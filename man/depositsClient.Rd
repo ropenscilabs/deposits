@@ -17,8 +17,8 @@ x
 # make a client
 token <- Sys.getenv("ZENODO_TOKEN")
 cli <- depositsClient$new(
-  url = "https://zenodo.org/api",
-  headers = list(Authorization = paste0("Bearer ", token))
+    url = "https://zenodo.org/api",
+    headers = list(Authorization = paste0("Bearer ", token))
 )
 
 # methods

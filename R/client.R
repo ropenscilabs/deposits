@@ -38,7 +38,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         result = NULL,
 
         #' @description Create a new `depositsClient` object
-        #' @param name (character) of the deposits server
+        #' @param url (character) URL for the deposits schema
         #' @param headers Any acceptable headers, a named list. See examples
         #' @return A new `depositsClient` object
         initialize = function(url, headers) {
