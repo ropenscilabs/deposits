@@ -1,4 +1,3 @@
-zenodo_base <- function() "https://zenodo.org/api"
 
 deposits_HEAD <- function(url, headers, ...) { # nolint (not snake_case)
     con <- crul::HttpClient$new(url, headers = headers, opts = list(...))
