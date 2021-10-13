@@ -28,6 +28,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
     ), # end private list
 
     public = list(
+        #' @field name (character) of deposits server
+        name = NULL,
         #' @field url (character) list of fragments
         url = NULL,
         #' @field headers list of named headers
@@ -38,11 +40,20 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         result = NULL,
 
         #' @description Create a new `depositsClient` object
-        #' @param url (character) URL for the deposits schema
+        #' @param name (character) of a deposits service (see
+        #' \link{deposits_services}).
         #' @param headers Any acceptable headers, a named list. See examples
         #' @return A new `depositsClient` object
-        initialize = function(url, headers) {
-            if (!missing(url)) self$url <- url
+        initialize = function(name, headers) {
+            if (missing(name))
+                stop ("'name' may not be missing.")
+            s <- deposits_services ()
+            if (!name %in% s$name)
+                stop ("'name' must be one of [",
+                      paste0 (s$name, collapse = ", "), "]")
+            self$name <- name
+            self$url <- s$url [s$name == name]
+
             if (!missing(headers)) self$headers <- headers
         },
 
@@ -51,7 +62,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param ... ignored
         print = function(x, ...) {
             cat("<deposits client>", sep = "\n")
-            cat(paste0("  url: ", self$url), sep = "\n")
+            cat(paste0("  name: ", self$name), sep = "\n")
+            cat(paste0("  url : ", self$url), sep = "\n")
         },
 
         #' @description ping a deposits server

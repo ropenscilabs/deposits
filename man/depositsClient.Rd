@@ -30,6 +30,8 @@ cli$ping()
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
+\item{\code{name}}{(character) of deposits server}
+
 \item{\code{url}}{(character) list of fragments}
 
 \item{\code{headers}}{list of named headers}
@@ -54,13 +56,14 @@ cli$ping()
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(url, headers)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, headers)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{url}}{(character) URL for the deposits schema}
+\item{\code{name}}{(character) of a deposits service (see
+\link{deposits_services}).}
 
 \item{\code{headers}}{Any acceptable headers, a named list. See examples}
 }
