@@ -28,6 +28,7 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      FIGSHARE_TOKEN: ${{ secrets.FIGSHARE_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
