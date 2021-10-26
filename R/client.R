@@ -44,11 +44,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return A new `depositsClient` object
         initialize = function(name, headers = NULL) {
             if (missing(name))
-                stop ("'name' may not be missing.")
+                stop ("'name' may not be missing.", call. = FALSE)
             s <- deposits_services ()
             if (!name %in% s$name)
                 stop ("'name' must be one of [",
-                      paste0 (s$name, collapse = ", "), "]")
+                      paste0 (s$name, collapse = ", "), "]",
+                      call. = FALSE)
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
 
