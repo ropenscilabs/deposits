@@ -1,4 +1,7 @@
 
+test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
+             identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
 test_that("Client", {
 
     service <- "figshare"
@@ -22,4 +25,31 @@ test_that("Client", {
     u <- s$api_base_url [s$name == service]
     u <- paste0 (u, "token") # for figshare only!
     expect_identical (cli$url, u)
+})
+
+test_that ("print", {
+
+    service <- "figshare"
+
+    expect_silent (
+        cli <- depositsClient$new (name = service)
+        )
+
+    out <- capture.output (print (cli))
+    expect_identical (out [1],
+                      "<deposits client>")
+    expect_true (any (grepl ("^\\s+name\\:", out)))
+    expect_true (any (grepl ("^\\s+url\\s\\:", out)))
+})
+
+testthat::skip_if (!test_all)
+
+test_that ("ping", {
+
+    service <- "figshare"
+
+    expect_silent (
+        cli <- depositsClient$new (name = service)
+        )
+    expect_true (cli$ping ())
 })
