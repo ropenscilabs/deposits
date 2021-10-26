@@ -56,7 +56,7 @@ cli$ping()
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, headers)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, headers = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -65,7 +65,7 @@ Create a new \code{depositsClient} object
 \item{\code{name}}{(character) of a deposits service (see
 \link{deposits_services}).}
 
-\item{\code{headers}}{Any acceptable headers, a named list. See examples}
+\item{\code{headers}}{Any acceptable headers. See examples}
 }
 \if{html}{\out{</div>}}
 }
