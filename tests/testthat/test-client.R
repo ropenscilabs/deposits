@@ -14,6 +14,10 @@ test_that("Client", {
         cli <- depositsClient$new (),
         "'name' may not be missing")
 
+    expect_error (
+        cli <- depositsClient$new ("junk"),
+        "'name' must be one of \\[zenodo, figshare\\]")
+
     expect_silent (
         cli <- depositsClient$new (name = service)
         )
