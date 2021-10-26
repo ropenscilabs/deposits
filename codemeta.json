@@ -8,7 +8,7 @@
   "description": "What the package does (one paragraph).",
   "name": "deposits: What the Package Does (One Line, Title Case)",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.1.016",
+  "version": "0.0.1.017",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
