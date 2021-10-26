@@ -15,6 +15,10 @@ get_deposits_token <- function (service = NULL) {
     e <- Sys.getenv ()
     token <- unique (e [grep (service, names (e), ignore.case = TRUE)])
 
+    if (length (token) == 0L) {
+        stop ("No token found for [", service, "] service.",
+              call. = FALSE)
+    }
     if (length (token) != 1L) {
         stop ("No unambiguous token found for [", service, "] service.",
               call. = FALSE)
