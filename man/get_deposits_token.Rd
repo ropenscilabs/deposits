@@ -18,3 +18,4 @@ Tokens should be stored as local environment variables, optionally defined in
 a \verb{~/.Renviron} file, and should contain the name of the desired deposits
 service.
 }
+\concept{auth}

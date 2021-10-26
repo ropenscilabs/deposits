@@ -1,6 +1,6 @@
 #' @title depositsClient
+#'
 #' @description R6 class for constructing deposits queries
-#' @export
 #' @return a `depositsClient` class (R6 class)
 #' @examples
 #' \dontrun{
@@ -15,6 +15,8 @@
 #' cli$ping()
 #'
 #' }
+#' @family client
+#' @export
 depositsClient <- R6::R6Class( # nolint (not snake_case)
     "depositsClient",
     portable = TRUE,

@@ -8,6 +8,7 @@
 #' @param service Name of desired service; must be a value in the "name" column
 #' of \link{deposits_services}.
 #' @return API token for nominated service.
+#' @family auth
 #' @export
 get_deposits_token <- function (service = NULL) {
 
