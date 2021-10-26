@@ -42,9 +42,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @description Create a new `depositsClient` object
         #' @param name (character) of a deposits service (see
         #' \link{deposits_services}).
-        #' @param headers Any acceptable headers, a named list. See examples
+        #' @param headers Any acceptable headers. See examples
         #' @return A new `depositsClient` object
-        initialize = function(name, headers) {
+        initialize = function(name, headers = NULL) {
             if (missing(name))
                 stop ("'name' may not be missing.")
             s <- deposits_services ()
@@ -54,7 +54,18 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
 
-            if (!missing(headers)) self$headers <- headers
+            # This accesses only the token endpoint of figshare for
+            # authorisation purposes only.
+            # TODO: Extend to all other endpoints.
+            if (name == "figshare") {
+                self$url <- paste0 (self$url, "token")
+            }
+
+            if (is.null (headers)) {
+
+                token <- get_deposits_token (service = self$name)
+                self$headers <- list(Authorization = paste0("Bearer ", token))
+            }
         },
 
         #' @description print method for the `depositsClient` class
