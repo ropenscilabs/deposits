@@ -1,4 +1,7 @@
 
+test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
+             identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
 test_that("services", {
 
     expect_silent (
@@ -17,4 +20,10 @@ test_that ("tokens", {
                   "invalid 'pattern' argument")
     expect_error (get_deposits_token ("aaaaa"),
                   "No unambiguous token found for")
+
+    testthat::skip_if (!test_all)
+
+    tok <- get_deposits_token ("figshare")
+    expect_type (tok, "character")
+    expect_true (nchar (tok) > 1L)
 })
