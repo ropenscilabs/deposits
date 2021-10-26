@@ -15,6 +15,6 @@ test_that ("tokens", {
 
     expect_error (get_deposits_token (),
                   "invalid 'pattern' argument")
-    expect_error (get_deposits_token ("aa"),
+    expect_error (get_deposits_token ("aaaaa"),
                   "No unambiguous token found for")
 })
