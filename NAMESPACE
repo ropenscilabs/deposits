@@ -2,3 +2,4 @@
 
 export(depositsClient)
 export(deposits_services)
+export(get_deposits_token)

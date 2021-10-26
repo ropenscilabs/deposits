@@ -4,7 +4,14 @@
 \alias{get_deposits_token}
 \title{Retrieve a token for a specified deposits service.}
 \usage{
-get_deposits_token(service)
+get_deposits_token(service = NULL)
+}
+\arguments{
+\item{service}{Name of desired service; must be a value in the "name" column
+of \link{deposits_services}.}
+}
+\value{
+API token for nominated service.
 }
 \description{
 Tokens should be stored as local environment variables, optionally defined in

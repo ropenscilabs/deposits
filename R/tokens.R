@@ -6,9 +6,10 @@
 #' service.
 #'
 #' @param service Name of desired service; must be a value in the "name" column
-#' of \link{deposits_services).
+#' of \link{deposits_services}.
+#' @return API token for nominated service.
 #' @export
-get_deposits_token <- function (service) {
+get_deposits_token <- function (service = NULL) {
 
     e <- Sys.getenv ()
     token <- unique (e [grep (service, names (e), ignore.case = TRUE)])
