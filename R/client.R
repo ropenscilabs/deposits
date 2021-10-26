@@ -3,15 +3,11 @@
 #' @export
 #' @return a `depositsClient` class (R6 class)
 #' @examples
-#' x <- depositsClient$new()
-#' x
-#'
 #' \dontrun{
 #' # make a client
 #' token <- Sys.getenv("ZENODO_TOKEN")
 #' cli <- depositsClient$new(
-#'     url = "https://zenodo.org/api",
-#'     headers = list(Authorization = paste0("Bearer ", token))
+#'     name = "figshare"
 #' )
 #'
 #' # methods
