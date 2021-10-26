@@ -7,8 +7,8 @@
   "identifier": "deposits",
   "description": "What the package does (one paragraph).",
   "name": "deposits: What the Package Does (One Line, Title Case)",
-  "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.1.023",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "0.0.1.024",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -88,7 +88,7 @@
       "sameAs": "https://CRAN.R-project.org/package=R6"
     }
   ],
-  "fileSize": "9.795KB",
+  "fileSize": "10.702KB",
   "codeRepository": "https://github.com/mpadge/deposits",
   "contIntegration": [
     "https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check",
