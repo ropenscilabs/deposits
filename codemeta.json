@@ -8,7 +8,7 @@
   "description": "What the package does (one paragraph).",
   "name": "deposits: What the Package Does (One Line, Title Case)",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.026",
+  "version": "0.0.1.027",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

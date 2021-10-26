@@ -18,14 +18,15 @@
 #' @family client
 #' @export
 depositsClient <- R6::R6Class( # nolint (not snake_case)
+
     "depositsClient",
     portable = TRUE,
     cloneable = FALSE,
 
-    private = list(
+    private = list (
     ), # end private list
 
-    public = list(
+    public = list (
         #' @field name (character) of deposits server
         name = NULL,
         #' @field url (character) list of fragments
@@ -42,8 +43,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' \link{deposits_services}).
         #' @param headers Any acceptable headers. See examples
         #' @return A new `depositsClient` object
-        initialize = function(name, headers = NULL) {
-            if (missing(name))
+        initialize = function (name, headers = NULL) {
+            if (missing (name))
                 stop ("'name' may not be missing.", call. = FALSE)
             s <- deposits_services ()
             if (!name %in% s$name)
@@ -63,17 +64,17 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             if (is.null (headers)) {
 
                 token <- get_deposits_token (service = self$name)
-                self$headers <- list(Authorization = paste0("Bearer ", token))
+                self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
         },
 
         #' @description print method for the `depositsClient` class
         #' @param x self
         #' @param ... ignored
-        print = function(x, ...) {
-            cat("<deposits client>", sep = "\n")
-            cat(paste0("  name: ", self$name), sep = "\n")
-            cat(paste0("  url : ", self$url), sep = "\n")
+        print = function (x, ...) {
+            cat ("<deposits client>", sep = "\n")
+            cat (paste0("  name: ", self$name), sep = "\n")
+            cat (paste0("  url : ", self$url), sep = "\n")
         },
 
         #' @description ping a deposits server
@@ -81,11 +82,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return `TRUE` if successful response, `FALSE` otherwise
         ping = function(...) {
             if (self$name != "figshare") {
-                res <- deposits_HEAD(self$url, self$headers, ...)
+                res <- deposits_HEAD (self$url, self$headers, ...)
             } else {
-                res <- deposits_HEAD(self$url, unlist (self$headers), ...)
+                res <- deposits_HEAD (self$url, unlist (self$headers), ...)
             }
-            res$success()
+            res$success ()
         }
 
     ) # end public list
