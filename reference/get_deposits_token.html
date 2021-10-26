@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List all deposits services and associated URLs — deposits_services • deposits</title>
+<title>Retrieve a token for a specified deposits service. — get_deposits_token • deposits</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="List all deposits services and associated URLs — deposits_services" />
-<meta property="og:description" content="List all deposits services and associated URLs" />
+<meta property="og:title" content="Retrieve a token for a specified deposits service. — get_deposits_token" />
+<meta property="og:description" content="Tokens should be stored as local environment variables, optionally defined in
+a ~/.Renviron file, and should contain the name of the desired deposits
+service." />
 
 
 
@@ -103,22 +105,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List all deposits services and associated URLs</h1>
+    <h1>Retrieve a token for a specified deposits service.</h1>
     
-    <div class="hidden name"><code>deposits_services.Rd</code></div>
+    <div class="hidden name"><code>get_deposits_token.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>List all deposits services and associated URLs</p>
+    <p>Tokens should be stored as local environment variables, optionally defined in
+a <code>~/.Renviron</code> file, and should contain the name of the desired deposits
+service.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>deposits_services</span><span class='op'>(</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_deposits_token</span><span class='op'>(</span>service <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>service</th>
+      <td><p>Name of desired service; must be a value in the "name" column
+of <a href='deposits_services.html'>deposits_services</a>.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code> with <code>name</code> and <code>url</code> values for each accessible
-service.</p>
+    <p>API token for nominated service.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
