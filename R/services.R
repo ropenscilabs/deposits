@@ -13,7 +13,7 @@ deposits_services <- function () {
             c ("figshare", "https://docs.figshare.com/", "https://api.figshare.com/v2/")
             )
         )
-    names (out) <- c ("name", "docs", "api-base-url")
+    names (out) <- c ("name", "docs", "api_base_url")
 
     return (out)
 }

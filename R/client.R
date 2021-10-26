@@ -52,7 +52,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 stop ("'name' must be one of [",
                       paste0 (s$name, collapse = ", "), "]")
             self$name <- name
-            self$url <- s$url [s$name == name]
+            self$url <- s$api_base_url [s$name == name]
 
             if (!missing(headers)) self$headers <- headers
         },
