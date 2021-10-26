@@ -10,3 +10,11 @@ test_that("services", {
     expect_identical (names (s), c ("name", "docs", "api_base_url"))
     expect_identical (s$name, c ("zenodo", "figshare"))
 })
+
+test_that ("tokens", {
+
+    expect_error (get_deposits_token (),
+                  "invalid 'pattern' argument")
+    expect_error (get_deposits_token ("aa"),
+                  "No unambiguous token found for")
+})

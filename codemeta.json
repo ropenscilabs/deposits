@@ -8,7 +8,7 @@
   "description": "What the package does (one paragraph).",
   "name": "deposits: What the Package Does (One Line, Title Case)",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "0.0.1.21",
+  "version": "0.0.1.022",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -90,7 +90,10 @@
   ],
   "fileSize": "9.795KB",
   "codeRepository": "https://github.com/mpadge/deposits",
-  "contIntegration": ["https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/mpadge/deposits"],
+  "contIntegration": [
+    "https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check",
+    "https://codecov.io/gh/mpadge/deposits"
+  ],
   "developmentStatus": "https://www.repostatus.org/#concept",
   "relatedLink": "https://mpadge.github.io/deposits",
   "readme": "https://github.com/mpadge/deposits/blob/main/README.md"
