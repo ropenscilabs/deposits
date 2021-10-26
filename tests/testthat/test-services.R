@@ -26,4 +26,17 @@ test_that ("tokens", {
     tok <- get_deposits_token ("figshare")
     expect_type (tok, "character")
     expect_true (nchar (tok) > 1L)
+
+    Sys.setenv ("junkone" = "123456")
+    Sys.setenv ("junktwo" = "123456")
+    expect_silent (
+        tok <- get_deposits_token ("junk")
+        )
+    expect_equal (tok, "123456")
+
+    Sys.setenv ("junktwo" = "234567")
+    expect_error (
+        tok <- get_deposits_token ("junk"),
+        "No unambiguous token found for \\[junk\\] service."
+        )
 })
