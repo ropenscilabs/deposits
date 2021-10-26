@@ -44,7 +44,15 @@ deposits_services ()
 All services require API (“Application Programming Interface”) keys to
 be stored as local environment variables the names of which must include
 the names of the respective services, as defined by the “name” column
-returned from `deposits_service()`, as shown above.
+returned from `deposits_service()`, as shown above. This can be done as
+in the following example:
+
+``` r
+Sys.setenv ("ZENODO_TOKEN" = "<my-token")
+```
+
+Alternatively, these tokens can be stored in a `~/.Renviron` file, where
+they will be automatically loaded into every R session.
 
 ## Functionality
 
