@@ -12,7 +12,6 @@ output:
 
 <!-- badges: start -->
 [![R build status](https://github.com/mpadge/deposits/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check)
-[![gitlab push](https://github.com/mpadge/deposits/workflows/push-to-gitlab/badge.svg)](https://github.com/mpadge/deposits/actions?query=workflow%3Apush-to-gitlab)
 [![codecov](https://codecov.io/gh/mpadge/deposits/branch/main/graph/badge.svg)](https://codecov.io/gh/mpadge/deposits)
 [![Project Status: Concept](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
