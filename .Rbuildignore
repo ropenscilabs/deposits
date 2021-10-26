@@ -19,3 +19,5 @@
 ^ctags$
 ^inst/precommit$
 ^inst/WORDLIST$
+^docs$
+^pkgdown$
