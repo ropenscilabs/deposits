@@ -81,7 +81,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param ... curl options passed on to [crul::verb-HEAD]
         #' @return `TRUE` if successful response, `FALSE` otherwise
         ping = function(...) {
-            res <- deposits_HEAD(self$url, self$headers, ...)
+            if (self$name != "figshare") {
+                res <- deposits_HEAD(self$url, self$headers, ...)
+            } else {
+                res <- deposits_HEAD(self$url, unlist (self$headers), ...)
+            }
             res$success()
         }
 
