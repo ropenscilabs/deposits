@@ -1,20 +1,18 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "deposits",
   "description": "What the package does (one paragraph).",
   "name": "deposits: What the Package Does (One Line, Title Case)",
+  "codeRepository": "https://github.com/mpadge/deposits",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.035",
+  "version": "0.0.1.36",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "author": [
     {
       "@type": "Person",
@@ -24,9 +22,6 @@
       "@id": "https://orcid.org/0000-0003-2172-5265"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -50,8 +45,8 @@
       "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "crul",
       "name": "crul",
@@ -63,7 +58,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=crul"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -75,7 +70,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -86,15 +81,12 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
-    }
-  ],
-  "fileSize": "11.22KB",
-  "codeRepository": "https://github.com/mpadge/deposits",
-  "contIntegration": [
-    "https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/mpadge/deposits"
-  ],
-  "developmentStatus": "https://www.repostatus.org/#concept",
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "12.385KB",
   "relatedLink": "https://mpadge.github.io/deposits",
-  "readme": "https://github.com/mpadge/deposits/blob/main/README.md"
+  "readme": "https://github.com/mpadge/deposits/blob/main/README.md",
+  "contIntegration": ["https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/mpadge/deposits"],
+  "developmentStatus": "https://www.repostatus.org/#concept"
 }

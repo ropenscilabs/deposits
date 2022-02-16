@@ -65,8 +65,7 @@ for (s in services$name) {
     cli <- depositsClient$new(
       name = s
     )
-    ping <- cli$ping()
-    message (s, ": ", ping)
+    message (s, ": ", cli$ping()
 }
 ```
 
