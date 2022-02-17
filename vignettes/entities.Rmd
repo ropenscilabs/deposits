@@ -1,0 +1,22 @@
+---
+title: "Metadata and Data Entities"
+author: 
+  - "Mark Padgham"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Metadata and Data Entities}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set (
+    collapse = TRUE,
+    warning = TRUE,
+    message = TRUE,
+    width = 120,
+    comment = "#>",
+    fig.retina = 2,
+    fig.path = "README-"
+)
+```
