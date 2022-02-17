@@ -3,6 +3,7 @@
 #'
 #' @return A `data.frame` with `name` and `url` values for each accessible
 #' service.
+#' @family misc
 #' @export
 deposits_services <- function () {
 

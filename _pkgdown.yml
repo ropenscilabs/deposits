@@ -1,9 +1,12 @@
 url: https://mpadge.github.io/deposits
 
 reference:
-- title: Deposits client
-  content:
-  - has_concept("client")
-- title: Authentication
-  content:
-  - has_concept("auth")
+  - title: Deposits client
+    content:
+    - has_concept("client")
+  - title: Authentication
+    content:
+    - has_concept("auth")
+  - title: Miscellaneous
+    content:
+    - has_concept("misc")
