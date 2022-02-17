@@ -6,7 +6,7 @@
   "name": "deposits: What the Package Does (One Line, Title Case)",
   "codeRepository": "https://github.com/mpadge/deposits",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.040",
+  "version": "0.0.1.041",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
