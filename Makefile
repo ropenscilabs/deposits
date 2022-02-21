@@ -1,8 +1,8 @@
 VIGNETTE=entities
 
-.PHONY: all build check document test
+.PHONY: all build check doc test
 
-all: document build check
+all: doc build check
 
 build: doc
 	R CMD build .
