@@ -20,3 +20,105 @@ knitr::opts_chunk$set (
     fig.path = "README-"
 )
 ```
+
+This vignette gives a tabular overview of how the two systems currently
+implemented ([zenodo](https://zenodo.org) and
+[figshare](https://figshare.com/)) align with the official entities defined in
+the [Dublin Core Metadata Initiative
+(DCMI)](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
+These DCMI entities or "terms" can be extracted from [the `atom4R`
+package](https://github.com/eblondel/atom4R/) as a `data.frame` object with the
+following lines:
+
+```{r DC-terms, eval = FALSE}
+library (atom4R)
+terms <- getDCMIVocabulary(id = "http://purl.org/dc/terms/")$get ()
+```
+
+The corresponding entities in the zenodo API are defined at
+[developers.zenodo.org](https://developers.zenodo.org/), and those for figshare
+at [docs.figshare.com](https://docs.figshare.com/).
+
+### [DCMI Terms](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#section-2)
+
+Zenodo has a separate "Metadata Resource," elements of which are noted "(m)".
+
+DC | Zenodo | Figshare
+--- | --- | ---
+abstract | description(m) (also DC description) | description
+accessRights | access_right(m)/access_conditions(m) | 
+accrualMethod | | 
+accrualPeriodicity | | 
+accrualPolicy | | 
+alternative | | 
+audience | communities(m) |
+available | | 
+bibliographicCitation | journal/conference/imprint/partof/thesis metadata(m(m)) | 
+conformsTo | | 
+created | created | timeline:firstOnline
+dateAccepted | publication_date(m)/dates(m) | timeline
+dateCopyrighted | publication_date(m)/dates(m) | timeline
+dateSubmitted | publication_date(m)/dates(m) | timeline
+educationLevel | | 
+extent | | 
+hasFormat | | 
+hasPart | files/related_identifiers(m) | 
+hasVersion | version(m) (see also DC isVersionOf/identifier) | 
+instructionalMethod | | 
+isFormatOf | | 
+isPartOf | | projects/collections
+isReferencedBy | | projects/collections
+isReplacedBy | | 
+isRequiredBy | | 
+issued | | 
+isVersionOf | version(m) (see also DC hasVersion/identifer) | 
+license | license(m) | license
+mediator | | 
+medium | upload_type(m)/image_type(m) | defined_type
+modified | modified | 
+provenance | | 
+references | references(m) | references
+replaces | | 
+requires | | 
+rightsHolder | | 
+spatial | locations(m) (see also DC location) | 
+tableOfContents | | 
+temporal | | 
+valid | | 
+
+
+### [DCMI Element Properties](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#section-3)
+
+DC | Zenodo | Figshare
+--- | --- | ---
+contributor | contributors(m) | 
+coverage | locations(m) (see also DC spatial) | 
+creator | creators(m)/owner | authors
+date | dates(m) | timeline
+description | description(m) (also DC abstract)/method(m)/state | description
+format | | defined_type
+identifier | doi(m)/doi_url(m)/record_id/record_url | 
+language | language(m) | 
+publisher | | 
+relation | | 
+rights | | 
+source | | 
+subject | keywords(m)/subjects(m) | categories (per defined list)
+title | title(m)/version(m) | 
+type | publication_type(m) | 
+
+## Additional Data & Metadata Elements not coverged by DCMI
+
+### Zenodo
+
+- embargo_date(m)
+- prereserve_doi(m)
+- notes(m)
+- grants(m)
+- submitted
+
+### Figshare
+
+- tags
+- keywords
+- funding/funding_list

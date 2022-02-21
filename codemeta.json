@@ -6,7 +6,7 @@
   "name": "deposits: What the Package Does (One Line, Title Case)",
   "codeRepository": "https://github.com/mpadge/deposits",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.042",
+  "version": "0.0.1.43",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -43,6 +43,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     },
     {
       "@type": "SoftwareApplication",
@@ -94,14 +106,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "13.46KB",
+  "fileSize": "16.605KB",
   "relatedLink": "https://mpadge.github.io/deposits",
   "readme": "https://github.com/mpadge/deposits/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/mpadge/deposits"
-  ],
+  "contIntegration": ["https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/mpadge/deposits"],
   "developmentStatus": "https://www.repostatus.org/#concept"
 }
