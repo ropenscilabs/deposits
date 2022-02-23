@@ -1,6 +1,6 @@
 Package: deposits
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.1.045
+Version: 0.0.1.046
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265"))
@@ -9,6 +9,7 @@ License: MIT + file LICENSE
 URL: https://ropenscilabs.github.io/deposits/
 BugReports: https://github.com/ropenscilabs/deposits/issues
 Imports:
+    atom4R,
     crul,
     jsonlite,
     R6
