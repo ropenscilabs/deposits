@@ -18,6 +18,7 @@ test_that("metadata template", {
 
 test_that("metadata to DCEntry", {
 
+    library(atom4R) # https://github.com/eblondel/atom4R/pull/10
     filename <- tempfile (fileext = ".json")
     deposits_metadata_template (filename)
 
