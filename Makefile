@@ -1,4 +1,5 @@
 VIGNETTE=entities
+README=README
 
 .PHONY: all build check doc test
 
@@ -28,6 +29,9 @@ test:
 
 check:
 	Rscript -e 'library(pkgcheck); checks <- pkgcheck(); print(checks); summary (checks)'
+
+knitr: $(README).Rmd
+	echo "rmarkdown::render('$(README).Rmd',output_file='$(README).md')" | R --no-save -q
 
 install: clean
 	R CMD INSTALL .
