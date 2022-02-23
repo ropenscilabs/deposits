@@ -3,8 +3,8 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/mpadge/deposits/workflows/R-CMD-check/badge.svg)](https://github.com/mpadge/deposits/actions?query=workflow%3AR-CMD-check)
-[![codecov](https://codecov.io/gh/mpadge/deposits/branch/main/graph/badge.svg)](https://codecov.io/gh/mpadge/deposits)
+status](https://github.com/ropenscilabs/deposits/workflows/R-CMD-check/badge.svg)](https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check)
+[![codecov](https://codecov.io/gh/ropenscilabs/deposits/branch/main/graph/badge.svg)](https://codecov.io/gh/ropenscilabs/deposits)
 [![Project Status:
 Concept](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 <!-- badges: end -->
