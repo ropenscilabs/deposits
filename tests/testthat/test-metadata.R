@@ -2,9 +2,10 @@
 test_that("metadata template", {
 
     filename <- tempfile (fileext = ".json")
-    expect_silent (
+    #expect_silent (
         out <- deposits_metadata_template (filename)
-    )
+    #)
+    expect_true (out)
     expect_true (file.exists (filename))
 
     json <- readLines (filename)
