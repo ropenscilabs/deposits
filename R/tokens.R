@@ -16,7 +16,14 @@
 get_deposits_token <- function (service = NULL) {
 
     e <- Sys.getenv ()
-    token <- unique (e [grep (service, names (e), ignore.case = TRUE)])
+    e <- e [grep (service, names (e), ignore.case = TRUE)]
+    if (length (e) != 1L) {
+        if (grepl ("^zenodo$", service, ignore.case = TRUE)) {
+            e <- e [which (!grepl ("sandbox", names (e), ignore.case = TRUE))]
+        }
+    }
+
+    token <- unique (e)
 
     if (length (token) == 0L) {
         stop ("No token found for [", service, "] service.",
