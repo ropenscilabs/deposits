@@ -18,4 +18,7 @@ Tokens should be stored as local environment variables, optionally defined in
 a \verb{~/.Renviron} file, and should contain the name of the desired deposits
 service.
 }
+\examples{
+token <- get_deposits_token (service = "figshare")
+}
 \concept{auth}

@@ -14,6 +14,11 @@
 #'
 #' @return (Invisibly) `TRUE` if local file successfully created; otherwise
 #' `FALSE`.
+#'
+#' @examples
+#' filename <- tempfile (fileext = ".json")
+#' deposits_metadata_template (filename)
+#' # then edit that file to complete metadata
 #' @family misc
 #' @export
 deposits_metadata_template <- function (filename = NULL) {

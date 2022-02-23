@@ -13,6 +13,9 @@ service.
 \description{
 List all deposits services and associated URLs
 }
+\examples{
+s <- deposits_services ()
+}
 \seealso{
 Other misc: 
 \code{\link{deposits_metadata_template}()}

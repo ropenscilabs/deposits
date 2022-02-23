@@ -23,6 +23,11 @@ extracted here from the \pkg{atom4R} package. The template produced by this
 function is in \code{json} format which can be manually edited to provide metadata
 for a deposit.
 }
+\examples{
+filename <- tempfile (fileext = ".json")
+deposits_metadata_template (filename)
+# then edit that file to complete metadata
+}
 \seealso{
 Other misc: 
 \code{\link{deposits_services}()}
