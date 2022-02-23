@@ -29,7 +29,7 @@ deposits_metadata_template (filename)
 # then edit that file to complete metadata
 }
 \seealso{
-Other misc: 
-\code{\link{deposits_services}()}
+Other meta: 
+\code{\link{deposits_meta_to_dcmi}()}
 }
-\concept{misc}
+\concept{meta}
