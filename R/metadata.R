@@ -14,6 +14,7 @@
 #'
 #' @return (Invisibly) `TRUE` if local file successfully created; otherwise
 #' `FALSE`.
+#' @family misc
 #' @export
 deposits_metadata_template <- function (filename = NULL) {
 

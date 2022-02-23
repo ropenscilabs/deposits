@@ -23,3 +23,8 @@ extracted here from the \pkg{atom4R} package. The template produced by this
 function is in \code{json} format which can be manually edited to provide metadata
 for a deposit.
 }
+\seealso{
+Other misc: 
+\code{\link{deposits_services}()}
+}
+\concept{misc}
