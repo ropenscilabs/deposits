@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">deposits</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.043</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1.051</span>
       </span>
     </div>
 
@@ -55,7 +55,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ropenscilabs/deposits/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -71,9 +78,9 @@
       <h1 data-toc-skip>Metadata and Data Entities</h1>
                         <h4 data-toc-skip class="author">Mark Padgham</h4>
             
-            <h4 data-toc-skip class="date">2022-02-21</h4>
+            <h4 data-toc-skip class="date">2022-02-23</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ropenscilabs/deposits/blob/HEAD/vignettes/entities.Rmd" class="external-link"><code>vignettes/entities.Rmd</code></a></small>
       <div class="hidden name"><code>entities.Rmd</code></div>
 
     </div>
@@ -83,7 +90,7 @@
 <p>This vignette gives a tabular overview of how the two systems currently implemented (<a href="https://zenodo.org" class="external-link">zenodo</a> and <a href="https://figshare.com/" class="external-link">figshare</a>) align with the official entities defined in the <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/" class="external-link">Dublin Core Metadata Initiative (DCMI)</a>. These DCMI entities or “terms” can be extracted from <a href="https://github.com/eblondel/atom4R/" class="external-link">the <code>atom4R</code> package</a> as a <code>data.frame</code> object with the following lines:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span> <span class="op">(</span><span class="va"><a href="https://github.com/eblondel/atom4R" class="external-link">atom4R</a></span><span class="op">)</span>
-<span class="va">terms</span> <span class="op">&lt;-</span> <span class="fu">getDCMIVocabulary</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"http://purl.org/dc/terms/"</span><span class="op">)</span><span class="op">$</span><span class="fu">get</span> <span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="va">terms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/atom4R/man/getDCMIVocabulary.html" class="external-link">getDCMIVocabulary</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"http://purl.org/dc/terms/"</span><span class="op">)</span><span class="op">$</span><span class="fu">get</span> <span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The corresponding entities in the zenodo API are defined at <a href="https://developers.zenodo.org/" class="external-link">developers.zenodo.org</a>, and those for figshare at <a href="https://docs.figshare.com/" class="external-link">docs.figshare.com</a>.</p>
 <div class="section level3">
 <h3 id="dcmi-terms">

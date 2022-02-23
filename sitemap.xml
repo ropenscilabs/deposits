@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mpadge.github.io/deposits/404.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/404.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/LICENSE-text.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/articles/entities.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/articles/entities.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/articles/index.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/authors.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/authors.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/index.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/index.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/reference/deposits-package.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/reference/deposits-package.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/reference/depositsClient.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/reference/depositsClient.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/reference/deposits_services.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/reference/deposits_metadata_template.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/reference/get_deposits_token.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/reference/deposits_services.html</loc>
   </url>
   <url>
-    <loc>https://mpadge.github.io/deposits/reference/index.html</loc>
+    <loc>https://ropenscilabs.github.io/deposits/reference/get_deposits_token.html</loc>
+  </url>
+  <url>
+    <loc>https://ropenscilabs.github.io/deposits/reference/index.html</loc>
   </url>
 </urlset>
