@@ -34,13 +34,17 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         schema = NULL,
         #' @field result holds result from http request
         result = NULL,
+        #' @field metadata holds metadata
+        metadata = NULL,
 
         #' @description Create a new `depositsClient` object
         #' @param name (character) of a deposits service (see
         #' \link{deposits_services}).
+        #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
+        #' either constructed directly via \pkg{atom4R} routines, or via
         #' @param headers Any acceptable headers. See examples
         #' @return A new `depositsClient` object
-        initialize = function (name, headers = NULL) {
+        initialize = function (name, metadata = NULL, headers = NULL) {
 
             if (missing (name))
                 stop ("'name' may not be missing.", call. = FALSE)
@@ -60,9 +64,18 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             }
 
             if (is.null (headers)) {
-
                 token <- get_deposits_token (service = self$name)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
+            }
+
+            if (!is.null (metadata)) {
+                out <- capture.output (
+                    chk <- metadata$validate ()
+                    )
+                if (!chk) {
+                    stop ("metadata is not valid - see details via metadata$validate()")
+                }
+                self$metadata <- metadata
             }
         },
 
@@ -108,6 +121,22 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 stop (res$parse ())
             }
             jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+        },
+
+        #' @description Fill deposits client with metadata
+        #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
+        #' either constructed directly via \pkg{atom4R} routines, or via
+        #' \link{deposits_meta_to_dcmi}.
+        #' @return Modified form of the deposits client with metadata inserted.
+        fill_metadata = function(metadata) {
+            out <- capture.output (
+                chk <- metadata$validate ()
+                )
+            if (!chk) {
+                stop ("metadata is not valid - see details via metadata$validate()")
+            }
+            self$metadata <- metadata
+            return (self)
         }
 
     ) # end public list

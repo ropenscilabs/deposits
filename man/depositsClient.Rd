@@ -32,6 +32,8 @@ d$list_deposits ()
 \item{\code{schema}}{holds schema}
 
 \item{\code{result}}{holds result from http request}
+
+\item{\code{metadata}}{holds metadata}
 }
 \if{html}{\out{</div>}}
 }
@@ -42,6 +44,7 @@ d$list_deposits ()
 \item \href{#method-print}{\code{depositsClient$print()}}
 \item \href{#method-ping}{\code{depositsClient$ping()}}
 \item \href{#method-list_deposits}{\code{depositsClient$list_deposits()}}
+\item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -50,7 +53,7 @@ d$list_deposits ()
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, headers = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, metadata = NULL, headers = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -58,6 +61,9 @@ Create a new \code{depositsClient} object
 \describe{
 \item{\code{name}}{(character) of a deposits service (see
 \link{deposits_services}).}
+
+\item{\code{metadata}}{An \pkg{atom4R} \code{DCEntry} object containing metadata,
+either constructed directly via \pkg{atom4R} routines, or via}
 
 \item{\code{headers}}{Any acceptable headers. See examples}
 }
@@ -124,6 +130,28 @@ List own deposits for given service
 }
 \subsection{Returns}{
 A list of deposits.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fill_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_metadata}{}}}
+\subsection{Method \code{fill_metadata()}}{
+Fill deposits client with metadata
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$fill_metadata(metadata)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{metadata}}{An \pkg{atom4R} \code{DCEntry} object containing metadata,
+either constructed directly via \pkg{atom4R} routines, or via
+\link{deposits_meta_to_dcmi}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Modified form of the deposits client with metadata inserted.
 }
 }
 }
