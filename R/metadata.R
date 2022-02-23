@@ -118,7 +118,7 @@ load_meta_terms <- function () {
 
     terms <- system.file (file.path ("extdata", "DCTerms.csv"),
                           package = "deposits")
-    terms <- read.csv (terms)
+    terms <- utils::read.csv (terms)
     for (i in seq (ncol (terms))) {
         terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
     }
