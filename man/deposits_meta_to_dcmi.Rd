@@ -23,10 +23,11 @@ deposits_metadata_template (filename)
 m <- readLines (filename)
 m [grep ("Title", m)] <- "  \"Title\": \"New Title\""
 m [grep ("Type", m)] <- "  \"Type\": \"Software\""
-m [grep ("Description", m)] <- "  \"Description\": \"Description of software\""
+m [grep ("Description", m)] <-
+   "  \"Description\": \"Description of software\""
 # Values can be entered in JSON format:
 m [grep ("TableOfContents", m)] <-
-"  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"}"
+    "  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"}"
 dc <- deposits_meta_to_dcmi (filename, id = "my-id")
 }
 \seealso{
