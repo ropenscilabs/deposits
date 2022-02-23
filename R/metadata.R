@@ -122,6 +122,6 @@ load_meta_terms <- function () {
     for (i in seq (ncol (terms))) {
         terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
     }
-    index <- which (nchar (terms$Zenodo) > 0L | nchar (terms$Figshare) > 0L)
+    index <- which (nzchar (terms$Zenodo) | nzchar (terms$Figshare))
     return (terms [index, ])
 }
