@@ -5,15 +5,11 @@
 #' @examples
 #' \dontrun{
 #' # make a client
-#' token <- Sys.getenv("ZENODO_TOKEN")
-#' cli <- depositsClient$new(
-#'     name = "figshare"
-#' )
+#' d <- depositsClient$new ("zenodo") # or:
+#' d <- depositsClient$new ("figshare")
 #'
 #' # methods
-#' ## ping - hopefully you get TRUE
-#' cli$ping()
-#'
+#' d$list_deposits ()
 #' }
 #' @family client
 #' @export
