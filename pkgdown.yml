@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   entities: entities.html
-last_built: 2022-02-23T01:21Z
+last_built: 2022-02-23T04:59Z
 urls:
   reference: https://ropenscilabs.github.io/deposits/reference
   article: https://ropenscilabs.github.io/deposits/articles
