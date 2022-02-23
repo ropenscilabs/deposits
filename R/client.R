@@ -87,6 +87,22 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 res <- deposits_HEAD (self$url, unlist (self$headers), ...)
             }
             res$success ()
+        },
+
+        #' @description List own deposits for given service
+        #' @param ... curl options passed on to [crul::verb-HEAD]
+        #' @return A list of deposits.
+        list_deposits = function(...) {
+            self$url <- gsub ("token$", "", self$url)
+            url <- ifelse (self$name == "figshare",
+                           paste0 (self$url, "account/articles"),
+                           paste0 (self$url, "deposit/depositions"))
+            con <- crul::HttpClient$new (url, headers = self$headers, opts = list (...))
+            res <- con$get ()
+            if (!identical (res$status_code, 200)) {
+                stop (res$parse ())
+            }
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         }
 
     ) # end public list

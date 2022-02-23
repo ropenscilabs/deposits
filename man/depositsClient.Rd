@@ -45,6 +45,7 @@ cli$ping()
 \item \href{#method-new}{\code{depositsClient$new()}}
 \item \href{#method-print}{\code{depositsClient$print()}}
 \item \href{#method-ping}{\code{depositsClient$ping()}}
+\item \href{#method-list_deposits}{\code{depositsClient$list_deposits()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -107,6 +108,26 @@ ping a deposits server
 }
 \subsection{Returns}{
 \code{TRUE} if successful response, \code{FALSE} otherwise
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-list_deposits"></a>}}
+\if{latex}{\out{\hypertarget{method-list_deposits}{}}}
+\subsection{Method \code{list_deposits()}}{
+List own deposits for given service
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$list_deposits(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{curl options passed on to \link[crul:verb-HEAD]{crul::verb-HEAD}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list of deposits.
 }
 }
 }
