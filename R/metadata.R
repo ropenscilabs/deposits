@@ -89,14 +89,12 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
 
     if (!"atom4R" %in% loadedNamespaces ()) {
         # https://github.com/eblondel/atom4R/issues/9
+        # https://github.com/eblondel/atom4R/pull/10
         library ("atom4R")
     }
 
     meta <- jsonlite::read_json (filename)
     meta <- meta [which (nchar (meta) > 0L)]
-    #for (i in seq_along (meta)) {
-    #    meta [[i]] <- jsonlite::toJSON (meta [[i]], auto_unbox = TRUE)
-    #}
 
     dcmi <- atom4R::DCEntry$new ()
 
