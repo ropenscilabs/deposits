@@ -1,0 +1,15 @@
+url: https://ropenscilabs.github.io/deposits
+
+reference:
+- title: Deposits client
+  contents:
+  - has_concept("client")
+- title: Authentication
+  contents:
+  - has_concept("auth")
+- title: Metadata
+  contents:
+  - has_concept("meta")
+- title: Miscellaneous
+  contents:
+  - has_concept("misc")

@@ -1,0 +1,143 @@
+#' @title depositsClient
+#'
+#' @description R6 class for constructing deposits queries
+#' @return a `depositsClient` class (R6 class)
+#' @examples
+#' \dontrun{
+#' # make a client
+#' d <- depositsClient$new ("zenodo") # or:
+#' d <- depositsClient$new ("figshare")
+#'
+#' # methods
+#' d$list_deposits ()
+#' }
+#' @family client
+#' @export
+depositsClient <- R6::R6Class( # nolint (not snake_case)
+
+    "depositsClient",
+    portable = TRUE,
+    cloneable = FALSE,
+
+    private = list (
+    ), # end private list
+
+    public = list (
+
+        #' @field name (character) of deposits server
+        name = NULL,
+        #' @field url (character) list of fragments
+        url = NULL,
+        #' @field headers list of named headers
+        headers = NULL,
+        #' @field schema holds schema
+        schema = NULL,
+        #' @field result holds result from http request
+        result = NULL,
+        #' @field metadata holds metadata
+        metadata = NULL,
+
+        #' @description Create a new `depositsClient` object
+        #' @param name (character) of a deposits service (see
+        #' \link{deposits_services}).
+        #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
+        #' either constructed directly via \pkg{atom4R} routines, or via
+        #' @param headers Any acceptable headers. See examples
+        #' @return A new `depositsClient` object
+        initialize = function (name, metadata = NULL, headers = NULL) {
+
+            if (missing (name))
+                stop ("'name' may not be missing.", call. = FALSE)
+            s <- deposits_services ()
+            if (!name %in% s$name)
+                stop ("'name' must be one of [",
+                      paste0 (s$name, collapse = ", "), "]",
+                      call. = FALSE)
+            self$name <- name
+            self$url <- s$api_base_url [s$name == name]
+
+            # This accesses only the token endpoint of figshare for
+            # authorisation purposes only.
+            # TODO: Extend to all other endpoints.
+            if (name == "figshare") {
+                self$url <- paste0 (self$url, "token")
+            }
+
+            if (is.null (headers)) {
+                token <- get_deposits_token (service = self$name)
+                self$headers <- list (Authorization = paste0 ("Bearer ", token))
+            }
+
+            if (!is.null (metadata)) {
+                out <- capture.output (
+                    chk <- metadata$validate ()
+                    )
+                if (!chk) {
+                    stop ("metadata is not valid - see details via metadata$validate()")
+                }
+                self$metadata <- metadata
+            }
+        },
+
+        #' @description print method for the `depositsClient` class
+        #' @param x self
+        #' @param ... ignored
+        print = function (x, ...) {
+
+            cat ("<deposits client>", sep = "\n")
+            cat (paste0("  name: ", self$name), sep = "\n")
+            cat (paste0("  url : ", self$url), sep = "\n")
+        },
+
+        #' @description ping a deposits server
+        #' @param ... curl options passed on to [crul::verb-HEAD]
+        #' @return `TRUE` if successful response, `FALSE` otherwise
+        ping = function(...) {
+
+            if (self$name != "figshare") {
+                res <- deposits_HEAD (self$url, self$headers, ...)
+            } else {
+                res <- deposits_HEAD (self$url, unlist (self$headers), ...)
+            }
+            res$success ()
+        },
+
+        #' @description List own deposits for given service
+        #' @param ... curl options passed on to [crul::verb-HEAD]
+        #' @return A list of deposits.
+        list_deposits = function(...) {
+
+            self$url <- gsub ("token$", "", self$url)
+            url <- ifelse (self$name == "figshare",
+                           paste0 (self$url, "account/articles"),
+                           paste0 (self$url, "deposit/depositions"))
+
+            con <- crul::HttpClient$new (url,
+                                         headers = self$headers,
+                                         opts = list (...))
+
+            res <- con$get ()
+            if (!identical (res$status_code, 200)) {
+                stop (res$parse ())
+            }
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+        },
+
+        #' @description Fill deposits client with metadata
+        #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
+        #' either constructed directly via \pkg{atom4R} routines, or via
+        #' \link{deposits_meta_to_dcmi}.
+        #' @return Modified form of the deposits client with metadata inserted.
+        fill_metadata = function(metadata) {
+            out <- capture.output (
+                chk <- metadata$validate ()
+                )
+            if (!chk) {
+                stop ("metadata is not valid - see details via metadata$validate()")
+            }
+            self$metadata <- metadata
+            return (self)
+        }
+
+    ) # end public list
+)

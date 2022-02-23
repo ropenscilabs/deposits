@@ -1,0 +1,56 @@
+DC , Zenodo , Figshare
+abstract , description(m)  , description
+accessRights , access_right(m)|access_conditions(m) , 
+accrualMethod , , 
+accrualPeriodicity , , 
+accrualPolicy , , 
+alternative , , 
+audience , communities(m) ,
+available , , 
+bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m(m)) , 
+conformsTo , , 
+created , created , timeline:firstOnline
+dateAccepted , publication_date(m)|dates(m) , timeline
+dateCopyrighted , publication_date(m)|dates(m) , timeline
+dateSubmitted , publication_date(m)|dates(m) , timeline
+educationLevel , , 
+extent , , 
+hasFormat , , 
+hasPart , files|related_identifiers(m) , 
+hasVersion , version(m) ,
+instructionalMethod , , 
+isFormatOf , , 
+isPartOf , , projects|collections
+isReferencedBy , , projects|collections
+isReplacedBy , , 
+isRequiredBy , , 
+issued , , 
+isVersionOf , version(m) ,
+license , license(m) , license
+mediator , , 
+medium , upload_type(m)|image_type(m) , defined_type
+modified , modified , 
+provenance , , 
+references , references(m) , references
+replaces , , 
+requires , , 
+rightsHolder , , 
+spatial , locations(m) ,
+tableOfContents , , 
+temporal , , 
+valid , , 
+contributor , contributors(m) , 
+coverage , locations(m) ,
+creator , creators(m)|owner , authors
+date , dates(m) , timeline
+description , description(m)|method(m)|state , description
+format , , defined_type
+identifier , doi(m)|doi_url(m)|record_id|record_url , 
+language , language(m) , 
+publisher , , 
+relation , , 
+rights , , 
+source , , 
+subject , keywords(m)|subjects(m) , categories
+title , title(m)|version(m) , 
+type , publication_type(m) , 
