@@ -7,7 +7,7 @@ accrualPolicy , ,
 alternative , , 
 audience , communities(m) ,
 available , , 
-bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m(m)) , 
+bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m) , 
 conformsTo , , 
 created , created , timeline:firstOnline
 dateAccepted , publication_date(m)|dates(m) , timeline
