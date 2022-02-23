@@ -1,12 +1,13 @@
 Package: deposits
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.1.043
+Version: 0.0.1.044
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-URL: https://mpadge.github.io/deposits
+URL: https://ropenscilabs.github.io/deposits/
+BugReports: https://github.com/ropenscilabs/deposits/issues
 Imports:
     crul,
     jsonlite,
