@@ -111,3 +111,17 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
 
     return (dcmi)
 }
+
+#' Load metadata term translation table from local inst/extdata
+#' @noRd
+load_meta_terms <- function () {
+
+    terms <- system.file (file.path ("extdata", "DCTerms.csv"),
+                          package = "deposits")
+    terms <- read.csv (terms)
+    for (i in seq (ncol (terms))) {
+        terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
+    }
+    index <- which (nchar (terms$Zenodo) > 0L | nchar (terms$Figshare) > 0L)
+    return (terms [index, ])
+}
