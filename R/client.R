@@ -196,6 +196,23 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                               auto_unbox = TRUE))
             res <- con$post (body = body)
             return (res)
+        },
+
+        #' @description Upload file to an existing deposit
+        #' @param id The 'id' number of deposit which file it to be uploaded to.
+        #' @param path Path to local file.
+        #' @return A \pkg{crul} response object containing full data of deposit.
+        #' including of uploaded file.
+        upload_file = function (id, path = NULL) {
+
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles",
+                                   "deposit/depositions"))
+
+            if (cli$name == "figshare") {
+                out <- upload_figshare_file (id, url, self$headers, path) # in R/upload.R
+            }
         }
 
     ) # end public list
