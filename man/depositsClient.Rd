@@ -51,6 +51,7 @@ d$list_deposits ()
 \item \href{#method-delete_deposit}{\code{depositsClient$delete_deposit()}}
 \item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
 \item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
+\item \href{#method-upload_file}{\code{depositsClient$upload_file()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -196,6 +197,29 @@ Create a new deposit
 \subsection{Returns}{
 A \pkg{crul} response object. Results can be extracted with
 \code{jsonlite::fromJSON(result$parse(format="UTF-8"))}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-upload_file"></a>}}
+\if{latex}{\out{\hypertarget{method-upload_file}{}}}
+\subsection{Method \code{upload_file()}}{
+Upload file to an existing deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$upload_file(id, path = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{The 'id' number of deposit which file it to be uploaded to.}
+
+\item{\code{path}}{Path to local file.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \pkg{crul} response object containing full data of deposit.
+including of uploaded file.
 }
 }
 }
