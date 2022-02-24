@@ -42,7 +42,7 @@ valid , ,
 contributor , contributors(m) , 
 coverage , locations(m) ,
 creator , creators(m)|owner , authors
-date , dates(m) , timeline
+date , created , timeline
 description , description(m)|method(m)|state , description
 format , , defined_type
 identifier , doi(m)|doi_url(m)|record_id|record_url , 
