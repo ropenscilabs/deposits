@@ -11,7 +11,7 @@ What the package does (one paragraph).
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://ropenscilabs.github.io/deposits/}
+  \item \url{https://docs.ropensci.org/deposits/}
   \item Report bugs at \url{https://github.com/ropenscilabs/deposits/issues}
 }
 

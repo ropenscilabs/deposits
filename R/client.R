@@ -36,6 +36,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         result = NULL,
         #' @field metadata holds metadata
         metadata = NULL,
+        #' @field term_map Map between DCMI and deposit terms
+        term_map = NULL,
 
         #' @description Create a new `depositsClient` object
         #' @param name (character) of a deposits service (see
@@ -67,6 +69,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 token <- get_deposits_token (service = self$name)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
+
+            self$term_map <- get_dcmi_term_map (self$name)
 
             if (!is.null (metadata)) {
                 out <- capture.output (

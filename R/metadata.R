@@ -125,3 +125,25 @@ load_meta_terms <- function () {
     index <- which (nzchar (terms$Zenodo) | nzchar (terms$Figshare))
     return (terms [index, ])
 }
+
+#' Constrct map between DCMI terms and those of nominated deposits service.
+#' @noRd
+get_dcmi_term_map = function (deposit = "zenodo") {
+
+    terms <- load_meta_terms ()
+    this_col <- grep (deposit, names (terms), ignore.case = TRUE)
+    terms <- terms [which (nzchar (terms [, this_col])), ]
+    terms <- cbind (terms$DC, terms [, this_col])
+    terms <- apply (terms, 1, function (i) {
+        val <- strsplit (i [2], "\\|") [[1]]
+        cbind (rep (i [1], length (val)), val)
+    })
+    terms <- do.call (rbind, terms)
+    # zenodo metadata has "(m)" at end of terms
+    terms <- data.frame ("dcmi" = terms [, 1],
+                         "deposit" = terms [, 2],
+                         "meta" = grepl ("\\(m\\)$", terms [, 2]))
+    terms [, 2] <- gsub ("\\(m\\)$", "", terms [, 2])
+
+    return (terms)
+}

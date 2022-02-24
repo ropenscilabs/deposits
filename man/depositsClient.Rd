@@ -34,6 +34,8 @@ d$list_deposits ()
 \item{\code{result}}{holds result from http request}
 
 \item{\code{metadata}}{holds metadata}
+
+\item{\code{term_map}}{Map between DCMI and deposit terms}
 }
 \if{html}{\out{</div>}}
 }
