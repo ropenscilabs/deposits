@@ -25,6 +25,8 @@ d$list_deposits ()
 \describe{
 \item{\code{name}}{(character) of deposits server}
 
+\item{\code{sandbox}}{Connect client with sandbox if \code{TRUE} (zenodo only)}
+
 \item{\code{url}}{(character) list of fragments}
 
 \item{\code{headers}}{list of named headers}
@@ -55,7 +57,7 @@ d$list_deposits ()
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, metadata = NULL, headers = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -66,6 +68,9 @@ Create a new \code{depositsClient} object
 
 \item{\code{metadata}}{An \pkg{atom4R} \code{DCEntry} object containing metadata,
 either constructed directly via \pkg{atom4R} routines, or via}
+
+\item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
+actual API endpoint (for "zenodo" only).}
 
 \item{\code{headers}}{Any acceptable headers. See examples}
 }

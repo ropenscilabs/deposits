@@ -15,6 +15,7 @@
 #' @export
 get_deposits_token <- function (service = NULL) {
 
+    service <- gsub ("\\-", ".*", service)
     e <- Sys.getenv ()
     e <- e [grep (service, names (e), ignore.case = TRUE)]
     if (length (e) != 1L) {

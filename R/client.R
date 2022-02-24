@@ -26,6 +26,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
         #' @field name (character) of deposits server
         name = NULL,
+        #' @field sandbox Connect client with sandbox if `TRUE` (zenodo only)
+        sandbox = FALSE,
         #' @field url (character) list of fragments
         url = NULL,
         #' @field headers list of named headers
@@ -44,17 +46,23 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' \link{deposits_services}).
         #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
         #' either constructed directly via \pkg{atom4R} routines, or via
+        #' @param sandbox If `TRUE`, connect client to sandbox, rather than
+        #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples
         #' @return A new `depositsClient` object
-        initialize = function (name, metadata = NULL, headers = NULL) {
+        initialize = function (name, metadata = NULL, sandbox = FALSE, headers = NULL) {
 
-            if (missing (name))
-                stop ("'name' may not be missing.", call. = FALSE)
+            name <- match.arg (tolower (name), c ("zenodo", "figshare"))
+            if (sandbox & name == "zenodo") {
+                name <- "zenodo-sandbox"
+            }
+
             s <- deposits_services ()
-            if (!name %in% s$name)
+            if (!name %in% s$name) {
                 stop ("'name' must be one of [",
                       paste0 (s$name, collapse = ", "), "]",
                       call. = FALSE)
+            }
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
 
@@ -70,6 +78,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
 
+            if (self$name == "zenodo-sandbox") {
+                self$name <- "zenodo"
+            }
             self$term_map <- get_dcmi_term_map (self$name)
 
             if (!is.null (metadata)) {
