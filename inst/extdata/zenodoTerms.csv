@@ -19,7 +19,7 @@ title, string, yes, TRUE,
 creators, array, yes, TRUE, name|affiliation|orcid|gnd
 description, string|HTML, yes, TRUE,
 access_right, string, yes, TRUE, open|embargoed|restricted|closed
-license, string, access_right == 'open' | access_right == 'embargoed', TRUE, 
+license, string, access_right == 'open' | access_right == 'embargoed', TRUE, zenodo_licenses.csv
 embargo_date, string, access_right == 'embargoed', TRUE,
 access_conditions, string, access_right == 'restricted', TRUE, 
 doi, string, no, TRUE,

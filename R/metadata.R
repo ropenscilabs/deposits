@@ -258,6 +258,9 @@ validate_zenodo_terms <- function (terms) {
                                          zen_meta_terms$vocabulary [i]),
                               package = "deposits")
             voc <- utils::read.csv (f)
+            if (zen_meta_terms$term [i] == "license") {
+                voc <- c ("cc-zero", "cc-by", voc$id)
+            }
             term_i <- meta [[zen_meta_terms$term [i]]]
             if (zen_meta_terms$format [i] == "array") {
                 if (!is.list (term_i)) {
@@ -266,6 +269,13 @@ validate_zenodo_terms <- function (terms) {
                                       zen_meta_terms$term [i],
                                       "] must be an array"))
                 }
+            } else if (!term_i %in% voc) {
+                out <- c (out,
+                          paste0 ("Metadata [",
+                                  zen_meta_terms$term [i],
+                                  " = '",
+                                  term_i,
+                                  "'] not in required vocabulary."))
             }
         } else if (zen_meta_terms$format [i] == "array") {
             values <- strsplit (zen_meta_terms$vocabulary [i], "\\|") [[1]]
