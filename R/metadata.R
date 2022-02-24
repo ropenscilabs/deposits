@@ -164,7 +164,9 @@ construct_data_list <- function (metadata, term_map) {
                               j$value))
     names (values) <- term_map$deposit
     values <- values [which (vapply (values, length, integer (1)) > 0L)]
-    values <- lapply (values, function (i) paste0 (i, collapse = ","))
+    arrays <- c ("keywords", "contributors")
+    index <- which (!names (values) %in% arrays)
+    values [index] <- lapply (values [index], function (i) paste0 (i, collapse = ","))
 
     is_zenodo <- any (term_map$meta)
     if (is_zenodo) {
