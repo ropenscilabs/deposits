@@ -147,3 +147,49 @@ get_dcmi_term_map = function (deposit = "zenodo") {
 
     return (terms)
 }
+
+#' Convert metadata of atom4R::DCEntry object into a list of terms
+#'
+#' @param metadata The 'metadata' object of a 'deposits' client.
+#' @param term_map The 'term_map' object of a 'deposits' client.
+#' @noRd
+construct_data_list <- function (metadata, term_map) {
+
+    values <- lapply (term_map$dcmi, function (i)
+                      lapply (metadata [[i]], function (j)
+                              j$value))
+    names (values) <- term_map$deposit
+    values <- values [which (vapply (values, length, integer (1)) > 0L)]
+    values <- lapply (values, function (i) paste0 (i, collapse = ","))
+
+    is_zenodo <- any (term_map$meta)
+    if (is_zenodo) {
+
+        index <- which (names (values) %in%
+                        term_map$deposit [which (term_map$meta)])
+        meta_values <- values [index]
+        values <- values [-index]
+
+        req <- list ("upload_type" = "other",
+                      "title" = "Title",
+                      "creators" = "A. Person",
+                      "description" = "Description")
+
+        index <- which (!names (req) %in% names (meta_values))
+        meta_values <- c (meta_values, req [index])
+
+        if (!is.list (meta_values$creators)) {
+            meta_values$creators <- list (list (name = meta_values$creators))
+        } else if (names (meta_values$creators) == "name") {
+            meta_values$creators <- list (meta_values$creators)
+        }
+
+        values$metadata <- meta_values
+
+        if (!"created" %in% names (values)) {
+            values <- c ("created" = paste0 (Sys.Date ()), values)
+        }
+    }
+
+    return (values)
+}
