@@ -66,13 +66,6 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
 
-            # This accesses only the token endpoint of figshare for
-            # authorisation purposes only.
-            # TODO: Extend to all other endpoints.
-            if (name == "figshare") {
-                self$url <- paste0 (self$url, "token")
-            }
-
             if (is.null (headers)) {
                 token <- get_deposits_token (service = self$name)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
@@ -109,11 +102,13 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return `TRUE` if successful response, `FALSE` otherwise
         ping = function(...) {
 
-            if (self$name != "figshare") {
-                res <- deposits_HEAD (self$url, self$headers, ...)
-            } else {
-                res <- deposits_HEAD (self$url, unlist (self$headers), ...)
-            }
+            url <- ifelse (self$name == "figshare",
+                           paste0 (self$url, "token"),
+                           self$url)
+
+            con <- crul::HttpClient$new (url, headers = self$headers)
+            res <- con$head ()
+            res$raise_for_status ()
             res$success ()
         },
 
@@ -181,11 +176,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return A \pkg{crul} response object. Results can be extracted with
         #' `jsonlite::fromJSON(result$parse(format="UTF-8"))`
         new_deposit = function () {
+
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
             terms <- construct_data_list (self$metadata, self$term_map)
-            check <- validate_zenodo_terms (terms)
+            check <- validate_terms (terms, deposit = self$name)
             if (length (check) > 0L) {
                 warning ("The following metadata terms do not conform:\n",
                          paste0 (check, collapse = "\n"))
@@ -203,6 +199,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                               pretty = FALSE,
                                               auto_unbox = TRUE))
             res <- con$post (body = body)
+            return (res)
         }
 
     ) # end public list
