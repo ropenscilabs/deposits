@@ -1,45 +1,57 @@
-term, format, required, vocabulary
-upload_type, string, yes, publication|poster|presentation|dataset|image|video|software|lesson|physicalobject|other
-publication_type, string, upload_type == 'publication', annotationcollection|book|section|conferencepaper|datamanagementplan|article|patent|preprint|deliverable|milestone|proposal|report|softwaredocumentation|taxonomictreatment|technicalnote|thesis|workingpaper|other
-image_type, string, upload_type == 'image', figure|plot|drawing|diagram|photo|other
-publication_date, string, yes,
-title, string, yes,
-creators, array, yes, name|affiliation|orcid|gnd
-description, string|HTML, yes,
-access_right, string, yes, open|embargoed|restricted|closed
-license, string, access_right == 'open' | access_right == 'embargoed', 
-embargo_date, string, access_right == 'embargoed',
-access_conditions, string, access_right == 'restricted', 
-doi, string, no,
-prereserve_doi, object/bool, no,
-keywords, array, no,
-notes, string, no,
-related_identifiers, array, no, zenodoTerms_related_identifiers.csv
-contributors, array, no, 
-references, array, no,
-communities, array, no, identifier
-grants, array, no, id
-journal_title, string, no,
-journal_volume, string, no,
-journal_issue, string, no,
-journal_pages, string, no,
-conference_title, string, no,
-conference_acronym, string, no,
-conference_dates, string, no,
-conference_place, string, no,
-conference_url, string, no,
-conference_session, string, no,
-conference_session_part, string, no,
-imprint_publisher, string, no,
-imprint_isbn, string, no,
-imprint_place, string, no,
-partof_title, string, no,
-partof_pages, string, no,
-thesis_supervisors, string, no,
-thesis_university, string, no,
-subjects, array, no, term|identifier|scheme
-version, string, no,
-language, string, no,
-locations, array, no, lat|lon|place|description
-dates, array, no, zenodoTerms_dates.csv
-method, string|HTML, no,
+term, format, required, metadata, vocabulary
+created, timestamp, no, FALSE,
+doi, string, no, FALSE,
+doi_url, string, no, FALSE,
+files, array, no, FALSE,
+id, integer, no, FALSE,
+modified, timestamp, no, FALSE,
+owner, integer, no, FALSE,
+record_id, integer, no, FALSE,
+record_url, url, no, FALSE,
+state, string, no, FALSE, inprogress|done|error
+submitted, bool, no, FALSE,
+title, string, no, FALSE,
+upload_type, string, yes, TRUE, publication|poster|presentation|dataset|image|video|software|lesson|physicalobject|other
+publication_type, string, upload_type == 'publication', TRUE, annotationcollection|book|section|conferencepaper|datamanagementplan|article|patent|preprint|deliverable|milestone|proposal|report|softwaredocumentation|taxonomictreatment|technicalnote|thesis|workingpaper|other
+image_type, string, upload_type == 'image', TRUE, figure|plot|drawing|diagram|photo|other
+publication_date, string, yes, TRUE,
+title, string, yes, TRUE,
+creators, array, yes, TRUE, name|affiliation|orcid|gnd
+description, string|HTML, yes, TRUE,
+access_right, string, yes, TRUE, open|embargoed|restricted|closed
+license, string, access_right == 'open' | access_right == 'embargoed', TRUE, 
+embargo_date, string, access_right == 'embargoed', TRUE,
+access_conditions, string, access_right == 'restricted', TRUE, 
+doi, string, no, TRUE,
+prereserve_doi, object/bool, no, TRUE,
+keywords, array, no, TRUE,
+notes, string, no, TRUE,
+related_identifiers, array, no, TRUE, zenodoTerms_related_identifiers.csv
+contributors, array, no, TRUE, 
+references, array, no, TRUE,
+communities, array, no, TRUE, identifier
+grants, array, no, TRUE, id
+journal_title, string, no, TRUE,
+journal_volume, string, no, TRUE,
+journal_issue, string, no, TRUE,
+journal_pages, string, no, TRUE,
+conference_title, string, no, TRUE,
+conference_acronym, string, no, TRUE,
+conference_dates, string, no, TRUE,
+conference_place, string, no, TRUE,
+conference_url, string, no, TRUE,
+conference_session, string, no, TRUE,
+conference_session_part, string, no, TRUE,
+imprint_publisher, string, no, TRUE,
+imprint_isbn, string, no, TRUE,
+imprint_place, string, no, TRUE,
+partof_title, string, no, TRUE,
+partof_pages, string, no, TRUE,
+thesis_supervisors, string, no, TRUE,
+thesis_university, string, no, TRUE,
+subjects, array, no, TRUE, term|identifier|scheme
+version, string, no, TRUE,
+language, string, no, TRUE,
+locations, array, no, TRUE, lat|lon|place|description
+dates, array, no, TRUE, zenodoTerms_dates.csv
+method, string|HTML, no, TRUE,
