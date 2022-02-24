@@ -20,7 +20,7 @@ deposits_services <- function () {
 
             c ("zenodo-sandbox",
                "https://developers.zenodo.org/",
-               "https://sandobx.zenodo.org/api/"),
+               "https://sandbox.zenodo.org/api/"),
 
             c ("figshare",
                "https://docs.figshare.com/",

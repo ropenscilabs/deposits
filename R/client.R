@@ -123,9 +123,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         list_deposits = function(...) {
 
             self$url <- gsub ("token$", "", self$url)
-            url <- ifelse (self$name == "figshare",
-                           paste0 (self$url, "account/articles"),
-                           paste0 (self$url, "deposit/depositions"))
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles",
+                                   "deposit/depositions"))
 
             con <- crul::HttpClient$new (url,
                                          headers = self$headers,
@@ -152,6 +153,34 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             }
             self$metadata <- metadata
             return (self)
+        },
+
+        #' @description Create a new deposit
+        #' @return A \pkg{crul} response object. Results can be extracted with
+        #' `jsonlite::fromJSON(result$parse(format="UTF-8"))`
+        new_deposit = function () {
+            if (length (self$metadata) == 0L) {
+                stop ("No metadata present; use 'fill_metadata()' first.")
+            }
+            terms <- construct_data_list (self$metadata, self$term_map)
+            check <- validate_zenodo_terms (terms)
+            if (length (check) > 0L) {
+                warning ("The following metadata terms do not conform:\n",
+                         paste0 (check, collapse = "\n"))
+            }
+
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles",
+                                   "deposit/depositions"))
+
+            headers <- c (self$headers, "Content-Type" = "application/json")
+            con <- crul::HttpClient$new (url, headers = headers)
+
+            body <- paste0 (jsonlite::toJSON (terms,
+                                              pretty = FALSE,
+                                              auto_unbox = TRUE))
+            res <- con$post (body = body)
         }
 
     ) # end public list
