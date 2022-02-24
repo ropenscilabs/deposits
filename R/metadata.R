@@ -155,6 +155,10 @@ get_dcmi_term_map = function (deposit = "zenodo") {
 #' @noRd
 construct_data_list <- function (metadata, term_map) {
 
+    # term_map is constructed so that first DCMI translation is the preferred
+    # one, with subsequent ones offering alternative translations
+    term_map <- term_map [which (!duplicated (term_map$dcmi)), ]
+
     values <- lapply (term_map$dcmi, function (i)
                       lapply (metadata [[i]], function (j)
                               j$value))
