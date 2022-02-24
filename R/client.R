@@ -50,7 +50,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples
         #' @return A new `depositsClient` object
-        initialize = function (name, metadata = NULL, sandbox = FALSE, headers = NULL) {
+
+        initialize = function (name,
+                               metadata = NULL,
+                               sandbox = FALSE,
+                               headers = NULL) {
 
             name <- match.arg (tolower (name), c ("zenodo", "figshare"))
             if (sandbox & name == "zenodo") {
@@ -81,7 +85,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                     chk <- metadata$validate ()
                     )
                 if (!chk) {
-                    stop ("metadata is not valid - see details via metadata$validate()")
+                    stop ("metadata is not valid - ",
+                          "see details via metadata$validate()")
                 }
                 self$metadata <- metadata
             }
@@ -162,7 +167,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 chk <- metadata$validate ()
                 )
             if (!chk) {
-                stop ("metadata is not valid - see details via metadata$validate()")
+                stop ("metadata is not valid - ",
+                      "see details via metadata$validate()")
             }
             self$metadata <- metadata
             return (self)
@@ -211,7 +217,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions"))
 
             if (cli$name == "figshare") {
-                out <- upload_figshare_file (id, url, self$headers, path) # in R/upload.R
+                # in R/upload-figshare.R
+                out <- upload_figshare_file (id, url, self$headers, path)
+            } else if (cli$name == "zenodo") {
+                # in R/upload-zenodo.R
+                out <- upload_zenodo_file (id, url, self$headers, path)
             }
         }
 
