@@ -126,7 +126,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
-                                   "deposit/depositions"))
+                                   "deposit/depositions?size=1000"))
 
             con <- crul::HttpClient$new (url,
                                          headers = self$headers,
@@ -137,6 +137,28 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 stop (res$parse ())
             }
             jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+        },
+
+        #' @description Deleted a nominated deposit
+        #' @param id Integer identifer of deposit (generally from
+        #' \link{list_deposits}).
+        #' @return A \pkg{crul} response object.
+        delete_deposit = function (id = NULL) {
+
+            self$url <- gsub ("token$", "", self$url)
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles",
+                                   "deposit/depositions"),
+                           "/",
+                           id)
+            con <- crul::HttpClient$new (url, headers = self$headers)
+            res <- con$delete ()
+            if (!identical (res$status_code, 204)) {
+                warning ("Deleting failed with status [",
+                         res$status_code, "]")
+            }
+            return (res)
         },
 
         #' @description Fill deposits client with metadata

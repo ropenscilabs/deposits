@@ -48,7 +48,9 @@ d$list_deposits ()
 \item \href{#method-print}{\code{depositsClient$print()}}
 \item \href{#method-ping}{\code{depositsClient$ping()}}
 \item \href{#method-list_deposits}{\code{depositsClient$list_deposits()}}
+\item \href{#method-delete_deposit}{\code{depositsClient$delete_deposit()}}
 \item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
+\item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -140,6 +142,27 @@ A list of deposits.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-delete_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-delete_deposit}{}}}
+\subsection{Method \code{delete_deposit()}}{
+Deleted a nominated deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$delete_deposit(id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{id}}{Integer identifer of deposit (generally from
+\link{list_deposits}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \pkg{crul} response object.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fill_metadata"></a>}}
 \if{latex}{\out{\hypertarget{method-fill_metadata}{}}}
 \subsection{Method \code{fill_metadata()}}{
@@ -159,6 +182,20 @@ either constructed directly via \pkg{atom4R} routines, or via
 }
 \subsection{Returns}{
 Modified form of the deposits client with metadata inserted.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-new_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-new_deposit}{}}}
+\subsection{Method \code{new_deposit()}}{
+Create a new deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new_deposit()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A \pkg{crul} response object. Results can be extracted with
+\code{jsonlite::fromJSON(result$parse(format="UTF-8"))}
 }
 }
 }
