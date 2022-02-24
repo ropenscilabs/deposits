@@ -205,11 +205,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Upload file to an existing deposit
-        #' @param id The 'id' number of deposit which file it to be uploaded to.
+        #' @param depost_id The 'id' number of deposit which file it to be uploaded to.
         #' @param path Path to local file.
         #' @return A \pkg{crul} response object containing full data of deposit.
         #' including of uploaded file.
-        upload_file = function (id, path = NULL) {
+        upload_file = function (depost_id, path = NULL) {
 
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
@@ -218,10 +218,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             if (cli$name == "figshare") {
                 # in R/upload-figshare.R
-                out <- upload_figshare_file (id, url, self$headers, path)
+                out <- upload_figshare_file (depost_id, url, self$headers, path)
             } else if (cli$name == "zenodo") {
                 # in R/upload-zenodo.R
-                out <- upload_zenodo_file (id, url, self$headers, path)
+                out <- upload_zenodo_file (depost_id, url, self$headers, path)
             }
         }
 

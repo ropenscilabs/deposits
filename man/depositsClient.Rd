@@ -205,13 +205,13 @@ A \pkg{crul} response object. Results can be extracted with
 \subsection{Method \code{upload_file()}}{
 Upload file to an existing deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$upload_file(id, path = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$upload_file(depost_id, path = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{The 'id' number of deposit which file it to be uploaded to.}
+\item{\code{depost_id}}{The 'id' number of deposit which file it to be uploaded to.}
 
 \item{\code{path}}{Path to local file.}
 }
