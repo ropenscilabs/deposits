@@ -199,6 +199,27 @@ construct_data_list <- function (metadata, term_map) {
             values <- c ("created" = paste0 (Sys.Date ()), values)
         }
 
+    } else {
+        if (!is.list (values$authors)) {
+            values$authors <- list (list (name = values$authors))
+        }
+        if (!is.integer (values$categories)) {
+            message ("Figshare categories must be integer values; ",
+                     "the provided values will be removed.")
+            values$categories <- NULL
+        }
+        if ("timeline" %in% names (values)) {
+            # figshare timeline allows only:
+            # [firstOnline, publisherPublication, publisherAcceptance]
+            # For demonstration purposes, only use firstOneline for now
+            values$timeline <- list (firstOnline = values$timeline [1])
+        }
+        if ("license" %in% names (values) &
+            is.na (suppressWarnings (as.integer (values$license)))) {
+            warning ("Figshare licenses must be integer-valued; ",
+                     "the value will be reset to '1' = 'CC-BY'")
+            values$license <- 1L
+        }
     }
 
     return (values)

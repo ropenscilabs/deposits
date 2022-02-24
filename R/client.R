@@ -140,7 +140,6 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return A \pkg{crul} response object.
         delete_deposit = function (id = NULL) {
 
-            self$url <- gsub ("token$", "", self$url)
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
@@ -149,10 +148,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                            id)
             con <- crul::HttpClient$new (url, headers = self$headers)
             res <- con$delete ()
-            if (!identical (res$status_code, 204)) {
-                warning ("Deleting failed with status [",
-                         res$status_code, "]")
-            }
+            res$raise_for_status ()
             return (res)
         },
 

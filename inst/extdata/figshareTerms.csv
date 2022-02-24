@@ -1,0 +1,20 @@
+term, format, required, metadata, vocabulary
+title, string, yes, FALSE,
+description, string, no, FALSE,
+tags, array-string, no, FALSE,
+keywords, array-string, no, FALSE,
+references, array-string, no, FALSE,
+categories, array-integer, no, FALSE,
+categories_by_source_id, array-string, no, FALSE,
+authors, list-string, no, FALSE, id|name|first_name|last_name|email|orcid_id
+custom_fields, object, no, FALSE,
+custom_fields_list, list, no, FALSE, name|value
+defined_type, string, no, FALSE, figure|online|resource|preprint|book|conference|contribution|media|dataset|poster|journal|contribution|presentation|thesis|software
+funding, string, no, FALSE,
+funding_list, array-string, no, FALSE, id|title
+license, integer, no, FALSE,
+doi, string, no, FALSE,
+handle, string, no, FALSE,
+resource_doi, string, no, FALSE,
+resource_title, string, no, FALSE,
+timeline, TimeLineUpdate, no, FALSE, firstOnline|publisherPublication|publisherAcceptance
