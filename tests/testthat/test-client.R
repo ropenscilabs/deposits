@@ -12,11 +12,11 @@ test_that("Client", {
 
     expect_error (
         cli <- depositsClient$new (),
-        "'name' may not be missing")
+        "is missing, with no default")
 
     expect_error (
         cli <- depositsClient$new ("junk"),
-        "'name' must be one of \\[zenodo, figshare\\]")
+        "should be one of")
 
     expect_silent (
         cli <- depositsClient$new (name = service)
@@ -27,7 +27,6 @@ test_that("Client", {
 
     s <- deposits_services ()
     u <- s$api_base_url [s$name == service]
-    u <- paste0 (u, "token") # for figshare only!
     expect_identical (cli$url, u)
 })
 
