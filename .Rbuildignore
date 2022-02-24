@@ -21,3 +21,4 @@
 ^inst/WORDLIST$
 ^docs$
 ^pkgdown$
+data-raw/
