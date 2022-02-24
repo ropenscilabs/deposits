@@ -105,7 +105,7 @@ rights | |
 source | | 
 subject | keywords(m)/subjects(m) | categories (per defined list)
 title | title(m)/version(m) | 
-type | publication_type(m) | 
+type | upload_type(m) | 
 
 ## Additional Data & Metadata Elements not coverged by DCMI
 

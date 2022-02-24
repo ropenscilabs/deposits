@@ -53,4 +53,4 @@ rights , ,
 source , , 
 subject , keywords(m)|subjects(m) , categories
 title , title(m)|version(m) , 
-type , publication_type(m) , 
+type , upload_type(m) , 
