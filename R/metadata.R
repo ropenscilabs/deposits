@@ -225,7 +225,6 @@ validate_zenodo_terms <- function (terms) {
         zen_terms [, i] <- gsub ("^\\s+|\\s+$", "", zen_terms [, i])
     }
     zen_terms$metadata <- as.logical (zen_terms$metadata)
-    zen_terms <- zen_terms [which (nzchar (zen_terms$vocabulary)), ]
 
     zen_meta_terms <- zen_terms [which (zen_terms$metadata), ]
     zen_terms <- zen_terms [which (!zen_terms$metadata), ]
@@ -236,17 +235,27 @@ validate_zenodo_terms <- function (terms) {
 
     # check terms
     for (i in seq (nrow (zen_terms))) {
-        values <- strsplit (zen_terms$vocabulary [i], "\\|") [[i]]
-        term_i <- terms [[zen_terms$term [i]]]
-        if (!term_i %in% values) {
-            out <- c (out,
-                      paste0 ("Data [",
-                              zen_terms$term [i],
-                              " = '",
-                              term_i,
-                              "'] not in required vocabulary of [",
-                              zen_terms$vocabulary [i],
-                              "]"))
+
+        if (nzchar (zen_terms$vocabulary [i])) {
+            values <- strsplit (zen_terms$vocabulary [i], "\\|") [[1]]
+            term_i <- terms [[zen_terms$term [i]]]
+            if (!term_i %in% values) {
+                out <- c (out,
+                          paste0 ("Data [",
+                                  zen_terms$term [i],
+                                  " = '",
+                                  term_i,
+                                  "'] not in required vocabulary of [",
+                                  zen_terms$vocabulary [i],
+                                  "]"))
+            }
+        } else if (zen_terms$format [i] == "integer") {
+            if (suppressWarnings (is.na (as.integer (term_i)))) {
+                out <- c (out,
+                          paste0 ("Data [",
+                                  zen_terms$term [i],
+                                  "] must be an integer."))
+            }
         }
     }
 
@@ -277,10 +286,22 @@ validate_zenodo_terms <- function (terms) {
                                   term_i,
                                   "'] not in required vocabulary."))
             }
-        } else if (zen_meta_terms$format [i] == "array") {
+        } else if (nzchar (zen_meta_terms$vocabulary [i])) {
             values <- strsplit (zen_meta_terms$vocabulary [i], "\\|") [[1]]
-            term_i <- unique (unlist (lapply (meta$creators, names)))
-            if (!all (term_i %in% values)) {
+            term_i <- meta [[zen_meta_terms$term [i]]]
+            if (zen_meta_terms$format [i] == "array") {
+
+                term_names <- unique (unlist (lapply (term_i, names)))
+                if (!all (term_names %in% values)) {
+                    out <- c (out,
+                              paste0 ("Metadata [",
+                                      zen_meta_terms$term [i],
+                                      "] must be an array/list ",
+                                      "with names in [",
+                                      paste0 (values, collapse = ", "),
+                                      "]"))
+                }
+            } else if (!term_i %in% values) {
                 out <- c (out,
                           paste0 ("Metadata [",
                                   zen_meta_terms$term [i],
@@ -290,18 +311,13 @@ validate_zenodo_terms <- function (terms) {
                                   zen_meta_terms$vocabulary [i],
                                   "]"))
             }
-        } else {
-            values <- strsplit (zen_meta_terms$vocabulary [i], "\\|") [[1]]
+        } else if (zen_meta_terms$format [i] == "array") {
             term_i <- meta [[zen_meta_terms$term [i]]]
-            if (!term_i %in% values) {
+            if (!is.list (term_i)) {
                 out <- c (out,
                           paste0 ("Metadata [",
                                   zen_meta_terms$term [i],
-                                  " = '",
-                                  term_i,
-                                  "'] not in required vocabulary of [",
-                                  zen_meta_terms$vocabulary [i],
-                                  "]"))
+                                  "] must be an array/list object"))
             }
         }
     }
