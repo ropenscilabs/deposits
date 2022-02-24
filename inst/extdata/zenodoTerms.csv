@@ -1,0 +1,45 @@
+term, format, required, vocabulary
+upload_type, string, yes, publication|poster|presentation|dataset|image|video|software|lesson|physicalobject|other
+publication_type, string, upload_type == 'publication', annotationcollection|book|section|conferencepaper|datamanagementplan|article|patent|preprint|deliverable|milestone|proposal|report|softwaredocumentation|taxonomictreatment|technicalnote|thesis|workingpaper|other
+image_type, string, upload_type == 'image', figure|plot|drawing|diagram|photo|other
+publication_date, string, yes,
+title, string, yes,
+creators, array, yes, name|affiliation|orcid|gnd
+description, string|HTML, yes,
+access_right, string, yes, open|embargoed|restricted|closed
+license, string, access_right == 'open' | access_right == 'embargoed', 
+embargo_date, string, access_right == 'embargoed',
+access_conditions, string, access_right == 'restricted', 
+doi, string, no,
+prereserve_doi, object/bool, no,
+keywords, array, no,
+notes, string, no,
+related_identifiers, array, no, zenodoTerms_related_identifiers.csv
+contributors, array, no, 
+references, array, no,
+communities, array, no, identifier
+grants, array, no, id
+journal_title, string, no,
+journal_volume, string, no,
+journal_issue, string, no,
+journal_pages, string, no,
+conference_title, string, no,
+conference_acronym, string, no,
+conference_dates, string, no,
+conference_place, string, no,
+conference_url, string, no,
+conference_session, string, no,
+conference_session_part, string, no,
+imprint_publisher, string, no,
+imprint_isbn, string, no,
+imprint_place, string, no,
+partof_title, string, no,
+partof_pages, string, no,
+thesis_supervisors, string, no,
+thesis_university, string, no,
+subjects, array, no, term|identifier|scheme
+version, string, no,
+language, string, no,
+locations, array, no, lat|lon|place|description
+dates, array, no, zenodoTerms_dates.csv
+method, string|HTML, no,

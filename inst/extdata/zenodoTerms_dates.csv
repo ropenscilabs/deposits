@@ -1,0 +1,5 @@
+term, required, vocabulary
+start, yes,
+end, yes,
+type, yes, Collected|Valid|Withdrawn
+description, no,
