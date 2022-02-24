@@ -1,10 +1,12 @@
-upload_figshare_file <- function (id, url, headers, path) {
+upload_figshare_file <- function (article_id, url, headers, path) {
 
-    res <- figshare_upload_url (id, url, headers, path)
+    article_url <- sprintf ("%s/%s", url, article_id)
+
+    res <- figshare_upload_url (article_id, url, headers, path)
     x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
     upload_url <- x$upload_url
+    file_id <- x$id
     #upload_token <- x$upload_token
-    file_url <- x$file_url # check and fix!
 
     flist <- figshare_upload_parts (upload_url, headers, path)
     nparts <- length (flist)
@@ -18,13 +20,14 @@ upload_figshare_file <- function (id, url, headers, path) {
     }
 
     # complete upload
+    file_url <- sprintf ("%s/files/%s", article_url, file_id)
     con <- crul::HttpClient$new (file_url, headers = headers)
     res <- con$post ()
     res$raise_for_status ()
     chk <- file.remove (flist) # nolint
 
     # and check article data:
-    con <- crul::HttpClient$new (url, headers = headers)
+    con <- crul::HttpClient$new (article_url, headers = headers)
     res <- con$get ()
     res$raise_for_status ()
 
