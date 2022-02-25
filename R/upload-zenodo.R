@@ -8,7 +8,7 @@
 #' @noRd
 upload_zenodo_file <- function (deposit_id, url, headers, path) {
 
-    bucket_link <- get_zenodo_bucket_link (depost_id, url, headers)
+    bucket_link <- get_zenodo_bucket_link (deposit_id, url, headers)
 
     filename <- basename (path)
     file_url <- paste0 (bucket_link, "/", filename)
@@ -21,7 +21,7 @@ upload_zenodo_file <- function (deposit_id, url, headers, path) {
     return (res)
 }
 
-get_zenodo_bucket_link <- function (depost_id, url, headers) {
+get_zenodo_bucket_link <- function (deposit_id, url, headers) {
 
     url <- sprintf ("%s/%s", url, deposit_id)
 
