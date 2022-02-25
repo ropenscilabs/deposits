@@ -1,4 +1,4 @@
-VIGNETTE=entities
+VIGNETTE=deposits
 README=README
 
 .PHONY: all build check doc test

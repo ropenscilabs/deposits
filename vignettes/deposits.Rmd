@@ -1,0 +1,167 @@
+---
+title: "The deposits package"
+author: 
+  - "Mark Padgham"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{The deposits package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set (
+    collapse = TRUE,
+    warning = TRUE,
+    message = TRUE,
+    width = 120,
+    comment = "#>",
+    fig.retina = 2,
+    fig.path = "README-"
+)
+```
+
+The `deposits` package is a universal client for depositing and accessing
+research data anywhere. Currently supported services are
+[zenodo](https://zenodo.org) and [figshare](https://figshare.com).
+These two systems have fundamentally different interfaces ("API"s, or
+Application Programming Interfaces), and access to these and
+indeed all deposition services has traditionally been enabled through
+individual software clients. The `deposits` package aims to be a
+universal client offering access to a variety of deposition services, without
+users having to know any specific details of the APIs for each service. This
+vignette provides a demonstration of the primary functionality of the
+`deposits` package.
+
+```{r lib}
+library (deposits)
+```
+
+
+## The deposits client
+
+The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
+interface with the individual deposition services. An empty client can be
+constructed by naming the desired service, where the `sandbox` parameter
+constructs a client to the `zenodo` sandbox environment intended for testing
+their API. Actual use of the `zenodo` API can then be enabled with the default
+`sandbox = FALSE`.
+
+```{r client-new}
+cli <- depositsClient$new ("zenodo", sandbox = TRUE)
+cli
+```
+
+Client construction requires local environment variables to be stored with
+personal access keys, as described in the [main `README`
+document](https://docs.ropensci.org/deposits/#api-keys). Clients can be tested
+with the `ping()` function, to confirm authorization, and the `list_deposits()`
+function can be used to list all of your personal deposits.
+
+```{r ping-list, eval = FALSE}
+cli$ping ()
+#> [1] TRUE
+deps <- cli$list_deposits ()
+class (deps)
+#> [1] "data.frame"
+names (deps)
+#>  [1] "conceptrecid" "created"      "id"           "links"        "metadata"
+#'  [6] "modified"     "owner"        "record_id"    "state"        "submitted"
+#' [11] "title"        "doi"          "doi_url"
+```
+
+The result of `list_deposits()` differ for the two services, but both return
+`data.frame` objects. Importantly, these `data.frame`s all have a column named
+`id` which holds unique, integer-valued identifiers for the deposits. These
+identifiers are required for several of `deposit` functions, in which they are
+passed as a `deposit_id` parameter.
+
+## Metadata
+
+The primary function of `deposits` is `new_deposit()`, which creates a new
+deposit using metadata passed to the `deposits` client. The specification and
+construction of metadata is described in detail in a second vignette, with this
+vignette providing a brief overview. `deposits` metadata is represented as a
+[`DCEntry` object from the `atom4R`
+package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore).
+The "DC" stands for the ["Dublin Core Metadata Initiative"
+(DCMI)](https://www.dublincore.org/) which provides arguably the most
+widely-used [set of metadata terms and
+entities](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
+The `DCEntry` objects are also `R6` objects, constructed by default with no
+metadata:
+
+```{r}
+library (atom4R)
+meta <- DCEntry$new ()
+meta
+```
+
+The metadata in a `deposits` object can be defined either on construction of a
+new object, or using the `fill_metadata()` function:
+
+```{r deposit-metadata-fill}
+cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
+cli
+# or:
+cli <- depositsClient$new ("zenodo", sandbox = TRUE)
+cli$fill_metadata (meta)
+```
+
+### Filling metadata
+
+The documentation for [the `atom4R`
+package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore)
+describes in detail how to fill metadata in a `DCEntry()` object. An example
+is:
+
+```{r dc-meta-fill}
+meta$addDCTitle ("My new deposit")
+cli
+```
+
+Note that as `R6` objects, both the `meta` and `cli` objects are pointers,
+which enables the update to the `meta` object in the first of the lines above
+to be immediately reflected in an updated `deposits` object. To make metadata
+completion easier, the `deposits` package enables metadata to be entered in a
+simple text file using the following workflow:
+
+1. Run [the `deposits_metadata_template()`
+   function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
+   specifying a local file which will be written with an empty metadata
+   template in a simple JSON format;
+2. Edit the template and complete any desired metadata; and
+3. Run [the `deposits_meta_to_dcmi()`
+   function](https://docs.ropensci.org/deposits/reference/deposits_meta_to_dcmi.html)
+   to use the file to automatically populate a `DCEntry` object.
+
+The following code demonstrates how to create and modify a metadata template,
+including a line to define the single "title" metadata entry.
+
+```{r meta-demo}
+f <- tempfile (fileext = ".json")
+deposits_metadata_template (filename = f)
+template <- readLines (f)
+head (template)
+title_line <- grep ("Title", template)
+template [title_line]
+template [title_line] <- "  \"Title\": \"My new deposit\","
+writeLines (template, f)
+```
+
+Note that all quotation marks are "escaped" - that is, prefixed with
+backslashes, and that each line ends with a comma. Construction of a `deposits`
+metadata object is then as simple as the following line:
+
+```{r}
+meta <- deposits_meta_to_dcmi (f)
+```
+
+That metadata can then be used to construct a `deposits` client, in which the
+title entered in the template then appears as part of the `DCEntry` metadata
+object.
+
+```{r}
+cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
+cli
+```
