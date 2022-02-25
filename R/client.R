@@ -169,7 +169,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             con <- crul::HttpClient$new (url, headers = self$headers)
             res <- con$delete ()
             res$raise_for_status ()
-            return (res)
+            return (res$status_code == 204L)
         },
 
         #' @description Fill deposits client with metadata
