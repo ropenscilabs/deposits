@@ -22,3 +22,4 @@
 ^docs$
 ^pkgdown$
 data-raw/
+.ropensci-staff
