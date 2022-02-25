@@ -130,15 +130,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return A list of deposits.
         list_deposits = function () {
 
-            self$url <- gsub ("token$", "", self$url)
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
                                    "deposit/depositions?size=1000"))
 
-            con <- crul::HttpClient$new (url,
-                                         headers = self$headers,
-                                         opts = list (...))
+            con <- crul::HttpClient$new (url, headers = self$headers)
 
             res <- con$get ()
             if (!identical (res$status_code, 200)) {
