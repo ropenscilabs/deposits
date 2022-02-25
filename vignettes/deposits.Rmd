@@ -48,9 +48,14 @@ constructs a client to the `zenodo` sandbox environment intended for testing
 their API. Actual use of the `zenodo` API can then be enabled with the default
 `sandbox = FALSE`.
 
-```{r client-new}
+```{r client-new, eval = FALSE}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE)
 cli
+#> <deposits client>
+#>     name: zenodo
+#>  sandbox: TRUE
+#>     url : https://sandbox.zenodo.org/api/
+#> metadata: <none>
 ```
 
 Client construction requires local environment variables to be stored with
@@ -101,9 +106,15 @@ meta
 The metadata in a `deposits` object can be defined either on construction of a
 new object, or using the `fill_metadata()` function:
 
-```{r deposit-metadata-fill}
+```{r deposit-metadata-fill, eval = FALSE}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
 cli
+#> <deposits client>
+#>     name: zenodo
+#>  sandbox: TRUE
+#>     url : https://sandbox.zenodo.org/api/
+#> metadata:<DCEntry>
+#> ....|-- updated: 2022-02-23 15:48:11
 # or:
 cli <- depositsClient$new ("zenodo", sandbox = TRUE)
 cli$fill_metadata (meta)
@@ -116,9 +127,17 @@ package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore)
 describes in detail how to fill metadata in a `DCEntry()` object. An example
 is:
 
-```{r dc-meta-fill}
+```{r dc-meta-fill, eval = FALSE}
 meta$addDCTitle ("My new deposit")
 cli
+#> <deposits client>
+#>     name: zenodo
+#>  sandbox: TRUE
+#>     url : https://sandbox.zenodo.org/api/
+#> metadata:<DCEntry>
+#> ....|-- updated: 2022-02-23 15:48:11
+#> ....|-- title <DCTitle>
+#> ........|-- value: My new deposit
 ```
 
 Note that as `R6` objects, both the `meta` and `cli` objects are pointers,
@@ -162,9 +181,17 @@ That metadata can then be used to construct a `deposits` client, in which the
 title entered in the template then appears as part of the `DCEntry` metadata
 object.
 
-```{r new-client}
+```{r new-client, eval = FALSE}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
 cli
+#> <deposits client>
+#>     name: zenodo
+#>  sandbox: TRUE
+#>     url : https://sandbox.zenodo.org/api/
+#> metadata:<DCEntry>
+#> ....|-- updated: 2022-02-23 15:48:11
+#> ....|-- title <DCTitle>
+#> ........|-- value: My new deposit
 ```
 
 ## Creating and deleting new deposits
