@@ -53,6 +53,7 @@ d$list_deposits ()
 \item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
 \item \href{#method-upload_file}{\code{depositsClient$upload_file()}}
 \item \href{#method-retrieve_deposit}{\code{depositsClient$retrieve_deposit()}}
+\item \href{#method-download_file}{\code{depositsClient$download_file()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -243,6 +244,34 @@ to be retrieved.}
 }
 \subsection{Returns}{
 A \code{data.frame} containing full data of specified deposit.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-download_file"></a>}}
+\if{latex}{\out{\hypertarget{method-download_file}{}}}
+\subsection{Method \code{download_file()}}{
+Download a specified 'filename' from a deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$download_file(deposit_id, filename, path = NULL, quiet = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit for which information is
+to be retrieved.}
+
+\item{\code{filename}}{The name of the file to be download as specified in
+the deposit.}
+
+\item{\code{path}}{The local directory where file is to be downloaded.}
+
+\item{\code{quiet}}{If \code{FALSE}, display download progress.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The full path of the downloaded file.
 }
 }
 }
