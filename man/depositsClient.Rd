@@ -154,8 +154,8 @@ Deleted a nominated deposit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{Integer identifer of deposit (generally from
-\link{list_deposits}).}
+\item{\code{id}}{Integer identifer of deposit (generally obtained from
+\code{list_deposits} method).}
 }
 \if{html}{\out{</div>}}
 }
@@ -211,7 +211,8 @@ Upload file to an existing deposit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{depost_id}}{The 'id' number of deposit which file it to be uploaded to.}
+\item{\code{depost_id}}{The 'id' number of deposit which file it to be
+uploaded to. (generally obtained from \code{list_deposits} method).}
 
 \item{\code{path}}{Path to local file.}
 }

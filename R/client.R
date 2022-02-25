@@ -144,8 +144,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Deleted a nominated deposit
-        #' @param id Integer identifer of deposit (generally from
-        #' \link{list_deposits}).
+        #' @param id Integer identifer of deposit (generally obtained from
+        #' `list_deposits` method).
         #' @return A \pkg{crul} response object.
         delete_deposit = function (id = NULL) {
 
@@ -209,7 +209,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Upload file to an existing deposit
-        #' @param depost_id The 'id' number of deposit which file it to be uploaded to.
+        #' @param depost_id The 'id' number of deposit which file it to be
+        #' uploaded to. (generally obtained from `list_deposits` method).
         #' @param path Path to local file.
         #' @return A \pkg{crul} response object containing full data of deposit.
         #' including of uploaded file.
