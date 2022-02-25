@@ -228,6 +228,24 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 # in R/upload-zenodo.R
                 out <- upload_zenodo_file (depost_id, url, self$headers, path)
             }
+        },
+
+        #' @description Retrieve information on specified deposit
+        #' @param deposit_id The 'id' number of deposit for which information is
+        #' to be retrieved.
+        #' @return A `data.frame` containing full data of specified deposit.
+        retrieve_deposit = function (deposit_id) {
+
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles/",
+                                   "deposit/depositions/"),
+                           deposit_id)
+
+            con <- crul::HttpClient$new (url, headers = self$headers)
+            res <- con$get ()
+            res$raise_for_status ()
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         }
 
     ) # end public list

@@ -52,6 +52,7 @@ d$list_deposits ()
 \item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
 \item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
 \item \href{#method-upload_file}{\code{depositsClient$upload_file()}}
+\item \href{#method-retrieve_deposit}{\code{depositsClient$retrieve_deposit()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -221,6 +222,27 @@ uploaded to. (generally obtained from \code{list_deposits} method).}
 \subsection{Returns}{
 A \pkg{crul} response object containing full data of deposit.
 including of uploaded file.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-retrieve_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-retrieve_deposit}{}}}
+\subsection{Method \code{retrieve_deposit()}}{
+Retrieve information on specified deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$retrieve_deposit(deposit_id)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit for which information is
+to be retrieved.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{data.frame} containing full data of specified deposit.
 }
 }
 }
