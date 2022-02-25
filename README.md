@@ -130,7 +130,9 @@ here with default values for all parameters:
 8.  `download_file(deposit_id, filename)` to download nominated
     `filename` from specified deposit.
 
-See vignettes for further details.
+The introductory vignette demonstrates all of these functions, while the
+“Metadata” vignette describes processes to specify deposit metadata with
+a `deposits` client.
 
 ## Code of Conduct
 
