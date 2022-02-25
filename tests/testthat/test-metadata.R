@@ -25,7 +25,8 @@ test_that("metadata to DCEntry", {
     m <- readLines (filename)
     m [grep ("Title", m)] <- "  \"Title\": \"New Title\","
     m [grep ("Type", m)] <- "  \"Type\": \"Software\","
-    m [grep ("Description", m)] <- "  \"Description\": \"Description of software\","
+    m [grep ("Description", m)] <-
+        "  \"Description\": \"Description of software\","
     m [grep ("TableOfContents", m)] <-
         "  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"},"
 

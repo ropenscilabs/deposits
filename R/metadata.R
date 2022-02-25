@@ -130,7 +130,7 @@ load_meta_terms <- function () {
 
 #' Constrct map between DCMI terms and those of nominated deposits service.
 #' @noRd
-get_dcmi_term_map = function (deposit = "zenodo") {
+get_dcmi_term_map <- function (deposit = "zenodo") {
 
     terms <- load_meta_terms ()
     this_col <- grep (deposit, names (terms), ignore.case = TRUE)
@@ -168,7 +168,8 @@ construct_data_list <- function (metadata, term_map) {
     values <- values [which (vapply (values, length, integer (1)) > 0L)]
     arrays <- c ("keywords", "contributors")
     index <- which (!names (values) %in% arrays)
-    values [index] <- lapply (values [index], function (i) paste0 (i, collapse = ","))
+    values [index] <- lapply (values [index], function (i)
+                              paste0 (i, collapse = ","))
 
     is_zenodo <- any (term_map$meta)
     if (is_zenodo) {

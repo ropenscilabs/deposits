@@ -102,6 +102,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @description print method for the `depositsClient` class
         #' @param x self
         #' @param ... ignored
+
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
@@ -114,6 +115,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
         #' @description ping a deposits server to check authentication
         #' @return `TRUE` if successful response, `FALSE` otherwise
+
         ping = function() {
 
             url <- ifelse (self$name == "figshare",
@@ -128,6 +130,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
         #' @description List own deposits for given service
         #' @return A list of deposits.
+
         list_deposits = function () {
 
             url <- paste0 (self$url,
@@ -138,9 +141,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             con <- crul::HttpClient$new (url, headers = self$headers)
 
             res <- con$get ()
-            if (!identical (res$status_code, 200)) {
-                stop (res$parse ())
-            }
+            res$raise_for_status ()
             jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         },
 
@@ -148,6 +149,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param id Integer identifer of deposit (generally obtained from
         #' `list_deposits` method).
         #' @return A \pkg{crul} response object.
+
         delete_deposit = function (id = NULL) {
 
             checkmate::assert_int (id)
@@ -169,6 +171,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' either constructed directly via \pkg{atom4R} routines, or via
         #' \link{deposits_meta_to_dcmi}.
         #' @return Modified form of the deposits client with metadata inserted.
+
         fill_metadata = function(metadata) {
 
             checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
@@ -187,6 +190,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @description Create a new deposit
         #' @return A \pkg{crul} response object. Results can be extracted with
         #' `jsonlite::fromJSON(result$parse(format="UTF-8"))`
+
         new_deposit = function () {
 
             if (length (self$metadata) == 0L) {
@@ -211,6 +215,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                               pretty = FALSE,
                                               auto_unbox = TRUE))
             res <- con$post (body = body)
+            res$raise_for_status ()
             return (res)
         },
 
@@ -220,6 +225,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param path Path to local file.
         #' @return A \pkg{crul} response object containing full data of deposit.
         #' including of uploaded file.
+
         upload_file = function (deposit_id, path = NULL) {
 
             checkmate::assert_int (deposit_id)
@@ -235,17 +241,25 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             if (cli$name == "figshare") {
                 # in R/upload-figshare.R
-                out <- upload_figshare_file (deposit_id, url, self$headers, path)
+                out <- upload_figshare_file (deposit_id,
+                                             url,
+                                             self$headers,
+                                             path)
             } else if (cli$name == "zenodo") {
                 # in R/upload-zenodo.R
-                out <- upload_zenodo_file (deposit_id, url, self$headers, path)
+                out <- upload_zenodo_file (deposit_id,
+                                           url,
+                                           self$headers,
+                                           path)
             }
+            return (out)
         },
 
         #' @description Retrieve information on specified deposit
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
         #' @return A `data.frame` containing full data of specified deposit.
+
         retrieve_deposit = function (deposit_id) {
 
             checkmate::assert_int (deposit_id)
@@ -270,7 +284,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param path The local directory where file is to be downloaded.
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
-        download_file = function (deposit_id, filename, path = NULL, quiet = FALSE) {
+
+        download_file = function (deposit_id,
+                                  filename,
+                                  path = NULL,
+                                  quiet = FALSE) {
 
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (filename, len = 1L)
@@ -303,7 +321,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 download_url <- x$files$download_url [x$files$name == filename]
                 download_url <- sprintf ("%s/%s", download_url, filename)
             } else if (self$name == "zenodo") {
-                download_url <- x$files$links$download [x$files$filename == filename]
+                download_url <-
+                    x$files$links$download [x$files$filename == filename]
             } else {
                 stop ("There is not deposits service named [", self$name, "]")
             }
@@ -314,14 +333,18 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             destfile <- file.path (path, filename)
 
             h <- curl::new_handle (verbose = FALSE)
-            curl::handle_setheaders(h,
-                                    "Content-Type" = "application/binary",
-                                    "Authorization" = self$headers$Authorization)
-            chk <- curl::curl_download (url = download_url,
-                                        destfile = destfile,
-                                        quiet = quiet,
-                                        handle = h,
-                                        mode = "wb")
+            curl::handle_setheaders(
+                h,
+                "Content-Type" = "application/binary",
+                "Authorization" = self$headers$Authorization
+            )
+            chk <- curl::curl_download (
+                url = download_url,
+                destfile = destfile,
+                quiet = quiet,
+                handle = h,
+                mode = "wb"
+            )
 
             return (chk)
         }
