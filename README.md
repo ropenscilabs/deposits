@@ -99,9 +99,10 @@ cli
 ```
 
     ## <deposits client>
-    ##    name: zenodo
-    ## sandbox: FALSE
-    ##    url : https://zenodo.org/api/
+    ##     name: zenodo
+    ##  sandbox: FALSE
+    ##     url : https://zenodo.org/api/
+    ## metadata: <none>
 
 ``` r
 cli <- depositsClient$new ("zenodo", sandbox = TRUE)
@@ -109,9 +110,10 @@ cli
 ```
 
     ## <deposits client>
-    ##    name: zenodo
-    ## sandbox: TRUE
-    ##    url : https://sandbox.zenodo.org/api/
+    ##     name: zenodo
+    ##  sandbox: TRUE
+    ##     url : https://sandbox.zenodo.org/api/
+    ## metadata: <none>
 
 A `deposits` client offers the following additional functions, listed
 here with default values for all parameters:
