@@ -207,8 +207,8 @@ uploaded to. (generally obtained from \code{list_deposits} method).}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \pkg{crul} response object containing full data of deposit.
-including of uploaded file.
+A \code{data.frame} with details on newly uploaded file, including
+upload and download URLs, and file details.
 }
 }
 \if{html}{\out{<hr>}}

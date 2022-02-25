@@ -228,8 +228,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param deposit_id The 'id' number of deposit which file it to be
         #' uploaded to. (generally obtained from `list_deposits` method).
         #' @param path Path to local file.
-        #' @return A \pkg{crul} response object containing full data of deposit.
-        #' including of uploaded file.
+        #' @return A `data.frame` with details on newly uploaded file, including
+        #' upload and download URLs, and file details.
 
         upload_file = function (deposit_id, path = NULL) {
 
@@ -246,18 +246,19 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             if (cli$name == "figshare") {
                 # in R/upload-figshare.R
-                out <- upload_figshare_file (deposit_id,
+                res <- upload_figshare_file (deposit_id,
                                              url,
                                              self$headers,
                                              path)
             } else if (cli$name == "zenodo") {
                 # in R/upload-zenodo.R
-                out <- upload_zenodo_file (deposit_id,
+                res <- upload_zenodo_file (deposit_id,
                                            url,
                                            self$headers,
                                            path)
             }
-            return (out)
+
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         },
 
         #' @description Retrieve information on specified deposit
