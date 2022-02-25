@@ -17,7 +17,7 @@ test_that("services", {
 test_that ("tokens", {
 
     expect_error (get_deposits_token (),
-                  "invalid 'pattern' argument")
+                  "Assertion on 'service' failed")
     expect_error (get_deposits_token ("aaaaa"),
                   "No token found for \\[aaaaa\\]")
 
