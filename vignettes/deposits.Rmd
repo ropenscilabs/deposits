@@ -35,6 +35,7 @@ vignette provides a demonstration of the primary functionality of the
 
 ```{r lib}
 library (deposits)
+library (atom4R) # for metadata objects
 ```
 
 
@@ -91,7 +92,7 @@ entities](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
 The `DCEntry` objects are also `R6` objects, constructed by default with no
 metadata:
 
-```{r}
+```{r dcentry-demo}
 library (atom4R)
 meta <- DCEntry$new ()
 meta
@@ -153,7 +154,7 @@ Note that all quotation marks are "escaped" - that is, prefixed with
 backslashes, and that each line ends with a comma. Construction of a `deposits`
 metadata object is then as simple as the following line:
 
-```{r}
+```{r meta-to-dc}
 meta <- deposits_meta_to_dcmi (f)
 ```
 
@@ -161,7 +162,114 @@ That metadata can then be used to construct a `deposits` client, in which the
 title entered in the template then appears as part of the `DCEntry` metadata
 object.
 
-```{r}
+```{r new-client}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
 cli
+```
+
+## Creating and deleting new deposits
+
+The following single line demonstrates how to create a new deposit:
+
+```{r new_deposit, eval = FALSE}
+res <- cli$new_deposit ()
+class (res)
+#> [1] "list"
+names (res)
+#>  [1] "conceptrecid" "created"      "doi"          "doi_url"      "files"
+#>  [6] "id"           "links"        "metadata"     "modified"     "owner"
+#> [11] "record_id"    "state"        "submitted"    "title"
+res$title
+#> [1] "My new deposit"
+res$id
+#> [1] 1021945
+```
+
+The list of deposits should then include the newly constructed one:
+
+```{r chedk-dep-id, eval = FALSE}
+deps <- cli$list_deposits ()
+res$id %in% deps$id
+#> [1] TRUE
+```
+
+Deposits can be deleted by passing `id` values to `delete_deposit()`:
+
+```{r, eval = FALSE}
+cli$delete_deposit (res$id)
+#> [1] TRUE
+```
+
+## Uploading files to deposits
+
+Deposits created with the `new_deposit()` function contain metadata without any
+associated files, such as binary data files. These can be uploaded with a
+deposit using the `upload_file()` function, which accepts two parameters of
+`deposit_id`, and a `path` variable specifying a local file to be uploaded.
+The following lines create an arbitrary binary file to be uploaded.
+
+```{r bin-file, eval = FALSE}
+path <- tempfile ()
+dat <- paste0 (sample (c (LETTERS, letters, 0:9), size = 1e5, replace = TRUE),
+               collapse = "")
+con <- file (path, open = "wb")
+writeBin (dat, con)
+close (con)
+```
+
+Uploading to our deposit is then as simple as:
+
+```{r upload-demo, eval = FALSE}
+d <- cli$new_deposit ()
+res <- cli$upload_file (deposit_id = d$id, path = path)
+class (res)
+#> [1] "list"
+names (res)
+#> [1] "mimetype"      "updated"       "links"         "is_head"       "created"
+#> [6] "checksum"      "version_id"    "delete_marker" "key"           "size"
+```
+
+The `deposit_id` can then be used to get details of the deposit, and to confirm
+that our newly uploaded file has been included.
+
+```{r upload-check-fake-data, echo = FALSE}
+links <- data.frame (
+download = "https://sandbox.zenodo.org/api/files/a619f5d0-034c-4cb1-b03c-7d01984d0e76/file13934345cf839",
+self = "https://sandbox.zenodo.org/api/deposit/depositions/1022056/files/1989dff8-69bd-46cb-81c8-0b8d28b5bfef"
+)
+
+files <- data.frame (
+    checksum = "01352a8608e77c6d5a85e18238baf88f",
+    filename = "file13934345cf839",
+    filesize = 100194,
+    id = "1989dff8-69bd-46cb-81c8-0b8d28b5bfef",
+    links = links)
+
+res <- list (
+    "conceptrecid" = "",
+    "created" = "",
+    "doi" = "",
+    "doi_url" = "",
+    "files"= files,
+    "id" = "",
+    "links" = "",
+    "metadata" = "",
+    "modified" = "",
+    "owner" = "",
+    "record_id" = "",
+    "state" = "",
+    "submitted" = "",
+    "title" = "")
+```
+
+```{r upload-check, eval = FALSE}
+res <- cli$retrieve_deposit (deposit_id = d$id)
+names (res)
+#>  [1] "conceptrecid" "created"      "doi"          "doi_url"      "files"
+#>  [6] "id"           "links"        "metadata"     "modified"     "owner"
+#> [11] "record_id"    "state"        "submitted"    "title"
+```
+The "files" component has the details of the file:
+```{r upload-file-details}
+res$files
 ```
