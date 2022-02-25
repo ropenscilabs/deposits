@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.102",
+  "version": "0.0.1.103",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -124,14 +124,23 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "SystemRequirements": {}
+    "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "withr",
+      "name": "withr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=withr"
+    },
+    "SystemRequirements": null
   },
-  "fileSize": "119.811KB",
+  "fileSize": "124.672KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/ropenscilabs/deposits"
-  ],
+  "contIntegration": ["https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/ropenscilabs/deposits"],
   "developmentStatus": "https://www.repostatus.org/#concept"
 }
