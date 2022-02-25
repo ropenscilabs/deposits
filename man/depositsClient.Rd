@@ -137,13 +137,13 @@ A list of deposits.
 \subsection{Method \code{delete_deposit()}}{
 Deleted a nominated deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$delete_deposit(id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$delete_deposit(deposit_id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{id}}{Integer identifer of deposit (generally obtained from
+\item{\code{deposit_id}}{Integer identifer of deposit (generally obtained from
 \code{list_deposits} method).}
 }
 \if{html}{\out{</div>}}

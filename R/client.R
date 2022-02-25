@@ -146,20 +146,20 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Deleted a nominated deposit
-        #' @param id Integer identifer of deposit (generally obtained from
+        #' @param deposit_id Integer identifer of deposit (generally obtained from
         #' `list_deposits` method).
         #' @return A \pkg{crul} response object.
 
-        delete_deposit = function (id = NULL) {
+        delete_deposit = function (deposit_id = NULL) {
 
-            checkmate::assert_int (id)
+            checkmate::assert_int (deposit_id)
 
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
                                    "deposit/depositions"),
                            "/",
-                           id)
+                           deposit_id)
             con <- crul::HttpClient$new (url, headers = self$headers)
             res <- con$delete ()
             res$raise_for_status ()
