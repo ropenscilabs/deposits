@@ -103,8 +103,9 @@ meta <- DCEntry$new ()
 meta
 ```
 
-The metadata in a `deposits` object can be defined either on construction of a
-new object, or using the `fill_metadata()` function:
+The metadata in a `deposits` object can be defined either by passing it as a
+parameter of the new client function, or by using the `fill_metadata()`
+function:
 
 ```{r deposit-metadata-fill, eval = FALSE}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
