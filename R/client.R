@@ -246,6 +246,62 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             res <- con$get ()
             res$raise_for_status ()
             jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+        },
+
+        #' @description Download a specified 'filename' from a deposit
+        #' @param deposit_id The 'id' number of deposit for which information is
+        #' to be retrieved.
+        #' @param filename The name of the file to be download as specified in
+        #' the deposit.
+        #' @param path The local directory where file is to be downloaded.
+        #' @param quiet If `FALSE`, display download progress.
+        #' @return The full path of the downloaded file.
+        download_file = function (deposit_id, filename, path = NULL, quiet = FALSE) {
+
+            # repeat retrieve_deposit method to get download_url:
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles/",
+                                   "deposit/depositions/"),
+                           deposit_id)
+
+            con <- crul::HttpClient$new (url, headers = self$headers)
+            res <- con$get ()
+            res$raise_for_status ()
+            x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+
+            name_field <- ifelse (self$name == "figshare",
+                                  "name",
+                                  "filename")
+            if (!filename %in% x$files [[name_field]]) {
+                stop ("That deposit does not contain the specified file.")
+            }
+
+            if (self$name == "figshare") {
+                download_url <- x$files$download_url [x$files$name == filename]
+                download_url <- sprintf ("%s/%s", download_url, filename)
+            } else if (self$name == "zenodo") {
+                download_url <- x$files$links$download [x$files$filename == filename]
+            } else {
+                stop ("There is not deposits service named [", self$name, "]")
+            }
+
+            if (is.null (path)) {
+                path <- here::here ()
+            }
+            destfile <- file.path (path, filename)
+
+            h <- curl::new_handle (verbose = FALSE)
+            curl::handle_setheaders(h,
+                                    "Content-Type" = "application/binary",
+                                    "Authorization" = self$headers$Authorization)
+            chk <- curl::curl_download (url = download_url,
+                                        destfile = destfile,
+                                        quiet = quiet,
+                                        handle = h,
+                                        mode = "wb")
+
+            return (chk)
         }
 
     ) # end public list
