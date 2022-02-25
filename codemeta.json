@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.116",
+  "version": "0.0.1.117",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -85,6 +85,18 @@
     },
     "2": {
       "@type": "SoftwareApplication",
+      "identifier": "checkmate",
+      "name": "checkmate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=checkmate"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
       "identifier": "crul",
       "name": "crul",
       "provider": {
@@ -95,7 +107,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=crul"
     },
-    "3": {
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "curl",
+      "name": "curl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=curl"
+    },
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -107,12 +131,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "4": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "5": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -124,7 +148,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "6": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -136,14 +160,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "124.672KB",
+  "fileSize": "128.777KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/ropenscilabs/deposits"
-  ],
-  "developmentStatus": "https://www.repostatus.org/#concept"
+  "contIntegration": ["https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/ropenscilabs/deposits"],
+  "developmentStatus": "https://www.repostatus.org/#wip"
 }
