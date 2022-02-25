@@ -106,11 +106,17 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0("   name: ", self$name), sep = "\n")
+            cat (paste0("    name: ", self$name), sep = "\n")
             if (self$name == "zenodo") {
-                cat (paste0("sandbox: ", self$sandbox), sep = "\n")
+                cat (paste0(" sandbox: ", self$sandbox), sep = "\n")
             }
-            cat (paste0("   url : ", self$url), sep = "\n")
+            cat (paste0("    url : ", self$url), sep = "\n")
+            if (is.null (self$metadata)) {
+                cat ("metadata: <none>")
+            } else {
+                cat ("metadata:")
+                print (self$metadata)
+            }
         },
 
         #' @description ping a deposits server to check authentication
