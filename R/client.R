@@ -56,8 +56,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                sandbox = FALSE,
                                headers = NULL) {
 
+            self$sandbox <- sandbox
             name <- match.arg (tolower (name), c ("zenodo", "figshare"))
-            if (sandbox & name == "zenodo") {
+            if (sandbox && name == "zenodo") {
                 name <- "zenodo-sandbox"
             }
 
@@ -98,8 +99,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0("  name: ", self$name), sep = "\n")
-            cat (paste0("  url : ", self$url), sep = "\n")
+            cat (paste0("   name: ", self$name), sep = "\n")
+            if (self$name == "zenodo") {
+                cat (paste0("sandbox: ", self$sandbox), sep = "\n")
+            }
+            cat (paste0("   url : ", self$url), sep = "\n")
         },
 
         #' @description ping a deposits server
