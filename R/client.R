@@ -184,7 +184,6 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                       "see details via metadata$validate()")
             }
             self$metadata <- metadata
-            return (self)
         },
 
         #' @description Create a new deposit
