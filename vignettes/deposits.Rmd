@@ -43,7 +43,7 @@ library (atom4R) # for metadata objects
 
 The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
 interface with the individual deposition services. An empty client can be
-constructed by naming the desired service, where the `sandbox` parameter
+constructed by naming the desired service. An additional `sandbox` parameter
 constructs a client to the `zenodo` sandbox environment intended for testing
 their API. Actual use of the `zenodo` API can then be enabled with the default
 `sandbox = FALSE`.
@@ -76,7 +76,7 @@ names (deps)
 #' [11] "title"        "doi"          "doi_url"
 ```
 
-The result of `list_deposits()` differ for the two services, but both return
+The results of `list_deposits()` differ for the two services, but both return
 `data.frame` objects. Importantly, these `data.frame`s all have a column named
 `id` which holds unique, integer-valued identifiers for the deposits. These
 identifiers are required for several of `deposit` functions, in which they are
@@ -85,12 +85,12 @@ passed as a `deposit_id` parameter.
 ## Metadata
 
 The primary function of `deposits` is `new_deposit()`, which creates a new
-deposit using metadata passed to the `deposits` client. The specification and
+deposit using metadata held by the `deposits` client. The specification and
 construction of metadata is described in detail in a second vignette, with this
 vignette providing a brief overview. `deposits` metadata is represented as a
 [`DCEntry` object from the `atom4R`
-package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore).
-The "DC" stands for the ["Dublin Core Metadata Initiative"
+package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore). The
+"DC" stands for the ["Dublin Core Metadata Initiative"
 (DCMI)](https://www.dublincore.org/) which provides arguably the most
 widely-used [set of metadata terms and
 entities](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
@@ -143,13 +143,13 @@ cli
 Note that as `R6` objects, both the `meta` and `cli` objects are pointers,
 which enables the update to the `meta` object in the first of the lines above
 to be immediately reflected in an updated `deposits` object. To make metadata
-completion easier, the `deposits` package enables metadata to be entered in a
-simple text file using the following workflow:
+completion easier, the `deposits` package includes helper functions to work
+with metadata in a simple text file using the following workflow:
 
 1. Run [the `deposits_metadata_template()`
    function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
-   specifying a local file which will be written with an empty metadata
-   template in a simple JSON format;
+   specifying a local file to hold the empty metadata template in a simple JSON
+   format;
 2. Edit the template and complete any desired metadata; and
 3. Run [the `deposits_meta_to_dcmi()`
    function](https://docs.ropensci.org/deposits/reference/deposits_meta_to_dcmi.html)
@@ -230,10 +230,10 @@ cli$delete_deposit (res$id)
 ## Uploading files to deposits
 
 Deposits created with the `new_deposit()` function contain metadata without any
-associated files, such as binary data files. These can be uploaded with a
-deposit using the `upload_file()` function, which accepts two parameters of
-`deposit_id`, and a `path` variable specifying a local file to be uploaded.
-The following lines create an arbitrary binary file to be uploaded.
+associated files. Deposit files such as data files can be uploaded to a deposit
+using the `upload_file()` function, which accepts two parameters of
+`deposit_id`, and a `path` variable specifying a local file to be uploaded. The
+following lines create an arbitrary binary file to be uploaded.
 
 ```{r bin-file, eval = FALSE}
 path <- tempfile ()
@@ -244,7 +244,7 @@ writeBin (dat, con)
 close (con)
 ```
 
-Uploading to our deposit is then as simple as:
+Uploading to the deposit is then as simple as:
 
 ```{r upload-demo, eval = FALSE}
 d <- cli$new_deposit ()
@@ -296,7 +296,9 @@ names (res)
 #>  [6] "id"           "links"        "metadata"     "modified"     "owner"
 #> [11] "record_id"    "state"        "submitted"    "title"
 ```
+
 The "files" component has the details of the file:
+
 ```{r upload-file-details}
 res$files
 ```
