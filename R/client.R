@@ -236,7 +236,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
             if (!is.null (path)) {
                 checkmate::assert_character (path, len = 1L)
-                checkmate::assert_directory_exists (path)
+                checkmate::assert_directory_exists (dirname (path))
             }
 
             url <- paste0 (self$url,
