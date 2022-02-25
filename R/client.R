@@ -193,8 +193,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Create a new deposit
-        #' @return A \pkg{crul} response object. Results can be extracted with
-        #' `jsonlite::fromJSON(result$parse(format="UTF-8"))`
+        #' @return A `data.frame` with details of the newly created deposit.
 
         new_deposit = function () {
 
@@ -221,7 +220,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                               auto_unbox = TRUE))
             res <- con$post (body = body)
             res$raise_for_status ()
-            return (res)
+
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         },
 
         #' @description Upload file to an existing deposit

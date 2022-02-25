@@ -184,8 +184,7 @@ Create a new deposit
 }
 
 \subsection{Returns}{
-A \pkg{crul} response object. Results can be extracted with
-\code{jsonlite::fromJSON(result$parse(format="UTF-8"))}
+A \code{data.frame} with details of the newly created deposit.
 }
 }
 \if{html}{\out{<hr>}}
