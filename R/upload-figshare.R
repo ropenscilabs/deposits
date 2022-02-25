@@ -1,3 +1,11 @@
+#' Upload a file to a nominated figshare article
+#'
+#' @param article_id The generic 'deposit_id' parameter passed to the deposits
+#' client, where deposits in figshare are called "articles".
+#' @param url The generic endpoint for figshare articles.
+#' @param headers Generic header including the OAuth token.
+#' @param path Path to local file to be uploaded.
+#' @noRd
 upload_figshare_file <- function (article_id, url, headers, path) {
 
     article_url <- sprintf ("%s/%s", url, article_id)
