@@ -77,7 +77,8 @@ either constructed directly via \pkg{atom4R} routines, or via}
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
 actual API endpoint (for "zenodo" only).}
 
-\item{\code{headers}}{Any acceptable headers. See examples}
+\item{\code{headers}}{Any acceptable headers. See examples in \pkg{crul}
+package.}
 }
 \if{html}{\out{</div>}}
 }
@@ -108,18 +109,11 @@ print method for the \code{depositsClient} class
 \if{html}{\out{<a id="method-ping"></a>}}
 \if{latex}{\out{\hypertarget{method-ping}{}}}
 \subsection{Method \code{ping()}}{
-ping a deposits server
+ping a deposits server to check authentication
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$ping(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$ping()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{curl options passed on to \link[crul:verb-HEAD]{crul::verb-HEAD}}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
 \code{TRUE} if successful response, \code{FALSE} otherwise
 }
@@ -130,16 +124,9 @@ ping a deposits server
 \subsection{Method \code{list_deposits()}}{
 List own deposits for given service
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$list_deposits(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$list_deposits()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{...}}{curl options passed on to \link[crul:verb-HEAD]{crul::verb-HEAD}}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
 A list of deposits.
 }
@@ -207,13 +194,13 @@ A \pkg{crul} response object. Results can be extracted with
 \subsection{Method \code{upload_file()}}{
 Upload file to an existing deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$upload_file(depost_id, path = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$upload_file(deposit_id, path = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{depost_id}}{The 'id' number of deposit which file it to be
+\item{\code{deposit_id}}{The 'id' number of deposit which file it to be
 uploaded to. (generally obtained from \code{list_deposits} method).}
 
 \item{\code{path}}{Path to local file.}
