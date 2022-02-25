@@ -48,7 +48,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' either constructed directly via \pkg{atom4R} routines, or via
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
-        #' @param headers Any acceptable headers. See examples
+        #' @param headers Any acceptable headers. See examples in \pkg{crul}
+        #' package.
         #' @return A new `depositsClient` object
 
         initialize = function (name,
@@ -56,11 +57,16 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                sandbox = FALSE,
                                headers = NULL) {
 
-            self$sandbox <- sandbox
             name <- match.arg (tolower (name), c ("zenodo", "figshare"))
+            checkmate::assert_logical (sandbox, len = 1L)
+            if (!is.null (metadata)) {
+                checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+            }
+
             if (sandbox && name == "zenodo") {
                 name <- "zenodo-sandbox"
             }
+            self$sandbox <- sandbox
 
             s <- deposits_services ()
             if (!name %in% s$name) {
@@ -106,10 +112,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             cat (paste0("   url : ", self$url), sep = "\n")
         },
 
-        #' @description ping a deposits server
-        #' @param ... curl options passed on to [crul::verb-HEAD]
+        #' @description ping a deposits server to check authentication
         #' @return `TRUE` if successful response, `FALSE` otherwise
-        ping = function(...) {
+        ping = function() {
 
             url <- ifelse (self$name == "figshare",
                            paste0 (self$url, "token"),
@@ -122,9 +127,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description List own deposits for given service
-        #' @param ... curl options passed on to [crul::verb-HEAD]
         #' @return A list of deposits.
-        list_deposits = function(...) {
+        list_deposits = function () {
 
             self$url <- gsub ("token$", "", self$url)
             url <- paste0 (self$url,
@@ -149,6 +153,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @return A \pkg{crul} response object.
         delete_deposit = function (id = NULL) {
 
+            checkmate::assert_int (id)
+
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
@@ -167,6 +173,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' \link{deposits_meta_to_dcmi}.
         #' @return Modified form of the deposits client with metadata inserted.
         fill_metadata = function(metadata) {
+
+            checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+
             out <- capture.output (
                 chk <- metadata$validate ()
                 )
@@ -209,12 +218,18 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Upload file to an existing deposit
-        #' @param depost_id The 'id' number of deposit which file it to be
+        #' @param deposit_id The 'id' number of deposit which file it to be
         #' uploaded to. (generally obtained from `list_deposits` method).
         #' @param path Path to local file.
         #' @return A \pkg{crul} response object containing full data of deposit.
         #' including of uploaded file.
-        upload_file = function (depost_id, path = NULL) {
+        upload_file = function (deposit_id, path = NULL) {
+
+            checkmate::assert_int (deposit_id)
+            if (!is.null (path)) {
+                checkmate::assert_character (path, len = 1L)
+                checkmate::assert_directory_exists (path)
+            }
 
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
@@ -223,10 +238,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             if (cli$name == "figshare") {
                 # in R/upload-figshare.R
-                out <- upload_figshare_file (depost_id, url, self$headers, path)
+                out <- upload_figshare_file (deposit_id, url, self$headers, path)
             } else if (cli$name == "zenodo") {
                 # in R/upload-zenodo.R
-                out <- upload_zenodo_file (depost_id, url, self$headers, path)
+                out <- upload_zenodo_file (deposit_id, url, self$headers, path)
             }
         },
 
@@ -235,6 +250,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' to be retrieved.
         #' @return A `data.frame` containing full data of specified deposit.
         retrieve_deposit = function (deposit_id) {
+
+            checkmate::assert_int (deposit_id)
 
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
@@ -257,6 +274,14 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
         download_file = function (deposit_id, filename, path = NULL, quiet = FALSE) {
+
+            checkmate::assert_int (deposit_id)
+            checkmate::assert_character (filename, len = 1L)
+            if (!is.null (path)) {
+                checkmate::assert_character (path, len = 1L)
+                checkmate::assert_directory_exists (path)
+            }
+            checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
             url <- paste0 (self$url,

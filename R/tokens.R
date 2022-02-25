@@ -15,6 +15,8 @@
 #' @export
 get_deposits_token <- function (service = NULL) {
 
+    checkmate::assert_character (service, len = 1L)
+
     service <- gsub ("\\-", ".*", service)
     e <- Sys.getenv ()
     e <- e [grep (service, names (e), ignore.case = TRUE)]

@@ -23,6 +23,9 @@
 #' @export
 deposits_metadata_template <- function (filename = NULL) {
 
+    checkmate::assert_character (filename, len = 1L)
+    filepath <- dirname (normalizePath (filename, mustWork = FALSE))
+    checkmate::assert_directory_exists (filepath)
     if (file.exists (filename)) {
         stop ("filename [", filename, "] already exists; please delete before ",
               "calling this function.")
@@ -74,13 +77,12 @@ deposits_metadata_template <- function (filename = NULL) {
 #' @export
 deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
 
-    if (is.null (filename)) {
-        stop ("filename must be specified.")
-    }
+    checkmate::assert_character (filename, len = 1L)
+    checkmate::assert_directory_exists (dirname (normalizePath (filename)))
     if (!file.exists (filename)) {
         stop ("filename [", filename, "] does not exist.")
     }
-
+    checkmate::assert_character (id, len = 1L)
 
     meta <- readLines (filename)
     check <- jsonlite::validate (meta)
