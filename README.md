@@ -9,7 +9,7 @@ status](https://github.com/ropenscilabs/deposits/workflows/R-CMD-check/badge.svg
 Concept](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The `deposits` package is a universal client for depositing and
+The `deposits` R package is a universal client for depositing and
 accessing research data anywhere. Currently supported services are
 [zenodo](https://zenodo.org) and [figshare](https://figshare.com).
 
@@ -30,7 +30,7 @@ Alternatively, the package can be installed directly from GitHub with
 the following command:
 
 ``` r
-remotes::install_github ("mpadge/deposits")
+remotes::install_github ("ropenscilabs/deposits")
 ```
 
 The package can then be loaded for use with:

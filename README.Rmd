@@ -17,7 +17,7 @@ output:
 <!-- badges: end -->
 
 
-The `deposits` package is a universal client for depositing and accessing
+The `deposits` R package is a universal client for depositing and accessing
 research data anywhere. Currently supported services are
 [zenodo](https://zenodo.org) and [figshare](https://figshare.com).
 
@@ -37,7 +37,7 @@ Alternatively, the package can be installed directly from GitHub with the
 following command:
 
 ```{r remotes-install, eval = FALSE}
-remotes::install_github ("mpadge/deposits")
+remotes::install_github ("ropenscilabs/deposits")
 ```
 
 The package can then be loaded for use with:
