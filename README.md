@@ -89,9 +89,9 @@ client](https://github.com/r-lib/R6) offering a variety of methods for
 performing actions on deposits services. Details of the methods can be
 seen in the [help file for the
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html).
-All `deposits` operations start with a client constructed with the `new`
-function, for which the first parameter must be given to specify the
-service with which the client will connect:
+All `deposits` operations start with a client constructed with the
+`new()` function, with a first parameter specifying the desired deposits
+service:
 
 ``` r
 cli <- depositsClient$new ("zenodo")
@@ -115,8 +115,8 @@ cli
     ##     url : https://sandbox.zenodo.org/api/
     ## metadata: <none>
 
-A `deposits` client offers the following additional functions, listed
-here with default values for all parameters:
+A `deposits` client offers the following functions, listed here with
+names of parameters:
 
 1.  `ping()` to verify Authorization tokens;
 2.  `list_deposits()` to do just that;
