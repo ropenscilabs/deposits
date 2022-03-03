@@ -9,6 +9,10 @@ a \code{depositsClient} class (R6 class)
 \description{
 R6 class for constructing deposits queries
 }
+\note{
+Client should already contain metadata updated with the
+'fill_metadata()' function.
+}
 \examples{
 \dontrun{
 # make a client
@@ -51,6 +55,7 @@ d$list_deposits ()
 \item \href{#method-delete_deposit}{\code{depositsClient$delete_deposit()}}
 \item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
 \item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
+\item \href{#method-update_deposit}{\code{depositsClient$update_deposit()}}
 \item \href{#method-upload_file}{\code{depositsClient$upload_file()}}
 \item \href{#method-retrieve_deposit}{\code{depositsClient$retrieve_deposit()}}
 \item \href{#method-download_file}{\code{depositsClient$download_file()}}
@@ -185,6 +190,26 @@ Create a new deposit
 
 \subsection{Returns}{
 A \code{data.frame} with details of the newly created deposit.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-update_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-update_deposit}{}}}
+\subsection{Method \code{update_deposit()}}{
+Update metadata for specified deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$update_deposit(deposit_id)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit to update.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{data.frame} with details of newly updated deposit
 }
 }
 \if{html}{\out{<hr>}}

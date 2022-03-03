@@ -224,6 +224,36 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
         },
 
+        #' @description Update metadata for specified deposit
+        #' @note Client should already contain metadata updated with the
+        #' 'fill_metadata()' function.
+        #' @param deposit_id The 'id' number of deposit to update.
+        #' @return A `data.frame` with details of newly updated deposit
+
+        update_deposit = function (deposit_id) {
+
+            checkmate::assert_int (deposit_id)
+
+            url <- paste0 (self$url,
+                           ifelse (self$name == "figshare",
+                                   "account/articles/",
+                                   "deposit/depositions/"),
+                           deposit_id)
+
+            headers <- c (self$headers, "Content-Type" = "application/json")
+            con <- crul::HttpClient$new (url, headers = headers)
+
+            terms <- construct_data_list (self$metadata, self$term_map)
+            body <- paste0 (jsonlite::toJSON (terms,
+                                              pretty = FALSE,
+                                              auto_unbox = TRUE))
+
+            res <- con$put (body = body)
+            res$raise_for_status ()
+
+            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+        },
+
         #' @description Upload file to an existing deposit
         #' @param deposit_id The 'id' number of deposit which file it to be
         #' uploaded to. (generally obtained from `list_deposits` method).
