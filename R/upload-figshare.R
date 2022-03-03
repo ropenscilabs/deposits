@@ -11,6 +11,7 @@ upload_figshare_file <- function (article_id, url, headers, path) {
     article_url <- sprintf ("%s/%s", url, article_id)
 
     res <- figshare_upload_url (article_id, url, headers, path)
+    res$raise_for_status ()
     x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
     upload_url <- x$upload_url
     file_id <- x$id
