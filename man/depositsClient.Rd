@@ -21,6 +21,25 @@ d <- depositsClient$new ("figshare")
 
 # methods
 d$list_deposits ()
+
+# Construct new deposit:
+meta <- atom4R::DCEntry$new ()
+meta$addDCTitle ("New deposit")
+cli <- depositsClient$new ("zenodo", sandbox = TRUE, meta = meta)
+res <- cli$new_deposit () # upload metadata to construct new zenodo deposit
+deposit_id <- res$id # or "entity_id" for "figshare"
+cli$retrieve_deposit (deposit_id = deposit_id)
+
+# Update deposit:
+# Note that updating atom4R::DCentry metadata objects generally requires
+# deleting old element and replacing with new one.
+meta$delDCTitle (meta$title [[1]])
+meta$addDCTitle ("This is a new title")
+cli$fill_metadata (meta)
+cli$update_deposit (deposit_id = deposit_id)
+
+# Delete deposit:
+cli$delete_deposit (deposit_id = deposit_id)
 }
 }
 \concept{client}
@@ -148,8 +167,8 @@ Deleted a nominated deposit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{Integer identifer of deposit (generally obtained from
-\code{list_deposits} method).}
+\item{\code{deposit_id}}{Integer identifer of deposit (generally obtained
+from \code{list_deposits} method).}
 }
 \if{html}{\out{</div>}}
 }
