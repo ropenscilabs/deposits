@@ -17,13 +17,13 @@ accessing research data anywhere. Currently supported services are
 
 The package can be installed by enabling the [“ropensci”
 r-universe](https://ropensci.r-universe.dev), and using
-`install.package()`:
+`install.packages()`:
 
 ``` r
 options (repos = c (
     ropensci = 'https://ropensci.r-universe.dev',
     CRAN = 'https://cloud.r-project.org'))
-install.package ("deposits")
+install.packages ("deposits")
 ```
 
 Alternatively, the package can be installed directly from GitHub with
