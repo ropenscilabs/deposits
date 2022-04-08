@@ -4,9 +4,9 @@
 \name{deposits-package}
 \alias{deposits}
 \alias{deposits-package}
-\title{deposits: What the Package Does (One Line, Title Case)}
+\title{deposits: A universal client for depositing and accessing research data anywhere.}
 \description{
-What the package does (one paragraph).
+A universal client for depositing and accessing research data anywhere. Currently supported services are zenodo and figshare.
 }
 \seealso{
 Useful links:
