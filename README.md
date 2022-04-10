@@ -53,9 +53,9 @@ deposits_services ()
     ## 2 zenodo-sandbox https://developers.zenodo.org/ https://sandbox.zenodo.org/api/
     ## 3       figshare     https://docs.figshare.com/    https://api.figshare.com/v2/
 
-[`zenodo`](https://zenodo.org) offers a “sandbox” environment for
-testing, which offers an ideal environment for testing the functionality
-of this package.
+[`zenodo`](https://zenodo.org) offers a "sandbox" environment, which
+offers an ideal environment for testing the functionality of this
+package.
 
 ## API tokens
 

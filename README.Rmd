@@ -55,8 +55,8 @@ The list of data repositories currently supported is accessible by the
 deposits_services ()
 ```
 
-[`zenodo`](https://zenodo.org) offers a "sandbox" environment for testing,
-which offers an ideal environment for testing the functionality of this
+[`zenodo`](https://zenodo.org) offers a "sandbox" environment, which
+offers an ideal environment for testing the functionality of this
 package.
 
 
