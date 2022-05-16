@@ -267,21 +267,26 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                          paste0 (check, collapse = "\n"))
             }
 
+            body <- jsonlite::toJSON (terms, pretty = FALSE, auto_unbox = TRUE)
+
             url <- paste0 (self$url,
                            ifelse (self$name == "figshare",
                                    "account/articles",
                                    "deposit/depositions"))
 
-            headers <- c (self$headers, "Content-Type" = "application/json")
-            con <- crul::HttpClient$new (url, headers = headers)
+            req <- httr2::request (url)
+            req <- httr2::req_headers (
+                req,
+                "Authorization" = self$headers$Authorization,
+                "Content-Type" = "application/json"
 
-            body <- paste0 (jsonlite::toJSON (terms,
-                                              pretty = FALSE,
-                                              auto_unbox = TRUE))
-            res <- con$post (body = body)
-            res$raise_for_status ()
+            )
+            req <- httr2::req_body_raw (req, body = paste0 (body))
+            req <- httr2::req_method (req, "POST")
 
-            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            resp <- httr2::req_perform (req)
+
+            httr2::resp_body_json (resp)
         },
 
         #' @description Update metadata for specified deposit
