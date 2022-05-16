@@ -40,6 +40,25 @@ deposits_metadata_template <- function (filename = NULL) {
     flist <- as.list (rep ("", length (fields)))
     names (flist) <- fields
 
+    # add non-DCMI comment, tags and keywords fields
+    flist$`_comment` <- "Fields starting with underscores will be ignored (and can safely be deleted)"
+    flist$Tags <- list ("tag1", "tag2")
+    flist$Keywords <- list ("keyword1", "keyword2")
+    flist <- flist [order (names (flist))]
+    # insert comments before Keywords and Tags
+    for (what in c ("Keywords", "Tags")) {
+        i <- which (names (flist) == what)
+        flist <- c (
+            flist [seq (i - 1)],
+            "_comment" = paste0 (
+                "These ",
+                tolower (what),
+                " demonstrate the required list structure, and can be deleted"
+            ),
+            flist [seq (i, length (flist))]
+        )
+    }
+
     res <- tryCatch (
         suppressWarnings (
             jsonlite::write_json (flist,
@@ -92,6 +111,10 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
 
     meta <- jsonlite::read_json (filename)
     meta <- meta [which (nchar (meta) > 0L)]
+
+    not_dcmi <- c ("Tags", "Keywords", "^\\_")
+    ptn <- paste0 (not_dcmi, collapse = "|")
+    meta <- meta [which (!grepl (ptn, names (meta)))]
 
     dcmi <- atom4R::DCEntry$new ()
 
