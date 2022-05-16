@@ -287,7 +287,13 @@ A \code{data.frame} containing full data of specified deposit.
 \subsection{Method \code{download_file()}}{
 Download a specified 'filename' from a deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$download_file(deposit_id, filename, path = NULL, quiet = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$download_file(
+  deposit_id,
+  filename,
+  path = NULL,
+  overwrite = FALSE,
+  quiet = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -300,6 +306,9 @@ to be retrieved.}
 the deposit.}
 
 \item{\code{path}}{The local directory where file is to be downloaded.}
+
+\item{\code{overwrite}}{Do not overwrite existing files unless set to
+\code{TRUE}.}
 
 \item{\code{quiet}}{If \code{FALSE}, display download progress.}
 }

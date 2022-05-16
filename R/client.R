@@ -360,12 +360,15 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @param filename The name of the file to be download as specified in
         #' the deposit.
         #' @param path The local directory where file is to be downloaded.
+        #' @param overwrite Do not overwrite existing files unless set to
+        #' `TRUE`.
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
 
         download_file = function (deposit_id,
                                   filename,
                                   path = NULL,
+                                  overwrite = FALSE,
                                   quiet = FALSE) {
 
             checkmate::assert_int (deposit_id)
@@ -409,6 +412,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 path <- here::here ()
             }
             destfile <- file.path (path, filename)
+            if (file.exists (destfile) & !overwrite) {
+                stop ("File [", destfile, "] exists; either remove ",
+                      "or pass `overwrite = TRUE`.")
+            }
 
             h <- curl::new_handle (verbose = FALSE)
             curl::handle_setheaders(
