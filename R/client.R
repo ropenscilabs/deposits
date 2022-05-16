@@ -317,20 +317,25 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions"))
 
             if (self$name == "figshare") {
+
                 # in R/upload-figshare.R
                 res <- upload_figshare_file (deposit_id,
                                              url,
                                              self$headers,
                                              path)
+
             } else if (self$name == "zenodo") {
+
                 # in R/upload-zenodo.R
                 res <- upload_zenodo_file (deposit_id,
                                            url,
                                            self$headers,
                                            path)
+
+                res <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
             }
 
-            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            return (res)
         },
 
         #' @description Retrieve information on specified deposit

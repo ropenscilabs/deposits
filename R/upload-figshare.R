@@ -24,25 +24,48 @@ upload_figshare_file <- function (article_id, url, headers, path) {
 
     # upload parts:
     for (i in seq (nparts)) {
-        upload_url_part <- paste0 (upload_url, "/", i)
-        con <- crul::HttpClient$new (upload_url_part, headers = headers)
-        res <- con$put (body = list (f = crul::upload (flist [i])))
-        res$raise_for_status ()
+        #upload_url_part <- paste0 (upload_url, "/", i)
+        #con <- crul::HttpClient$new (upload_url_part, headers = headers)
+        #res <- con$put (body = list (f = crul::upload (flist [i])))
+        #res$raise_for_status ()
+
+        req <- httr2::request (sprintf ("%s/%s", upload_url, i))
+        req <- httr2::req_headers (
+            req,
+            "Authorization" = headers$Authorization
+        )
+        req <- httr2::req_body_file (
+            req,
+            path = path)
+        req <- httr2::req_method (req, "PUT")
+        resp <- httr2::req_perform (req)
+        httr2::resp_check_status (resp)
     }
 
     # complete upload
     file_url <- sprintf ("%s/files/%s", article_url, file_id)
-    con <- crul::HttpClient$new (file_url, headers = headers)
-    res <- con$post ()
-    res$raise_for_status ()
+    req <- httr2::request (file_url)
+    req <- httr2::req_headers (
+        req,
+        "Authorization" = headers$Authorization
+    )
+    req <- httr2::req_method (req, "POST")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+
     chk <- file.remove (flist) # nolint
 
     # and check article data:
-    con <- crul::HttpClient$new (article_url, headers = headers)
-    res <- con$get ()
-    res$raise_for_status ()
+    req <- httr2::request (article_url)
+    req <- httr2::req_headers (
+        req,
+        "Authorization" = headers$Authorization
+    )
+    req <- httr2::req_method (req, "GET")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
 
-    return (res)
+    return (httr2::resp_body_json (resp))
 }
 
 figshare_upload_url <- function (id, url, headers, path) {
