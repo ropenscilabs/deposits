@@ -104,7 +104,7 @@ directly via \pkg{atom4R} routines, or via
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
 actual API endpoint (for "zenodo" only).}
 
-\item{\code{headers}}{Any acceptable headers. See examples in \pkg{crul}
+\item{\code{headers}}{Any acceptable headers. See examples in \pkg{httr2}
 package.}
 }
 \if{html}{\out{</div>}}
@@ -170,13 +170,13 @@ Deleted a nominated deposit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{Integer identifer of deposit (generally obtained
+\item{\code{deposit_id}}{Integer identifier of deposit (generally obtained
 from \code{list_deposits} method).}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \pkg{crul} response object.
+\code{TRUE} is deposit successfully deleted, otherwise \code{FALSE}.
 }
 }
 \if{html}{\out{<hr>}}
