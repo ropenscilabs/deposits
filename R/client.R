@@ -393,10 +393,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions/"),
                            deposit_id)
 
-            con <- crul::HttpClient$new (url, headers = self$headers)
-            res <- con$get ()
-            res$raise_for_status ()
-            x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            x <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
             name_field <- ifelse (self$name == "figshare",
                                   "name",
