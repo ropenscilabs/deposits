@@ -220,6 +220,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
             terms <- construct_data_list (self$metadata, self$term_map)
+            if (length (terms) == 0L) {
+                stop ("metadata is empty; please fill template or use `atom4R` methods ",
+                      "described in vignette")
+            }
             check <- validate_terms (terms, deposit = self$name)
             if (length (check) > 0L) {
                 warning ("The following metadata terms do not conform:\n",
