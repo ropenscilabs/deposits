@@ -12,13 +12,25 @@ upload_zenodo_file <- function (deposit_id, url, headers, path) {
 
     filename <- basename (path)
     file_url <- paste0 (bucket_link, "/", filename)
-    headers <- c (headers, "Content-Type" = "application/octet-stream")
 
-    con <- crul::HttpClient$new (file_url, headers = headers)
-    res <- con$put (body = list (f = crul::upload (path)))
-    res$raise_for_status ()
+    #con <- crul::HttpClient$new (file_url, headers = headers)
+    #res <- con$put (body = list (f = crul::upload (path)))
+    #res$raise_for_status ()
 
-    return (res)
+    req <- httr2::request (file_url)
+    req <- httr2::req_headers (
+        req,
+        "Authorization" = headers$Authorization,
+        "Content-Type" = "application/octet-stream"
+    )
+    req <- httr2::req_body_file (
+        req,
+        path = path)
+    req <- httr2::req_method (req, "PUT")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+
+    return (httr2::resp_body_json (resp))
 }
 
 get_zenodo_bucket_link <- function (deposit_id, url, headers) {

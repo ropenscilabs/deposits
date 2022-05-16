@@ -332,7 +332,6 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                            self$headers,
                                            path)
 
-                res <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
             }
 
             return (res)
@@ -416,7 +415,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             if (is.null (path)) {
                 path <- here::here ()
             }
-            destfile <- file.path (path, filename)
+            destfile <- normalizePath (file.path (path, filename))
             if (file.exists (destfile) & !overwrite) {
                 stop ("File [", destfile, "] exists; either remove ",
                       "or pass `overwrite = TRUE`.")
