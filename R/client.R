@@ -87,7 +87,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                     checkmate::assert_file_exists (metadata)
                     metadata <- deposits_meta_to_dcmi (filename)
                 } else {
-                    checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+                    checkmate::assert_class (metadata, c ("DCEntry", "AtomEntry", "R6"))
                 }
             }
 
@@ -201,14 +201,24 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Fill deposits client with metadata
-        #' @param metadata An \pkg{atom4R} `DCEntry` object containing metadata,
-        #' either constructed directly via \pkg{atom4R} routines, or via
+        #' @param metadata Either name (or full path) or a local file containing
+        #' metadata constructed with \link{deposits_metadata_template}, or an
+        #' \pkg{atom4R} `DCEntry` object containing metadata, either constructed
+        #' directly via \pkg{atom4R} routines, or via
         #' \link{deposits_meta_to_dcmi}.
         #' @return Modified form of the deposits client with metadata inserted.
 
         fill_metadata = function(metadata) {
 
-            checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+            if (!is.null (metadata)) {
+                if (is.character (metadata)) {
+                    checkmate::assert_string (metadata)
+                    checkmate::assert_file_exists (metadata)
+                    metadata <- deposits_meta_to_dcmi (filename)
+                } else {
+                    checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+                }
+            }
 
             out <- capture.output (
                 chk <- metadata$validate ()

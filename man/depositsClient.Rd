@@ -191,8 +191,10 @@ Fill deposits client with metadata
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{metadata}}{An \pkg{atom4R} \code{DCEntry} object containing metadata,
-either constructed directly via \pkg{atom4R} routines, or via
+\item{\code{metadata}}{Either name (or full path) or a local file containing
+metadata constructed with \link{deposits_metadata_template}, or an
+\pkg{atom4R} \code{DCEntry} object containing metadata, either constructed
+directly via \pkg{atom4R} routines, or via
 \link{deposits_meta_to_dcmi}.}
 }
 \if{html}{\out{</div>}}
