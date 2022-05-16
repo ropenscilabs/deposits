@@ -12,9 +12,7 @@ upload_figshare_file <- function (article_id, url, headers, path) {
 
     article_url <- sprintf ("%s/%s", url, article_id)
 
-    res <- figshare_upload_url (article_id, url, headers, path)
-    res$raise_for_status ()
-    x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+    x <- figshare_upload_url (article_id, url, headers, path)
     upload_url <- x$upload_url
     file_id <- x$id
     #upload_token <- x$upload_token
@@ -24,45 +22,28 @@ upload_figshare_file <- function (article_id, url, headers, path) {
 
     # upload parts:
     for (i in seq (nparts)) {
-        #upload_url_part <- paste0 (upload_url, "/", i)
-        #con <- crul::HttpClient$new (upload_url_part, headers = headers)
-        #res <- con$put (body = list (f = crul::upload (flist [i])))
-        #res$raise_for_status ()
 
-        req <- httr2::request (sprintf ("%s/%s", upload_url, i))
-        req <- httr2::req_headers (
-            req,
-            "Authorization" = headers$Authorization,
-            "Content-Type" = "application/octet-stream"
-        )
+        url_i <- sprintf ("%s/%s", upload_url, i)
+        req <- create_httr2_helper (url_i, headers$Authorization, "PUT")
+        req$headers <- c (req$headers, 
+                          "Content-Type" = "application/octet-stream")
         req <- httr2::req_body_file (
             req,
             path = path)
-        req <- httr2::req_method (req, "PUT")
         resp <- httr2::req_perform (req)
         httr2::resp_check_status (resp)
     }
 
     # complete upload
     file_url <- sprintf ("%s/files/%s", article_url, file_id)
-    req <- httr2::request (file_url)
-    req <- httr2::req_headers (
-        req,
-        "Authorization" = headers$Authorization
-    )
-    req <- httr2::req_method (req, "POST")
+    req <- create_httr2_helper (file_url, headers$Authorization, "POST")
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
     chk <- file.remove (flist) # nolint
 
     # and check article data:
-    req <- httr2::request (article_url)
-    req <- httr2::req_headers (
-        req,
-        "Authorization" = headers$Authorization
-    )
-    req <- httr2::req_method (req, "GET")
+    req <- create_httr2_helper (article_url, headers$Authorization, "GET")
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
@@ -78,29 +59,31 @@ figshare_upload_url <- function (id, url, headers, path) {
                               data.frame (md5 = md5,
                                           name = basename (path),
                                           size = s),
+                              pretty = FALSE,
                               auto_unbox = TRUE
     )
     body <- gsub ("^\\[|\\]$", "", paste0 (body))
 
     url <- paste0 (url, "/", id, "/files")
-    headers <- c (headers, "Content-Type" = "application/json")
 
     # First get upload location:
-    con <- crul::HttpClient$new (url, headers = headers)
-    res <- con$post (body = body)
-    res$raise_for_status ()
+    req <- create_httr2_helper (url, headers$Authorization, "POST")
+    req$headers <- c (req$headers, "Content-Type" = "application/json")
+    req <- httr2::req_body_raw (req, body = paste0 (body))
 
-    out <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
-    location <- out$location
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+
+    location <- httr2::resp_body_json (resp)
 
     # Then a second call to get upload URL:
     file_id <- gsub ("^.*\\/", "", location)
     url <- paste0 (url, "/", file_id)
-    con <- crul::HttpClient$new (url, headers = headers)
-    res <- con$get ()
-    res$raise_for_status ()
 
-    return (res)
+    req <- create_httr2_helper (url, headers$Authorization, "GET")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+    httr2::resp_body_json (resp)
 }
 
 figshare_upload_parts <- function (url, headers, path) {
