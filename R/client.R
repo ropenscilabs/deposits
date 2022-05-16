@@ -187,7 +187,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            httr2::resp_body_json (resp)
+            httr2::resp_body_json (resp, simplifyVector = TRUE)
         },
 
         #' @description Deleted a nominated deposit
