@@ -191,9 +191,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         },
 
         #' @description Deleted a nominated deposit
-        #' @param deposit_id Integer identifer of deposit (generally obtained
+        #' @param deposit_id Integer identifier of deposit (generally obtained
         #' from `list_deposits` method).
-        #' @return A \pkg{crul} response object.
+        #' @return `TRUE` is deposit successfully deleted, otherwise `FALSE`.
 
         delete_deposit = function (deposit_id = NULL) {
 
@@ -205,10 +205,17 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions"),
                            "/",
                            deposit_id)
-            con <- crul::HttpClient$new (url, headers = self$headers)
-            res <- con$delete ()
-            res$raise_for_status ()
-            return (res$status_code == 204L)
+
+            req <- httr2::request (url)
+            req <- httr2::req_headers (
+                req,
+                "Authorization" = self$headers$Authorization
+            )
+            req <- httr2::req_method (req, "DELETE")
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            return (httr2::resp_status (resp) == 204L)
         },
 
         #' @description Fill deposits client with metadata
