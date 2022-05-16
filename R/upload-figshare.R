@@ -32,7 +32,8 @@ upload_figshare_file <- function (article_id, url, headers, path) {
         req <- httr2::request (sprintf ("%s/%s", upload_url, i))
         req <- httr2::req_headers (
             req,
-            "Authorization" = headers$Authorization
+            "Authorization" = headers$Authorization,
+            "Content-Type" = "application/octet-stream"
         )
         req <- httr2::req_body_file (
             req,
