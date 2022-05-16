@@ -1,5 +1,7 @@
 #' Upload a file to a nominated figshare article
 #'
+#' \url{https://docs.figshare.com/#upload_files_example_upload_on_figshare}
+#'
 #' @param article_id The generic 'deposit_id' parameter passed to the deposits
 #' client, where deposits in figshare are called "articles".
 #' @param url The generic endpoint for figshare articles.
