@@ -70,7 +70,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' \link{deposits_meta_to_dcmi}.
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
-        #' @param headers Any acceptable headers. See examples in \pkg{crul}
+        #' @param headers Any acceptable headers. See examples in \pkg{httr2}
         #' package.
         #' @return A new `depositsClient` object
 
@@ -156,10 +156,16 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                            paste0 (self$url, "token"),
                            self$url)
 
-            con <- crul::HttpClient$new (url, headers = self$headers)
-            res <- con$head ()
-            res$raise_for_status ()
-            res$success ()
+            req <- httr2::request (url)
+            req <- httr2::req_headers (
+                req,
+                "Authorization" = self$headers$Authorization
+            )
+            req <- httr2::req_method (req, "GET") # default
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            return (!httr2::resp_is_error (resp))
         },
 
         #' @description List own deposits for given service
