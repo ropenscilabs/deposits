@@ -95,8 +95,11 @@ Create a new \code{depositsClient} object
 \item{\code{name}}{(character) of a deposits service (see
 \link{deposits_services}).}
 
-\item{\code{metadata}}{An \pkg{atom4R} \code{DCEntry} object containing metadata,
-either constructed directly via \pkg{atom4R} routines, or via}
+\item{\code{metadata}}{Either name (or full path) or a local file containing
+metadata constructed with \link{deposits_metadata_template}, or an
+\pkg{atom4R} \code{DCEntry} object containing metadata, either constructed
+directly via \pkg{atom4R} routines, or via
+\link{deposits_meta_to_dcmi}.}
 
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
 actual API endpoint (for "zenodo" only).}
