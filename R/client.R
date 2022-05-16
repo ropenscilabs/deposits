@@ -415,7 +415,8 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             if (is.null (path)) {
                 path <- here::here ()
             }
-            destfile <- normalizePath (file.path (path, filename))
+            destfile <- normalizePath (file.path (path, filename),
+                                       mustWork = FALSE)
             if (file.exists (destfile) & !overwrite) {
                 stop ("File [", destfile, "] exists; either remove ",
                       "or pass `overwrite = TRUE`.")
@@ -424,7 +425,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             h <- curl::new_handle (verbose = FALSE)
             curl::handle_setheaders(
                 h,
-                "Content-Type" = "application/binary",
+                "Content-Type" = "application/octet-stream",
                 "Authorization" = self$headers$Authorization
             )
             chk <- curl::curl_download (
