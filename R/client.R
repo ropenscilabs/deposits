@@ -178,11 +178,16 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "account/articles",
                                    "deposit/depositions?size=1000"))
 
-            con <- crul::HttpClient$new (url, headers = self$headers)
+            req <- httr2::request (url)
+            req <- httr2::req_headers (
+                req,
+                "Authorization" = self$headers$Authorization
+            )
+            req <- httr2::req_method (req, "GET") # default
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
 
-            res <- con$get ()
-            res$raise_for_status ()
-            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            httr2::resp_body_json (resp)
         },
 
         #' @description Deleted a nominated deposit
