@@ -197,10 +197,11 @@ construct_data_list <- function (metadata, term_map) {
         }
 
     } else {
-        if (!is.list (values$authors)) {
+
+        if ("authors" %in% names (values) & !is.list (values$authors)) {
             values$authors <- list (list (name = values$authors))
         }
-        if (!is.integer (values$categories)) {
+        if ("categories" %in% names (values) & !is.integer (values$categories)) {
             message ("Figshare categories must be integer values; ",
                      "the provided values will be removed.")
             values$categories <- NULL
@@ -211,11 +212,12 @@ construct_data_list <- function (metadata, term_map) {
             # For demonstration purposes, only use firstOneline for now
             values$timeline <- list (firstOnline = values$timeline [1])
         }
-        if ("license" %in% names (values) &
-            is.na (suppressWarnings (as.integer (values$license)))) {
-            warning ("Figshare licenses must be integer-valued; ",
-                     "the value will be reset to '1' = 'CC-BY'")
-            values$license <- 1L
+        if ("license" %in% names (values)) {
+            if (is.na (suppressWarnings (as.integer (values$license)))) {
+                warning ("Figshare licenses must be integer-valued; ",
+                         "the value will be reset to '1' = 'CC-BY'")
+                values$license <- 1L
+            }
         }
     }
 
