@@ -156,12 +156,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                            paste0 (self$url, "token"),
                            self$url)
 
-            req <- httr2::request (url)
-            req <- httr2::req_headers (
-                req,
-                "Authorization" = self$headers$Authorization
-            )
-            req <- httr2::req_method (req, "GET") # default
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
@@ -178,12 +173,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "account/articles",
                                    "deposit/depositions?size=1000"))
 
-            req <- httr2::request (url)
-            req <- httr2::req_headers (
-                req,
-                "Authorization" = self$headers$Authorization
-            )
-            req <- httr2::req_method (req, "GET") # default
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
@@ -206,12 +196,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                            "/",
                            deposit_id)
 
-            req <- httr2::request (url)
-            req <- httr2::req_headers (
-                req,
-                "Authorization" = self$headers$Authorization
-            )
-            req <- httr2::req_method (req, "DELETE")
+            req <- create_httr2_helper (url, self$headers$Authorization, "DELETE")
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
@@ -274,15 +259,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "account/articles",
                                    "deposit/depositions"))
 
-            req <- httr2::request (url)
-            req <- httr2::req_headers (
-                req,
-                "Authorization" = self$headers$Authorization,
-                "Content-Type" = "application/json"
-
-            )
+            req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+            req$headers <- c (req$headers, "Content-Type" = "application/json")
             req <- httr2::req_body_raw (req, body = paste0 (body))
-            req <- httr2::req_method (req, "POST")
 
             resp <- httr2::req_perform (req)
 
@@ -375,10 +354,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions/"),
                            deposit_id)
 
-            con <- crul::HttpClient$new (url, headers = self$headers)
-            res <- con$get ()
-            res$raise_for_status ()
-            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            httr2::resp_body_json (resp)
         },
 
         #' @description Download a specified 'filename' from a deposit
