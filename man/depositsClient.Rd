@@ -67,22 +67,22 @@ cli$delete_deposit (deposit_id = deposit_id)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{depositsClient$new()}}
-\item \href{#method-print}{\code{depositsClient$print()}}
-\item \href{#method-ping}{\code{depositsClient$ping()}}
-\item \href{#method-list_deposits}{\code{depositsClient$list_deposits()}}
-\item \href{#method-delete_deposit}{\code{depositsClient$delete_deposit()}}
-\item \href{#method-fill_metadata}{\code{depositsClient$fill_metadata()}}
-\item \href{#method-new_deposit}{\code{depositsClient$new_deposit()}}
-\item \href{#method-update_deposit}{\code{depositsClient$update_deposit()}}
-\item \href{#method-upload_file}{\code{depositsClient$upload_file()}}
-\item \href{#method-retrieve_deposit}{\code{depositsClient$retrieve_deposit()}}
-\item \href{#method-download_file}{\code{depositsClient$download_file()}}
+\item \href{#method-depositsClient-new}{\code{depositsClient$new()}}
+\item \href{#method-depositsClient-print}{\code{depositsClient$print()}}
+\item \href{#method-depositsClient-ping}{\code{depositsClient$ping()}}
+\item \href{#method-depositsClient-list_deposits}{\code{depositsClient$list_deposits()}}
+\item \href{#method-depositsClient-delete_deposit}{\code{depositsClient$delete_deposit()}}
+\item \href{#method-depositsClient-fill_metadata}{\code{depositsClient$fill_metadata()}}
+\item \href{#method-depositsClient-new_deposit}{\code{depositsClient$new_deposit()}}
+\item \href{#method-depositsClient-update_deposit}{\code{depositsClient$update_deposit()}}
+\item \href{#method-depositsClient-upload_file}{\code{depositsClient$upload_file()}}
+\item \href{#method-depositsClient-retrieve_deposit}{\code{depositsClient$retrieve_deposit()}}
+\item \href{#method-depositsClient-download_file}{\code{depositsClient$download_file()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-depositsClient-new"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object
 \subsection{Usage}{
@@ -111,8 +111,8 @@ A new \code{depositsClient} object
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-print"></a>}}
-\if{latex}{\out{\hypertarget{method-print}{}}}
+\if{html}{\out{<a id="method-depositsClient-print"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-print}{}}}
 \subsection{Method \code{print()}}{
 print method for the \code{depositsClient} class
 \subsection{Usage}{
@@ -130,8 +130,8 @@ print method for the \code{depositsClient} class
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-ping"></a>}}
-\if{latex}{\out{\hypertarget{method-ping}{}}}
+\if{html}{\out{<a id="method-depositsClient-ping"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-ping}{}}}
 \subsection{Method \code{ping()}}{
 ping a deposits server to check authentication
 \subsection{Usage}{
@@ -143,8 +143,8 @@ ping a deposits server to check authentication
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-list_deposits"></a>}}
-\if{latex}{\out{\hypertarget{method-list_deposits}{}}}
+\if{html}{\out{<a id="method-depositsClient-list_deposits"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-list_deposits}{}}}
 \subsection{Method \code{list_deposits()}}{
 List own deposits for given service
 \subsection{Usage}{
@@ -156,8 +156,8 @@ A list of deposits.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-delete_deposit"></a>}}
-\if{latex}{\out{\hypertarget{method-delete_deposit}{}}}
+\if{html}{\out{<a id="method-depositsClient-delete_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-delete_deposit}{}}}
 \subsection{Method \code{delete_deposit()}}{
 Deleted a nominated deposit
 \subsection{Usage}{
@@ -177,8 +177,8 @@ A \pkg{crul} response object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fill_metadata"></a>}}
-\if{latex}{\out{\hypertarget{method-fill_metadata}{}}}
+\if{html}{\out{<a id="method-depositsClient-fill_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-fill_metadata}{}}}
 \subsection{Method \code{fill_metadata()}}{
 Fill deposits client with metadata
 \subsection{Usage}{
@@ -199,8 +199,8 @@ Modified form of the deposits client with metadata inserted.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new_deposit"></a>}}
-\if{latex}{\out{\hypertarget{method-new_deposit}{}}}
+\if{html}{\out{<a id="method-depositsClient-new_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-new_deposit}{}}}
 \subsection{Method \code{new_deposit()}}{
 Create a new deposit
 \subsection{Usage}{
@@ -212,8 +212,8 @@ A \code{data.frame} with details of the newly created deposit.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-update_deposit"></a>}}
-\if{latex}{\out{\hypertarget{method-update_deposit}{}}}
+\if{html}{\out{<a id="method-depositsClient-update_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-update_deposit}{}}}
 \subsection{Method \code{update_deposit()}}{
 Update metadata for specified deposit
 \subsection{Usage}{
@@ -232,8 +232,8 @@ A \code{data.frame} with details of newly updated deposit
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-upload_file"></a>}}
-\if{latex}{\out{\hypertarget{method-upload_file}{}}}
+\if{html}{\out{<a id="method-depositsClient-upload_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-upload_file}{}}}
 \subsection{Method \code{upload_file()}}{
 Upload file to an existing deposit
 \subsection{Usage}{
@@ -256,8 +256,8 @@ upload and download URLs, and file details.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-retrieve_deposit"></a>}}
-\if{latex}{\out{\hypertarget{method-retrieve_deposit}{}}}
+\if{html}{\out{<a id="method-depositsClient-retrieve_deposit"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-retrieve_deposit}{}}}
 \subsection{Method \code{retrieve_deposit()}}{
 Retrieve information on specified deposit
 \subsection{Usage}{
@@ -277,8 +277,8 @@ A \code{data.frame} containing full data of specified deposit.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-download_file"></a>}}
-\if{latex}{\out{\hypertarget{method-download_file}{}}}
+\if{html}{\out{<a id="method-depositsClient-download_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-download_file}{}}}
 \subsection{Method \code{download_file()}}{
 Download a specified 'filename' from a deposit
 \subsection{Usage}{

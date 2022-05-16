@@ -4,7 +4,7 @@
 \name{deposits-package}
 \alias{deposits}
 \alias{deposits-package}
-\title{deposits: A universal client for depositing and accessing research data anywhere.}
+\title{deposits: A universal client for depositing and accessing research data anywhere}
 \description{
 A universal client for depositing and accessing research data anywhere. Currently supported services are zenodo and figshare.
 }
