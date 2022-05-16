@@ -404,13 +404,18 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             if (self$name == "figshare") {
                 download_url <- x$files$download_url [x$files$name == filename]
-                download_url <- sprintf ("%s/%s", download_url, filename)
             } else if (self$name == "zenodo") {
                 download_url <-
                     x$files$links$download [x$files$filename == filename]
             } else {
                 stop ("There is not deposits service named [", self$name, "]")
             }
+
+            if (self$name == "figshare" & !x$is_public) {
+                stop ("Figshare only enables automated downloads of public files.\n",
+                      "You can manually download at ", download_url)
+            }
+
 
             if (is.null (path)) {
                 path <- here::here ()
