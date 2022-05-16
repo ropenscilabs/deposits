@@ -284,18 +284,20 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                                    "deposit/depositions/"),
                            deposit_id)
 
-            headers <- c (self$headers, "Content-Type" = "application/json")
-            con <- crul::HttpClient$new (url, headers = headers)
+            req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
+            req$headers <- c (req$headers, "Content-Type" = "application/json")
 
             terms <- construct_data_list (self$metadata, self$term_map)
             body <- paste0 (jsonlite::toJSON (terms,
                                               pretty = FALSE,
                                               auto_unbox = TRUE))
 
-            res <- con$put (body = body)
-            res$raise_for_status ()
+            req <- httr2::req_body_raw (req, body = paste0 (body))
 
-            jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            httr2::resp_body_json (resp)
         },
 
         #' @description Upload file to an existing deposit
