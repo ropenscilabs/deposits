@@ -86,13 +86,13 @@ figshare_upload_url <- function (id, url, headers, path) {
     httr2::resp_body_json (resp)
 }
 
-figshare_upload_parts <- function (url, headers, path) {
+figshare_upload_parts <- function (upload_url, headers, path) {
 
-    con <- crul::HttpClient$new (url, headers = headers)
-    res <- con$get ()
-    res$raise_for_status ()
+    req <- create_httr2_helper (upload_url, headers$Authorization, "GET")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+    x <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
-    x <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
     parts <- x$parts
     part_size <- parts$endOffset [1] + 1
     tmpdir <- dirname (path)
