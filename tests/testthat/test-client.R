@@ -12,11 +12,11 @@ test_that("Client", {
 
     expect_error (
         cli <- depositsClient$new (),
-        "is missing, with no default")
+        "argument \"name\" is missing, with no default")
 
     expect_error (
         cli <- depositsClient$new ("junk"),
-        "should be one of")
+        "'arg' should be one of")
 
     expect_silent (
         cli <- depositsClient$new (name = service)
