@@ -21,7 +21,7 @@ upload_zenodo_file <- function (deposit_id, url, headers, path) {
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
-    return (httr2::resp_body_json (resp))
+    return (httr2::resp_body_json (resp, simplifyVector = TRUE))
 }
 
 get_zenodo_bucket_link <- function (deposit_id, url, headers) {
