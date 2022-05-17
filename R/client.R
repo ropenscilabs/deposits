@@ -85,7 +85,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 if (is.character (metadata)) {
                     checkmate::assert_string (metadata)
                     checkmate::assert_file_exists (metadata)
-                    metadata <- deposits_meta_to_dcmi (filename)
+                    metadata <- deposits_meta_to_dcmi (metadata)
                 } else {
                     checkmate::assert_class (metadata, c ("DCEntry", "AtomEntry", "R6"))
                 }
