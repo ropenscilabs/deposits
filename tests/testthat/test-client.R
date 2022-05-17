@@ -49,10 +49,14 @@ testthat::skip_if (!test_all)
 
 test_that ("ping", {
 
+    options(httptest2.verbose = TRUE)
+
     service <- "figshare"
 
     expect_silent (
         cli <- depositsClient$new (name = service)
         )
-    expect_true (cli$ping ())
+    x <- with_mock_dir ("ping", {
+        cli$ping ()
+    })
 })

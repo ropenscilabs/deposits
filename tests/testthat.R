@@ -1,4 +1,5 @@
-library(testthat)
-library(deposits)
+library (testthat)
+library (httptest2)
+library (deposits)
 
-test_check("deposits")
+test_check ("deposits")
