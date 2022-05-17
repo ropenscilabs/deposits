@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.1.180",
+  "version": "0.0.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -33,6 +33,18 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "httptest2",
+      "name": "httptest2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httptest2"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
@@ -160,14 +172,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "147.822KB",
+  "fileSize": "158.421KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/ropenscilabs/deposits"
-  ],
+  "contIntegration": ["https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/ropenscilabs/deposits"],
   "developmentStatus": "https://www.repostatus.org/#wip"
 }

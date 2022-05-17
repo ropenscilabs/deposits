@@ -1,0 +1,16 @@
+{
+    "token": "e1a07ed5-5a3f-425d-91b0-778ce5bebd76",
+    "md5": "0644355dad45e1ddbbc81ccbbf840661",
+    "size": 506,
+    "name": "35141656/data.Rds",
+    "status": "PENDING",
+    "parts": [
+        {
+            "partNo": 1,
+            "startOffset": 0,
+            "endOffset": 505,
+            "status": "PENDING",
+            "locked": false
+        }
+    ]
+}
