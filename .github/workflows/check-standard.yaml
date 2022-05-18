@@ -29,6 +29,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       FIGSHARE_TOKEN: ${{ secrets.FIGSHARE_TOKEN }}
       ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+      ZENODO_SANDBOX_TOKEN: ${{ secrets.ZENODO_SANDBOX_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
