@@ -32,14 +32,12 @@
 #' }
 #' @family client
 #' @export
-depositsClient <- R6::R6Class( # nolint (not snake_case)
+depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
     "depositsClient",
     portable = TRUE,
     cloneable = FALSE,
-
-    private = list (
-    ), # end private list
+    private = list (), # end private list
 
     public = list (
 
@@ -99,8 +97,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             s <- deposits_services ()
             if (!name %in% s$name) {
                 stop ("'name' must be one of [",
-                      paste0 (s$name, collapse = ", "), "]",
-                      call. = FALSE)
+                    paste0 (s$name, collapse = ", "), "]",
+                    call. = FALSE
+                )
             }
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
@@ -118,10 +117,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             if (!is.null (metadata)) {
                 out <- capture.output (
                     chk <- metadata$validate ()
-                    )
+                )
                 if (!chk) {
-                    stop ("metadata is not valid - ",
-                          "see details via metadata$validate()")
+                    stop (
+                        "metadata is not valid - ",
+                        "see details via metadata$validate()"
+                    )
                 }
                 self$metadata <- metadata
             }
@@ -134,11 +135,11 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0("    name: ", self$name), sep = "\n")
+            cat (paste0 ("    name: ", self$name), sep = "\n")
             if (self$name == "zenodo") {
-                cat (paste0(" sandbox: ", self$sandbox), sep = "\n")
+                cat (paste0 (" sandbox: ", self$sandbox), sep = "\n")
             }
-            cat (paste0("    url : ", self$url), sep = "\n")
+            cat (paste0 ("    url : ", self$url), sep = "\n")
             if (is.null (self$metadata)) {
                 cat ("metadata: <none>")
             } else {
@@ -150,11 +151,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' @description ping a deposits server to check authentication
         #' @return `TRUE` if successful response, `FALSE` otherwise
 
-        ping = function() {
+        ping = function () {
 
             url <- ifelse (self$name == "figshare",
-                           paste0 (self$url, "token"),
-                           self$url)
+                paste0 (self$url, "token"),
+                self$url
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
@@ -168,10 +170,13 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
         list_deposits = function () {
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles",
-                                   "deposit/depositions?size=1000"))
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles",
+                    "deposit/depositions?size=1000"
+                )
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
@@ -189,12 +194,15 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles",
-                                   "deposit/depositions"),
-                           "/",
-                           deposit_id)
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles",
+                    "deposit/depositions"
+                ),
+                "/",
+                deposit_id
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "DELETE")
             resp <- httr2::req_perform (req)
@@ -211,7 +219,7 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
         #' \link{deposits_meta_to_dcmi}.
         #' @return Modified form of the deposits client with metadata inserted.
 
-        fill_metadata = function(metadata) {
+        fill_metadata = function (metadata) {
 
             if (!is.null (metadata)) {
                 if (is.character (metadata)) {
@@ -225,10 +233,12 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             out <- capture.output (
                 chk <- metadata$validate ()
-                )
+            )
             if (!chk) {
-                stop ("metadata is not valid - ",
-                      "see details via metadata$validate()")
+                stop (
+                    "metadata is not valid - ",
+                    "see details via metadata$validate()"
+                )
             }
             self$metadata <- metadata
         },
@@ -243,21 +253,28 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             }
             terms <- construct_data_list (self$metadata, self$term_map)
             if (length (terms) == 0L) {
-                stop ("metadata is empty; please fill template or use ",
-                      "`atom4R` methods described in vignette")
+                stop (
+                    "metadata is empty; please fill template or use ",
+                    "`atom4R` methods described in vignette"
+                )
             }
             check <- validate_terms (terms, deposit = self$name)
             if (length (check) > 0L) {
-                warning ("The following metadata terms do not conform:\n",
-                         paste0 (check, collapse = "\n"))
+                warning (
+                    "The following metadata terms do not conform:\n",
+                    paste0 (check, collapse = "\n")
+                )
             }
 
             body <- jsonlite::toJSON (terms, pretty = FALSE, auto_unbox = TRUE)
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles",
-                                   "deposit/depositions"))
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles",
+                    "deposit/depositions"
+                )
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
@@ -278,19 +295,23 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles/",
-                                   "deposit/depositions/"),
-                           deposit_id)
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles/",
+                    "deposit/depositions/"
+                ),
+                deposit_id
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
             terms <- construct_data_list (self$metadata, self$term_map)
             body <- paste0 (jsonlite::toJSON (terms,
-                                              pretty = FALSE,
-                                              auto_unbox = TRUE))
+                pretty = FALSE,
+                auto_unbox = TRUE
+            ))
 
             req <- httr2::req_body_raw (req, body = paste0 (body))
 
@@ -315,26 +336,33 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 checkmate::assert_directory_exists (dirname (path))
             }
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles",
-                                   "deposit/depositions"))
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles",
+                    "deposit/depositions"
+                )
+            )
 
             if (self$name == "figshare") {
 
                 # in R/upload-figshare.R
-                res <- upload_figshare_file (deposit_id,
-                                             url,
-                                             self$headers,
-                                             path)
+                res <- upload_figshare_file (
+                    deposit_id,
+                    url,
+                    self$headers,
+                    path
+                )
 
             } else if (self$name == "zenodo") {
 
                 # in R/upload-zenodo.R
-                res <- upload_zenodo_file (deposit_id,
-                                           url,
-                                           self$headers,
-                                           path)
+                res <- upload_zenodo_file (
+                    deposit_id,
+                    url,
+                    self$headers,
+                    path
+                )
 
             }
 
@@ -350,17 +378,24 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles/",
-                                   "deposit/depositions/"),
-                           deposit_id)
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles/",
+                    "deposit/depositions/"
+                ),
+                deposit_id
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            httr2::resp_body_json (resp, simplifyVector = TRUE)
+            dep <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+
+            cli <- metadata_from_deposit (cli, dep)
+
+            invisible (cli)
         },
 
         #' @description Download a specified 'filename' from a deposit
@@ -389,11 +424,14 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
-            url <- paste0 (self$url,
-                           ifelse (self$name == "figshare",
-                                   "account/articles/",
-                                   "deposit/depositions/"),
-                           deposit_id)
+            url <- paste0 (
+                self$url,
+                ifelse (self$name == "figshare",
+                    "account/articles/",
+                    "deposit/depositions/"
+                ),
+                deposit_id
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
@@ -402,8 +440,9 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             x <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
             name_field <- ifelse (self$name == "figshare",
-                                  "name",
-                                  "filename")
+                "name",
+                "filename"
+            )
             if (!filename %in% x$files [[name_field]]) {
                 stop ("That deposit does not contain the specified file.")
             }
@@ -418,8 +457,10 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
             }
 
             if (self$name == "figshare" & !x$is_public) {
-                stop ("Figshare only enables automated downloads of public files.\n",
-                      "You can manually download at ", download_url)
+                stop (
+                    "Figshare only enables automated downloads of public files.\n",
+                    "You can manually download at ", download_url
+                )
             }
 
 
@@ -427,14 +468,17 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
                 path <- here::here ()
             }
             destfile <- normalizePath (file.path (path, filename),
-                                       mustWork = FALSE)
+                mustWork = FALSE
+            )
             if (file.exists (destfile) & !overwrite) {
-                stop ("File [", destfile, "] exists; either remove ",
-                      "or pass `overwrite = TRUE`.")
+                stop (
+                    "File [", destfile, "] exists; either remove ",
+                    "or pass `overwrite = TRUE`."
+                )
             }
 
             h <- curl::new_handle (verbose = FALSE)
-            curl::handle_setheaders(
+            curl::handle_setheaders (
                 h,
                 "Content-Type" = "application/octet-stream",
                 "Authorization" = self$headers$Authorization
@@ -449,6 +493,5 @@ depositsClient <- R6::R6Class( # nolint (not snake_case)
 
             return (chk)
         }
-
     ) # end public list
 )

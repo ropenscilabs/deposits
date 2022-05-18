@@ -38,10 +38,7 @@ test_that ("figshare actions", {
     dep <- with_mock_dir ("fs_retr", {
         cli$retrieve_deposit (deposit_id)
     })
-    expect_type (dep, "list")
-    expect_length (dep$files, 0L)
-    expect_identical (dep$id, deposit_id)
-    expect_false (dep$is_public)
+    expect_s3_class (dep, "depositsClient")
 
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")

@@ -7,16 +7,16 @@ accrualPolicy , ,
 alternative , , 
 audience , communities(m) ,
 available , , 
-bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m) , 
+bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m) , citation
 conformsTo , , 
 created , created , timeline:firstOnline
-dateAccepted , publication_date(m)|dates(m) , timeline
-dateCopyrighted , publication_date(m)|dates(m) , timeline
-dateSubmitted , publication_date(m)|dates(m) , timeline
+dateAccepted , publication_date(m)|dates(m) , timeline:publisherAcceptance
+dateCopyrighted , publication_date(m)|dates(m) , timeline:publisherPublication
+dateSubmitted , publication_date(m)|dates(m) , timeline:firstOnline
 educationLevel , , 
 extent , , 
 hasFormat , , 
-hasPart , files|related_identifiers(m) , 
+hasPart , files|related_identifiers(m) , files
 hasVersion , version(m) ,
 instructionalMethod , , 
 isFormatOf , , 
@@ -24,11 +24,11 @@ isPartOf , , projects|collections
 isReferencedBy , , projects|collections
 isReplacedBy , , 
 isRequiredBy , , 
-issued , , 
+issued , , created_date
 isVersionOf , version(m) ,
-license , license(m) , license
+license , license(m) , license:url
 mediator , , 
-medium , upload_type(m)|image_type(m) , defined_type
+medium , upload_type(m)|image_type(m) , defined_type_name
 modified , modified , 
 provenance , , 
 references , references(m) , references
@@ -45,7 +45,7 @@ creator , creators(m)|owner , authors
 date , created , timeline
 description , description(m)|method(m)|state , description
 format , , defined_type
-identifier , doi(m)|doi_url(m)|record_id|record_url , 
+identifier , doi(m)|doi_url(m)|record_id|record_url , resource_doi|figshare_url
 language , language(m) , 
 publisher , , 
 relation , , 
