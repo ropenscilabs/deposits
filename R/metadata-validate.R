@@ -1,6 +1,6 @@
 #' validate metadata terms
 #'
-#' @param terms A list of metadata terms returned from `construct_date_list()`.
+#' @param terms A list of metadata terms returned from `construct_data_list()`.
 #' @param deposit Name of deposits service.
 #' @return `NULL` if all terms are valid, otherwise a vector of any invalid terms.
 #' @noRd
@@ -25,7 +25,8 @@ validate_zenodo_terms <- function (terms) {
     terms$metadata <- NULL
 
     f <- system.file (file.path ("extdata", "zenodoTerms.csv"),
-                      package = "deposits")
+        package = "deposits"
+    )
     zen_terms <- utils::read.csv (f)
     for (i in seq (ncol (zen_terms))) {
         zen_terms [, i] <- gsub ("^\\s+|\\s+$", "", zen_terms [, i])
@@ -46,21 +47,29 @@ validate_zenodo_terms <- function (terms) {
             values <- strsplit (zen_terms$vocabulary [i], "\\|") [[1]]
             term_i <- terms [[zen_terms$term [i]]]
             if (!term_i %in% values) {
-                out <- c (out,
-                          paste0 ("Data [",
-                                  zen_terms$term [i],
-                                  " = '",
-                                  term_i,
-                                  "'] not in required vocabulary of [",
-                                  zen_terms$vocabulary [i],
-                                  "]"))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Data [",
+                        zen_terms$term [i],
+                        " = '",
+                        term_i,
+                        "'] not in required vocabulary of [",
+                        zen_terms$vocabulary [i],
+                        "]"
+                    )
+                )
             }
         } else if (zen_terms$format [i] == "integer") {
             if (suppressWarnings (is.na (as.integer (term_i)))) {
-                out <- c (out,
-                          paste0 ("Data [",
-                                  zen_terms$term [i],
-                                  "] must be an integer."))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Data [",
+                        zen_terms$term [i],
+                        "] must be an integer."
+                    )
+                )
             }
         }
     }
@@ -69,9 +78,12 @@ validate_zenodo_terms <- function (terms) {
     for (i in seq (nrow (zen_meta_terms))) {
 
         if (grepl ("\\.csv$", zen_meta_terms$vocabulary [i])) {
-            f <- system.file (file.path ("extdata",
-                                         zen_meta_terms$vocabulary [i]),
-                              package = "deposits")
+            f <- system.file (file.path (
+                "extdata",
+                zen_meta_terms$vocabulary [i]
+            ),
+            package = "deposits"
+            )
             voc <- utils::read.csv (f)
             if (zen_meta_terms$term [i] == "license") {
                 voc <- c ("cc-zero", "cc-by", voc$id)
@@ -79,18 +91,26 @@ validate_zenodo_terms <- function (terms) {
             term_i <- meta [[zen_meta_terms$term [i]]]
             if (zen_meta_terms$format [i] == "array") {
                 if (!is.list (term_i)) {
-                    out <- c (out,
-                              paste0 ("Metadata [",
-                                      zen_meta_terms$term [i],
-                                      "] must be an array"))
+                    out <- c (
+                        out,
+                        paste0 (
+                            "Metadata [",
+                            zen_meta_terms$term [i],
+                            "] must be an array"
+                        )
+                    )
                 }
             } else if (!term_i %in% voc) {
-                out <- c (out,
-                          paste0 ("Metadata [",
-                                  zen_meta_terms$term [i],
-                                  " = '",
-                                  term_i,
-                                  "'] not in required vocabulary."))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Metadata [",
+                        zen_meta_terms$term [i],
+                        " = '",
+                        term_i,
+                        "'] not in required vocabulary."
+                    )
+                )
             }
         } else if (nzchar (zen_meta_terms$vocabulary [i])) {
             values <- strsplit (zen_meta_terms$vocabulary [i], "\\|") [[1]]
@@ -99,31 +119,43 @@ validate_zenodo_terms <- function (terms) {
 
                 term_names <- unique (unlist (lapply (term_i, names)))
                 if (!all (term_names %in% values)) {
-                    out <- c (out,
-                              paste0 ("Metadata [",
-                                      zen_meta_terms$term [i],
-                                      "] must be an array/list ",
-                                      "with names in [",
-                                      paste0 (values, collapse = ", "),
-                                      "]"))
+                    out <- c (
+                        out,
+                        paste0 (
+                            "Metadata [",
+                            zen_meta_terms$term [i],
+                            "] must be an array/list ",
+                            "with names in [",
+                            paste0 (values, collapse = ", "),
+                            "]"
+                        )
+                    )
                 }
             } else if (!term_i %in% values) {
-                out <- c (out,
-                          paste0 ("Metadata [",
-                                  zen_meta_terms$term [i],
-                                  " = '",
-                                  term_i,
-                                  "'] not in required vocabulary of [",
-                                  zen_meta_terms$vocabulary [i],
-                                  "]"))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Metadata [",
+                        zen_meta_terms$term [i],
+                        " = '",
+                        term_i,
+                        "'] not in required vocabulary of [",
+                        zen_meta_terms$vocabulary [i],
+                        "]"
+                    )
+                )
             }
         } else if (zen_meta_terms$format [i] == "array") {
             term_i <- meta [[zen_meta_terms$term [i]]]
             if (!is.list (term_i)) {
-                out <- c (out,
-                          paste0 ("Metadata [",
-                                  zen_meta_terms$term [i],
-                                  "] must be an array/list object"))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Metadata [",
+                        zen_meta_terms$term [i],
+                        "] must be an array/list object"
+                    )
+                )
             }
         }
     }
@@ -134,7 +166,8 @@ validate_zenodo_terms <- function (terms) {
 validate_figshare_terms <- function (terms) {
 
     f <- system.file (file.path ("extdata", "figshareTerms.csv"),
-                      package = "deposits")
+        package = "deposits"
+    )
     fs_terms <- utils::read.csv (f)
 
     for (i in seq (ncol (fs_terms))) {
@@ -150,47 +183,67 @@ validate_figshare_terms <- function (terms) {
         term_i <- terms [[fs_terms$term [i]]]
         if (fs_terms$format [i] == "integer") {
             if (is.na (suppressWarnings (as.integer (term_i)))) {
-                out <- c (out,
-                          paste0 ("Data [",
-                                  fs_terms$term [i],
-                                  "] is not coercible to integer."))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Data [",
+                        fs_terms$term [i],
+                        "] is not coercible to integer."
+                    )
+                )
             }
         } else if (grepl ("^(array|list)", fs_terms$format [i])) {
             if (!is.list (term_i)) {
-                out <- c (out,
-                          paste0 ("Data [",
-                                  fs_terms$term [i],
-                                  "] must have format [",
-                                  fs_terms$format [i],
-                                  "]"))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Data [",
+                        fs_terms$term [i],
+                        "] must have format [",
+                        fs_terms$format [i],
+                        "]"
+                    )
+                )
             } else if (nzchar (fs_terms$vocabulary [i])) {
                 voc <- strsplit (fs_terms$vocabulary [i], "\\|") [[1]]
-                term_names <- c (names (term_i),
-                                 unlist (lapply (term_i, names)))
+                term_names <- c (
+                    names (term_i),
+                    unlist (lapply (term_i, names))
+                )
                 if (!all (term_names %in% voc)) {
-                    out <- c (out,
-                              paste0 ("Data [",
-                                      fs_terms$term [i],
-                                      " = '",
-                                      term_i,
-                                      "' must follow fixed vocabulary of [",
-                                      paste0 (voc, collapse = ", "),
-                                      "]"))
+                    out <- c (
+                        out,
+                        paste0 (
+                            "Data [",
+                            fs_terms$term [i],
+                            " = '",
+                            term_i,
+                            "' must follow fixed vocabulary of [",
+                            paste0 (voc, collapse = ", "),
+                            "]"
+                        )
+                    )
                 }
             }
         } else if (nzchar (fs_terms$vocabulary [i])) {
             voc <- strsplit (fs_terms$vocabulary [i], "\\|") [[1]]
-            term_names <- c (names (term_i),
-                             unlist (lapply (term_i, names)))
+            term_names <- c (
+                names (term_i),
+                unlist (lapply (term_i, names))
+            )
             if (!all (term_names %in% voc)) {
-                out <- c (out,
-                          paste0 ("Data [",
-                                  fs_terms$term [i],
-                                  " = '",
-                                  term_i,
-                                  "' must follow fixed vocabulary of [",
-                                  paste0 (voc, collapse = ", "),
-                                  "]"))
+                out <- c (
+                    out,
+                    paste0 (
+                        "Data [",
+                        fs_terms$term [i],
+                        " = '",
+                        term_i,
+                        "' must follow fixed vocabulary of [",
+                        paste0 (voc, collapse = ", "),
+                        "]"
+                    )
+                )
             }
         }
     }
