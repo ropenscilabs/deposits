@@ -1,18 +1,18 @@
 {
     "files": [
         {
-            "upload_token": "e1a07ed5-5a3f-425d-91b0-778ce5bebd76",
+            "upload_token": "e726788a-03ae-49c8-ab62-6a1a815eeefa",
             "upload_url": "",
             "status": "moving_to_final",
             "preview_state": "preview_not_supported",
             "viewer_type": "",
-            "id": 35141656,
+            "id": 35155804,
             "name": "data.Rds",
             "size": 506,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/35141656",
-            "supplied_md5": "0644355dad45e1ddbbc81ccbbf840661",
-            "computed_md5": "0644355dad45e1ddbbc81ccbbf840661"
+            "download_url": "https://ndownloader.figshare.com/files/35155804",
+            "supplied_md5": "22c61006458c44ed979bf3461e330693",
+            "computed_md5": "22c61006458c44ed979bf3461e330693"
         }
     ],
     "resource_title": null,
@@ -38,7 +38,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/19779811",
+    "figshare_url": "https://figshare.com/articles/dataset/_/19786306",
     "description": "This is the abtract",
     "funding": null,
     "funding_list": [
@@ -47,8 +47,8 @@
     "version": 0,
     "status": "draft",
     "size": 506,
-    "created_date": "2022-05-17T13:03:06Z",
-    "modified_date": "2022-05-17T13:03:07Z",
+    "created_date": "2022-05-18T11:03:33Z",
+    "modified_date": "2022-05-18T11:03:33Z",
     "is_public": false,
     "is_confidential": false,
     "is_metadata_record": false,
@@ -69,7 +69,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark; Person, A. (2022): A Really Good Title. figshare. Dataset. https://figshare.com/articles/dataset/_/19779811",
+    "citation": "Padgham, Mark; Person, A. (2022): A Really Good Title. figshare. Dataset. https://figshare.com/articles/dataset/_/19786306",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -78,20 +78,20 @@
     "embargo_options": [
 
     ],
-    "id": 19779811,
+    "id": 19786306,
     "title": "A Really Good Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles19779811",
+    "url": "api/articles19786306",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles19779811",
-    "url_public_api": "api/articles/19779811",
-    "url_private_html": "https://figshare.com/account/articles/19779811",
-    "url_public_html": "https://figshare.com/articles/dataset/_/19779811",
+    "url_private_api": "api/articles19786306",
+    "url_public_api": "api/articles/19786306",
+    "url_private_html": "https://figshare.com/account/articles/19786306",
+    "url_public_html": "https://figshare.com/articles/dataset/_/19786306",
     "timeline": {
 
     }
