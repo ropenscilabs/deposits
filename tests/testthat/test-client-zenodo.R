@@ -49,11 +49,7 @@ test_that ("zenodo actions", {
     dep <- with_mock_dir ("zen_retr", {
         cli$retrieve_deposit (deposit_id)
     })
-    expect_type (dep, "list")
-    expect_length (dep$files, 0L)
-    expect_identical (dep$id, deposit_id)
-    expect_identical (names (dep_new), names (dep))
-    expect_false (identical (dep_new, dep))
+    expect_s3_class (dep, "depositsClient")
 
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")

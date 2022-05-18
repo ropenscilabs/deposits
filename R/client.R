@@ -393,7 +393,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             dep <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
-            cli <- metadata_from_deposit (cli, dep)
+            cli <- metadata_from_deposit (self, dep)
 
             invisible (cli)
         },
