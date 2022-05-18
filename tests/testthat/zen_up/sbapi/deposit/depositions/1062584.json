@@ -1,0 +1,47 @@
+{
+    "conceptrecid": "1062583",
+    "created": "2022-05-18T12:19:31.109110+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+
+    ],
+    "id": 1062584,
+    "links": {
+        "bucket": "sbapi/files/4aa3e0db-f508-45c9-a8ec-63a4c3df1d04",
+        "discard": "sbapi/deposit/depositions/1062584/actions/discard",
+        "edit": "sbapi/deposit/depositions/1062584/actions/edit",
+        "files": "sbapi/deposit/depositions/1062584/files",
+        "html": "https://sandbox.zenodo.org/deposit/1062584",
+        "latest_draft": "sbapi/deposit/depositions/1062584",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1062584",
+        "newversion": "sbapi/deposit/depositions/1062584/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1062584/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1062584/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1062584"
+    },
+    "metadata": {
+        "access_right": "open",
+        "creators": [
+            {
+                "name": "A. Person"
+            }
+        ],
+        "description": "This is the abtract",
+        "doi": "",
+        "license": "CC-BY-4.0",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1062584",
+            "recid": 1062584
+        },
+        "publication_date": "2022-05-18",
+        "title": "A Really Good Title",
+        "upload_type": "other"
+    },
+    "modified": "2022-05-18T12:19:31.109119+00:00",
+    "owner": 115518,
+    "record_id": 1062584,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "A Really Good Title"
+}

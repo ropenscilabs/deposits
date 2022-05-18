@@ -4,21 +4,28 @@ function (resp) {
         resp,
         "https://api.figshare.com/v2/account/articles/",
         "api/articles",
-        fixed=TRUE
+        fixed = TRUE
     )
 
     resp <- httptest2::gsub_response (
         resp,
         "https://api.figshare.com/v2/",
         "api/",
-        fixed=TRUE
+        fixed = TRUE
     )
 
     resp <- httptest2::gsub_response (
         resp,
         "figshare.com/upload/",
         "up/",
-        fixed=TRUE
+        fixed = TRUE
+    )
+
+    resp <- httptest2::gsub_response (
+        resp,
+        "https://sandbox.zenodo.org/api/",
+        "sbapi/",
+        fixed = TRUE
     )
 
     return (resp)
