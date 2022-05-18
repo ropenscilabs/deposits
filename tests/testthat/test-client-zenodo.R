@@ -10,9 +10,11 @@ test_that ("zenodo actions", {
 
     service <- "zenodo"
 
-    expect_silent (
-        cli <- depositsClient$new (name = service, sandbox = TRUE)
-    )
+    # expect_silent (
+    cli <- depositsClient$new (name = service, sandbox = TRUE)
+    # )
+    expect_s3_class (cli, "depositsClient")
+    expect_identical (cli$name, service)
 
     # --------- PING
     x <- with_mock_dir ("zen_ping", {
