@@ -4,8 +4,6 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-source ("../extra-fns.R")
-
 test_that ("zenodo actions", {
 
     service <- "zenodo"
@@ -22,8 +20,10 @@ test_that ("zenodo actions", {
     })
 
     # --------- NEW_DEPOSIT
-    filename <- fill_meta ()
-    cli <- depositsClient$new (name = service, sandbox = TRUE, metadata = filename)
+    metadata <- list (title = "New Title",
+                      abstract = "This is the abstract",
+                      creator = list ("A. Person", "B. Person"))
+    cli <- depositsClient$new (name = service, sandbox = TRUE, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
 
@@ -64,6 +64,14 @@ test_that ("zenodo actions", {
         gsub ("^md5\\:", "", dep$checksum),
         unname (tools::md5sum (filename))
     )
+
+    # -------- LIST_DEPOSITS
+    deps <- with_mock_dir ("zen_list", {
+        cli$list_deposits ()
+    })
+
+    expect_s3_class (deps, "data.frame")
+    expect_equal (nrow (deps), 1L)
 
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body
