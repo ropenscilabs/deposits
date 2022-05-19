@@ -1,0 +1,16 @@
+{
+    "mimetype": "application/octet-stream",
+    "updated": "2022-05-19T06:40:14.698208+00:00",
+    "links": {
+        "self": "sbapi/files/367abe75-1f71-4674-ab2c-49ed87d51f64/data.Rds",
+        "version": "sbapi/files/367abe75-1f71-4674-ab2c-49ed87d51f64/data.Rds?versionId=7b157b1e-6c1e-45a7-8fdd-18e7c3fbf030",
+        "uploads": "sbapi/files/367abe75-1f71-4674-ab2c-49ed87d51f64/data.Rds?uploads"
+    },
+    "is_head": true,
+    "created": "2022-05-19T06:40:14.692118+00:00",
+    "checksum": "md5:22c61006458c44ed979bf3461e330693",
+    "version_id": "7b157b1e-6c1e-45a7-8fdd-18e7c3fbf030",
+    "delete_marker": false,
+    "key": "data.Rds",
+    "size": 506
+}
