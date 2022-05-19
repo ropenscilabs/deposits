@@ -34,9 +34,9 @@ test_that ("metadata to DCEntry", {
     expect_true (jsonlite::validate (m))
     writeLines (m, filename)
 
-    expect_silent (
-        dc <- deposits_meta_to_dcmi (filename, id = "my-id")
-    )
+    # expect_silent ( # produces messages on some test environments
+    dc <- deposits_meta_to_dcmi (filename, id = "my-id")
+    # )
     expect_s3_class (dc, "DCEntry")
 
     expect_identical (dc$title [[1]]$value, "New Title")
