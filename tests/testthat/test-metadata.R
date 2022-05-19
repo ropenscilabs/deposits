@@ -1,10 +1,10 @@
 
-test_that("metadata template", {
+test_that ("metadata template", {
 
     filename <- tempfile (fileext = ".json")
-    #expect_silent (
-        out <- deposits_metadata_template (filename)
-    #)
+    # expect_silent (
+    out <- deposits_metadata_template (filename)
+    # )
     expect_true (out)
     expect_true (file.exists (filename))
 
@@ -13,12 +13,13 @@ test_that("metadata template", {
 
     expect_error (
         out <- deposits_metadata_template (filename),
-        "already exists; please delete before calling this function.")
+        "already exists; please delete before calling this function."
+    )
 })
 
-test_that("metadata to DCEntry", {
+test_that ("metadata to DCEntry", {
 
-    library(atom4R) # https://github.com/eblondel/atom4R/pull/10
+    library (atom4R) # https://github.com/eblondel/atom4R/pull/10
     filename <- tempfile (fileext = ".json")
     deposits_metadata_template (filename)
 
@@ -33,9 +34,9 @@ test_that("metadata to DCEntry", {
     expect_true (jsonlite::validate (m))
     writeLines (m, filename)
 
-    expect_output (
+    expect_silent (
         dc <- deposits_meta_to_dcmi (filename, id = "my-id")
-        )
+    )
     expect_s3_class (dc, "DCEntry")
 
     expect_identical (dc$title [[1]]$value, "New Title")
