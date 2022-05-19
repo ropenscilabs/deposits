@@ -27,8 +27,10 @@ deposits_metadata_template <- function (filename = NULL) {
     filepath <- dirname (normalizePath (filename, mustWork = FALSE))
     checkmate::assert_directory_exists (filepath)
     if (file.exists (filename)) {
-        stop ("filename [", filename, "] already exists; please delete before ",
-              "calling this function.")
+        stop (
+            "filename [", filename, "] already exists; please delete before ",
+            "calling this function."
+        )
     }
 
     # Get DCMI metadata fields from atom4R function names:
@@ -62,10 +64,13 @@ deposits_metadata_template <- function (filename = NULL) {
     res <- tryCatch (
         suppressWarnings (
             jsonlite::write_json (flist,
-                                  filename,
-                                  auto_unbox = TRUE,
-                                  pretty = TRUE)
-        ), error = function (e) e)
+                filename,
+                auto_unbox = TRUE,
+                pretty = TRUE
+            )
+        ),
+        error = function (e) e
+    )
 
     invisible (!methods::is (res, "error"))
 }
@@ -87,7 +92,7 @@ deposits_metadata_template <- function (filename = NULL) {
 #' m [grep ("Title", m)] <- "  \"Title\": \"New Title\""
 #' m [grep ("Type", m)] <- "  \"Type\": \"Software\""
 #' m [grep ("Description", m)] <-
-#'    "  \"Description\": \"Description of software\""
+#'     "  \"Description\": \"Description of software\""
 #' # Values can be entered in JSON format:
 #' m [grep ("TableOfContents", m)] <-
 #'     "  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"}"
@@ -117,6 +122,7 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
     meta <- meta [which (!grepl (ptn, names (meta)))]
 
     dcmi <- atom4R::DCEntry$new ()
+    dcmi$verbose.info <- FALSE
 
     for (n in names (meta)) {
         dc_fn <- paste0 ("addDC", n)
@@ -136,7 +142,8 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
 load_meta_terms <- function () {
 
     terms <- system.file (file.path ("extdata", "DCTerms.csv"),
-                          package = "deposits")
+        package = "deposits"
+    )
     terms <- utils::read.csv (terms)
     for (i in seq (ncol (terms))) {
         terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
@@ -159,9 +166,11 @@ get_dcmi_term_map <- function (deposit = "zenodo") {
     })
     terms <- do.call (rbind, terms)
     # zenodo metadata has "(m)" at end of terms
-    terms <- data.frame ("dcmi" = terms [, 1],
-                         "deposit" = terms [, 2],
-                         "meta" = grepl ("\\(m\\)$", terms [, 2]))
+    terms <- data.frame (
+        "dcmi" = terms [, 1],
+        "deposit" = terms [, 2],
+        "meta" = grepl ("\\(m\\)$", terms [, 2])
+    )
     terms [, 2] <- gsub ("\\(m\\)$", "", terms [, 2])
 
     return (terms)
@@ -178,28 +187,33 @@ construct_data_list <- function (metadata, term_map) {
     # one, with subsequent ones offering alternative translations
     term_map <- term_map [which (!duplicated (term_map$dcmi)), ]
 
-    values <- lapply (term_map$dcmi, function (i)
-                      lapply (metadata [[i]], function (j)
-                              j$value))
+    values <- lapply (term_map$dcmi, function (i) {
+        lapply (metadata [[i]], function (j) {
+            j$value
+        })
+    })
     names (values) <- term_map$deposit
     values <- values [which (vapply (values, length, integer (1)) > 0L)]
     arrays <- c ("keywords", "contributors")
     index <- which (!names (values) %in% arrays)
-    values [index] <- lapply (values [index], function (i)
-                              paste0 (i, collapse = ","))
+    values [index] <- lapply (values [index], function (i) {
+        paste0 (i, collapse = ",")
+    })
 
     is_zenodo <- any (term_map$meta)
     if (is_zenodo) {
 
         index <- which (names (values) %in%
-                        term_map$deposit [which (term_map$meta)])
+            term_map$deposit [which (term_map$meta)])
         meta_values <- values [index]
         values <- values [-index]
 
-        req <- list ("upload_type" = "other",
-                      "title" = "Title",
-                      "creators" = "A. Person",
-                      "description" = "Description")
+        req <- list (
+            "upload_type" = "other",
+            "title" = "Title",
+            "creators" = "A. Person",
+            "description" = "Description"
+        )
 
         index <- which (!names (req) %in% names (meta_values))
         meta_values <- c (meta_values, req [index])
@@ -225,8 +239,10 @@ construct_data_list <- function (metadata, term_map) {
             values$authors <- list (list (name = values$authors))
         }
         if ("categories" %in% names (values) & !is.integer (values$categories)) {
-            message ("Figshare categories must be integer values; ",
-                     "the provided values will be removed.")
+            message (
+                "Figshare categories must be integer values; ",
+                "the provided values will be removed."
+            )
             values$categories <- NULL
         }
         if ("timeline" %in% names (values)) {
@@ -237,8 +253,10 @@ construct_data_list <- function (metadata, term_map) {
         }
         if ("license" %in% names (values)) {
             if (is.na (suppressWarnings (as.integer (values$license)))) {
-                warning ("Figshare licenses must be integer-valued; ",
-                         "the value will be reset to '1' = 'CC-BY'")
+                warning (
+                    "Figshare licenses must be integer-valued; ",
+                    "the value will be reset to '1' = 'CC-BY'"
+                )
                 values$license <- 1L
             }
         }

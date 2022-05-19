@@ -48,6 +48,7 @@ metadata_from_figshare <- function (cli, dep) {
     dcmi <- cli$metadata
     if (is.null (dcmi)) {
         dcmi <- atom4R::DCEntry$new ()
+        dcmi$verbose.info <- FALSE
     }
 
     for (i in seq (nrow (term_map))) {
@@ -82,6 +83,7 @@ metadata_from_zenodo <- function (cli, dep) {
     dcmi <- cli$metadata
     if (is.null (dcmi)) {
         dcmi <- atom4R::DCEntry$new ()
+        dcmi$verbose.info <- FALSE
     }
 
     for (i in seq (nrow (term_map))) {
