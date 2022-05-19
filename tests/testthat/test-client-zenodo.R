@@ -20,9 +20,11 @@ test_that ("zenodo actions", {
     })
 
     # --------- NEW_DEPOSIT
-    metadata <- list (title = "New Title",
-                      abstract = "This is the abstract",
-                      creator = list ("A. Person", "B. Person"))
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
     cli <- depositsClient$new (name = service, sandbox = TRUE, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
