@@ -62,7 +62,10 @@ test_that ("client with metadata", {
     cli1$metadata$setUpdated (the_time)
 
     expect_identical (cli1$metadata$title [[1]]$value, "New Title")
-    expect_identical (cli1$metadata$abstract [[1]]$value, "This is the abstract")
+    expect_identical (
+        cli1$metadata$abstract [[1]]$value,
+        "This is the abstract"
+    )
     expect_identical (cli1$metadata$creator [[1]]$value, "A. Person")
     expect_identical (cli1$metadata$creator [[2]]$value, "B. Person")
 
@@ -75,5 +78,40 @@ test_that ("client with metadata", {
     cli2 <- depositsClient$new (deposit, sandbox = TRUE, metadata = filename)
     cli2$metadata$setUpdated (the_time)
 
-    expect_equal (cli1, cli2) # not identical because calling environments differ
+    # not identical because calling environments differ:
+    expect_equal (cli1, cli2)
+
+    meta <- deposits_meta_to_dcmi (filename)
+    cli3 <- depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+    cli3$metadata$setUpdated (the_time)
+
+    expect_equal (cli1, cli3)
+
+    cli4 <- depositsClient$new (deposit, sandbox = TRUE)
+    cli4$fill_metadata (meta)
+    cli4$metadata$setUpdated (the_time)
+
+    expect_equal (cli1, cli4)
+})
+
+test_that ("client with invalid metadata", {
+
+    deposit <- "zenodo"
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
+    filename <- tempfile (pattern = "meta_", fileext = ".json")
+    if (file.exists (filename)) {
+        file.remove (filename)
+    }
+    deposits_metadata_template (filename, metadata)
+    meta <- deposits_meta_to_dcmi (filename)
+    meta$creator <- c (meta$creator, "wrong") # must be a 'DCCreator' object
+
+    expect_error (
+        cli <- depositsClient$new (deposit, sandbox = TRUE, metadata = meta),
+        "metadata is not valid - see details via metadata\\$validate()"
+    )
 })
