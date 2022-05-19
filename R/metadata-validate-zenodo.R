@@ -1,8 +1,8 @@
+#'
+validate_zenodo_terms <- function (metaterms) {
 
-validate_zenodo_terms <- function (terms) {
-
-    meta <- terms$metadata
-    terms$metadata <- NULL
+    meta <- metaterms$metadata
+    metaterms$metadata <- NULL
 
     f <- system.file (file.path ("extdata", "zenodoTerms.csv"),
         package = "deposits"
@@ -18,7 +18,7 @@ validate_zenodo_terms <- function (terms) {
 
     index <- which (zen_meta_terms$term %in% names (meta))
     zen_meta_terms <- zen_meta_terms [index, ]
-    zen_terms <- zen_terms [which (zen_terms$term %in% names (terms)), ]
+    zen_terms <- zen_terms [which (zen_terms$term %in% names (metaterms)), ]
 
     out <- c (
         check_zenodo_terms (zen_terms),
@@ -30,15 +30,16 @@ validate_zenodo_terms <- function (terms) {
 
 #' Check standard zenodo terms - not their "metadata"
 #' @noRd
-check_zenodo_terms <- function (zen_terms) {
+check_zenodo_terms <- function (zen_terms, meta) {
 
     out <- NULL
 
     for (i in seq (nrow (zen_terms))) {
 
         if (nzchar (zen_terms$vocabulary [i])) {
+
             values <- strsplit (zen_terms$vocabulary [i], "\\|") [[1]]
-            term_i <- terms [[zen_terms$term [i]]]
+            term_i <- meta [[zen_terms$term [i]]]
             if (!term_i %in% values) {
                 out <- c (
                     out,

@@ -1,4 +1,4 @@
-validate_figshare_terms <- function (terms) {
+validate_figshare_terms <- function (metaterms) {
 
     f <- system.file (file.path ("extdata", "figshareTerms.csv"),
         package = "deposits"
@@ -9,13 +9,13 @@ validate_figshare_terms <- function (terms) {
         fs_terms [, i] <- gsub ("^\\s+|\\s+$", "", fs_terms [, i])
     }
     fs_terms$metadata <- NULL # zenodo only
-    fs_terms <- fs_terms [which (fs_terms$term %in% names (terms)), ]
+    fs_terms <- fs_terms [which (fs_terms$term %in% names (metaterms)), ]
 
     out <- NULL
 
     for (i in seq (nrow (fs_terms))) {
 
-        term_i <- terms [[fs_terms$term [i]]]
+        term_i <- metaterms [[fs_terms$term [i]]]
 
         if (fs_terms$format [i] == "integer") {
 

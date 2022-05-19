@@ -16,30 +16,24 @@ Client should already contain metadata updated with the
 \examples{
 \dontrun{
 # make a client
-d <- depositsClient$new ("zenodo") # or:
-d <- depositsClient$new ("figshare")
+cli <- depositsClient$new ("zenodo") # or:
+cli <- depositsClient$new ("figshare")
+print (cli)
 
 # methods
-d$list_deposits ()
+cli$deposits_list ()
 
-# Construct new deposit:
-meta <- atom4R::DCEntry$new ()
-meta$addDCTitle ("New deposit")
-cli <- depositsClient$new ("zenodo", sandbox = TRUE, meta = meta)
-res <- cli$new_deposit () # upload metadata to construct new zenodo deposit
-deposit_id <- res$id # or "entity_id" for "figshare"
-cli$retrieve_deposit (deposit_id = deposit_id)
+# Fill depositsClient metadata
+metadata <- list (
+    title = "New Title",
+    abstract = "This is the abstract",
+    creator = list ("A. Person", "B. Person")
+)
+cli$deposit_fill_metadata (metadata)
+print (cli)
 
-# Update deposit:
-# Note that updating atom4R::DCentry metadata objects generally requires
-# deleting old element and replacing with new one.
-meta$delDCTitle (meta$title [[1]])
-meta$addDCTitle ("This is a new title")
-cli$fill_metadata (meta)
-cli$update_deposit (deposit_id = deposit_id)
-
-# Delete deposit:
-cli$delete_deposit (deposit_id = deposit_id)
+# or pass metadata directly at construction of new client
+cli <- depositsClient$new ("figshare", metadata = metadata)
 }
 }
 \concept{client}

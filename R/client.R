@@ -5,30 +5,24 @@
 #' @examples
 #' \dontrun{
 #' # make a client
-#' d <- depositsClient$new ("zenodo") # or:
-#' d <- depositsClient$new ("figshare")
+#' cli <- depositsClient$new ("zenodo") # or:
+#' cli <- depositsClient$new ("figshare")
+#' print (cli)
 #'
 #' # methods
-#' d$list_deposits ()
+#' cli$deposits_list ()
 #'
-#' # Construct new deposit:
-#' meta <- atom4R::DCEntry$new ()
-#' meta$addDCTitle ("New deposit")
-#' cli <- depositsClient$new ("zenodo", sandbox = TRUE, meta = meta)
-#' res <- cli$new_deposit () # upload metadata to construct new zenodo deposit
-#' deposit_id <- res$id # or "entity_id" for "figshare"
-#' cli$retrieve_deposit (deposit_id = deposit_id)
+#' # Fill depositsClient metadata
+#' metadata <- list (
+#'     title = "New Title",
+#'     abstract = "This is the abstract",
+#'     creator = list ("A. Person", "B. Person")
+#' )
+#' cli$deposit_fill_metadata (metadata)
+#' print (cli)
 #'
-#' # Update deposit:
-#' # Note that updating atom4R::DCentry metadata objects generally requires
-#' # deleting old element and replacing with new one.
-#' meta$delDCTitle (meta$title [[1]])
-#' meta$addDCTitle ("This is a new title")
-#' cli$fill_metadata (meta)
-#' cli$update_deposit (deposit_id = deposit_id)
-#'
-#' # Delete deposit:
-#' cli$delete_deposit (deposit_id = deposit_id)
+#' # or pass metadata directly at construction of new client
+#' cli <- depositsClient$new ("figshare", metadata = metadata)
 #' }
 #' @family client
 #' @export
@@ -240,14 +234,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
-            terms <- construct_data_list (self$metadata, self$term_map)
-            if (length (terms) == 0L) {
+            metaterms <- construct_data_list (self$metadata, self$term_map)
+            if (length (metaterms) == 0L) {
                 stop (
                     "metadata is empty; please fill template or use ",
                     "`atom4R` methods described in vignette"
                 )
             }
-            check <- validate_terms (terms, deposit = self$name)
+            check <- validate_terms (metaterms, deposit = self$name)
             if (length (check) > 0L) {
                 warning (
                     "The following metadata terms do not conform:\n",
@@ -255,7 +249,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
-            body <- jsonlite::toJSON (terms, pretty = FALSE, auto_unbox = TRUE)
+            body <- jsonlite::toJSON (metaterms, pretty = FALSE, auto_unbox = TRUE)
 
             url <- paste0 (
                 self$url,
@@ -296,8 +290,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            terms <- construct_data_list (self$metadata, self$term_map)
-            body <- paste0 (jsonlite::toJSON (terms,
+            metaterms <- construct_data_list (self$metadata, self$term_map)
+            body <- paste0 (jsonlite::toJSON (metaterms,
                 pretty = FALSE,
                 auto_unbox = TRUE
             ))
