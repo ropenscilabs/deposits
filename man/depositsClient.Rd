@@ -192,17 +192,24 @@ from \code{list_deposits} method).}
 \subsection{Method \code{fill_metadata()}}{
 Fill deposits client with metadata
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$fill_metadata(metadata)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$fill_metadata(metadata = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{metadata}}{Either name (or full path) or a local file containing
-metadata constructed with \link{deposits_metadata_template}, or an
-\pkg{atom4R} \code{DCEntry} object containing metadata, either constructed
-directly via \pkg{atom4R} routines, or via
-\link{deposits_meta_to_dcmi}.}
+\item{\code{metadata}}{Either of one three possible ways of defining
+metadata:
+\itemize{
+\item The name (or full path) or a local file containing
+metadata constructed with \link{deposits_metadata_template};
+\item A names list of metadata with names matching values given by
+\link{dcmi_terms}, and values specified as individual character
+strings or lists for multiple entries.
+\item An \pkg{atom4R} \code{DCEntry} object containing metadata, either
+constructed directly via \pkg{atom4R} routines, or via
+\link{deposits_meta_to_dcmi}.
+}}
 }
 \if{html}{\out{</div>}}
 }
