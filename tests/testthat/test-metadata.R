@@ -19,7 +19,6 @@ test_that ("metadata template", {
 
 test_that ("metadata to DCEntry", {
 
-    library (atom4R) # https://github.com/eblondel/atom4R/pull/10
     filename <- tempfile (fileext = ".json")
     deposits_metadata_template (filename)
 
@@ -45,4 +44,36 @@ test_that ("metadata to DCEntry", {
     expect_length (dc$tableOfContents, 2L)
     expect_identical (dc$tableOfContents [[1]]$value, "First")
     expect_identical (dc$tableOfContents [[2]]$value, "Second")
+})
+
+test_that ("client with metadata", {
+
+    deposit <- "zenodo"
+    # the following objects differ in timestamps, so all receive this one:
+    the_time <- Sys.time ()
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
+
+    cli1 <- depositsClient$new (deposit, sandbox = TRUE, metadata = metadata)
+    cli1$metadata$setUpdated (the_time)
+
+    expect_identical (cli1$metadata$title [[1]]$value, "New Title")
+    expect_identical (cli1$metadata$abstract [[1]]$value, "This is the abstract")
+    expect_identical (cli1$metadata$creator [[1]]$value, "A. Person")
+    expect_identical (cli1$metadata$creator [[2]]$value, "B. Person")
+
+    filename <- tempfile (pattern = "meta_", fileext = ".json")
+    deposit <- "zenodo"
+    if (file.exists (filename)) {
+        file.remove (filename)
+    }
+    deposits_metadata_template (filename, metadata)
+    cli2 <- depositsClient$new (deposit, sandbox = TRUE, metadata = filename)
+    cli2$metadata$setUpdated (the_time)
+
+    expect_equal (cli1, cli2) # not identical because calling environments differ
 })
