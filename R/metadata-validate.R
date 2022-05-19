@@ -107,7 +107,7 @@ check_zenodo_meta_terms <- function (zen_meta_terms, meta) {
 
         } else if (zen_meta_terms$format [i] == "array") {
 
-            out <- c (out, check_zen_meta_array (zen_meta_terms, i))
+            out <- c (out, check_zen_meta_array (zen_meta_terms, meta, i))
         }
     }
 
@@ -197,7 +197,7 @@ check_zen_meta_from_vocab <- function (zen_meta_terms, meta, i) {
 
 #' Check one zenodo metadata array term
 #' @noRd
-check_zen_meta_array <- function (zen_meta_terms, i) {
+check_zen_meta_array <- function (zen_meta_terms, meta, i) {
 
     out <- NULL
 
