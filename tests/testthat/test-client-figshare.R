@@ -4,8 +4,6 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-source ("../extra-fns.R")
-
 test_that ("figshare actions", {
 
     service <- "figshare"
@@ -20,8 +18,12 @@ test_that ("figshare actions", {
     })
 
     # --------- NEW_DEPOSIT
-    filename <- fill_meta ()
-    cli <- depositsClient$new (name = service, metadata = filename)
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
+    cli <- depositsClient$new (name = service, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
 
@@ -54,6 +56,14 @@ test_that ("figshare actions", {
         dep$files$supplied_md5,
         dep$files$computed_md5
     )
+
+    # -------- LIST_DEPOSITS
+    dep <- with_mock_dir ("fs_list", {
+        cli$list_deposits ()
+    })
+
+    expect_s3_class (dep, "data.frame")
+    expect_equal (nrow (dep), 1L)
 
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body
