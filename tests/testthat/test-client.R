@@ -25,6 +25,11 @@ test_that ("Client structure", {
     expect_s3_class (cli, "R6")
     expect_identical (cli$name, service)
 
+    expect_error (
+        cli$new_deposit (),
+        "No metadata present; use 'fill_metadata\\(\\)' first."
+    )
+
     s <- deposits_services ()
     u <- s$api_base_url [s$name == service]
     expect_identical (cli$url, u)
