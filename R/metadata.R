@@ -33,14 +33,9 @@ deposits_metadata_template <- function (filename = NULL) {
         )
     }
 
-    # Get DCMI metadata fields from atom4R function names:
-    fields <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
-    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
-    fields <- fields [which (!fields %in% not_meta)]
-
-    fields <- gsub ("^DC", "", fields)
-    flist <- as.list (rep ("", length (fields)))
-    names (flist) <- fields
+    meta_terms <- dcmi_terms ()
+    flist <- as.list (rep ("", length (meta_terms)))
+    names (flist) <- meta_terms
 
     # add non-DCMI comment, tags and keywords fields
     flist$`_comment` <- "Fields starting with underscores will be ignored (and can safely be deleted)"
@@ -73,6 +68,24 @@ deposits_metadata_template <- function (filename = NULL) {
     )
 
     invisible (!methods::is (res, "error"))
+}
+
+#' Get names of DCMI terms
+#'
+#' The Dublin Core Metadata Initiative defines a set of terms at
+#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
+#' This function returns the names of those terms currently recognised by the
+#' \pkg{atom4R} package.
+#'
+#' @return A character vector of DCMI terms.
+#' @export
+dcmi_terms <- function () {
+
+    terms <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
+    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
+    terms <- terms [which (!terms %in% not_meta)]
+
+    return (gsub ("^DC", "", terms))
 }
 
 #' Read a metadata `yaml` file and convert to \pkg{atom4R} DCMI object.
