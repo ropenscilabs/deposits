@@ -2,7 +2,8 @@
 #'
 #' @param terms A list of metadata terms returned from `construct_data_list()`.
 #' @param deposit Name of deposits service.
-#' @return `NULL` if all terms are valid, otherwise a vector of any invalid terms.
+#' @return `NULL` if all terms are valid, otherwise a vector of any invalid
+#' terms.
 #' @noRd
 validate_terms <- function (terms, deposit = "zenodo") {
 
@@ -18,8 +19,6 @@ validate_terms <- function (terms, deposit = "zenodo") {
 }
 
 validate_zenodo_terms <- function (terms) {
-
-    out <- NULL
 
     meta <- terms$metadata
     terms$metadata <- NULL
@@ -40,7 +39,20 @@ validate_zenodo_terms <- function (terms) {
     zen_meta_terms <- zen_meta_terms [index, ]
     zen_terms <- zen_terms [which (zen_terms$term %in% names (terms)), ]
 
-    # check terms
+    out <- c (
+        check_zenodo_terms (zen_terms),
+        check_zenodo_meta_terms (zen_meta_terms, meta)
+    )
+
+    return (out)
+}
+
+#' Check standard zenodo terms - not their "metadata"
+#' @noRd
+check_zenodo_terms <- function (zen_terms) {
+
+    out <- NULL
+
     for (i in seq (nrow (zen_terms))) {
 
         if (nzchar (zen_terms$vocabulary [i])) {
@@ -74,7 +86,15 @@ validate_zenodo_terms <- function (terms) {
         }
     }
 
-    # check meta_terms
+    return (out)
+}
+
+#' Check standard zenodo metadata terms
+#' @noRd
+check_zenodo_meta_terms <- function (zen_meta_terms, meta) {
+
+    out <- NULL
+
     for (i in seq (nrow (zen_meta_terms))) {
 
         if (grepl ("\\.csv$", zen_meta_terms$vocabulary [i])) {
@@ -162,6 +182,7 @@ validate_zenodo_terms <- function (terms) {
 
     return (out)
 }
+
 
 validate_figshare_terms <- function (terms) {
 
