@@ -15,7 +15,7 @@ upload_figshare_file <- function (article_id, url, headers, path) {
     x <- figshare_upload_url (article_id, url, headers, path)
     upload_url <- x$upload_url
     file_id <- x$id
-    #upload_token <- x$upload_token
+    # upload_token <- x$upload_token
 
     flist <- figshare_upload_parts (upload_url, headers, path)
     nparts <- length (flist)
@@ -25,11 +25,13 @@ upload_figshare_file <- function (article_id, url, headers, path) {
 
         url_i <- sprintf ("%s/%s", upload_url, i)
         req <- create_httr2_helper (url_i, headers$Authorization, "PUT")
-        req$headers <- c (req$headers, 
-                          "Content-Type" = "application/octet-stream")
+        req$headers <- c (req$headers,
+            "Content-Type" = "application/octet-stream"
+        )
         req <- httr2::req_body_file (
             req,
-            path = path)
+            path = path
+        )
         resp <- httr2::req_perform (req)
         httr2::resp_check_status (resp)
     }
@@ -56,11 +58,13 @@ figshare_upload_url <- function (id, url, headers, path) {
     md5 <- unname (tools::md5sum (path))
     s <- file.size (path)
     body <- jsonlite::toJSON (
-                              data.frame (md5 = md5,
-                                          name = basename (path),
-                                          size = s),
-                              pretty = FALSE,
-                              auto_unbox = TRUE
+        data.frame (
+            md5 = md5,
+            name = basename (path),
+            size = s
+        ),
+        pretty = FALSE,
+        auto_unbox = TRUE
     )
     body <- gsub ("^\\[|\\]$", "", paste0 (body))
 
@@ -97,9 +101,10 @@ figshare_upload_parts <- function (upload_url, headers, path) {
     part_size <- parts$endOffset [1] + 1
     tmpdir <- dirname (path)
 
-    withr::with_dir (tmpdir,
+    withr::with_dir (
+        tmpdir,
         system (paste ("split -b", part_size, path, "part_", "--numeric=1"))
-        )
+    )
 
     list.files (tmpdir, pattern = "^part\\_", full.names = TRUE)
 }

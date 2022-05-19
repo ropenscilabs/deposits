@@ -43,7 +43,10 @@ deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
     names (template) <- meta_terms
 
     # add non-DCMI comment, tags and keywords fields
-    template$`_comment` <- "Fields starting with underscores will be ignored (and can safely be deleted)"
+    template$`_comment` <- paste0 (
+        "Fields starting with underscores will be ",
+        "ignored (and can safely be deleted)"
+    )
     template$Tags <- list ("tag1", "tag2")
     template$Keywords <- list ("keyword1", "keyword2")
     template <- template [order (names (template))]
@@ -300,7 +303,8 @@ construct_data_list <- function (metadata, term_map) {
         if ("authors" %in% names (values) & !is.list (values$authors)) {
             values$authors <- list (list (name = values$authors))
         }
-        if ("categories" %in% names (values) & !is.integer (values$categories)) {
+        if ("categories" %in% names (values) &
+            !is.integer (values$categories)) {
             message (
                 "Figshare categories must be integer values; ",
                 "the provided values will be removed."

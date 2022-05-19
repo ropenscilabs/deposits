@@ -85,7 +85,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     checkmate::assert_file_exists (metadata)
                     metadata <- deposits_meta_to_dcmi (metadata)
                 } else {
-                    checkmate::assert_class (metadata, c ("DCEntry", "AtomEntry", "R6"))
+                    checkmate::assert_class (
+                        metadata,
+                        c ("DCEntry", "AtomEntry", "R6")
+                    )
                 }
             }
 
@@ -204,7 +207,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 deposit_id
             )
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "DELETE")
+            req <- create_httr2_helper (
+                url,
+                self$headers$Authorization,
+                "DELETE"
+            )
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
@@ -227,7 +234,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     checkmate::assert_file_exists (metadata)
                     metadata <- deposits_meta_to_dcmi (filename)
                 } else {
-                    checkmate::assert_class (meta, c ("DCEntry", "AtomEntry", "R6"))
+                    checkmate::assert_class (
+                        meta,
+                        c ("DCEntry", "AtomEntry", "R6")
+                    )
                 }
             }
 
@@ -458,8 +468,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (self$name == "figshare" & !x$is_public) {
                 stop (
-                    "Figshare only enables automated downloads of public files.\n",
-                    "You can manually download at ", download_url
+                    "Figshare only enables automated downloads of public ",
+                    "files.\nYou can manually download at ", download_url
                 )
             }
 
