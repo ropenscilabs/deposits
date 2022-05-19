@@ -61,11 +61,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Create a new `depositsClient` object
         #' @param name (character) of a deposits service (see
         #' \link{deposits_services}).
-        #' @param metadata Either name (or full path) or a local file containing
-        #' metadata constructed with \link{deposits_metadata_template}, or an
-        #' \pkg{atom4R} `DCEntry` object containing metadata, either constructed
-        #' directly via \pkg{atom4R} routines, or via
+        #' @param metadata Either of one three possible ways of defining
+        #' metadata:
+        #' \itemize{
+        #' \item The name (or full path) or a local file containing
+        #' metadata constructed with \link{deposits_metadata_template};
+        #' \item A names list of metadata with names matching values given by
+        #' \link{dcmi_terms}, and values specified as individual character
+        #' strings or lists for multiple entries.
+        #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
+        #' constructed directly via \pkg{atom4R} routines, or via
         #' \link{deposits_meta_to_dcmi}.
+        #' }
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
@@ -79,12 +86,23 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             name <- match.arg (tolower (name), c ("zenodo", "figshare"))
             checkmate::assert_logical (sandbox, len = 1L)
+
             if (!is.null (metadata)) {
+
                 if (is.character (metadata)) {
+
                     checkmate::assert_string (metadata)
                     checkmate::assert_file_exists (metadata)
                     metadata <- deposits_meta_to_dcmi (metadata)
+
+                } else if (is.list (metadata)) {
+
+                    filename <- tempfile (pattern = "meta_", fileext = ".json")
+                    deposits_metadata_template (filename, metadata)
+                    metadata <- deposits_meta_to_dcmi (filename)
+
                 } else {
+
                     checkmate::assert_class (
                         metadata,
                         c ("DCEntry", "AtomEntry", "R6")
