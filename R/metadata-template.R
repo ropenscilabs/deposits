@@ -64,6 +64,10 @@ deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
         )
     }
 
+    # json field names must be unique
+    i <- grep ("^\\_comment", names (template))
+    names (template) [i] <- paste0 ("_comment", seq (i))
+
     if (!is.null (metadata)) {
         template <- fill_metadata_template (template, metadata)
     }
