@@ -16,7 +16,7 @@ test_that ("zenodo actions", {
 
     # --------- PING
     x <- with_mock_dir ("zen_ping", {
-        cli$ping ()
+        cli$deposit_authenticate ()
     })
 
     # --------- NEW_DEPOSIT
@@ -30,7 +30,7 @@ test_that ("zenodo actions", {
     expect_s3_class (cli$metadata, "DCEntry")
 
     dep <- with_mock_dir ("zen_new", {
-        cli$new_deposit ()
+        cli$deposit_new ()
     })
 
     expect_type (dep, "list")
@@ -49,7 +49,7 @@ test_that ("zenodo actions", {
     # -------- RETRIEVE_DEPOSIT
     deposit_id <- dep$id
     dep <- with_mock_dir ("zen_retr", {
-        cli$retrieve_deposit (deposit_id)
+        cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
 
@@ -58,7 +58,7 @@ test_that ("zenodo actions", {
     saveRDS (datasets::Orange, filename)
 
     dep <- with_mock_dir ("zen_up", {
-        cli$upload_file (deposit_id, filename)
+        cli$deposit_upload_file (deposit_id, filename)
     })
 
     expect_type (dep, "list")
@@ -69,7 +69,7 @@ test_that ("zenodo actions", {
 
     # -------- LIST_DEPOSITS
     deps <- with_mock_dir ("zen_list", {
-        cli$list_deposits ()
+        cli$deposits_list ()
     })
 
     expect_s3_class (deps, "data.frame")
@@ -78,7 +78,7 @@ test_that ("zenodo actions", {
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body
     # dep <- with_mock_dir ("zen_del", {
-    #    cli$delete_deposit (deposit_id)
+    #    cli$deposit_delete (deposit_id)
     # })
     # expect_true (dep)
 })

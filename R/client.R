@@ -147,7 +147,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description ping a deposits server to check authentication
         #' @return `TRUE` if successful response, `FALSE` otherwise
 
-        ping = function () {
+        deposit_authenticate = function () {
 
             url <- ifelse (self$name == "figshare",
                 paste0 (self$url, "token"),
@@ -164,7 +164,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description List own deposits for given service
         #' @return A list of deposits.
 
-        list_deposits = function () {
+        deposits_list = function () {
 
             url <- paste0 (
                 self$url,
@@ -186,7 +186,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' from `list_deposits` method).
         #' @return `TRUE` is deposit successfully deleted, otherwise `FALSE`.
 
-        delete_deposit = function (deposit_id = NULL) {
+        deposit_delete = function (deposit_id = NULL) {
 
             checkmate::assert_int (deposit_id)
 
@@ -226,7 +226,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' }
         #' @return Modified form of the deposits client with metadata inserted.
 
-        fill_metadata = function (metadata = NULL) {
+        deposit_fill_metadata = function (metadata = NULL) {
 
             metadata <- process_metadata_param (metadata)
             self$metadata <- metadata
@@ -235,7 +235,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Create a new deposit
         #' @return A `data.frame` with details of the newly created deposit.
 
-        new_deposit = function () {
+        deposit_new = function () {
 
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
@@ -280,7 +280,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param deposit_id The 'id' number of deposit to update.
         #' @return A `data.frame` with details of newly updated deposit
 
-        update_deposit = function (deposit_id) {
+        deposit_update = function (deposit_id) {
 
             checkmate::assert_int (deposit_id)
 
@@ -317,7 +317,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @return A `data.frame` with details on newly uploaded file, including
         #' upload and download URLs, and file details.
 
-        upload_file = function (deposit_id, path = NULL) {
+        deposit_upload_file = function (deposit_id, path = NULL) {
 
             checkmate::assert_int (deposit_id)
             if (!is.null (path)) {
@@ -363,7 +363,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' to be retrieved.
         #' @return A `data.frame` containing full data of specified deposit.
 
-        retrieve_deposit = function (deposit_id) {
+        deposit_retrieve = function (deposit_id) {
 
             checkmate::assert_int (deposit_id)
 
@@ -398,11 +398,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
 
-        download_file = function (deposit_id,
-                                  filename,
-                                  path = NULL,
-                                  overwrite = FALSE,
-                                  quiet = FALSE) {
+        deposit_download_file = function (deposit_id,
+                                          filename,
+                                          path = NULL,
+                                          overwrite = FALSE,
+                                          quiet = FALSE) {
 
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (filename, len = 1L)

@@ -14,7 +14,7 @@ test_that ("figshare actions", {
 
     # --------- PING
     x <- with_mock_dir ("fs_ping", {
-        cli$ping ()
+        cli$deposit_authenticate ()
     })
 
     # --------- NEW_DEPOSIT
@@ -28,7 +28,7 @@ test_that ("figshare actions", {
     expect_s3_class (cli$metadata, "DCEntry")
 
     dep <- with_mock_dir ("fs_new", {
-        cli$new_deposit ()
+        cli$deposit_new ()
     })
 
     expect_type (dep, "list")
@@ -38,7 +38,7 @@ test_that ("figshare actions", {
     # -------- RETRIEVE_DEPOSIT
     deposit_id <- dep$entity_id
     dep <- with_mock_dir ("fs_retr", {
-        cli$retrieve_deposit (deposit_id)
+        cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
 
@@ -47,7 +47,7 @@ test_that ("figshare actions", {
     saveRDS (datasets::Orange, filename)
 
     dep <- with_mock_dir ("fs_up", {
-        cli$upload_file (deposit_id, filename)
+        cli$deposit_upload_file (deposit_id, filename)
     })
 
     expect_type (dep, "list")
@@ -59,7 +59,7 @@ test_that ("figshare actions", {
 
     # -------- LIST_DEPOSITS
     dep <- with_mock_dir ("fs_list", {
-        cli$list_deposits ()
+        cli$deposits_list ()
     })
 
     expect_s3_class (dep, "data.frame")
@@ -68,7 +68,7 @@ test_that ("figshare actions", {
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body
     # dep <- with_mock_dir ("fs_del", {
-    #    cli$delete_deposit (deposit_id)
+    #     cli$deposit_delete (deposit_id)
     # })
     # expect_true (dep)
 })

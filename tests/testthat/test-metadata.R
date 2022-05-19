@@ -88,7 +88,7 @@ test_that ("client with metadata", {
     expect_equal (cli1, cli3)
 
     cli4 <- depositsClient$new (deposit, sandbox = TRUE)
-    cli4$fill_metadata (meta)
+    cli4$deposit_fill_metadata (meta)
     cli4$metadata$setUpdated (the_time)
 
     expect_equal (cli1, cli4)

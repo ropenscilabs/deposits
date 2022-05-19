@@ -26,7 +26,7 @@ test_that ("Client structure", {
     expect_identical (cli$name, service)
 
     expect_error (
-        cli$new_deposit (),
+        cli$deposit_new (),
         "No metadata present; use 'fill_metadata\\(\\)' first."
     )
 
