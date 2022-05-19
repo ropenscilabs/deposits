@@ -1,4 +1,7 @@
 #' @keywords internal
+#' @importFrom R6 R6Class
+#' @importFrom here here
+#' @importFrom curl curl_download
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage
