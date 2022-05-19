@@ -1,4 +1,34 @@
 
+#' Process metadata parameters in one of the three possible forms, returning a
+#' 'DCEntry' object.
+#' @param metadata Metadata as list, filename, or DCEntry object
+#' @return A 'DCEntry' object
+#' @noRd
+process_metadata_param <- function (metadata) {
+
+    if (is.character (metadata)) {
+
+        checkmate::assert_string (metadata)
+        checkmate::assert_file_exists (metadata)
+        metadata <- deposits_meta_to_dcmi (metadata)
+
+    } else if (is.list (metadata)) {
+
+        filename <- tempfile (pattern = "meta_", fileext = ".json")
+        deposits_metadata_template (filename, metadata)
+        metadata <- deposits_meta_to_dcmi (filename)
+
+    } else {
+
+        checkmate::assert_class (
+            metadata,
+            c ("DCEntry", "AtomEntry", "R6")
+        )
+    }
+
+    return (metadata)
+}
+
 #' Get names of DCMI terms
 #'
 #' The Dublin Core Metadata Initiative defines a set of terms at

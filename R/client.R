@@ -88,26 +88,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_logical (sandbox, len = 1L)
 
             if (!is.null (metadata)) {
-
-                if (is.character (metadata)) {
-
-                    checkmate::assert_string (metadata)
-                    checkmate::assert_file_exists (metadata)
-                    metadata <- deposits_meta_to_dcmi (metadata)
-
-                } else if (is.list (metadata)) {
-
-                    filename <- tempfile (pattern = "meta_", fileext = ".json")
-                    deposits_metadata_template (filename, metadata)
-                    metadata <- deposits_meta_to_dcmi (filename)
-
-                } else {
-
-                    checkmate::assert_class (
-                        metadata,
-                        c ("DCEntry", "AtomEntry", "R6")
-                    )
-                }
+                metadata <- process_metadata_param (metadata)
             }
 
             if (sandbox && name == "zenodo") {
