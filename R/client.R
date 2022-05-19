@@ -97,12 +97,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self$sandbox <- sandbox
 
             s <- deposits_services ()
-            if (!name %in% s$name) {
-                stop ("'name' must be one of [",
-                    paste0 (s$name, collapse = ", "), "]",
-                    call. = FALSE
-                )
-            }
             self$name <- name
             self$url <- s$api_base_url [s$name == name]
 
