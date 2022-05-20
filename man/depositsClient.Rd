@@ -46,6 +46,8 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{url_base}}{(character) Base URL of host service API}
 
+\item{\code{url_deposit}}{(character) URL of deposit.}
+
 \item{\code{id}}{(integer) Deposit identifier from host service.}
 
 \item{\code{headers}}{(list) list of named headers}

@@ -1,15 +1,17 @@
 
-metadata_from_deposit <- function (cli, dep) {
+#' Convert hostdata from deposit query into `atom4R::DCEntry`.
+#' @noRd
+metadata_from_deposit <- function (cli, hostdata) {
 
     if (cli$name == "figshare") {
-        cli <- metadata_from_figshare (cli, dep)
+        dcmi <- metadata_from_figshare (cli, hostdata)
     } else if (cli$name == "zenodo") {
-        cli <- metadata_from_zenodo (cli, dep)
+        dcmi <- metadata_from_zenodo (cli, hostdata)
     } else {
         stop ("unknown deposit [", cli$name, "]")
     }
 
-    return (cli)
+    return (dcmi)
 }
 
 rm_missing_atom_terms <- function (term_map) {
@@ -27,9 +29,9 @@ rm_missing_atom_terms <- function (term_map) {
     term_map [which (!term_map$dcmi %in% missing), ]
 }
 
-term_map_for_deposit <- function (cli, dep) {
+term_map_for_deposit <- function (cli, hostdata) {
 
-    lens <- vapply (dep, length, integer (1L))
+    lens <- vapply (hostdata, length, integer (1L))
     dep_fields <- names (lens [which (lens > 0L)])
     dep_fields <- dep_fields [which (dep_fields %in% cli$term_map$deposit)]
     term_map <- cli$term_map [which (cli$term_map$deposit %in% dep_fields), ]
@@ -41,9 +43,9 @@ term_map_for_deposit <- function (cli, dep) {
 }
 
 
-metadata_from_figshare <- function (cli, dep) {
+metadata_from_figshare <- function (cli, hostdata) {
 
-    term_map <- term_map_for_deposit (cli, dep)
+    term_map <- term_map_for_deposit (cli, hostdata)
 
     dcmi <- cli$metadata
     if (is.null (dcmi)) {
@@ -58,7 +60,7 @@ metadata_from_figshare <- function (cli, dep) {
             ignore.case = TRUE
         )
 
-        value <- dep [[term_map$deposit [i]]]
+        value <- hostdata [[term_map$deposit [i]]]
         # https://github.com/eblondel/atom4R/issues/14
         if (dc_fn == "addDCCreator") {
             value <- paste0 (value$full_name, collapse = ", ")
@@ -67,16 +69,14 @@ metadata_from_figshare <- function (cli, dep) {
     }
     dcmi$validate ()
 
-    cli$metadata <- dcmi
-
-    return (cli)
+    return (dcmi)
 }
 
-metadata_from_zenodo <- function (cli, dep) {
+metadata_from_zenodo <- function (cli, hostdata) {
 
     term_map <- rbind (
-        term_map_for_deposit (cli, dep),
-        term_map_for_deposit (cli, dep$metadata)
+        term_map_for_deposit (cli, hostdata),
+        term_map_for_deposit (cli, hostdata$metadata)
     )
     term_map <- term_map [which (!duplicated (term_map)), ]
 
@@ -94,12 +94,10 @@ metadata_from_zenodo <- function (cli, dep) {
             ignore.case = TRUE
         )
 
-        value <- dep [[term_map$deposit [i]]]
+        value <- hostdata [[term_map$deposit [i]]]
         do.call (dcmi [[dc_fn]], list (value))
     }
     dcmi$validate ()
 
-    cli$metadata <- dcmi
-
-    return (cli)
+    return (dcmi)
 }

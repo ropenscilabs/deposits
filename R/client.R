@@ -31,7 +31,28 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
     "depositsClient",
     portable = TRUE,
     cloneable = FALSE,
-    private = list (), # end private list
+    private = list (
+        fill_deposit_id_url = function () {
+
+            if (self$name == "figshare") {
+                # entity_id is filled on creation, but retrieval returns 'id'
+                self$id <- self$hostdata$entity_id
+                if (is.null (self$id)) {
+                    self$id <- self$hostdata$id
+                }
+                self$url_deposit <-
+                    paste0 (
+                        "https://figshare.com/account/articles/",
+                        self$id
+                    )
+            } else if (self$name == "zenodo") {
+                self$id <- self$hostdata$id
+                self$url_deposit <- self$hostdata$links$html
+            }
+
+            invisible (self)
+        }
+    ), # end private list
 
     public = list (
 
@@ -41,6 +62,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         sandbox = FALSE,
         #' @field url_base (character) Base URL of host service API
         url_base = NULL,
+        #' @field url_deposit (character) URL of deposit.
+        url_deposit = NULL,
         #' @field id (integer) Deposit identifier from host service.
         id = NULL,
         #' @field headers (list) list of named headers
@@ -131,6 +154,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 cat (paste0 ("     sandbox: ", self$sandbox), sep = "\n")
             }
             cat (paste0 ("   url_base : ", self$url_base), sep = "\n")
+            if (!is.null (self$url_deposit)) {
+                cat (paste0 ("url_deposit : ", self$url_deposit), sep = "\n")
+            }
             if (!is.null (self$id)) {
                 cat (paste0 (" deposit id : ", self$id), sep = "\n")
             }
@@ -279,11 +305,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self$hostdata <- httr2::resp_body_json (resp)
 
-            if (self$name == "figshare") {
-                self$id <- self$hostdata$entity_id
-            } else if (self$name == "zenodo") {
-                self$id <- self$hostdata$id
-            }
+            private$fill_deposit_id_url ()
 
             invisible (self)
         },
@@ -394,11 +416,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            dep <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            self$hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
-            cli <- metadata_from_deposit (self, dep)
+            self$metadata <- metadata_from_deposit (self, self$hostdata)
 
-            invisible (cli)
+            self <- private$fill_deposit_id_url ()
+
+            invisible (self)
         },
 
         #' @description Download a specified 'filename' from a deposit
