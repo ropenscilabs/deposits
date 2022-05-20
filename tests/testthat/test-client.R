@@ -25,6 +25,13 @@ test_that ("Client structure", {
     expect_s3_class (cli, "R6")
     expect_identical (cli$name, service)
 
+    expect_true ("id" %in% names (cli))
+    expect_null (cli$id)
+    expect_true ("url_deposit" %in% names (cli))
+    expect_null (cli$url_deposit)
+    expect_true ("url_base" %in% names (cli))
+    expect_false (is.null (cli$url_base))
+
     expect_error (
         cli$deposit_new (),
         "No metadata present; use 'fill_metadata\\(\\)' first."
