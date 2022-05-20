@@ -377,12 +377,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         #' @description Update metadata for specified deposit
         #' @note Client should already contain metadata updated with the
-        #' 'fill_metadata()' function.
-        #' @param deposit_id The 'id' number of deposit to update.
-        #' @return A `data.frame` with details of newly updated deposit
+        #' 'deposit_fill_metadata()' function.
+        #' @param deposit_id The 'id' number of deposit to update. If not
+        #' specified, the 'id' value of current deposits client will be used.
 
-        deposit_update = function (deposit_id) {
+        deposit_update = function (deposit_id = NULL) {
 
+            if (is.null (deposit_id)) {
+                deposit_id <- self$id
+            }
             checkmate::assert_int (deposit_id)
 
             url <- paste0 (
@@ -408,7 +411,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            httr2::resp_body_json (resp)
+            # location <- httr2::resp_body_json (resp) # returns only URL
+
+            self$deposit_retrieve (deposit_id)
+
+            invisible (self)
         },
 
         #' @description Upload file to an existing deposit

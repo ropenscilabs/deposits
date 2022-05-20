@@ -47,11 +47,8 @@ metadata_from_figshare <- function (cli, hostdata) {
 
     term_map <- term_map_for_deposit (cli, hostdata)
 
-    dcmi <- cli$metadata
-    if (is.null (dcmi)) {
-        dcmi <- atom4R::DCEntry$new ()
-        dcmi$verbose.info <- FALSE
-    }
+    dcmi <- atom4R::DCEntry$new ()
+    dcmi$verbose.info <- FALSE
 
     for (i in seq (nrow (term_map))) {
         dc_fn <- grep (paste0 ("addDC", term_map$dcmi [i]),
@@ -80,11 +77,8 @@ metadata_from_zenodo <- function (cli, hostdata) {
     )
     term_map <- term_map [which (!duplicated (term_map)), ]
 
-    dcmi <- cli$metadata
-    if (is.null (dcmi)) {
-        dcmi <- atom4R::DCEntry$new ()
-        dcmi$verbose.info <- FALSE
-    }
+    dcmi <- atom4R::DCEntry$new ()
+    dcmi$verbose.info <- FALSE
 
     for (i in seq (nrow (term_map))) {
         dc_fn <- grep (

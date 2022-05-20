@@ -11,7 +11,7 @@ R6 class for constructing deposits queries
 }
 \note{
 Client should already contain metadata updated with the
-'fill_metadata()' function.
+'deposit_fill_metadata()' function.
 }
 \examples{
 \dontrun{
@@ -244,18 +244,16 @@ A \code{data.frame} with details of the newly created deposit.
 \subsection{Method \code{deposit_update()}}{
 Update metadata for specified deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{The 'id' number of deposit to update.}
+\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
+specified, the 'id' value of current deposits client will be used.}
 }
 \if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{data.frame} with details of newly updated deposit
 }
 }
 \if{html}{\out{<hr>}}
