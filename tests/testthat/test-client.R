@@ -10,7 +10,7 @@ test_that ("Client structure", {
 
     expect_error (
         cli <- depositsClient$new (),
-        "argument \"name\" is missing, with no default"
+        "argument \"service\" is missing, with no default"
     )
 
     expect_error (
@@ -19,11 +19,11 @@ test_that ("Client structure", {
     )
 
     expect_silent (
-        cli <- depositsClient$new (name = service)
+        cli <- depositsClient$new (service = service)
     )
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli, "R6")
-    expect_identical (cli$name, service)
+    expect_identical (cli$service, service)
 
     expect_true ("id" %in% names (cli))
     expect_null (cli$id)
@@ -47,7 +47,7 @@ test_that ("print", {
     service <- "figshare"
 
     expect_silent (
-        cli <- depositsClient$new (name = service)
+        cli <- depositsClient$new (service = service)
     )
 
     out <- capture.output (print (cli))

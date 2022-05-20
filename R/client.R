@@ -37,7 +37,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' 'hostdata'
         fill_deposit_id_url = function () {
 
-            if (self$name == "figshare") {
+            if (self$service == "figshare") {
                 # entity_id is filled on creation, but retrieval returns 'id'
                 self$id <- self$hostdata$entity_id
                 if (is.null (self$id)) {
@@ -48,7 +48,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         "https://figshare.com/account/articles/",
                         self$id
                     )
-            } else if (self$name == "zenodo") {
+            } else if (self$service == "zenodo") {
                 self$id <- self$hostdata$id
                 self$url_deposit <- self$hostdata$links$html
             }
@@ -63,7 +63,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles",
                     "deposit/depositions?size=1000"
                 )
@@ -81,8 +81,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
     public = list (
 
-        #' @field name (character) of deposits host service.
-        name = NULL,
+        #' @field service (character) of deposits host service.
+        service = NULL,
         #' @field sandbox (logical) Connect client with sandbox if `TRUE` (zenodo only)
         sandbox = FALSE,
         #' @field deposits (data.frame) Current deposits hosted on service, one
@@ -105,7 +105,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         term_map = NULL,
 
         #' @description Create a new `depositsClient` object
-        #' @param name (character) of a deposits service (see
+        #' @param service (character) of a deposits service (see
         #' \link{deposits_services}).
         #' @param metadata Either of one three possible ways of defining
         #' metadata:
@@ -125,36 +125,36 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' package.
         #' @return A new `depositsClient` object
 
-        initialize = function (name,
+        initialize = function (service,
                                metadata = NULL,
                                sandbox = FALSE,
                                headers = NULL) {
 
-            name <- match.arg (tolower (name), c ("zenodo", "figshare"))
+            service <- match.arg (tolower (service), c ("zenodo", "figshare"))
             checkmate::assert_logical (sandbox, len = 1L)
 
             if (!is.null (metadata)) {
                 metadata <- process_metadata_param (metadata)
             }
 
-            if (sandbox && name == "zenodo") {
-                name <- "zenodo-sandbox"
+            if (sandbox && service == "zenodo") {
+                service <- "zenodo-sandbox"
             }
             self$sandbox <- sandbox
 
             s <- deposits_services ()
-            self$name <- name
-            self$url_base <- s$api_base_url [s$name == name]
+            self$service <- service
+            self$url_base <- s$api_base_url [s$name == service]
 
             if (is.null (headers)) {
-                token <- get_deposits_token (service = self$name)
+                token <- get_deposits_token (service = self$service)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
 
-            if (self$name == "zenodo-sandbox") {
-                self$name <- "zenodo"
+            if (self$service == "zenodo-sandbox") {
+                self$service <- "zenodo"
             }
-            self$term_map <- get_dcmi_term_map (self$name)
+            self$term_map <- get_dcmi_term_map (self$service)
 
             private$deposits_list_extract ()
 
@@ -181,8 +181,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0 (" deposits service : ", self$name), sep = "\n")
-            if (self$name == "zenodo") {
+            cat (paste0 (" deposits service : ", self$service), sep = "\n")
+            if (self$service == "zenodo") {
                 cat (paste0 ("           sandbox: ", self$sandbox), sep = "\n")
             }
             cat (paste0 ("         url_base : ", self$url_base), sep = "\n")
@@ -231,7 +231,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_authenticate = function () {
 
-            url <- ifelse (self$name == "figshare",
+            url <- ifelse (self$service == "figshare",
                 paste0 (self$url_base, "token"),
                 self$url_base
             )
@@ -264,7 +264,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles",
                     "deposit/depositions"
                 ),
@@ -285,7 +285,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # and remove current 'hostdata' + 'metadata' if they correspond to
             # that deposit
-            if (self$name == "figshare") {
+            if (self$service == "figshare") {
 
                 if (!(is.null (self$id) & is.null (self$hostdata))) {
                     if (self$hostdata$entity_id == self$id |
@@ -294,7 +294,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     }
                 }
 
-            } else if (self$name == "zenodo") {
+            } else if (self$service == "zenodo") {
 
                 if (!(is.null (self$id) & is.null (self$hostdata))) {
                     if (self$hostdata$id == self$id) {
@@ -342,7 +342,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     "`atom4R` methods described in vignette"
                 )
             }
-            check <- validate_terms (metaterms, deposit = self$name)
+            check <- validate_terms (metaterms, deposit = self$service)
             if (length (check) > 0L) {
                 warning (
                     "The following metadata terms do not conform:\n",
@@ -354,7 +354,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles",
                     "deposit/depositions"
                 )
@@ -387,7 +387,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles/",
                     "deposit/depositions/"
                 ),
@@ -428,13 +428,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles",
                     "deposit/depositions"
                 )
             )
 
-            if (self$name == "figshare") {
+            if (self$service == "figshare") {
 
                 # in R/upload-figshare.R
                 res <- upload_figshare_file (
@@ -444,7 +444,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     path
                 )
 
-            } else if (self$name == "zenodo") {
+            } else if (self$service == "zenodo") {
 
                 # in R/upload-zenodo.R
                 res <- upload_zenodo_file (
@@ -470,7 +470,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles/",
                     "deposit/depositions/"
                 ),
@@ -518,7 +518,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # repeat retrieve_deposit method to get download_url:
             url <- paste0 (
                 self$url_base,
-                ifelse (self$name == "figshare",
+                ifelse (self$service == "figshare",
                     "account/articles/",
                     "deposit/depositions/"
                 ),
@@ -531,7 +531,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             x <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
-            name_field <- ifelse (self$name == "figshare",
+            name_field <- ifelse (self$service == "figshare",
                 "name",
                 "filename"
             )
@@ -539,16 +539,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("That deposit does not contain the specified file.")
             }
 
-            if (self$name == "figshare") {
+            if (self$service == "figshare") {
                 download_url <- x$files$download_url [x$files$name == filename]
-            } else if (self$name == "zenodo") {
+            } else if (self$service == "zenodo") {
                 download_url <-
                     x$files$links$download [x$files$filename == filename]
             } else {
-                stop ("There is not deposits service named [", self$name, "]")
+                stop ("There is not deposits service named [", self$service, "]")
             }
 
-            if (self$name == "figshare" & !x$is_public) {
+            if (self$service == "figshare" & !x$is_public) {
                 stop (
                     "Figshare only enables automated downloads of public ",
                     "files.\nYou can manually download at ", download_url

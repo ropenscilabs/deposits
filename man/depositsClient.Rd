@@ -40,7 +40,7 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{(character) of deposits host service.}
+\item{\code{service}}{(character) of deposits host service.}
 
 \item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE} (zenodo only)}
 
@@ -94,13 +94,13 @@ Extract list of all current deposits and store as
 
 Create a new \code{depositsClient} object
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(service, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{name}}{(character) of a deposits service (see
+\item{\code{service}}{(character) of a deposits service (see
 \link{deposits_services}).}
 
 \item{\code{metadata}}{Either of one three possible ways of defining
@@ -164,13 +164,13 @@ ping a deposits server to check authentication
 \if{html}{\out{<a id="method-depositsClient-deposits_list"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposits_list}{}}}
 \subsection{Method \code{deposits_list()}}{
-List own deposits for given service
+Update 'deposits' item of current deposits for given service
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_list()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A list of deposits.
+Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}

@@ -3,12 +3,12 @@
 #' @noRd
 metadata_from_deposit <- function (cli, hostdata) {
 
-    if (cli$name == "figshare") {
+    if (cli$service == "figshare") {
         dcmi <- metadata_from_figshare (cli, hostdata)
-    } else if (cli$name == "zenodo") {
+    } else if (cli$service == "zenodo") {
         dcmi <- metadata_from_zenodo (cli, hostdata)
     } else {
-        stop ("unknown deposit [", cli$name, "]")
+        stop ("unknown deposit [", cli$service, "]")
     }
 
     return (dcmi)

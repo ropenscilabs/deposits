@@ -9,7 +9,7 @@ test_that ("figshare actions", {
     service <- "figshare"
 
     expect_silent (
-        cli <- depositsClient$new (name = service)
+        cli <- depositsClient$new (service = service)
     )
 
     # --------- PING
@@ -23,7 +23,7 @@ test_that ("figshare actions", {
         abstract = "This is the abstract",
         creator = list ("A. Person", "B. Person")
     )
-    cli <- depositsClient$new (name = service, metadata = metadata)
+    cli <- depositsClient$new (service = service, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
     expect_null (cli$hostdata)
