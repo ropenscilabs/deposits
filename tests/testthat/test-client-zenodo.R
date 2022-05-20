@@ -28,26 +28,20 @@ test_that ("zenodo actions", {
     cli <- depositsClient$new (name = service, sandbox = TRUE, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
+    expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("zen_new", {
         cli$deposit_new ()
     })
 
-    expect_type (dep, "list")
-    expect_identical (
-        names (dep),
-        c (
-            "conceptrecid", "created", "doi",
-            "doi_url", "files", "id",
-            "links", "metadata", "modified",
-            "owner", "record_id", "state",
-            "submitted", "title"
-        )
-    )
-    dep_new <- dep
+    expect_s3_class (dep, "depositsClient")
+    expect_identical (dep, cli)
+    expect_false (is.null (cli$hostdata))
+    expect_type (cli$hostdata, "list")
+    expect_true (length (cli$hostdata) > 1L)
 
     # -------- RETRIEVE_DEPOSIT
-    deposit_id <- dep$id
+    deposit_id <- cli$hostdata$id
     dep <- with_mock_dir ("zen_retr", {
         cli$deposit_retrieve (deposit_id)
     })

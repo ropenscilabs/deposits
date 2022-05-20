@@ -47,6 +47,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         schema = NULL,
         #' @field result holds result from http request
         result = NULL,
+        #' @field hostdata Data as stored by host platform
+        hostdata = NULL,
         #' @field metadata holds metadata
         metadata = NULL,
         #' @field term_map Map between DCMI and deposit terms
@@ -130,11 +132,20 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 cat (paste0 (" sandbox: ", self$sandbox), sep = "\n")
             }
             cat (paste0 ("    url : ", self$url), sep = "\n")
+
+            if (is.null (self$hostdata)) {
+                cat ("hostdata: <none>")
+            } else {
+                cat ("hostdata: list with", length (self$hostdata), " elements\n")
+                cat ("\n")
+            }
+
             if (is.null (self$metadata)) {
                 cat ("metadata: <none>")
             } else {
                 cat ("metadata:")
                 print (self$metadata)
+                cat ("\n")
             }
         },
 
@@ -265,7 +276,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             resp <- httr2::req_perform (req)
 
-            httr2::resp_body_json (resp)
+            self$hostdata <- httr2::resp_body_json (resp)
+
+            invisible (self)
         },
 
         #' @description Update metadata for specified deposit

@@ -52,6 +52,8 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{result}}{holds result from http request}
 
+\item{\code{hostdata}}{Data as stored by host platform}
+
 \item{\code{metadata}}{holds metadata}
 
 \item{\code{term_map}}{Map between DCMI and deposit terms}

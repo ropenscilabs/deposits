@@ -26,17 +26,20 @@ test_that ("figshare actions", {
     cli <- depositsClient$new (name = service, metadata = metadata)
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
+    expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("fs_new", {
         cli$deposit_new ()
     })
 
-    expect_type (dep, "list")
-    expect_identical (names (dep), c ("entity_id", "location", "warnings"))
-    expect_length (dep$warnings, 0L)
+    expect_s3_class (dep, "depositsClient")
+    expect_identical (dep, cli)
+    expect_false (is.null (cli$hostdata))
+    expect_type (cli$hostdata, "list")
+    expect_true (length (cli$hostdata) > 1L)
 
     # -------- RETRIEVE_DEPOSIT
-    deposit_id <- dep$entity_id
+    deposit_id <- cli$hostdata$entity_id
     dep <- with_mock_dir ("fs_retr", {
         cli$deposit_retrieve (deposit_id)
     })
