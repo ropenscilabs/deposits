@@ -366,7 +366,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             resp <- httr2::req_perform (req)
 
-            self$hostdata <- httr2::resp_body_json (resp)
+            hostdata <- httr2::resp_body_json (resp)
+
+            if (self$service == "figshare") {
+                self$deposit_retrieve (hostdata$entity_id)
+            } else if (self$service == "zenodo") {
+                self$hostdata <- hostdata
+            }
 
             private$fill_deposit_id_url ()
 
