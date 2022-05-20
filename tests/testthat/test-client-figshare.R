@@ -65,8 +65,8 @@ test_that ("figshare actions", {
         cli$deposits_list ()
     })
 
-    expect_s3_class (dep, "data.frame")
-    expect_equal (nrow (dep), 1L)
+    expect_s3_class (dep, "depositsClient")
+    expect_identical (dep, cli)
 
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body

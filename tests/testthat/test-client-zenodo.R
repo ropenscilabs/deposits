@@ -62,12 +62,12 @@ test_that ("zenodo actions", {
     )
 
     # -------- LIST_DEPOSITS
-    deps <- with_mock_dir ("zen_list", {
+    dep <- with_mock_dir ("zen_list", {
         cli$deposits_list ()
     })
 
-    expect_s3_class (deps, "data.frame")
-    expect_equal (nrow (deps), 1L)
+    expect_s3_class (dep, "depositsClient")
+    expect_identical (dep, cli)
 
     # -------- DELETE_DEPOSIT
     # can't mock that because it returns an empty body

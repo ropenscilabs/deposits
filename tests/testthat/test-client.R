@@ -55,8 +55,9 @@ test_that ("print", {
         out [1],
         "<deposits client>"
     )
-    expect_true (any (grepl ("^\\s+name\\s\\:", out)))
+    expect_true (any (grepl ("^\\s+deposits\\sservice\\s\\:", out)))
     expect_true (any (grepl ("^\\s+url_base\\s\\:", out)))
+    expect_true (any (grepl ("^\\s+Current\\sdeposits\\s\\:", out)))
     expect_true (any (grepl ("^\\s+hostdata\\s\\:", out)))
     expect_true (any (grepl ("^\\s+metadata\\s\\:", out)))
 })

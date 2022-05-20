@@ -32,6 +32,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
     portable = TRUE,
     cloneable = FALSE,
     private = list (
+
+        #' @description Fill client 'id' and 'url_deposit' values from
+        #' 'hostdata'
         fill_deposit_id_url = function () {
 
             if (self$name == "figshare") {
@@ -51,6 +54,28 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             invisible (self)
+        },
+
+        #' @description Extract list of all current deposits and store as
+        #' 'deposits' member element.
+
+        deposits_list_extract = function () {
+
+            url <- paste0 (
+                self$url_base,
+                ifelse (self$name == "figshare",
+                    "account/articles",
+                    "deposit/depositions?size=1000"
+                )
+            )
+
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            self$deposits <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+
+            invisible (self)
         }
     ), # end private list
 
@@ -60,6 +85,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         name = NULL,
         #' @field sandbox (logical) Connect client with sandbox if `TRUE` (zenodo only)
         sandbox = FALSE,
+        #' @field deposits (data.frame) Current deposits hosted on service, one
+        #' row per deposit.
+        deposits = NULL,
         #' @field url_base (character) Base URL of host service API
         url_base = NULL,
         #' @field url_deposit (character) URL of deposit.
@@ -72,7 +100,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         hostdata = NULL,
         #' @field metadata (`atom4R::DCEntry`) holds metadata
         metadata = NULL,
-        #' @field term_map (`data.frame`) Map between DCMI and deposit terms for
+        #' @field term_map (data.frame) Map between DCMI and deposit terms for
         #' specified host service.
         term_map = NULL,
 
@@ -128,6 +156,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             self$term_map <- get_dcmi_term_map (self$name)
 
+            private$deposits_list_extract ()
+
             if (!is.null (metadata)) {
                 out <- capture.output (
                     chk <- metadata$validate ()
@@ -140,6 +170,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
                 self$metadata <- metadata
             }
+
+            return (self)
         },
 
         #' @description print method for the `depositsClient` class
@@ -149,11 +181,24 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0 ("       name : ", self$name), sep = "\n")
+            cat (paste0 (" deposits service : ", self$name), sep = "\n")
             if (self$name == "zenodo") {
-                cat (paste0 ("     sandbox: ", self$sandbox), sep = "\n")
+                cat (paste0 ("           sandbox: ", self$sandbox), sep = "\n")
             }
-            cat (paste0 ("   url_base : ", self$url_base), sep = "\n")
+            cat (paste0 ("         url_base : ", self$url_base), sep = "\n")
+            if (length (self$deposits) == 0L) {
+                cat (" Current deposits : <none>\n")
+            } else {
+                cat (paste0 (
+                    " Current deposits : ",
+                    nrow (self$deposits),
+                    " (see 'deposits' element for details)"
+                ),
+                sep = "\n"
+                )
+            }
+            cat ("\n")
+
             if (!is.null (self$url_deposit)) {
                 cat (paste0 ("url_deposit : ", self$url_deposit), sep = "\n")
             }
@@ -170,9 +215,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (self$metadata)) {
                 cat ("   metadata : <none>\n")
             } else {
-                cat ("\n   metadata : ")
-                print (self$metadata)
-                cat ("\n")
+                these_metadata <- construct_data_list (self$metadata, self$term_map)
+                cat (paste0 (
+                    "   metadata : ",
+                    length (these_metadata),
+                    " terms (see 'metadata' element for details)"
+                ),
+                sep = "\n"
+                )
             }
         },
 
@@ -193,24 +243,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (!httr2::resp_is_error (resp))
         },
 
-        #' @description List own deposits for given service
-        #' @return A list of deposits.
+        #' @description Update 'deposits' item of current deposits for given service
+        #' @return Updated 'deposits' client
 
         deposits_list = function () {
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$name == "figshare",
-                    "account/articles",
-                    "deposit/depositions?size=1000"
-                )
-            )
+            self <- private$deposits_list_extract ()
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
-            resp <- httr2::req_perform (req)
-            httr2::resp_check_status (resp)
-
-            httr2::resp_body_json (resp, simplifyVector = TRUE)
+            invisible (self)
         },
 
         #' @description Deleted a nominated deposit
@@ -240,7 +280,30 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            return (httr2::resp_status (resp) == 204L)
+            # Then return client with that deposit removed from list:
+            self$deposits_list ()
+
+            # and remove current 'hostdata' + 'metadata' if they correspond to
+            # that deposit
+            if (self$name == "figshare") {
+
+                if (!(is.null (self$id) & is.null (self$hostdata))) {
+                    if (self$hostdata$entity_id == self$id |
+                        self$hostdata$id == self$id) {
+                        self$hostdata <- self$metadata <- NULL
+                    }
+                }
+
+            } else if (self$name == "zenodo") {
+
+                if (!(is.null (self$id) & is.null (self$hostdata))) {
+                    if (self$hostdata$id == self$id) {
+                        self$hostdata <- self$metadata <- NULL
+                    }
+                }
+            }
+
+            return (self)
         },
 
         #' @description Fill deposits client with metadata
@@ -306,6 +369,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self$hostdata <- httr2::resp_body_json (resp)
 
             private$fill_deposit_id_url ()
+
+            private$deposits_list_extract ()
 
             invisible (self)
         },

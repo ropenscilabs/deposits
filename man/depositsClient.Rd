@@ -44,6 +44,9 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE} (zenodo only)}
 
+\item{\code{deposits}}{(data.frame) Current deposits hosted on service, one
+row per deposit.}
+
 \item{\code{url_base}}{(character) Base URL of host service API}
 
 \item{\code{url_deposit}}{(character) URL of deposit.}
@@ -56,7 +59,7 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{metadata}}{(\code{atom4R::DCEntry}) holds metadata}
 
-\item{\code{term_map}}{(\code{data.frame}) Map between DCMI and deposit terms for
+\item{\code{term_map}}{(data.frame) Map between DCMI and deposit terms for
 specified host service.}
 }
 \if{html}{\out{</div>}}
@@ -81,6 +84,14 @@ specified host service.}
 \if{html}{\out{<a id="method-depositsClient-new"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-new}{}}}
 \subsection{Method \code{new()}}{
+Fill client 'id' and 'url_deposit' values from
+'hostdata'
+
+
+Extract list of all current deposits and store as
+'deposits' member element.
+
+
 Create a new \code{depositsClient} object
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(name, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
