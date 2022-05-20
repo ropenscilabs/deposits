@@ -44,7 +44,7 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE} (zenodo only)}
 
-\item{\code{url}}{(character) Base URL of host service API}
+\item{\code{url_base}}{(character) Base URL of host service API}
 
 \item{\code{id}}{(integer) Deposit identifier from host service.}
 

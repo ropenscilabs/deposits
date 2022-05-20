@@ -39,8 +39,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         name = NULL,
         #' @field sandbox (logical) Connect client with sandbox if `TRUE` (zenodo only)
         sandbox = FALSE,
-        #' @field url (character) Base URL of host service API
-        url = NULL,
+        #' @field url_base (character) Base URL of host service API
+        url_base = NULL,
         #' @field id (integer) Deposit identifier from host service.
         id = NULL,
         #' @field headers (list) list of named headers
@@ -93,7 +93,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             s <- deposits_services ()
             self$name <- name
-            self$url <- s$api_base_url [s$name == name]
+            self$url_base <- s$api_base_url [s$name == name]
 
             if (is.null (headers)) {
                 token <- get_deposits_token (service = self$name)
@@ -130,7 +130,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$name == "zenodo") {
                 cat (paste0 ("     sandbox: ", self$sandbox), sep = "\n")
             }
-            cat (paste0 ("        url : ", self$url), sep = "\n")
+            cat (paste0 ("   url_base : ", self$url_base), sep = "\n")
             if (!is.null (self$id)) {
                 cat (paste0 (" deposit id : ", self$id), sep = "\n")
             }
@@ -156,8 +156,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         deposit_authenticate = function () {
 
             url <- ifelse (self$name == "figshare",
-                paste0 (self$url, "token"),
-                self$url
+                paste0 (self$url_base, "token"),
+                self$url_base
             )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
@@ -173,7 +173,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         deposits_list = function () {
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles",
                     "deposit/depositions?size=1000"
@@ -197,7 +197,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles",
                     "deposit/depositions"
@@ -264,7 +264,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             body <- jsonlite::toJSON (metaterms, pretty = FALSE, auto_unbox = TRUE)
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles",
                     "deposit/depositions"
@@ -299,7 +299,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles/",
                     "deposit/depositions/"
@@ -340,7 +340,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles",
                     "deposit/depositions"
@@ -382,7 +382,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
 
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles/",
                     "deposit/depositions/"
@@ -428,7 +428,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # repeat retrieve_deposit method to get download_url:
             url <- paste0 (
-                self$url,
+                self$url_base,
                 ifelse (self$name == "figshare",
                     "account/articles/",
                     "deposit/depositions/"

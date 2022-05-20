@@ -32,7 +32,7 @@ test_that ("Client structure", {
 
     s <- deposits_services ()
     u <- s$api_base_url [s$name == service]
-    expect_identical (cli$url, u)
+    expect_identical (cli$url_base, u)
 })
 
 test_that ("print", {
@@ -49,7 +49,7 @@ test_that ("print", {
         "<deposits client>"
     )
     expect_true (any (grepl ("^\\s+name\\s\\:", out)))
-    expect_true (any (grepl ("^\\s+url\\s\\:", out)))
+    expect_true (any (grepl ("^\\s+url_base\\s\\:", out)))
     expect_true (any (grepl ("^\\s+hostdata\\s\\:", out)))
     expect_true (any (grepl ("^\\s+metadata\\s\\:", out)))
 })
