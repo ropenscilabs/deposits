@@ -43,10 +43,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         url = NULL,
         #' @field headers list of named headers
         headers = NULL,
-        #' @field schema holds schema
-        schema = NULL,
-        #' @field result holds result from http request
-        result = NULL,
         #' @field hostdata Data as stored by host platform
         hostdata = NULL,
         #' @field metadata holds metadata

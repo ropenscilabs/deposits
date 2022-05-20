@@ -48,10 +48,6 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 
 \item{\code{headers}}{list of named headers}
 
-\item{\code{schema}}{holds schema}
-
-\item{\code{result}}{holds result from http request}
-
 \item{\code{hostdata}}{Data as stored by host platform}
 
 \item{\code{metadata}}{holds metadata}
