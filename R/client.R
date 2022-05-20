@@ -35,19 +35,22 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
     public = list (
 
-        #' @field name (character) of deposits server
+        #' @field name (character) of deposits host service.
         name = NULL,
-        #' @field sandbox Connect client with sandbox if `TRUE` (zenodo only)
+        #' @field sandbox (logical) Connect client with sandbox if `TRUE` (zenodo only)
         sandbox = FALSE,
-        #' @field url (character) list of fragments
+        #' @field url (character) Base URL of host service API
         url = NULL,
-        #' @field headers list of named headers
+        #' @field id (integer) Deposit identifier from host service.
+        id = NULL,
+        #' @field headers (list) list of named headers
         headers = NULL,
-        #' @field hostdata Data as stored by host platform
+        #' @field hostdata (list) Data as stored by host platform
         hostdata = NULL,
-        #' @field metadata holds metadata
+        #' @field metadata (`atom4R::DCEntry`) holds metadata
         metadata = NULL,
-        #' @field term_map Map between DCMI and deposit terms
+        #' @field term_map (`data.frame`) Map between DCMI and deposit terms for
+        #' specified host service.
         term_map = NULL,
 
         #' @description Create a new `depositsClient` object
@@ -123,23 +126,25 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         print = function (x, ...) {
 
             cat ("<deposits client>", sep = "\n")
-            cat (paste0 ("    name: ", self$name), sep = "\n")
+            cat (paste0 ("       name : ", self$name), sep = "\n")
             if (self$name == "zenodo") {
-                cat (paste0 (" sandbox: ", self$sandbox), sep = "\n")
+                cat (paste0 ("     sandbox: ", self$sandbox), sep = "\n")
             }
-            cat (paste0 ("    url : ", self$url), sep = "\n")
+            cat (paste0 ("        url : ", self$url), sep = "\n")
+            if (!is.null (self$id)) {
+                cat (paste0 (" deposit id : ", self$id), sep = "\n")
+            }
 
             if (is.null (self$hostdata)) {
-                cat ("hostdata: <none>")
+                cat ("   hostdata : <none>\n")
             } else {
-                cat ("hostdata: list with", length (self$hostdata), " elements\n")
-                cat ("\n")
+                cat ("   hostdata : list with", length (self$hostdata), " elements\n")
             }
 
             if (is.null (self$metadata)) {
-                cat ("metadata: <none>")
+                cat ("   metadata : <none>\n")
             } else {
-                cat ("metadata:")
+                cat ("\n   metadata : ")
                 print (self$metadata)
                 cat ("\n")
             }
@@ -273,6 +278,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
 
             self$hostdata <- httr2::resp_body_json (resp)
+
+            if (self$name == "figshare") {
+                self$id <- self$hostdata$entity_id
+            } else if (self$name == "zenodo") {
+                self$id <- self$hostdata$id
+            }
 
             invisible (self)
         },

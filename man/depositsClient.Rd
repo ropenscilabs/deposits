@@ -40,19 +40,22 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
-\item{\code{name}}{(character) of deposits server}
+\item{\code{name}}{(character) of deposits host service.}
 
-\item{\code{sandbox}}{Connect client with sandbox if \code{TRUE} (zenodo only)}
+\item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE} (zenodo only)}
 
-\item{\code{url}}{(character) list of fragments}
+\item{\code{url}}{(character) Base URL of host service API}
 
-\item{\code{headers}}{list of named headers}
+\item{\code{id}}{(integer) Deposit identifier from host service.}
 
-\item{\code{hostdata}}{Data as stored by host platform}
+\item{\code{headers}}{(list) list of named headers}
 
-\item{\code{metadata}}{holds metadata}
+\item{\code{hostdata}}{(list) Data as stored by host platform}
 
-\item{\code{term_map}}{Map between DCMI and deposit terms}
+\item{\code{metadata}}{(\code{atom4R::DCEntry}) holds metadata}
+
+\item{\code{term_map}}{(\code{data.frame}) Map between DCMI and deposit terms for
+specified host service.}
 }
 \if{html}{\out{</div>}}
 }
