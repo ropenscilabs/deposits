@@ -295,16 +295,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$service == "figshare") {
 
                 if (!(is.null (self$id) & is.null (self$hostdata))) {
-                    if (self$hostdata$entity_id == self$id |
-                        self$hostdata$id == self$id) {
-                        self$hostdata <- self$metadata <- NULL
+                    if (!is.null (self$hostdata$entity_id)) {
+                        if (self$hostdata$entity_id == self$id |
+                            self$hostdata$id == self$id) {
+                            self$hostdata <- self$metadata <- NULL
+                        }
                     }
                 }
 
             } else if (self$service == "zenodo") {
 
                 if (!(is.null (self$id) & is.null (self$hostdata))) {
-                    if (is.null (self$hostdata$id)) {
+                    if (!is.null (self$hostdata$id)) {
                         if (self$hostdata$id == self$id) {
                             self$hostdata <- self$metadata <- NULL
                         }
