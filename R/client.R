@@ -83,7 +83,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         #' @field service (character) of deposits host service.
         service = NULL,
-        #' @field sandbox (logical) Connect client with sandbox if `TRUE` (zenodo only)
+        #' @field sandbox (logical) Connect client with sandbox if `TRUE`
+        #' (zenodo only)
         sandbox = FALSE,
         #' @field deposits (data.frame) Current deposits hosted on service, one
         #' row per deposit.
@@ -209,13 +210,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (self$hostdata)) {
                 cat ("   hostdata : <none>\n")
             } else {
-                cat ("   hostdata : list with", length (self$hostdata), " elements\n")
+                cat (
+                    "   hostdata : list with",
+                    length (self$hostdata),
+                    " elements\n"
+                )
             }
 
             if (is.null (self$metadata)) {
                 cat ("   metadata : <none>\n")
             } else {
-                these_metadata <- construct_data_list (self$metadata, self$term_map)
+                these_metadata <-
+                    construct_data_list (self$metadata, self$term_map)
                 cat (paste0 (
                     "   metadata : ",
                     length (these_metadata),
@@ -243,7 +249,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (!httr2::resp_is_error (resp))
         },
 
-        #' @description Update 'deposits' item of current deposits for given service
+        #' @description Update 'deposits' item of current deposits for given
+        #' service
         #' @return Updated 'deposits' client
 
         deposits_list = function () {
@@ -356,7 +363,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metaterms$created <- "2022-01-01"
             }
 
-            body <- jsonlite::toJSON (metaterms, pretty = FALSE, auto_unbox = TRUE)
+            body <- jsonlite::toJSON (
+                metaterms,
+                pretty = FALSE,
+                auto_unbox = TRUE
+            )
 
             url <- paste0 (
                 self$url_base,
@@ -564,7 +575,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 download_url <-
                     x$files$links$download [x$files$filename == filename]
             } else {
-                stop ("There is not deposits service named [", self$service, "]")
+                stop (
+                    "There is not deposits service named [",
+                    self$service, "]"
+                )
             }
 
             if (self$service == "figshare" & !x$is_public) {
