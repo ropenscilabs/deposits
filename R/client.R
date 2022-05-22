@@ -297,8 +297,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             } else if (self$service == "zenodo") {
 
                 if (!(is.null (self$id) & is.null (self$hostdata))) {
-                    if (self$hostdata$id == self$id) {
-                        self$hostdata <- self$metadata <- NULL
+                    if (is.null (self$hostdata$id)) {
+                        if (self$hostdata$id == self$id) {
+                            self$hostdata <- self$metadata <- NULL
+                        }
                     }
                 }
             }
@@ -348,6 +350,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     "The following metadata terms do not conform:\n",
                     paste0 (check, collapse = "\n")
                 )
+            }
+
+            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+                metaterms$created <- "2022-01-01"
             }
 
             body <- jsonlite::toJSON (metaterms, pretty = FALSE, auto_unbox = TRUE)

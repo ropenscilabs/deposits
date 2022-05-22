@@ -4,6 +4,10 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
+# Request mocking requires setting dates in some requests to constant values,
+# for which this envvar is used.
+Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
+
 test_that ("zenodo actions", {
 
     service <- "zenodo"
@@ -76,3 +80,5 @@ test_that ("zenodo actions", {
     # })
     # expect_true (dep)
 })
+
+Sys.unsetenv ("DEPOSITS_TEST_ENV")
