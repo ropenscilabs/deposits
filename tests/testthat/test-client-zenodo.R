@@ -12,9 +12,9 @@ test_that ("zenodo actions", {
 
     service <- "zenodo"
 
-    # expect_silent (
-    cli <- depositsClient$new (service = service, sandbox = TRUE)
-    # )
+    cli <- with_mock_dir ("zen_create", {
+        depositsClient$new (service = service, sandbox = TRUE)
+    })
     expect_s3_class (cli, "depositsClient")
     expect_identical (cli$service, service)
 
