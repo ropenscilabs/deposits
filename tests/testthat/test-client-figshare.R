@@ -8,9 +8,10 @@ test_that ("figshare actions", {
 
     service <- "figshare"
 
-    expect_silent (
-        cli <- depositsClient$new (service = service)
-    )
+    cli <- with_mock_dir ("fs_create", {
+        depositsClient$new (service = service)
+    })
+    expect_length (cli$deposits, 0L) # no current deposits
 
     # --------- PING
     x <- with_mock_dir ("fs_ping", {
@@ -47,6 +48,46 @@ test_that ("figshare actions", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
+
+    # -------- UPDATE_DEPOSIT
+    expect_equal (
+        cli$hostdata$title,
+        metadata$title
+    )
+    expect_equal (
+        cli$hostdata$description,
+        metadata$abstract
+    )
+    expect_equal (
+        cli$metadata$title [[1]]$value,
+        metadata$title
+    )
+
+    metadata <- list (
+        title = "Modified Title",
+        abstract = "This is the modified abstract",
+        creator = "C. Person"
+    )
+    cli$deposit_fill_metadata (metadata)
+    expect_equal (
+        cli$metadata$title [[1]]$value,
+        metadata$title
+    )
+    expect_false (cli$hostdata$title ==
+        metadata$title)
+    expect_false (cli$hostdata$description ==
+        metadata$abstract)
+    dep <- with_mock_dir ("fs_update", {
+        cli$deposit_update ()
+    })
+    expect_equal (
+        cli$hostdata$title,
+        metadata$title
+    )
+    expect_equal (
+        cli$hostdata$description,
+        metadata$abstract
+    )
 
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")
