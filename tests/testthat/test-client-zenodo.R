@@ -51,6 +51,46 @@ test_that ("zenodo actions", {
     })
     expect_s3_class (dep, "depositsClient")
 
+    # -------- UPDATE_DEPOSIT
+    expect_equal (
+        cli$hostdata$title,
+        metadata$title
+    )
+    expect_equal (
+        cli$hostdata$metadata$description,
+        metadata$abstract
+    )
+    expect_equal (
+        cli$metadata$title [[1]]$value,
+        metadata$title
+    )
+
+    metadata <- list (
+        title = "Modified Title",
+        abstract = "This is the modified abstract",
+        creator = "C. Person"
+    )
+    cli$deposit_fill_metadata (metadata)
+    expect_equal (
+        cli$metadata$title [[1]]$value,
+        metadata$title
+    )
+    expect_false (cli$hostdata$title ==
+        metadata$title)
+    expect_false (cli$hostdata$metadata$description ==
+        metadata$abstract)
+    dep <- with_mock_dir ("zen_update", {
+        cli$deposit_update ()
+    })
+    expect_equal (
+        cli$hostdata$title,
+        metadata$title
+    )
+    expect_equal (
+        cli$hostdata$metadata$description,
+        metadata$abstract
+    )
+
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")
     saveRDS (datasets::Orange, filename)
