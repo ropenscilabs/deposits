@@ -40,6 +40,9 @@ test_that ("figshare actions", {
 
     # -------- RETRIEVE_DEPOSIT
     deposit_id <- cli$hostdata$entity_id
+    if (is.null (deposit_id)) {
+        deposit_id <- cli$hostdata$id
+    }
     dep <- with_mock_dir ("fs_retr", {
         cli$deposit_retrieve (deposit_id)
     })
