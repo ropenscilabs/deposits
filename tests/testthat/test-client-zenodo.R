@@ -118,9 +118,8 @@ test_that ("zenodo actions", {
 
     # -------- DEPOSIT_DOWNLOAD
     path <- tempdir ()
-    ftmp <- file.path (path, "data.Rds")
-    if (file.exists (ftmp)) {
-        file.remove (ftmp)
+    if (file.exists (filename)) { # from upload data above
+        file.remove (filename)
     }
 
     path <- with_mock_dir ("zen_dl", {
@@ -130,6 +129,7 @@ test_that ("zenodo actions", {
             path = tempdir ()
         )
     })
+    expect_identical (filename, path)
     expect_true (file.exists (path))
     expect_identical (datasets::Orange, readRDS (path))
 
