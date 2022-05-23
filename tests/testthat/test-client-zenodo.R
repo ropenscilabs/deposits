@@ -130,8 +130,9 @@ test_that ("zenodo actions", {
         )
     })
     expect_identical (filename, path)
-    expect_true (file.exists (path))
-    expect_identical (datasets::Orange, readRDS (path))
+    # The mock tests do not actually create the file, so can't test it here:
+    # expect_true (file.exists (path))
+    # expect_identical (datasets::Orange, readRDS (path))
 
     # -------- DEPOSIT_DELETE
     # can't mock that because it returns an empty body
