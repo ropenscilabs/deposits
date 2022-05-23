@@ -49,6 +49,7 @@ upload_figshare_file <- function (article_id, url, headers, path) {
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
+    # return value is full hostdata with updated files component
     return (httr2::resp_body_json (resp, simplifyVector = TRUE))
 }
 

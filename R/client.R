@@ -474,7 +474,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$service == "figshare") {
 
                 # in R/upload-figshare.R
-                res <- upload_figshare_file (
+                self$hostdata <- upload_figshare_file (
                     deposit_id,
                     url,
                     self$headers,
@@ -493,7 +493,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             }
 
-            return (res)
+            invisible (self)
         },
 
         #' @description Retrieve information on specified deposit
