@@ -275,6 +275,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (self$id)) {
                 self <- private$upload_dcmi_xml ()
+                # That resets local metadata to upload version, so needs to be
+                # reset again:
+                self$metadata <- metadata
             }
 
             invisible (self)
