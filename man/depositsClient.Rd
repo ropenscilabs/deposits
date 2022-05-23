@@ -42,7 +42,8 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 \describe{
 \item{\code{service}}{(character) of deposits host service.}
 
-\item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE} (zenodo only)}
+\item{\code{sandbox}}{(logical) Connect client with sandbox if \code{TRUE}
+(zenodo only)}
 
 \item{\code{deposits}}{(data.frame) Current deposits hosted on service, one
 row per deposit.}
@@ -164,7 +165,8 @@ ping a deposits server to check authentication
 \if{html}{\out{<a id="method-depositsClient-deposits_list"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposits_list}{}}}
 \subsection{Method \code{deposits_list()}}{
-Update 'deposits' item of current deposits for given service
+Update 'deposits' item of current deposits for given
+service
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_list()}\if{html}{\out{</div>}}
 }
