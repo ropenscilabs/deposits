@@ -1,5 +1,8 @@
 url: https://ropenscilabs.github.io/deposits
 
+figures:
+  dev: grDevices::png
+
 reference:
 - title: Deposits client
   contents:
