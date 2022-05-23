@@ -332,9 +332,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$hostdata <- hostdata
             }
 
-            private$fill_deposit_id_url ()
+            self <- private$fill_deposit_id_url ()
 
-            private$deposits_list_extract ()
+            self <- private$deposits_list_extract ()
 
             invisible (self)
         },
@@ -380,9 +380,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            # location <- httr2::resp_body_json (resp) # returns only URL
-
-            self$deposit_retrieve (deposit_id)
+            self <- self$deposit_retrieve (deposit_id)
 
             invisible (self)
         },
@@ -435,7 +433,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     path
                 )
 
-                self$deposit_retrieve (deposit_id)
+                self <- self$deposit_retrieve (deposit_id)
             }
 
             invisible (self)
