@@ -289,7 +289,7 @@ A \code{data.frame} containing full data of specified deposit.
 Download a specified 'filename' from a deposit
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_download_file(
-  deposit_id,
+  deposit_id = NULL,
   filename,
   path = NULL,
   overwrite = FALSE,

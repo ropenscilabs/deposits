@@ -478,7 +478,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
 
-        deposit_download_file = function (deposit_id,
+        deposit_download_file = function (deposit_id = NULL,
                                           filename,
                                           path = NULL,
                                           overwrite = FALSE,
