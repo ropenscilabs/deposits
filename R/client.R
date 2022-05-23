@@ -426,6 +426,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
             metaterms <- construct_data_list (self$metadata, self$term_map)
+
+            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+                metaterms$created <- "2022-01-01"
+            }
+
             body <- paste0 (jsonlite::toJSON (metaterms,
                 pretty = FALSE,
                 auto_unbox = TRUE
