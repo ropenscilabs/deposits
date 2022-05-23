@@ -287,9 +287,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            # Then return client with that deposit removed from list:
-            self$deposits_list ()
-
             # and remove current 'hostdata' + 'metadata' if they correspond to
             # that deposit
             if (self$service == "figshare") {
@@ -313,6 +310,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     }
                 }
             }
+
+            # Then return client with that deposit removed from list:
+            self$deposits_list ()
 
             return (self)
         },
@@ -473,7 +473,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (self$service == "figshare") {
 
-                # in R/upload-figshare.R
+                # in R/upload-figshare.R, which returns updated hostdata
                 self$hostdata <- upload_figshare_file (
                     deposit_id,
                     url,
@@ -483,7 +483,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             } else if (self$service == "zenodo") {
 
-                # in R/upload-zenodo.R
+                # in R/upload-zenodo.R, which returns data on file upload only
                 res <- upload_zenodo_file (
                     deposit_id,
                     url,
@@ -491,6 +491,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     path
                 )
 
+                self$deposit_retrieve (deposit_id)
             }
 
             invisible (self)
@@ -588,18 +589,21 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
-            if (self$service == "figshare" & !x$is_public) {
-                stop (
-                    "Figshare only enables automated downloads of public ",
-                    "files.\nYou can manually download at ", download_url
-                )
+            if (self$service == "figshare") {
+                if (!x$is_public) {
+                    stop (
+                        "Figshare only enables automated downloads of public ",
+                        "files.\nYou can manually download at ", download_url
+                    )
+                }
             }
 
 
             if (is.null (path)) {
                 path <- here::here ()
             }
-            destfile <- normalizePath (file.path (path, filename),
+            destfile <- normalizePath (
+                file.path (path, filename),
                 mustWork = FALSE
             )
             if (file.exists (destfile) & !overwrite) {
@@ -615,7 +619,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 "Content-Type" = "application/octet-stream",
                 "Authorization" = self$headers$Authorization
             )
-            chk <- curl::curl_download (
+            path <- curl::curl_download (
                 url = download_url,
                 destfile = destfile,
                 quiet = quiet,
@@ -623,7 +627,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 mode = "wb"
             )
 
-            return (chk)
+            return (path)
         }
     ) # end public list
 )
