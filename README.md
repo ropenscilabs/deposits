@@ -11,7 +11,10 @@ Concept](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 
 The `deposits` R package is a universal client for depositing and
 accessing research data anywhere. Currently supported services are
-[zenodo](https://zenodo.org) and [figshare](https://figshare.com).
+[zenodo](https://zenodo.org) and [figshare](https://figshare.com). This
+README primarily contains information on setting up the `deposits`
+package. Use of the package is described in [the introductory
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
 
 ## Installation
 
@@ -21,8 +24,9 @@ r-universe](https://ropensci.r-universe.dev), and using
 
 ``` r
 options (repos = c (
-    ropensci = 'https://ropensci.r-universe.dev',
-    CRAN = 'https://cloud.r-project.org'))
+    ropensci = "https://ropensci.r-universe.dev",
+    CRAN = "https://cloud.r-project.org"
+))
 install.packages ("deposits")
 ```
 
@@ -53,7 +57,7 @@ deposits_services ()
     ## 2 zenodo-sandbox https://developers.zenodo.org/ https://sandbox.zenodo.org/api/
     ## 3       figshare     https://docs.figshare.com/    https://api.figshare.com/v2/
 
-[`zenodo`](https://zenodo.org) offers a "sandbox" environment, which
+[`zenodo`](https://zenodo.org) offers a “sandbox” environment, which
 offers an ideal environment for testing the functionality of this
 package.
 
@@ -64,9 +68,9 @@ All services require users to create an account and then to generate API
 links to generate tokens, also listed as sequences of menu items used to
 reach token settings:
 
-  - [zenodo/account/settings/applications/tokens/new](https://zenodo.org/account/settings/applications/tokens/new/)
-  - [zenodo-sandbox/account/settings/applications/tokens/new](https://sandbox.zenodo.org/account/settings/applications/tokens/new/),
-  - [figshare/account/applications](https://figshare.com/account/applications).
+-   [zenodo/account/settings/applications/tokens/new](https://zenodo.org/account/settings/applications/tokens/new/)
+-   [zenodo-sandbox/account/settings/applications/tokens/new](https://sandbox.zenodo.org/account/settings/applications/tokens/new/),
+-   [figshare/account/applications](https://figshare.com/account/applications).
 
 It is not necessary to create or register applications on any of these
 services; this package uses personal tokens only. The tokens need to be
@@ -94,43 +98,38 @@ All `deposits` operations start with a client constructed with the
 service:
 
 ``` r
-cli <- depositsClient$new ("zenodo")
-cli
-```
-
-    ## <deposits client>
-    ##     name: zenodo
-    ##  sandbox: FALSE
-    ##     url : https://zenodo.org/api/
-    ## metadata: <none>
-
-``` r
 cli <- depositsClient$new ("zenodo", sandbox = TRUE)
 cli
 ```
 
     ## <deposits client>
-    ##     name: zenodo
-    ##  sandbox: TRUE
-    ##     url : https://sandbox.zenodo.org/api/
-    ## metadata: <none>
+    ##  deposits service : zenodo
+    ##            sandbox: TRUE
+    ##          url_base : https://sandbox.zenodo.org/api/
+    ##  Current deposits : 2 (see 'deposits' element for details)
+    ## 
+    ##    hostdata : <none>
+    ##    metadata : <none>
 
-A `deposits` client offers the following functions, listed here with
-names of parameters:
+The command, `ls(cli)`, will list all elements of the R6 object, with
+the functions prefixed with `deposit_` or `deposits_`. These functions
+are:
 
-1.  `ping()` to verify Authorization tokens;
-2.  `list_deposits()` to do just that;
-3.  `fill_metadata(meta)` to fill a `deposits` client with metadata (see
-    Metadata vignette for details);
-4.  `new_deposit()` to create a new deposit using the metadata inserted
-    with `fill_metadata()`;
-5.  `delete_deposit(deposit_id)` to delete a nominated deposit;
-6.  `upload_file(deposit_id, path)` to upload a local file to a
-    specified deposit;
-7.  `retrieve_deposit(deposit_id)` to retrieve metadata for a nominated
-    deposit; and
-8.  `download_file(deposit_id, filename)` to download nominated
+1.  `deposit_authenticate()` to verify Authorization tokens;
+2.  `deposit_delete(deposit_id)` to delete a nominated deposit;
+3.  `deposit_download_file(deposit_id, filename)` to download nominated
     `filename` from specified deposit.
+4.  `deposit_fill_metadata(meta)` to fill a `deposits` client with
+    metadata (see introductory vignette for details);
+5.  `deposit_new()` to create a new deposit on a deposits service using
+    the metadata inserted with `fill_metadata()`;
+6.  `deposit_retrieve(deposit_id)` to retrieve information on a
+    specified deposit;
+7.  `deposit_update(deposit_id)` to update deposit on server with local
+    metadata;
+8.  `deposit_upload_file(deposit_id, path)` to upload a local file to a
+    specified deposit; and
+9.  `deposits_list()` to update lists of current deposits within client.
 
 [An introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html)
