@@ -373,6 +373,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
                 metaterms$created <- "2022-01-01"
+                if (!is.null (metaterms$modified)) {
+                    metaterms$modified <- "2022-01-01"
+                }
             }
 
             body <- paste0 (jsonlite::toJSON (metaterms,
