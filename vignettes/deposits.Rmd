@@ -35,271 +35,305 @@ vignette provides a demonstration of the primary functionality of the
 
 ```{r lib}
 library (deposits)
-library (atom4R) # for metadata objects
 ```
 
 
 ## The deposits client
 
 The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
-interface with the individual deposition services. An empty client can be
-constructed by naming the desired service. An additional `sandbox` parameter
-constructs a client to the `zenodo` sandbox environment intended for testing
-their API. Actual use of the `zenodo` API can then be enabled with the default
-`sandbox = FALSE`.
+interface with the individual deposition services. The following sub-section explains the properties of a `deposits` client for those unfamiliar with `R6` objects.
+
+### R6 methods
+
+The `R6` package used to construct `deposits` clients here allows for
+structured class objects in R. The objects include elements (such as variables)
+and methods, which for R are generally functions. A new client can be
+constructed with the `new` operator, which for `deposits` requires specifying
+the service for which the client is to be constructed:
+
+```{r new-cli, eval = FALSE}
+cli <- depositsClient$new (service = "figshare")
+```
+
+Additional functions are called in a similar way, using the notation,
+`cli$deposit_function()`. The `deposits` package is constructed so that
+function calls constructed is this way will "automatically" update the object
+itself, and so generally do not need to be assigned to a return value.
+For example, the function `deposits_list()` updates the list of deposits on the
+associated service. In conventional R packages, calling this function would
+require assigning a return value like this:
+
+```{r cli-list-deps, eval = FALSE}
+cli_updated <- cli$deposits_list ()
+```
+
+`R6` objects are, however, always updated internally, so the client itself,
+`cli`, will already include the updated list of deposits without any need for
+assigning the return value to `cli_updated`. That is, rather than the above
+line, all deposits functions may be called simply as,
+
+```{r cli-list-deps2, eval = FALSE}
+cli$deposits_list ()
+```
+
+(The single exception to this is the `deposit_download_file()` function, which
+returns the path to the locally downloaded file, and so should always be
+assigned to a return value.)
+
+
+
+### Initialising a deposits client
+
+An empty client can be constructed by naming the desired service. An additional
+`sandbox` parameter constructs a client to the `zenodo` sandbox environment
+intended for testing their API. Actual use of the `zenodo` API can then be
+enabled with the default `sandbox = FALSE`.
 
 ```{r client-new, eval = FALSE}
 cli <- depositsClient$new ("zenodo", sandbox = TRUE)
 cli
 #> <deposits client>
-#>     name: zenodo
-#>  sandbox: TRUE
-#>     url : https://sandbox.zenodo.org/api/
-#> metadata: <none>
+#> deposits service : zenodo
+#>           sandbox: TRUE
+#>         url_base : https://sandbox.zenodo.org/api/
+#> Current deposits : <none>
+#>
+#>   hostdata : <none>
+#>   metadata : <none>
 ```
 
-Client construction requires local environment variables to be stored with
-personal access keys, as described in the [main `README`
-document](https://docs.ropensci.org/deposits/#api-keys). Clients can be tested
-with the `ping()` function, to confirm authorization, and the `list_deposits()`
-function can be used to list all of your personal deposits.
+Client construction requires personal access or authentication tokens for
+deposits services to be stored as local environment variables, as described in
+the [main `README` document](https://docs.ropensci.org/deposits/#api-keys).
+Authentication tokens are checked when new clients are constructed, so the
+`$new()` function will only succeed with valid tokens.
 
-```{r ping-list, eval = FALSE}
-cli$ping ()
-#> [1] TRUE
-deps <- cli$list_deposits ()
-class (deps)
-#> [1] "data.frame"
-names (deps)
-#>  [1] "conceptrecid" "created"      "id"           "links"        "metadata"
-#'  [6] "modified"     "owner"        "record_id"    "state"        "submitted"
-#' [11] "title"        "doi"          "doi_url"
+As also described in that `README`, the main functions of a `deposits` client
+are all prefixed with either `deposit_` or `deposits_`, as seen from the result
+of `ls(cli)`:
+
+```{r ls-cli, eval = FALSE}
+ls (cli)
+#>  [1] "deposit_delete"        "deposit_download_file" "deposit_fill_metadata"
+#>  [4] "deposit_new"           "deposit_retrieve"      "deposit_update"
+#>  [7] "deposit_upload_file"   "deposits"              "deposits_list"
+#> [10] "headers"               "hostdata"              "id"
+#> [13] "initialize"            "metadata"              "print"
+#> [16] "sandbox"               "service"               "term_map"
+#> [19] "url_base"              "url_deposit"
 ```
 
-The results of `list_deposits()` differ for the two services, but both return
-`data.frame` objects. Importantly, these `data.frame`s all have a column named
-`id` which holds unique, integer-valued identifiers for the deposits. These
-identifiers are required for several of `deposit` functions, in which they are
-passed as a `deposit_id` parameter.
+The client constructed above is mostly empty, but nevertheless demonstrates the
+two primary fields or elements of a deposits client:
+
+1. `hostdata` holding all metadata from a "host" or external deposits service
+   for a particular deposit; and 
+2. `metadata` holding a consistently structured representation of the key
+   components of the `hostdata`.
+
+The `hostdata` structures are generally lists, but differ for different
+services, whereas the `metadata` structures remain consistent between services,
+and allow data to be transformed from one format to another, and, in future
+functionality, will allow data to be transferred between different services.
+
+Both of these elements represent the "metadata" of a deposit, with the data
+itself referred to as "files", which can be uploaded and downloaded. Thus all
+deposits begin with metadata, with the actual data upload only possible once
+the initial metadata has been specified and uploaded.
+
 
 ## Metadata
 
-The primary function of `deposits` is `new_deposit()`, which creates a new
-deposit using metadata held by the `deposits` client. The specification and
-construction of metadata is described in detail in a second vignette, with this
-vignette providing a brief overview. `deposits` metadata is represented as a
-[`DCEntry` object from the `atom4R`
-package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore). The
-"DC" stands for the ["Dublin Core Metadata Initiative"
-(DCMI)](https://www.dublincore.org/) which provides arguably the most
-widely-used [set of metadata terms and
-entities](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
-The `DCEntry` objects are also `R6` objects, constructed by default with no
-metadata:
+A new deposit is initially constructed by filling the `metadata` field with a
+local representation of metadata. The `hostdata` field is filled only after
+this initial deposit metadata has been uploaded to the external service. These
+two fields thus further differ through `metadata` being a local, and
+locally-defined, representation of metadata for a deposit, whereas `hostdata`
+are always provided and defined by the external service. The best way to
+understand this distinction is through a practical demonstration.
 
-```{r dcentry-demo}
-library (atom4R)
-meta <- DCEntry$new ()
-meta
+### Metadata as a list
+
+There are several ways of defining metadata for a `deposits` entity, perhaps
+the easiest of which is as a simple list:
+
+```{r metadata-example-1, eval = TRUE}
+metadata <- list (
+    title = "New Title",
+    abstract = "This is the abstract",
+    creator = list ("A. Person", "B. Person")
+)
 ```
 
-The metadata in a `deposits` object can be defined either by passing it as a
-parameter of the new client function, or by using the `fill_metadata()`
-function:
+A new deposits client can be filled with this metadata by passing it as the
+`metadata` parameter:
 
-```{r deposit-metadata-fill, eval = FALSE}
-cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
-cli
+```{r new-cli-with-meta-1, eval = FALSE}
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+print (cli)
 #> <deposits client>
-#>     name: zenodo
-#>  sandbox: TRUE
-#>     url : https://sandbox.zenodo.org/api/
-#> metadata:<DCEntry>
-#> ....|-- updated: 2022-02-23 15:48:11
-# or:
-cli <- depositsClient$new ("zenodo", sandbox = TRUE)
-cli$fill_metadata (meta)
+#>  deposits service : zenodo
+#>            sandbox: TRUE
+#>          url_base : https://sandbox.zenodo.org/api/
+#>  Current deposits : <none>
+#>
+#>     hostdata : <none>
+#>     metadata : 3 terms (see 'metadata' element for details)
 ```
 
-### Filling metadata
+The summary produced by calling `print()` (or, equivalently, just typing `cli`
+in the console) says that the object now includes three metadata terms. They
+can be seen by viewing `cli$metadata`:
 
-The documentation for [the `atom4R`
-package](https://github.com/eblondel/atom4R/wiki#atom4R-create-dublincore)
-describes in detail how to fill metadata in a `DCEntry()` object. An example
-is:
-
-```{r dc-meta-fill, eval = FALSE}
-meta$addDCTitle ("My new deposit")
-cli
-#> <deposits client>
-#>     name: zenodo
-#>  sandbox: TRUE
-#>     url : https://sandbox.zenodo.org/api/
-#> metadata:<DCEntry>
-#> ....|-- updated: 2022-02-23 15:48:11
+```{r cli-dcmi-metadata, eval = FALSE}
+cli$metadata
+#> <DCEntry>
+#> ....|-- updated: 2022-05-23 14:13:42
 #> ....|-- title <DCTitle>
-#> ........|-- value: My new deposit
+#> ........|-- value: New Title
+#> ....|-- abstract <DCAbstract>
+#> ........|-- value: This is the abstract
+#> ....|-- creator <DCCreator>
+#> ........|-- value: A. Person
+#> ....|-- creator <DCCreator>
+#> ........|-- value: B. Person>
 ```
 
-Note that as `R6` objects, both the `meta` and `cli` objects are pointers,
-which enables the update to the `meta` object in the first of the lines above
-to be immediately reflected in an updated `deposits` object. To make metadata
-completion easier, the `deposits` package includes helper functions to work
-with metadata in a simple text file using the following workflow:
+Metadata in `deposits` objects are stored as `DCEntry` objects in a format
+provided by [the `atom4R` package](https://github.com/eblondel/atom4R).
+These metadata are primarily intended for internal use within the `deposits`
+package, and shouldn't generally need to be manipulated directly by users of
+this package (although they certainly can be, as illustrated below).
 
-1. Run [the `deposits_metadata_template()`
-   function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
-   specifying a local file to hold the empty metadata template in a simple JSON
-   format;
-2. Edit the template and complete any desired metadata; and
-3. Run [the `deposits_meta_to_dcmi()`
-   function](https://docs.ropensci.org/deposits/reference/deposits_meta_to_dcmi.html)
-   to use the file to automatically populate a `DCEntry` object.
+### Metadata from a local file
 
-The following code demonstrates how to create and modify a metadata template,
-including a line to define the single "title" metadata entry.
+Another convenient way to specify metadata is to use [the
+`deposits_metadata_template()`
+funciton](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
+to write a local YAML representation of metadata. This function also accepts
+the `metadata` parameter of data specified as a list:
 
-```{r meta-demo}
-f <- tempfile (fileext = ".json")
-deposits_metadata_template (filename = f)
-template <- readLines (f)
-head (template)
-title_line <- grep ("Title", template)
-template [title_line]
-template [title_line] <- "  \"Title\": \"My new deposit\","
-writeLines (template, f)
+```{r}
+meta_file <- tempfile (pattern = "meta-", fileext = ".yaml")
+deposits_metadata_template (filename = meta_file, metadata = metadata)
+head (readLines (meta_file))
 ```
 
-Note that all quotation marks are "escaped" - that is, prefixed with
-backslashes, and that each line ends with a comma. Construction of a `deposits`
-metadata object is then as simple as the following line:
+Those metadata can then be directly edited using any text file editor, and the
+modified results saved to a local file. The name of that file can then also be
+passed as the `metadata` parameter of a new `deposits` client. The following
+code thus produces the same results as above:
 
-```{r meta-to-dc}
-meta <- deposits_meta_to_dcmi (f)
+```{r new-cli-with-meta-file, eval = FALSE}
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = meta_file)
 ```
 
-That metadata can then be used to construct a `deposits` client, in which the
-title entered in the template then appears as part of the `DCEntry` metadata
-object.
+## Creating a new deposit
 
-```{r new-client, eval = FALSE}
-cli <- depositsClient$new ("zenodo", sandbox = TRUE, metadata = meta)
-cli
+
+A `deposits` client with metadata can be used to initiate a new deposit on the
+associated external service with the `$deposit_new()` function. This is not to
+be confused with the `$new()` function which creates a new client. The
+`$deposit_new()` function uses an existing client to create a new deposit on
+the external service. Using the client constructed above with our sample
+metadata gives the following result:
+
+```{r deposit_new, eval = FALSE}
+cli$deposit_new ()
+print (cli)
 #> <deposits client>
-#>     name: zenodo
-#>  sandbox: TRUE
-#>     url : https://sandbox.zenodo.org/api/
-#> metadata:<DCEntry>
-#> ....|-- updated: 2022-02-23 15:48:11
-#> ....|-- title <DCTitle>
-#> ........|-- value: My new deposit
+#>  deposits service : zenodo
+#>            sandbox: TRUE
+#>          url_base : https://sandbox.zenodo.org/api/
+#>  Current deposits : 1 (see 'deposits' element for details)
+#>
+#>  url_deposit : https://sandbox.zenodo.org/deposit/1064327
+#>   deposit id : 1064327
+#>     hostdata : list with 14  elements
+#>     metadata : 3 terms (see 'metadata' element for details)
 ```
 
-## Creating and deleting new deposits
+The client now lists one current deposit, additional fields for the URL and
+"id" of the deposit, and has a `hostdata` field with 14 elements. Importantly,
+the `id` field holds a unique integer value used to identify particular
+deposits both on all external services, and as the `deposit_id` parameter of
+`deposits` client functions. The following code demonstrates by constructing a
+new client with no metadata.
 
-The following single line demonstrates how to create a new deposit:
-
-```{r new_deposit, eval = FALSE}
-res <- cli$new_deposit ()
-class (res)
-#> [1] "list"
-names (res)
-#>  [1] "conceptrecid" "created"      "doi"          "doi_url"      "files"
-#>  [6] "id"           "links"        "metadata"     "modified"     "owner"
-#> [11] "record_id"    "state"        "submitted"    "title"
-res$title
-#> [1] "My new deposit"
-res$id
-#> [1] 1021945
+```{r new-cli-after-deposit, eval = FALSE}
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+print (cli)
+#> <deposits client>
+#>  deposits service : zenodo
+#>            sandbox: TRUE
+#>          url_base : https://sandbox.zenodo.org/api/
+#>  Current deposits : 1 (see 'deposits' element for details)
+#>
+#>   hostdata : <none>
+#>   metadata : <none>
 ```
 
-The list of deposits should then include the newly constructed one:
+This differs from our initial client in that it now lists one "current
+deposit". We can examine that to get the associated "id" value:
 
-```{r chedk-dep-id, eval = FALSE}
-deps <- cli$list_deposits ()
-res$id %in% deps$id
-#> [1] TRUE
+```{r id-value, eval = FALSE}
+cli$deposits$id
+#> [1] 1064327
+deposit_id <- cli$deposits$id
 ```
 
-Deposits can be deleted by passing `id` values to `delete_deposit()`:
+We can then retrieve the metadata we previously uploaded with the
+`deposit_retrieve()` function:
 
-```{r, eval = FALSE}
-cli$delete_deposit (res$id)
-#> [1] TRUE
+```{r deposit-retrieve, eval = FALSE}
+cli$deposit_retrieve (deposit_id = deposit_id)
 ```
+
+The local client then holds identical information to the previous client
+immediately after calling `deposit_new()` - that is, `retrieve_deposit()` has
+filled the local client with all of the metadata from that deposit.
+
 
 ## Uploading files to deposits
 
-Deposits created with the `new_deposit()` function contain metadata without any
-associated files. Deposit files such as data files can be uploaded to a deposit
-using the `upload_file()` function, which accepts two parameters of
-`deposit_id`, and a `path` variable specifying a local file to be uploaded. The
-following lines create an arbitrary binary file to be uploaded.
+The deposits clients thus far have only been used to construct and upload
+metadata. The main point of a deposit is of course to store actual data in any
+arbitrary format alongside these structured metadata. This is achieved with
+[the `deposit_upload_file()`
+function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_upload_file),
+demonstrated in the following code which uses our deposit retrieved directly
+above.
 
-```{r bin-file, eval = FALSE}
-path <- tempfile ()
-dat <- paste0 (sample (c (LETTERS, letters, 0:9), size = 1e5, replace = TRUE),
-               collapse = "")
-con <- file (path, open = "wb")
-writeBin (dat, con)
-close (con)
+
+```{r upload-file, eval = FALSE}
+path <- file.path (tempdir (), "data.Rds")
+saveRDS (datasets::Orange, path)
+cli$deposit_upload_file (path = path)
 ```
 
-Uploading to the deposit is then as simple as:
+Although the `print` output of our `cli` object does not change after
+uploading, the details of the files are contained in the `hostdata$files`
+element:
 
-```{r upload-demo, eval = FALSE}
-d <- cli$new_deposit ()
-res <- cli$upload_file (deposit_id = d$id, path = path)
-class (res)
-#> [1] "list"
-names (res)
-#> [1] "mimetype"      "updated"       "links"         "is_head"       "created"
-#> [6] "checksum"      "version_id"    "delete_marker" "key"           "size"
+```{r cli-hostdata-files, eval = FALSE}
+cli$hostdata$files
+#>                           checksum               filename filesize
+#> 1 22c61006458c44ed979bf3461e330693 data-18e115882cf14.Rds      506
+#>                                     id
+#> 1 00cad89d-4084-4337-b96a-2f1e232b2b6c
+#>                                                                                     links.download
+#> 1 https://sandbox.zenodo.org/api/files/e3f727dc-1dfd-4849-88cf-994f630105cf/data-18e115882cf14.Rds
+#>                                                                                              links.self
+#> 1 https://sandbox.zenodo.org/api/deposit/depositions/1064327/files/00cad89d-4084-4337-b96a-2f1e232b2b6c
 ```
 
-The `deposit_id` can then be used to get details of the deposit, and to confirm
-that our newly uploaded file has been included.
+Files can be downloaded with the converse `download_file` function,
+demonstrated here by first removing the local copy, and then downloading it
+from the deposits service:
 
-```{r upload-check-fake-data, echo = FALSE}
-links <- data.frame (
-download = "https://sandbox.zenodo.org/api/files/a619f5d0-034c-4cb1-b03c-7d01984d0e76/file13934345cf839",
-self = "https://sandbox.zenodo.org/api/deposit/depositions/1022056/files/1989dff8-69bd-46cb-81c8-0b8d28b5bfef"
-)
-
-files <- data.frame (
-    checksum = "01352a8608e77c6d5a85e18238baf88f",
-    filename = "file13934345cf839",
-    filesize = 100194,
-    id = "1989dff8-69bd-46cb-81c8-0b8d28b5bfef",
-    links = links)
-
-res <- list (
-    "conceptrecid" = "",
-    "created" = "",
-    "doi" = "",
-    "doi_url" = "",
-    "files"= files,
-    "id" = "",
-    "links" = "",
-    "metadata" = "",
-    "modified" = "",
-    "owner" = "",
-    "record_id" = "",
-    "state" = "",
-    "submitted" = "",
-    "title" = "")
-```
-
-```{r upload-check, eval = FALSE}
-res <- cli$retrieve_deposit (deposit_id = d$id)
-names (res)
-#>  [1] "conceptrecid" "created"      "doi"          "doi_url"      "files"
-#>  [6] "id"           "links"        "metadata"     "modified"     "owner"
-#> [11] "record_id"    "state"        "submitted"    "title"
-```
-
-The "files" component has the details of the file:
-
-```{r upload-file-details}
-res$files
+```{r dl_file, eval = FALSE}
+file.remove (path)
+file <- cli$deposit_download_file (filename = "data.Rds", path = tempdir ())
+identical (readRDS (file), datasets::Orange)
+#> [1] TRUE
 ```
