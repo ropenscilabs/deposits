@@ -17,11 +17,6 @@ test_that ("figshare actions", {
     })
     expect_length (cli$deposits, 0L) # no current deposits
 
-    # --------- AUTHENTICATE
-    x <- with_mock_dir ("fs_ping", {
-        cli$deposit_authenticate ()
-    })
-
     # --------- DEPOSIT_NEW
     metadata <- list (
         title = "New Title",

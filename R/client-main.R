@@ -192,23 +192,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
         },
 
-        #' @description ping a deposits server to check authentication
-        #' @return `TRUE` if successful response, `FALSE` otherwise
-
-        deposit_authenticate = function () {
-
-            url <- ifelse (self$service == "figshare",
-                paste0 (self$url_base, "token"),
-                self$url_base
-            )
-
-            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
-            resp <- httr2::req_perform (req)
-            httr2::resp_check_status (resp)
-
-            return (!httr2::resp_is_error (resp))
-        },
-
         #' @description Update 'deposits' item of current deposits for given
         #' service
         #' @return Updated 'deposits' client

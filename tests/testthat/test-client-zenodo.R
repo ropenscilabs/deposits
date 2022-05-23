@@ -18,11 +18,6 @@ test_that ("zenodo actions", {
     expect_s3_class (cli, "depositsClient")
     expect_identical (cli$service, service)
 
-    # --------- AUTHENTICATE
-    x <- with_mock_dir ("zen_ping", {
-        cli$deposit_authenticate ()
-    })
-
     # --------- DEPOSIT_NEW
     metadata <- list (
         title = "New Title",
