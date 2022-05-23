@@ -252,7 +252,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (self)
         },
 
-        #' @description Fill deposits client with metadata
+        #' @description Fill deposits client with metadata, and upload to
+        #' deposits service if connected.
         #' @param metadata Either of one three possible ways of defining
         #' metadata:
         #' \itemize{
@@ -271,6 +272,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             metadata <- process_metadata_param (metadata)
             self$metadata <- metadata
+
+            if (!is.null (self$id)) {
+                self <- private$upload_dcmi_xml ()
+            }
+
+            invisible (self)
         },
 
         #' @description Create a new deposit
@@ -379,6 +386,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             httr2::resp_check_status (resp)
 
             self <- self$deposit_retrieve (deposit_id)
+
+            self <- private$upload_dcmi_xml ()
 
             invisible (self)
         },

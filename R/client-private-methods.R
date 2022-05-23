@@ -86,7 +86,9 @@ depositsClient$set ("private", "upload_dcmi_xml", function () {
     xml <- as (self$metadata$encode (), "character")
     f <- file.path (tempdir (), paste0 ("DCEntry-", self$id, ".xml"))
     writeLines (xml, f)
-    cli$deposit_upload_file (self$id, f)
+    self$deposit_upload_file (self$id, f)
+
+    chk <- file.remove (f)
 
     invisible (self)
 })
