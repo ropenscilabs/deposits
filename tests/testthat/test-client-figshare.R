@@ -67,7 +67,11 @@ test_that ("figshare actions", {
         abstract = "This is the modified abstract",
         creator = "C. Person"
     )
-    cli$deposit_fill_metadata (metadata)
+
+    dep <- with_mock_dir ("fs_meta", {
+        cli$deposit_fill_metadata (metadata)
+    })
+
     expect_equal (
         cli$metadata$title [[1]]$value,
         metadata$title
