@@ -573,34 +573,41 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 deposit_id
             )
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
-            resp <- httr2::req_perform (req)
-            httr2::resp_check_status (resp)
-
-            x <- httr2::resp_body_json (resp, simplifyVector = TRUE)
-
             name_field <- ifelse (self$service == "figshare",
                 "name",
                 "filename"
             )
-            if (!filename %in% x$files [[name_field]]) {
+
+            if (filename %in% self$hostdata$files [[name_field]]) {
+
+                files <- self$hostdata$files
+
+            } else {
+
+                req <- create_httr2_helper (
+                    url,
+                    self$headers$Authorization,
+                    "GET"
+                )
+                resp <- httr2::req_perform (req)
+                httr2::resp_check_status (resp)
+
+                files <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            }
+
+            if (!filename %in% files [[name_field]]) {
                 stop ("That deposit does not contain the specified file.")
             }
 
             if (self$service == "figshare") {
-                download_url <- x$files$download_url [x$files$name == filename]
+                download_url <- files$download_url [files$name == filename]
             } else if (self$service == "zenodo") {
                 download_url <-
-                    x$files$links$download [x$files$filename == filename]
-            } else {
-                stop (
-                    "There is not deposits service named [",
-                    self$service, "]"
-                )
+                    files$links$download [files$filename == filename]
             }
 
             if (self$service == "figshare") {
-                if (!x$is_public) {
+                if (!cli$hostdata$is_public) {
                     stop (
                         "Figshare only enables automated downloads of public ",
                         "files.\nYou can manually download at ", download_url
