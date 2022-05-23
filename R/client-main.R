@@ -247,32 +247,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            # and remove current 'hostdata' + 'metadata' if they correspond to
-            # that deposit
-            if (self$service == "figshare") {
-
-                if (!(is.null (self$id) & is.null (self$hostdata))) {
-                    if (!is.null (self$hostdata$entity_id)) {
-                        if (self$hostdata$entity_id == self$id |
-                            self$hostdata$id == self$id) {
-                            self$hostdata <- self$metadata <- NULL
-                        }
-                    }
-                }
-
-            } else if (self$service == "zenodo") {
-
-                if (!(is.null (self$id) & is.null (self$hostdata))) {
-                    if (!is.null (self$hostdata$id)) {
-                        if (self$hostdata$id == self$id) {
-                            self$hostdata <- self$metadata <- NULL
-                        }
-                    }
-                }
-            }
+            # rm current 'hostdata' + 'metadata' if they are from self$id:
+            self <- self$rm_host_meta_data ()
 
             # Then return client with that deposit removed from list:
-            self$deposits_list ()
+            self <- self$deposits_list ()
 
             return (self)
         },
