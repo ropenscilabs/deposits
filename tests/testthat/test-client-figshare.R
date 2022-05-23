@@ -4,6 +4,10 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
+# Request mocking requires setting dates in some requests to constant values,
+# for which this envvar is used.
+Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
+
 test_that ("figshare actions", {
 
     service <- "figshare"
@@ -77,9 +81,11 @@ test_that ("figshare actions", {
         metadata$title)
     expect_false (cli$hostdata$description ==
         metadata$abstract)
+
     dep <- with_mock_dir ("fs_update", {
         cli$deposit_update ()
     })
+
     expect_equal (
         cli$hostdata$title,
         metadata$title
@@ -97,8 +103,8 @@ test_that ("figshare actions", {
         cli$deposit_upload_file (deposit_id, filename)
     })
 
-    expect_type (dep, "list")
-    expect_true (length (dep$files) > 0L)
+    expect_identical (dep, cli)
+    expect_true (length (cli$hostdata$files) > 0L)
     expect_identical (
         dep$files$supplied_md5,
         dep$files$computed_md5

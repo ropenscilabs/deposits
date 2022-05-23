@@ -102,6 +102,7 @@ test_that ("zenodo actions", {
     })
 
     expect_identical (dep, cli)
+    expect_true (length (cli$hostdata$files) > 0L)
     expect_identical (
         gsub ("^md5\\:", "", dep$hostdata$files$checksum [1]),
         unname (tools::md5sum (filename))

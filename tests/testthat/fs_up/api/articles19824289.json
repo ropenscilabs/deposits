@@ -1,6 +1,19 @@
 {
     "files": [
-
+        {
+            "upload_token": "83a38cfe-27fa-41f4-a51f-a074a0db4d52",
+            "upload_url": "",
+            "status": "moving_to_final",
+            "preview_state": "preview_not_supported",
+            "viewer_type": "",
+            "id": 35232790,
+            "name": "data.Rds",
+            "size": 506,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/35232790",
+            "supplied_md5": "22c61006458c44ed979bf3461e330693",
+            "computed_md5": "22c61006458c44ed979bf3461e330693"
+        }
     ],
     "resource_title": null,
     "resource_doi": null,
@@ -18,7 +31,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/19816537",
+    "figshare_url": "https://figshare.com/articles/dataset/_/19824289",
     "description": "This is the modified abstract",
     "funding": null,
     "funding_list": [
@@ -26,9 +39,9 @@
     ],
     "version": 0,
     "status": "draft",
-    "size": 0,
-    "created_date": "2022-05-22T19:44:32Z",
-    "modified_date": "2022-05-22T19:44:41Z",
+    "size": 506,
+    "created_date": "2022-05-23T09:33:27Z",
+    "modified_date": "2022-05-23T09:33:39Z",
     "is_public": false,
     "is_confidential": false,
     "is_metadata_record": false,
@@ -49,7 +62,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/19816537",
+    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/19824289",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -58,20 +71,20 @@
     "embargo_options": [
 
     ],
-    "id": 19816537,
+    "id": 19824289,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles19816537",
+    "url": "api/articles19824289",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles19816537",
-    "url_public_api": "api/articles/19816537",
-    "url_private_html": "https://figshare.com/account/articles/19816537",
-    "url_public_html": "https://figshare.com/articles/dataset/_/19816537",
+    "url_private_api": "api/articles19824289",
+    "url_public_api": "api/articles/19824289",
+    "url_private_html": "https://figshare.com/account/articles/19824289",
+    "url_public_html": "https://figshare.com/articles/dataset/_/19824289",
     "timeline": {
 
     }
