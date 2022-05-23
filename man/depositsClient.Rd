@@ -253,7 +253,7 @@ Update metadata for specified deposit
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{deposit_id}}{The 'id' number of deposit to update. If not
-specified, the 'id' value of current deposits client will be used.}
+specified, the 'id' value of current deposits client is used.}
 }
 \if{html}{\out{</div>}}
 }
@@ -264,14 +264,15 @@ specified, the 'id' value of current deposits client will be used.}
 \subsection{Method \code{deposit_upload_file()}}{
 Upload file to an existing deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(deposit_id, path = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{The 'id' number of deposit which file it to be
-uploaded to. (generally obtained from \code{list_deposits} method).}
+\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
+uploaded to. If not specified, the 'id' value of current deposits
+client is used.}
 
 \item{\code{path}}{Path to local file.}
 }
@@ -321,8 +322,9 @@ Download a specified 'filename' from a deposit
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{The 'id' number of deposit for which information is
-to be retrieved.}
+\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
+downloaded from. If not specified, the 'id' value of current deposits
+client is used.}
 
 \item{\code{filename}}{The name of the file to be download as specified in
 the deposit.}

@@ -404,7 +404,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @note Client should already contain metadata updated with the
         #' 'deposit_fill_metadata()' function.
         #' @param deposit_id The 'id' number of deposit to update. If not
-        #' specified, the 'id' value of current deposits client will be used.
+        #' specified, the 'id' value of current deposits client is used.
 
         deposit_update = function (deposit_id = NULL) {
 
@@ -449,13 +449,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Upload file to an existing deposit
-        #' @param deposit_id The 'id' number of deposit which file it to be
-        #' uploaded to. (generally obtained from `list_deposits` method).
+        #' @param deposit_id The 'id' number of deposit which file is to be
+        #' uploaded to. If not specified, the 'id' value of current deposits
+        #' client is used.
         #' @param path Path to local file.
         #' @return A `data.frame` with details on newly uploaded file, including
         #' upload and download URLs, and file details.
 
-        deposit_upload_file = function (deposit_id, path = NULL) {
+        deposit_upload_file = function (deposit_id = NULL, path = NULL) {
+
+            if (is.null (deposit_id)) {
+                deposit_id <- self$id
+            }
 
             checkmate::assert_int (deposit_id)
             if (!is.null (path)) {
@@ -529,8 +534,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Download a specified 'filename' from a deposit
-        #' @param deposit_id The 'id' number of deposit for which information is
-        #' to be retrieved.
+        #' @param deposit_id The 'id' number of deposit which file is to be
+        #' downloaded from. If not specified, the 'id' value of current deposits
+        #' client is used.
         #' @param filename The name of the file to be download as specified in
         #' the deposit.
         #' @param path The local directory where file is to be downloaded.
@@ -544,6 +550,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                           path = NULL,
                                           overwrite = FALSE,
                                           quiet = FALSE) {
+
+            if (is.null (deposit_id)) {
+                deposit_id <- self$id
+            }
 
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (filename, len = 1L)
