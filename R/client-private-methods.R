@@ -77,3 +77,16 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 
     invisible (self)
 })
+
+#' @description Convert DCMI metadata to XML and update with current deposit
+#' @noRd
+
+depositsClient$set ("private", "upload_dcmi_xml", function () {
+
+    xml <- as (self$metadata$encode (), "character")
+    f <- file.path (tempdir (), paste0 ("DCEntry-", self$id, ".xml"))
+    writeLines (xml, f)
+    cli$deposit_upload_file (self$id, f)
+
+    invisible (self)
+})
