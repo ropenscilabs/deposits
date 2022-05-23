@@ -613,21 +613,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
-            h <- curl::new_handle (verbose = FALSE)
-            curl::handle_setheaders (
-                h,
-                "Content-Type" = "application/octet-stream",
-                "Authorization" = self$headers$Authorization
-            )
-            path <- curl::curl_download (
-                url = download_url,
-                destfile = destfile,
-                quiet = quiet,
-                handle = h,
-                mode = "wb"
+            req <- create_httr2_helper (
+                download_url,
+                self$headers$Authorization,
+                "GET"
             )
 
-            return (path)
+            resp <- httr2::req_perform (req, path = destfile)
+            httr2::resp_check_status (resp)
+
+            return (destfile)
         }
     ) # end public list
 )

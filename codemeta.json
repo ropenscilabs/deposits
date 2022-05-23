@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.2.070",
+  "version": "0.0.2.071",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -109,18 +109,6 @@
     },
     "3": {
       "@type": "SoftwareApplication",
-      "identifier": "curl",
-      "name": "curl",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=curl"
-    },
-    "4": {
-      "@type": "SoftwareApplication",
       "identifier": "here",
       "name": "here",
       "provider": {
@@ -131,7 +119,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=here"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "httr2",
       "name": "httr2",
@@ -143,7 +131,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr2"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -155,12 +143,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -172,7 +160,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -186,7 +174,7 @@
     },
     "SystemRequirements": {}
   },
-  "fileSize": "173.053KB",
+  "fileSize": "199.4KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
   "contIntegration": [
