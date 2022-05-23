@@ -13,12 +13,12 @@ test_that ("figshare actions", {
     })
     expect_length (cli$deposits, 0L) # no current deposits
 
-    # --------- PING
+    # --------- AUTHENTICATE
     x <- with_mock_dir ("fs_ping", {
         cli$deposit_authenticate ()
     })
 
-    # --------- NEW_DEPOSIT
+    # --------- DEPOSIT_NEW
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
@@ -39,7 +39,7 @@ test_that ("figshare actions", {
     expect_type (cli$hostdata, "list")
     expect_true (length (cli$hostdata) > 1L)
 
-    # -------- RETRIEVE_DEPOSIT
+    # -------- DEPOSIT_RETRIEVE
     deposit_id <- cli$hostdata$entity_id
     if (is.null (deposit_id)) {
         deposit_id <- cli$hostdata$id
@@ -49,7 +49,7 @@ test_that ("figshare actions", {
     })
     expect_s3_class (dep, "depositsClient")
 
-    # -------- UPDATE_DEPOSIT
+    # -------- DEPOSIT_UPDATE
     expect_equal (
         cli$hostdata$title,
         metadata$title
@@ -104,7 +104,7 @@ test_that ("figshare actions", {
         dep$files$computed_md5
     )
 
-    # -------- LIST_DEPOSITS
+    # -------- DEPOSITS_LIST
     dep <- with_mock_dir ("fs_list", {
         cli$deposits_list ()
     })
@@ -112,7 +112,11 @@ test_that ("figshare actions", {
     expect_s3_class (dep, "depositsClient")
     expect_identical (dep, cli)
 
-    # -------- DELETE_DEPOSIT
+    # -------- DEPOSIT_DOWNLOAD
+    # can't test because figshare doesn't allow private download
+    # ---> tested in zenodo.
+
+    # -------- DEPOSIT_DELETE
     # can't mock that because it returns an empty body
     # dep <- with_mock_dir ("fs_del", {
     #     cli$deposit_delete (deposit_id)

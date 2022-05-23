@@ -18,12 +18,12 @@ test_that ("zenodo actions", {
     expect_s3_class (cli, "depositsClient")
     expect_identical (cli$service, service)
 
-    # --------- PING
+    # --------- AUTHENTICATE
     x <- with_mock_dir ("zen_ping", {
         cli$deposit_authenticate ()
     })
 
-    # --------- NEW_DEPOSIT
+    # --------- DEPOSIT_NEW
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
@@ -44,14 +44,14 @@ test_that ("zenodo actions", {
     expect_type (cli$hostdata, "list")
     expect_true (length (cli$hostdata) > 1L)
 
-    # -------- RETRIEVE_DEPOSIT
+    # -------- DEPOSIT_RETRIEVE
     deposit_id <- cli$hostdata$id
     dep <- with_mock_dir ("zen_retr", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
 
-    # -------- UPDATE_DEPOSIT
+    # -------- DEPOSIT_UPDATE
     expect_equal (
         cli$hostdata$title,
         metadata$title
@@ -79,9 +79,11 @@ test_that ("zenodo actions", {
         metadata$title)
     expect_false (cli$hostdata$metadata$description ==
         metadata$abstract)
+
     dep <- with_mock_dir ("zen_update", {
         cli$deposit_update ()
     })
+
     expect_equal (
         cli$hostdata$title,
         metadata$title
@@ -99,13 +101,13 @@ test_that ("zenodo actions", {
         cli$deposit_upload_file (deposit_id, filename)
     })
 
-    expect_type (dep, "list")
+    expect_identical (dep, cli)
     expect_identical (
-        gsub ("^md5\\:", "", dep$checksum),
+        gsub ("^md5\\:", "", dep$hostdata$files$checksum [1]),
         unname (tools::md5sum (filename))
     )
 
-    # -------- LIST_DEPOSITS
+    # -------- DEPOSITS_LIST
     dep <- with_mock_dir ("zen_list", {
         cli$deposits_list ()
     })
@@ -113,7 +115,24 @@ test_that ("zenodo actions", {
     expect_s3_class (dep, "depositsClient")
     expect_identical (dep, cli)
 
-    # -------- DELETE_DEPOSIT
+    # -------- DEPOSIT_DOWNLOAD
+    path <- tempdir ()
+    ftmp <- file.path (path, "data.Rds")
+    if (file.exists (ftmp)) {
+        file.remove (ftmp)
+    }
+
+    path <- with_mock_dir ("zen_dl", {
+        cli$deposit_download_file (
+            deposit_id = deposit_id,
+            filename = basename (filename),
+            path = tempdir ()
+        )
+    })
+    expect_true (file.exists (path))
+    expect_identical (datasets::Orange, readRDS (path))
+
+    # -------- DEPOSIT_DELETE
     # can't mock that because it returns an empty body
     # dep <- with_mock_dir ("zen_del", {
     #    cli$deposit_delete (deposit_id)
