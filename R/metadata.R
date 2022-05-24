@@ -110,9 +110,9 @@ construct_data_list <- function (metadata, term_map) {
     values [index] <- lapply (values [index], function (i) {
         paste0 (i, collapse = ",")
     })
-    values <- values [which (!values == "NULL")]
+    # values <- values [which (!values == "NULL")]
 
-    values <- values [which (!duplicated (names (values)))]
+    # values <- values [which (!duplicated (names (values)))]
 
     is_zenodo <- any (term_map$meta)
     if (is_zenodo) {
