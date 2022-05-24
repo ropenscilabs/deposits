@@ -50,14 +50,13 @@ test_that ("print", {
         cli <- depositsClient$new (service = service)
     )
 
-    out <- capture.output (print (cli))
-    expect_identical (
-        out [1],
-        "<deposits client>"
-    )
-    expect_true (any (grepl ("^\\s+deposits\\sservice\\s\\:", out)))
-    expect_true (any (grepl ("^\\s+url_base\\s\\:", out)))
-    expect_true (any (grepl ("^\\s+Current\\sdeposits\\s\\:", out)))
-    expect_true (any (grepl ("^\\s+hostdata\\s\\:", out)))
-    expect_true (any (grepl ("^\\s+metadata\\s\\:", out)))
+    testthat::expect_snapshot (print (cli))
+
+    cli$hostdata <- list (data = "data")
+    cli$metadata <- atom4R::DCEntry$new ()
+    cli$id <- "1"
+    cli$url_deposit <- "https://my.deposit"
+    cli$deposits <- data.frame (n = 1:5)
+
+    testthat::expect_snapshot (print (cli))
 })
