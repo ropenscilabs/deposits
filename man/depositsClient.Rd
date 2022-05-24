@@ -178,7 +178,8 @@ from \code{list_deposits} method).}
 \if{html}{\out{<a id="method-depositsClient-deposit_fill_metadata"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_fill_metadata}{}}}
 \subsection{Method \code{deposit_fill_metadata()}}{
-Fill deposits client with metadata
+Fill deposits client with metadata, and upload to
+deposits service if connected.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_fill_metadata(metadata = NULL)}\if{html}{\out{</div>}}
 }
