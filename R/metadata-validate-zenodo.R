@@ -30,22 +30,23 @@ validate_zenodo_terms <- function (metaterms) {
 
 #' Check standard zenodo terms - not their "metadata"
 #' @noRd
-check_zenodo_terms <- function (zen_terms, meta) {
+check_zenodo_terms <- function (zen_terms) {
 
     out <- NULL
 
     for (i in seq (nrow (zen_terms))) {
 
+        term_i <- zen_terms$term [i]
+
         if (nzchar (zen_terms$vocabulary [i])) {
 
             values <- strsplit (zen_terms$vocabulary [i], "\\|") [[1]]
-            term_i <- meta [[zen_terms$term [i]]]
             if (!term_i %in% values) {
                 out <- c (
                     out,
                     paste0 (
                         "Data [",
-                        zen_terms$term [i],
+                        term_i,
                         " = '",
                         term_i,
                         "'] not in required vocabulary of [",
@@ -55,12 +56,13 @@ check_zenodo_terms <- function (zen_terms, meta) {
                 )
             }
         } else if (zen_terms$format [i] == "integer") {
+
             if (suppressWarnings (is.na (as.integer (term_i)))) {
                 out <- c (
                     out,
                     paste0 (
                         "Data [",
-                        zen_terms$term [i],
+                        term_i,
                         "] must be an integer."
                     )
                 )

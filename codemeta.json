@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.3.23",
+  "version": "0.0.3.024",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -172,11 +172,14 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "SystemRequirements": null
+    "SystemRequirements": {}
   },
   "fileSize": "235.162KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
-  "contIntegration": ["https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/ropenscilabs/deposits"],
+  "contIntegration": [
+    "https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check",
+    "https://codecov.io/gh/ropenscilabs/deposits"
+  ],
   "developmentStatus": "https://www.repostatus.org/#wip"
 }
