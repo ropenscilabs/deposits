@@ -59,18 +59,14 @@ check_fs_meta_from_vocab <- function (fs_terms, i, term_i) {
     out <- NULL
 
     voc <- strsplit (fs_terms$vocabulary [i], "\\|") [[1]]
-    term_names <- c (
-        names (term_i),
-        unlist (lapply (term_i, names))
-    )
 
-    if (!all (term_names %in% voc)) {
+    if (!all (term_i %in% voc)) {
         out <- paste0 (
             "Data [",
             fs_terms$term [i],
             " = '",
             term_i,
-            "' must follow fixed vocabulary of [",
+            "'] must follow fixed vocabulary of [",
             paste0 (voc, collapse = ", "),
             "]"
         )
