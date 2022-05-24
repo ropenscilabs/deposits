@@ -24,7 +24,14 @@ test_that ("zenodo actions", {
         abstract = "This is the abstract",
         creator = list ("A. Person", "B. Person")
     )
-    cli <- depositsClient$new (service = service, sandbox = TRUE, metadata = metadata)
+
+    with_mock_dir ("zen_client", {
+        cli <- depositsClient$new (
+            service = service,
+            sandbox = TRUE,
+            metadata = metadata
+        )
+    })
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli$metadata, "DCEntry")
     expect_null (cli$hostdata)
