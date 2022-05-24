@@ -21,7 +21,7 @@ validate_zenodo_terms <- function (metaterms) {
     zen_terms <- zen_terms [which (zen_terms$term %in% names (metaterms)), ]
 
     out <- c (
-        check_zenodo_terms (zen_terms),
+        check_zenodo_terms (zen_terms, metaterms),
         check_zenodo_meta_terms (zen_meta_terms, meta)
     )
 
@@ -30,13 +30,13 @@ validate_zenodo_terms <- function (metaterms) {
 
 #' Check standard zenodo terms - not their "metadata"
 #' @noRd
-check_zenodo_terms <- function (zen_terms) {
+check_zenodo_terms <- function (zen_terms, metaterms) {
 
     out <- NULL
 
     for (i in seq (nrow (zen_terms))) {
 
-        term_i <- zen_terms$term [i]
+        term_i <- metaterms [[zen_terms$term [i]]]
 
         if (nzchar (zen_terms$vocabulary [i])) {
 
