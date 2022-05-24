@@ -3,7 +3,7 @@ function (resp) {
     resp <- httptest2::gsub_response (
         resp,
         "https://api.figshare.com/v2/account/articles/",
-        "api/articles",
+        "api/articles/",
         fixed = TRUE
     )
 
@@ -33,6 +33,15 @@ function (resp) {
         resp,
         paste0 ("files/", ptn, "/"),
         "files/hash/",
+        fixed = FALSE
+    )
+
+    # Timestamp pattern:
+    ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}"
+    resp <- httptest2::gsub_response (
+        resp,
+        ptn,
+        "2022-01-01T00:00:00",
         fixed = FALSE
     )
 
