@@ -174,3 +174,42 @@ test_that ("zenodo metadata terms", {
     metaterms$metadata$keywords <- list ("keyword")
     expect_null (validate_terms (metaterms, deposit = "zenodo"))
 })
+
+test_that ("figshare metadata terms", {
+
+    metaterms <- list (
+        created = Sys.Date (),
+        title = "New Title",
+        description = "This is the abstract",
+        creators = list ("A. Person", "B. Person")
+    )
+    check <- validate_terms (metaterms, deposit = "figshare")
+    expect_null (check) # metadata okay
+
+    metaterms$license <- "MIT" # should be integer
+    check <- validate_terms (metaterms, deposit = "figshare")
+    expect_true (!is.null (check))
+    expect_length (check, 1L) # both terms are invalid
+    expect_true (grepl ("is not coercible to integer", check [1]))
+
+    metaterms$license <- 1L
+    expect_null (validate_terms (metaterms, deposit = "figshare"))
+
+    metaterms$defined_type <- "notatype"
+    check <- validate_terms (metaterms, deposit = "figshare")
+    expect_true (!is.null (check))
+    expect_length (check, 1L) # both terms are invalid
+    expect_true (grepl ("must follow fixed vocabulary of", check [1]))
+
+    metaterms$defined_type <- "dataset"
+    expect_null (validate_terms (metaterms, deposit = "figshare"))
+
+    metaterms$tags <- "tag"
+    check <- validate_terms (metaterms, deposit = "figshare")
+    expect_true (!is.null (check))
+    expect_length (check, 1L) # both terms are invalid
+    expect_true (grepl ("must have format \\[array-string\\]", check [1]))
+
+    metaterms$tags <- list ("tag1", "tag2")
+    expect_null (validate_terms (metaterms, deposit = "figshare"))
+})
