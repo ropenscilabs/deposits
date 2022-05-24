@@ -274,6 +274,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self$metadata <- metadata
 
             if (!is.null (self$id)) {
+
                 self <- private$upload_dcmi_xml ()
                 # That resets local metadata to upload version, so needs to be
                 # reset again:
@@ -304,10 +305,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     "The following metadata terms do not conform:\n",
                     paste0 (check, collapse = "\n")
                 )
-            }
-
-            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-                metaterms$created <- "2022-01-01"
             }
 
             body <- jsonlite::toJSON (
@@ -373,13 +370,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
             metaterms <- construct_data_list (self$metadata, self$term_map)
-
-            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-                metaterms$created <- "2022-01-01"
-                if (!is.null (metaterms$modified)) {
-                    metaterms$modified <- "2022-01-01"
-                }
-            }
 
             body <- paste0 (jsonlite::toJSON (metaterms,
                 pretty = FALSE,
