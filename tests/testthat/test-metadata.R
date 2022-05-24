@@ -115,3 +115,62 @@ test_that ("client with invalid metadata", {
         "metadata is not valid - see details via metadata\\$validate()"
     )
 })
+
+test_that ("zenodo metadata terms", {
+
+    metaterms <- list (
+        created = Sys.Date (),
+        metadata = list (
+            title = "New Title",
+            description = "This is the abstract",
+            creators = list ("A. Person", "B. Person")
+        )
+    )
+    check <- validate_terms (metaterms, deposit = "zenodo")
+
+    expect_null (check) # metadata okay
+
+    metaterms$owner <- "me" # should be integer
+    metaterms$state <- "notinvocab" # vocab=(inprogress|done|error)
+    check <- validate_terms (metaterms, deposit = "zenodo")
+
+    expect_true (!is.null (check))
+    expect_length (check, 2L) # both terms are invalid
+    expect_true (grepl ("must be an integer", check [1]))
+    expect_true (grepl ("not in required vocabulary", check [2]))
+
+    metaterms$owner <- 1L
+    metaterms$state <- "done" # vocab=(inprogress|done|error)
+    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+
+    metaterms$metadata$license <- "none"
+    metaterms$metadata$dates <- Sys.Date ()
+    check <- validate_terms (metaterms, deposit = "zenodo")
+
+    expect_true (!is.null (check))
+    expect_length (check, 2L) # both terms are invalid
+    expect_true (grepl ("not in required vocabulary", check [1]))
+    expect_true (grepl ("must be an array", check [2]))
+
+    metaterms$metadata$license <- "MIT"
+    metaterms$metadata$dates <- list (Sys.Date ())
+    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+
+    metaterms$metadata$upload_type <- "notatype"
+    check <- validate_terms (metaterms, deposit = "zenodo")
+    expect_true (!is.null (check))
+    expect_length (check, 1L)
+    expect_true (grepl ("not in required vocabulary", check [1]))
+
+    metaterms$metadata$upload_type <- "dataset"
+    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+
+    metaterms$metadata$keywords <- "keyword"
+    check <- validate_terms (metaterms, deposit = "zenodo")
+    expect_true (!is.null (check))
+    expect_length (check, 1L)
+    expect_true (grepl ("must be an array/list object", check [1]))
+
+    metaterms$metadata$keywords <- list ("keyword")
+    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+})
