@@ -84,6 +84,18 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 depositsClient$set ("private", "upload_dcmi_xml", function () {
 
     xml <- as (self$metadata$encode (), "character")
+
+    # httptest2 file name is hashed from md5, so need to have entirely
+    # consistent contents for test instances:
+    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+
+        # gsub timestamps:
+        ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}"
+        xml <- gsub (ptn, "2022-01-01T00:00:00", xml)
+        # and gsub integer dataset id values:
+        xml <- gsub ("dataset\\/\\_\\/[0-9]*<", "dataset/_/identifier<", xml)
+    }
+
     f <- file.path (tempdir (), paste0 ("DCEntry-", self$id, ".xml"))
     if (file.exists (f)) {
         file.remove (f)

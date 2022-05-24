@@ -4,8 +4,9 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-# Request mocking requires setting dates in some requests to constant values,
-# for which this envvar is used.
+# This envvar is used only in the private 'upload_dcmi_xml()' function, in which
+# it converts the contents of the uploaded XML file to a standardised form
+# (uniform timestamps and article id values).
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
 test_that ("figshare actions", {
@@ -15,7 +16,8 @@ test_that ("figshare actions", {
     cli <- with_mock_dir ("fs_create", {
         depositsClient$new (service = service)
     })
-    # expect_length (cli$deposits, 0L) # no current deposits
+    expect_s3_class (cli, "depositsClient")
+    expect_identical (cli$service, service)
 
     # --------- DEPOSIT_NEW
     metadata <- list (

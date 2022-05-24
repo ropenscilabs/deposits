@@ -4,8 +4,9 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-# Request mocking requires setting dates in some requests to constant values,
-# for which this envvar is used.
+# This envvar is used only in the private 'upload_dcmi_xml()' function, in which
+# it converts the contents of the uploaded XML file to a standardised form
+# (uniform timestamps and article id values).
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
 test_that ("zenodo actions", {
