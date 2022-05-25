@@ -1,0 +1,16 @@
+{
+    "mimetype": "text/xml",
+    "updated": "2022-01-01T00:00:00.796632+00:00",
+    "links": {
+        "self": "sbapi/files/hash/DCEntry-1065633.xml",
+        "version": "sbapi/files/hash/DCEntry-1065633.xml?versionId=8c172ffe-bf0c-42fb-b37d-7aebbd8605cd",
+        "uploads": "sbapi/files/hash/DCEntry-1065633.xml?uploads"
+    },
+    "is_head": true,
+    "created": "2022-01-01T00:00:00.791717+00:00",
+    "checksum": "md5:7d6ace0b9e838dbd8b43702bae8ad55e",
+    "version_id": "8c172ffe-bf0c-42fb-b37d-7aebbd8605cd",
+    "delete_marker": false,
+    "key": "DCEntry-1065633.xml",
+    "size": 796
+}

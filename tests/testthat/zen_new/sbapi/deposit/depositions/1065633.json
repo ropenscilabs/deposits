@@ -1,0 +1,56 @@
+{
+    "conceptrecid": "1065632",
+    "created": "2022-01-01T00:00:00.728177+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "c4bf594fdb09de568e37a748f5e55005",
+            "filename": "DCEntry-1065633.xml",
+            "filesize": 829,
+            "id": "4e5d2aa0-977b-4c49-a095-6d05c7b401eb",
+            "links": {
+                "download": "sbapi/files/hash/DCEntry-1065633.xml",
+                "self": "sbapi/deposit/depositions/1065633/files/4e5d2aa0-977b-4c49-a095-6d05c7b401eb"
+            }
+        }
+    ],
+    "id": 1065633,
+    "links": {
+        "bucket": "sbapi/files/e8fdaedb-04c6-4b84-b78a-eda83fa76b3c",
+        "discard": "sbapi/deposit/depositions/1065633/actions/discard",
+        "edit": "sbapi/deposit/depositions/1065633/actions/edit",
+        "files": "sbapi/deposit/depositions/1065633/files",
+        "html": "https://sandbox.zenodo.org/deposit/1065633",
+        "latest_draft": "sbapi/deposit/depositions/1065633",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1065633",
+        "newversion": "sbapi/deposit/depositions/1065633/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1065633/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1065633/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1065633"
+    },
+    "metadata": {
+        "access_right": "open",
+        "creators": [
+            {
+                "name": "A. Person,B. Person"
+            }
+        ],
+        "description": "This is the abstract",
+        "doi": "",
+        "license": "CC-BY-4.0",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1065633",
+            "recid": 1065633
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other"
+    },
+    "modified": "2022-01-01T00:00:00.728185+00:00",
+    "owner": 115518,
+    "record_id": 1065633,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}

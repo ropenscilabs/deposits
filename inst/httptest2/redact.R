@@ -45,5 +45,14 @@ function (resp) {
         fixed = FALSE
     )
 
+    # And dates without times:
+    ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}"
+    resp <- httptest2::gsub_response (
+        resp,
+        ptn,
+        "2022-01-01",
+        fixed = FALSE
+    )
+
     return (resp)
 }
