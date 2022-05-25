@@ -249,7 +249,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # Then return client with that deposit removed from list:
             self <- self$deposits_list ()
 
-            return (self)
+            invisible (self)
         },
 
         #' @description Fill deposits client with metadata, and upload to
