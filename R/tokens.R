@@ -10,7 +10,9 @@
 #' @return API token for nominated service.
 #'
 #' @examples
+#' \dontrun{
 #' token <- get_deposits_token (service = "figshare")
+#' }
 #' @family auth
 #' @export
 get_deposits_token <- function (service = NULL) {
@@ -30,11 +32,13 @@ get_deposits_token <- function (service = NULL) {
 
     if (length (token) == 0L) {
         stop ("No token found for [", service, "] service.",
-              call. = FALSE)
+            call. = FALSE
+        )
     }
     if (length (token) != 1L) {
         stop ("No unambiguous token found for [", service, "] service.",
-              call. = FALSE)
+            call. = FALSE
+        )
     }
 
     return (token)

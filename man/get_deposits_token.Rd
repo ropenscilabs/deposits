@@ -19,6 +19,8 @@ a \verb{~/.Renviron} file, and should contain the name of the desired deposits
 service.
 }
 \examples{
+\dontrun{
 token <- get_deposits_token (service = "figshare")
+}
 }
 \concept{auth}
