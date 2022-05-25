@@ -98,7 +98,7 @@ All `deposits` operations start with a client constructed with the
 service:
 
 ``` r
-cli <- depositsClient$new ("zenodo", sandbox = TRUE)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli
 ```
 

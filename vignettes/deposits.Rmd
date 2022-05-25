@@ -120,7 +120,7 @@ ls (cli)
 #> [10] "headers"               "hostdata"              "id"
 #> [13] "initialize"            "metadata"              "print"
 #> [16] "sandbox"               "service"               "term_map"
-#> [19] "url_base"              "url_deposit"
+#> [19] "url_base"              "url_service"
 ```
 
 The client constructed above is mostly empty, but nevertheless demonstrates the

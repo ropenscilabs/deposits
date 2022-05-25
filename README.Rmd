@@ -100,7 +100,7 @@ All `deposits` operations start with a client constructed with the `new()`
 function, with a first parameter specifying the desired deposits service:
 
 ```{r client-new}
-cli <- depositsClient$new ("zenodo", sandbox = TRUE)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli
 ```
 
