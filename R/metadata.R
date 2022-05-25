@@ -89,7 +89,8 @@ get_dcmi_term_map <- function (service = "zenodo") {
 
 #' Convert metadata of atom4R::DCEntry object into a list of terms
 #'
-#' @param metadata The 'metadata' object of a 'deposits' client.
+#' @param metadata The 'metadata' object of a 'deposits' client, as an
+#' `atom4R::DCEntry` object.
 #' @param term_map The 'term_map' object of a 'deposits' client.
 #' @noRd
 construct_data_list <- function (metadata, term_map) {

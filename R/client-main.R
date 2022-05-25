@@ -293,12 +293,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
             metaterms <- construct_data_list (self$metadata, self$term_map)
-            if (length (metaterms) == 0L) {
-                stop (
-                    "metadata is empty; please fill template or use ",
-                    "`atom4R` methods described in vignette"
-                )
-            }
 
             check <- validate_terms (metaterms, service = self$service)
             if (length (check) > 0L) {
