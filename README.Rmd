@@ -63,7 +63,8 @@ cli
 #>    metadata : <none>
 ```
 
-The deposits workflow involves the following main steps:
+Having constructed a new client, the deposits workflow then involves the
+following main steps:
 
 1. Fill the client with metadata;
 2. Create a new deposit on the nominated service; and
