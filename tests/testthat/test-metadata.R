@@ -58,7 +58,9 @@ test_that ("client with metadata", {
         creator = list ("A. Person", "B. Person")
     )
 
-    cli1 <- depositsClient$new (deposit, sandbox = TRUE, metadata = metadata)
+    cli1 <- with_mock_dir ("meta-new1", {
+        depositsClient$new (deposit, sandbox = TRUE, metadata = metadata)
+    })
     cli1$metadata$setUpdated (the_time)
 
     expect_identical (cli1$metadata$title [[1]]$value, "New Title")
@@ -75,19 +77,25 @@ test_that ("client with metadata", {
         file.remove (filename)
     }
     deposits_metadata_template (filename, metadata)
-    cli2 <- depositsClient$new (deposit, sandbox = TRUE, metadata = filename)
+    cli2 <- with_mock_dir ("meta-new2", {
+        depositsClient$new (deposit, sandbox = TRUE, metadata = filename)
+    })
     cli2$metadata$setUpdated (the_time)
 
     # not identical because calling environments differ:
     expect_equal (cli1, cli2)
 
     meta <- deposits_meta_to_dcmi (filename)
-    cli3 <- depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+    cli3 <- with_mock_dir ("meta-new3", {
+        depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+    })
     cli3$metadata$setUpdated (the_time)
 
     expect_equal (cli1, cli3)
 
-    cli4 <- depositsClient$new (deposit, sandbox = TRUE)
+    cli4 <- with_mock_dir ("meta-new4", {
+        depositsClient$new (deposit, sandbox = TRUE)
+    })
     cli4$deposit_fill_metadata (meta)
     cli4$metadata$setUpdated (the_time)
 
@@ -111,7 +119,9 @@ test_that ("client with invalid metadata", {
     meta$creator <- c (meta$creator, "wrong") # must be a 'DCCreator' object
 
     expect_error (
-        cli <- depositsClient$new (deposit, sandbox = TRUE, metadata = meta),
+        cli <- with_mock_dir ("meta-new-error", {
+            depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+        }),
         "metadata is not valid - see details via metadata\\$validate()"
     )
 })
