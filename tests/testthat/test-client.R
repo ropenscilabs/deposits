@@ -19,7 +19,7 @@ test_that ("Client structure", {
     )
 
     expect_silent (
-        cli <- with_mock_dir ("client-new1", {
+        cli <- with_mock_dir ("client-new", {
             depositsClient$new (service = service)
         })
     )
@@ -44,13 +44,34 @@ test_that ("Client structure", {
     expect_identical (cli$url_base, u)
 })
 
-test_that ("print", {
+test_that ("print-figshare", {
 
     service <- "figshare"
 
     expect_silent (
-        cli <- with_mock_dir ("client-new2", {
+        cli <- with_mock_dir ("print-fs", {
             depositsClient$new (service = service)
+        })
+    )
+
+    testthat::expect_snapshot (print (cli))
+
+    cli$hostdata <- list (data = "data")
+    cli$metadata <- atom4R::DCEntry$new ()
+    cli$id <- "1"
+    cli$url_deposit <- "https://my.deposit"
+    cli$deposits <- data.frame (n = 1:5)
+
+    testthat::expect_snapshot (print (cli))
+})
+
+test_that ("print-zenodo", {
+
+    service <- "zenodo"
+
+    expect_silent (
+        cli <- with_mock_dir ("print-zen", {
+            depositsClient$new (service = service, sandbox = TRUE)
         })
     )
 
