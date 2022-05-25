@@ -1,7 +1,7 @@
 Package: deposits
 Title: A universal client for depositing and accessing research data
     anywhere
-Version: 0.0.3.030
+Version: 0.0.3.031
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265"))
@@ -25,7 +25,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Remotes:
-    eblondel/atom4R
+    eblondel/atom4R,
+    mpadge/rdflib
 Config/testthat/edition: 3
 VignetteBuilder: 
     knitr

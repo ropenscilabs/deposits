@@ -19,7 +19,9 @@ test_that ("Client structure", {
     )
 
     expect_silent (
-        cli <- depositsClient$new (service = service)
+        cli <- with_mock_dir ("client-new1", {
+            depositsClient$new (service = service)
+        })
     )
     expect_s3_class (cli, "depositsClient")
     expect_s3_class (cli, "R6")
@@ -47,7 +49,9 @@ test_that ("print", {
     service <- "figshare"
 
     expect_silent (
-        cli <- depositsClient$new (service = service)
+        cli <- with_mock_dir ("client-new2", {
+            depositsClient$new (service = service)
+        })
     )
 
     testthat::expect_snapshot (print (cli))
