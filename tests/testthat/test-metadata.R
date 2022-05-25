@@ -49,6 +49,10 @@ test_that ("metadata to DCEntry", {
     expect_identical (dc$tableOfContents [[2]]$value, "Second")
 })
 
+# the following test fails on windows machines on r-universe windows machines,
+# so switched off from here.
+testthat::skip_if (!test_all)
+
 test_that ("client with metadata", {
 
     service <- "zenodo"
@@ -104,10 +108,6 @@ test_that ("client with metadata", {
 
     expect_equal (cli1, cli4)
 })
-
-# the following test fails on windows machines on r-universe windows machines,
-# so switched off from here.
-testthat::skip_if (!test_all)
 
 test_that ("client with invalid metadata", {
 
