@@ -105,7 +105,7 @@ test_that ("zenodo actions", {
     saveRDS (datasets::Orange, filename)
 
     dep <- with_mock_dir ("zen_up", {
-        cli$deposit_upload_file (deposit_id, filename)
+        cli$deposit_upload_file (path = filename) # deposit_id grabbed from cli$id
     })
 
     expect_identical (dep, cli)
@@ -131,7 +131,7 @@ test_that ("zenodo actions", {
 
     path <- with_mock_dir ("zen_dl", {
         cli$deposit_download_file (
-            deposit_id = deposit_id,
+            # deposit_id = deposit_id, # grabbed from cli$id
             filename = basename (filename),
             path = tempdir ()
         )
@@ -140,6 +140,17 @@ test_that ("zenodo actions", {
     # The mock tests do not actually create the file, so can't test it here:
     # expect_true (file.exists (path))
     # expect_identical (datasets::Orange, readRDS (path))
+
+    expect_error (
+        with_mock_dir ("zen_dl_fail", {
+            cli$deposit_download_file (
+                deposit_id = deposit_id,
+                filename = "does_not_exist.dat",
+                path = tempdir ()
+            )
+        }),
+        "That deposit does not contain the specified file."
+    )
 
     # -------- DEPOSIT_DELETE
     # can't mock that because it returns an empty body
