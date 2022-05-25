@@ -1,9 +1,9 @@
 
-#' @description Fill client 'id' and 'url_deposit' values from
+#' @description Fill client 'id' and 'url_service' values from
 #' 'hostdata'
 #' @noRd
 
-depositsClient$set ("private", "fill_deposit_id_url", function () {
+depositsClient$set ("private", "fill_service_id_url", function () {
 
     if (self$service == "figshare") {
         # entity_id is filled on creation, but retrieval returns 'id'
@@ -11,14 +11,14 @@ depositsClient$set ("private", "fill_deposit_id_url", function () {
         if (is.null (self$id)) {
             self$id <- self$hostdata$id
         }
-        self$url_deposit <-
+        self$url_service <-
             paste0 (
                 "https://figshare.com/account/articles/",
                 self$id
             )
     } else if (self$service == "zenodo") {
         self$id <- self$hostdata$id
-        self$url_deposit <- self$hostdata$links$html
+        self$url_service <- self$hostdata$links$html
     }
 
     invisible (self)

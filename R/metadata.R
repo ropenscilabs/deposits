@@ -65,10 +65,10 @@ load_meta_terms <- function () {
 
 #' Constrct map between DCMI terms and those of nominated deposits service.
 #' @noRd
-get_dcmi_term_map <- function (deposit = "zenodo") {
+get_dcmi_term_map <- function (service = "zenodo") {
 
     terms <- load_meta_terms ()
-    this_col <- grep (deposit, names (terms), ignore.case = TRUE)
+    this_col <- grep (service, names (terms), ignore.case = TRUE)
     terms <- terms [which (nzchar (terms [, this_col])), ]
     terms <- cbind (terms$DC, terms [, this_col])
     terms <- apply (terms, 1, function (i) {
@@ -79,7 +79,7 @@ get_dcmi_term_map <- function (deposit = "zenodo") {
     # zenodo metadata has "(m)" at end of terms
     terms <- data.frame (
         "dcmi" = terms [, 1],
-        "deposit" = terms [, 2],
+        "service" = terms [, 2],
         "meta" = grepl ("\\(m\\)$", terms [, 2])
     )
     terms [, 2] <- gsub ("\\(m\\)$", "", terms [, 2])
@@ -103,22 +103,19 @@ construct_data_list <- function (metadata, term_map) {
             j$value
         })
     })
-    names (values) <- term_map$deposit
+    names (values) <- term_map$service
     values <- values [which (vapply (values, length, integer (1)) > 0L)]
     arrays <- c ("keywords", "contributors")
     index <- which (!names (values) %in% arrays)
     values [index] <- lapply (values [index], function (i) {
         paste0 (i, collapse = ",")
     })
-    # values <- values [which (!values == "NULL")]
-
-    # values <- values [which (!duplicated (names (values)))]
 
     is_zenodo <- any (term_map$meta)
     if (is_zenodo) {
 
         index <- which (names (values) %in%
-            term_map$deposit [which (term_map$meta)])
+            term_map$service [which (term_map$meta)])
         meta_values <- values [index]
         values <- values [-index]
 

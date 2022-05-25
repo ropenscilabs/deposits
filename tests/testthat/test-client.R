@@ -29,8 +29,8 @@ test_that ("Client structure", {
 
     expect_true ("id" %in% names (cli))
     expect_null (cli$id)
-    expect_true ("url_deposit" %in% names (cli))
-    expect_null (cli$url_deposit)
+    expect_true ("url_service" %in% names (cli))
+    expect_null (cli$url_service)
     expect_true ("url_base" %in% names (cli))
     expect_false (is.null (cli$url_base))
 
@@ -59,7 +59,7 @@ test_that ("print-figshare", {
     cli$hostdata <- list (data = "data")
     cli$metadata <- atom4R::DCEntry$new ()
     cli$id <- "1"
-    cli$url_deposit <- "https://my.deposit"
+    cli$url_service <- "https://my.deposit"
     cli$deposits <- data.frame (n = 1:5)
 
     testthat::expect_snapshot (print (cli))
@@ -80,7 +80,7 @@ test_that ("print-zenodo", {
     cli$hostdata <- list (data = "data")
     cli$metadata <- atom4R::DCEntry$new ()
     cli$id <- "1"
-    cli$url_deposit <- "https://my.deposit"
+    cli$url_service <- "https://my.deposit"
     cli$deposits <- data.frame (n = 1:5)
 
     testthat::expect_snapshot (print (cli))

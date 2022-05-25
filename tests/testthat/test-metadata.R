@@ -48,7 +48,7 @@ test_that ("metadata to DCEntry", {
 
 test_that ("client with metadata", {
 
-    deposit <- "zenodo"
+    service <- "zenodo"
     # the following objects differ in timestamps, so all receive this one:
     the_time <- Sys.time ()
 
@@ -59,7 +59,7 @@ test_that ("client with metadata", {
     )
 
     cli1 <- with_mock_dir ("meta-new1", {
-        depositsClient$new (deposit, sandbox = TRUE, metadata = metadata)
+        depositsClient$new (service, sandbox = TRUE, metadata = metadata)
     })
     cli1$metadata$setUpdated (the_time)
 
@@ -72,13 +72,13 @@ test_that ("client with metadata", {
     expect_identical (cli1$metadata$creator [[2]]$value, "B. Person")
 
     filename <- tempfile (pattern = "meta_", fileext = ".json")
-    deposit <- "zenodo"
+    service <- "zenodo"
     if (file.exists (filename)) {
         file.remove (filename)
     }
     deposits_metadata_template (filename, metadata)
     cli2 <- with_mock_dir ("meta-new2", {
-        depositsClient$new (deposit, sandbox = TRUE, metadata = filename)
+        depositsClient$new (service, sandbox = TRUE, metadata = filename)
     })
     cli2$metadata$setUpdated (the_time)
 
@@ -87,14 +87,14 @@ test_that ("client with metadata", {
 
     meta <- deposits_meta_to_dcmi (filename)
     cli3 <- with_mock_dir ("meta-new3", {
-        depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+        depositsClient$new (service, sandbox = TRUE, metadata = meta)
     })
     cli3$metadata$setUpdated (the_time)
 
     expect_equal (cli1, cli3)
 
     cli4 <- with_mock_dir ("meta-new4", {
-        depositsClient$new (deposit, sandbox = TRUE)
+        depositsClient$new (service, sandbox = TRUE)
     })
     cli4$deposit_fill_metadata (meta)
     cli4$metadata$setUpdated (the_time)
@@ -104,7 +104,7 @@ test_that ("client with metadata", {
 
 test_that ("client with invalid metadata", {
 
-    deposit <- "zenodo"
+    service <- "zenodo"
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
@@ -120,7 +120,7 @@ test_that ("client with invalid metadata", {
 
     expect_error (
         cli <- with_mock_dir ("meta-new-error", {
-            depositsClient$new (deposit, sandbox = TRUE, metadata = meta)
+            depositsClient$new (service, sandbox = TRUE, metadata = meta)
         }),
         "metadata is not valid - see details via metadata\\$validate()"
     )
@@ -136,13 +136,13 @@ test_that ("zenodo metadata terms", {
             creators = list ("A. Person", "B. Person")
         )
     )
-    check <- validate_terms (metaterms, deposit = "zenodo")
+    check <- validate_terms (metaterms, service = "zenodo")
 
     expect_null (check) # metadata okay
 
     metaterms$owner <- "me" # should be integer
     metaterms$state <- "notinvocab" # vocab=(inprogress|done|error)
-    check <- validate_terms (metaterms, deposit = "zenodo")
+    check <- validate_terms (metaterms, service = "zenodo")
 
     expect_true (!is.null (check))
     expect_length (check, 2L) # both terms are invalid
@@ -151,11 +151,11 @@ test_that ("zenodo metadata terms", {
 
     metaterms$owner <- 1L
     metaterms$state <- "done" # vocab=(inprogress|done|error)
-    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+    expect_null (validate_terms (metaterms, service = "zenodo"))
 
     metaterms$metadata$license <- "none"
     metaterms$metadata$dates <- Sys.Date ()
-    check <- validate_terms (metaterms, deposit = "zenodo")
+    check <- validate_terms (metaterms, service = "zenodo")
 
     expect_true (!is.null (check))
     expect_length (check, 2L) # both terms are invalid
@@ -164,25 +164,25 @@ test_that ("zenodo metadata terms", {
 
     metaterms$metadata$license <- "MIT"
     metaterms$metadata$dates <- list (Sys.Date ())
-    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+    expect_null (validate_terms (metaterms, service = "zenodo"))
 
     metaterms$metadata$upload_type <- "notatype"
-    check <- validate_terms (metaterms, deposit = "zenodo")
+    check <- validate_terms (metaterms, service = "zenodo")
     expect_true (!is.null (check))
     expect_length (check, 1L)
     expect_true (grepl ("not in required vocabulary", check [1]))
 
     metaterms$metadata$upload_type <- "dataset"
-    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+    expect_null (validate_terms (metaterms, service = "zenodo"))
 
     metaterms$metadata$keywords <- "keyword"
-    check <- validate_terms (metaterms, deposit = "zenodo")
+    check <- validate_terms (metaterms, service = "zenodo")
     expect_true (!is.null (check))
     expect_length (check, 1L)
     expect_true (grepl ("must be an array/list object", check [1]))
 
     metaterms$metadata$keywords <- list ("keyword")
-    expect_null (validate_terms (metaterms, deposit = "zenodo"))
+    expect_null (validate_terms (metaterms, service = "zenodo"))
 })
 
 test_that ("figshare metadata terms", {
@@ -193,33 +193,33 @@ test_that ("figshare metadata terms", {
         description = "This is the abstract",
         creators = list ("A. Person", "B. Person")
     )
-    check <- validate_terms (metaterms, deposit = "figshare")
+    check <- validate_terms (metaterms, service = "figshare")
     expect_null (check) # metadata okay
 
     metaterms$license <- "MIT" # should be integer
-    check <- validate_terms (metaterms, deposit = "figshare")
+    check <- validate_terms (metaterms, service = "figshare")
     expect_true (!is.null (check))
     expect_length (check, 1L) # both terms are invalid
     expect_true (grepl ("is not coercible to integer", check [1]))
 
     metaterms$license <- 1L
-    expect_null (validate_terms (metaterms, deposit = "figshare"))
+    expect_null (validate_terms (metaterms, service = "figshare"))
 
     metaterms$defined_type <- "notatype"
-    check <- validate_terms (metaterms, deposit = "figshare")
+    check <- validate_terms (metaterms, service = "figshare")
     expect_true (!is.null (check))
     expect_length (check, 1L) # both terms are invalid
     expect_true (grepl ("must follow fixed vocabulary of", check [1]))
 
     metaterms$defined_type <- "dataset"
-    expect_null (validate_terms (metaterms, deposit = "figshare"))
+    expect_null (validate_terms (metaterms, service = "figshare"))
 
     metaterms$tags <- "tag"
-    check <- validate_terms (metaterms, deposit = "figshare")
+    check <- validate_terms (metaterms, service = "figshare")
     expect_true (!is.null (check))
     expect_length (check, 1L) # both terms are invalid
     expect_true (grepl ("must have format \\[array-string\\]", check [1]))
 
     metaterms$tags <- list ("tag1", "tag2")
-    expect_null (validate_terms (metaterms, deposit = "figshare"))
+    expect_null (validate_terms (metaterms, service = "figshare"))
 })

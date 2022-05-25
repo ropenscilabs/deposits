@@ -1,17 +1,17 @@
 #' validate metadata terms
 #'
 #' @param metaterms A list of metadata terms returned from `construct_data_list()`.
-#' @param deposit Name of deposits service.
+#' @param service Name of deposits service.
 #' @return `NULL` if all metaterms are valid, otherwise a vector of any invalid
 #' metaterms.
 #' @noRd
-validate_terms <- function (metaterms, deposit = "zenodo") {
+validate_terms <- function (metaterms, service = "zenodo") {
 
-    deposit <- match.arg (deposit, c ("figshare", "zenodo"))
+    service <- match.arg (service, c ("figshare", "zenodo"))
 
-    if (deposit == "zenodo") {
+    if (service == "zenodo") {
         res <- validate_zenodo_terms (metaterms) # in metadata-validate-zenodo.R
-    } else if (deposit == "figshare") {
+    } else if (service == "figshare") {
         res <- validate_figshare_terms (metaterms)
     }
 

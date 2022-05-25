@@ -51,8 +51,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         deposits = NULL,
         #' @field url_base (character) Base URL of host service API
         url_base = NULL,
-        #' @field url_deposit (character) URL of deposit.
-        url_deposit = NULL,
+        #' @field url_service (character) URL of deposit service
+        url_service = NULL,
         #' @field id (integer) Deposit identifier from host service.
         id = NULL,
         #' @field headers (list) list of named headers
@@ -160,8 +160,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             cat ("\n")
 
-            if (!is.null (self$url_deposit)) {
-                cat (paste0 ("url_deposit : ", self$url_deposit), sep = "\n")
+            if (!is.null (self$url_service)) {
+                cat (paste0 ("url_service : ", self$url_service), sep = "\n")
             }
             if (!is.null (self$id)) {
                 cat (paste0 (" deposit id : ", self$id), sep = "\n")
@@ -299,7 +299,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     "`atom4R` methods described in vignette"
                 )
             }
-            check <- validate_terms (metaterms, deposit = self$service)
+
+            check <- validate_terms (metaterms, service = self$service)
             if (length (check) > 0L) {
                 warning (
                     "The following metadata terms do not conform:\n",
@@ -335,7 +336,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$hostdata <- hostdata
             }
 
-            self <- private$fill_deposit_id_url ()
+            self <- private$fill_service_id_url ()
 
             self <- private$deposits_list_extract ()
 
@@ -468,7 +469,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self$metadata <- metadata_from_deposit (self, self$hostdata)
 
-            self <- private$fill_deposit_id_url ()
+            self <- private$fill_service_id_url ()
 
             invisible (self)
         },
