@@ -33,7 +33,7 @@ users having to know any specific details of the APIs for each service. This
 vignette provides a demonstration of the primary functionality of the
 `deposits` package.
 
-```{r lib}
+```{r lib, echo = FALSE}
 library (deposits)
 ```
 
