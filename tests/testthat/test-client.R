@@ -47,6 +47,10 @@ test_that ("Client structure", {
     expect_identical (cli$url_base, u)
 })
 
+# the following test fails on windows machines on r-universe windows machines,
+# so switched off from here.
+testthat::skip_if (!test_all)
+
 test_that ("print-figshare", {
 
     service <- "figshare"
@@ -67,10 +71,6 @@ test_that ("print-figshare", {
 
     testthat::expect_snapshot (print (cli))
 })
-
-# the following test fails on windows machines on r-universe windows machines,
-# so switched off from here.
-testthat::skip_if (!test_all)
 
 test_that ("print-zenodo", {
 
