@@ -26,8 +26,8 @@ test_that ("zenodo actions", {
         creator = list ("A. Person", "B. Person")
     )
 
-    with_mock_dir ("zen_client", {
-        cli <- depositsClient$new (
+    cli <- with_mock_dir ("zen_client", {
+        depositsClient$new (
             service = service,
             sandbox = TRUE,
             metadata = metadata
