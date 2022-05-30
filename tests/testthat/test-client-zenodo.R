@@ -7,6 +7,7 @@ testthat::skip_if (!test_all)
 # This envvar is used only in the private 'upload_dcmi_xml()' function, in which
 # it converts the contents of the uploaded XML file to a standardised form
 # (uniform timestamps and article id values).
+# This is also used one time in client_main.R deposit_new() method.
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
 test_that ("zenodo actions", {
@@ -105,7 +106,7 @@ test_that ("zenodo actions", {
     saveRDS (datasets::Orange, filename)
 
     dep <- with_mock_dir ("zen_up", {
-        cli$deposit_upload_file (path = filename) # deposit_id grabbed from cli$id
+        cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 
     expect_identical (dep, cli)
