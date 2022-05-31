@@ -1,17 +1,17 @@
 [
     {
-        "conceptrecid": "1067591",
-        "created": "2022-01-01T00:00:00.845315",
+        "conceptrecid": "1067813",
+        "created": "2022-01-01T00:00:00.812048",
         "doi": "",
         "doi_url": "https://doi.org/",
-        "id": 1067592,
+        "id": 1067814,
         "links": {
-            "discard": "sbapi/deposit/depositions/1067592/actions/discard",
-            "edit": "sbapi/deposit/depositions/1067592/actions/edit",
-            "files": "sbapi/deposit/depositions/1067592/files",
-            "html": "https://sandbox.zenodo.org/deposit/1067592",
-            "publish": "sbapi/deposit/depositions/1067592/actions/publish",
-            "self": "sbapi/deposit/depositions/1067592"
+            "discard": "sbapi/deposit/depositions/1067814/actions/discard",
+            "edit": "sbapi/deposit/depositions/1067814/actions/edit",
+            "files": "sbapi/deposit/depositions/1067814/files",
+            "html": "https://sandbox.zenodo.org/deposit/1067814",
+            "publish": "sbapi/deposit/depositions/1067814/actions/publish",
+            "self": "sbapi/deposit/depositions/1067814"
         },
         "metadata": {
             "access_right": "open",
@@ -24,55 +24,16 @@
             "doi": "",
             "license": "CC-BY-4.0",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1067592",
-                "recid": 1067592
+                "doi": "10.5072/zenodo.1067814",
+                "recid": 1067814
             },
             "publication_date": "2022-01-01",
             "title": "New Title",
             "upload_type": "other"
         },
-        "modified": "2022-01-01T00:00:00.845324",
+        "modified": "2022-01-01T00:00:00.812057",
         "owner": 115518,
-        "record_id": 1067592,
-        "state": "unsubmitted",
-        "submitted": false,
-        "title": "New Title"
-    },
-    {
-        "conceptrecid": "1065665",
-        "created": "2022-01-01T00:00:00.942241",
-        "doi": "",
-        "doi_url": "https://doi.org/",
-        "id": 1065666,
-        "links": {
-            "discard": "sbapi/deposit/depositions/1065666/actions/discard",
-            "edit": "sbapi/deposit/depositions/1065666/actions/edit",
-            "files": "sbapi/deposit/depositions/1065666/files",
-            "html": "https://sandbox.zenodo.org/deposit/1065666",
-            "publish": "sbapi/deposit/depositions/1065666/actions/publish",
-            "self": "sbapi/deposit/depositions/1065666"
-        },
-        "metadata": {
-            "access_right": "open",
-            "creators": [
-                {
-                    "name": "A. Person,B. Person"
-                }
-            ],
-            "description": "This is the abstract",
-            "doi": "",
-            "license": "CC-BY-4.0",
-            "prereserve_doi": {
-                "doi": "10.5072/zenodo.1065666",
-                "recid": 1065666
-            },
-            "publication_date": "2022-01-01",
-            "title": "New Title",
-            "upload_type": "other"
-        },
-        "modified": "2022-01-01T00:00:00.942249",
-        "owner": 115518,
-        "record_id": 1065666,
+        "record_id": 1067814,
         "state": "unsubmitted",
         "submitted": false,
         "title": "New Title"
