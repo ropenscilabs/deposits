@@ -302,11 +302,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
-            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-                # The body of the request is not redacted
-                metaterms$created <- "2022-01-01"
-            }
-
             body <- jsonlite::toJSON (
                 metaterms,
                 pretty = FALSE,

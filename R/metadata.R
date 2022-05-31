@@ -145,6 +145,10 @@ construct_data_list <- function (metadata, term_map) {
             values <- c ("created" = paste0 (Sys.Date ()), values)
         }
 
+        if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+            values$created <- "2022-01-01"
+        }
+
     } else {
 
         if ("authors" %in% names (values) & !is.list (values$authors)) {
