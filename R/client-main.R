@@ -302,12 +302,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
-            body <- jsonlite::toJSON (
-                metaterms,
-                pretty = FALSE,
-                auto_unbox = TRUE
-            )
-
             url <- paste0 (
                 self$url_base,
                 ifelse (self$service == "figshare",
@@ -317,8 +311,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-            req$headers <- c (req$headers, "Content-Type" = "application/json")
-            req <- httr2::req_body_raw (req, body = paste0 (body))
+            req <- httr2::req_body_json (req, data = metaterms)
 
             resp <- httr2::req_perform (req)
 
@@ -366,12 +359,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             metaterms <- construct_data_list (self$metadata, self$term_map)
 
-            body <- paste0 (jsonlite::toJSON (metaterms,
-                pretty = FALSE,
-                auto_unbox = TRUE
-            ))
-
-            req <- httr2::req_body_raw (req, body = paste0 (body))
+            req <- httr2::req_body_json (req, data = metaterms)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
