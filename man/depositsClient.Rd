@@ -171,7 +171,7 @@ from \code{list_deposits} method).}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-\code{TRUE} is deposit successfully deleted, otherwise \code{FALSE}.
+Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}
@@ -203,7 +203,7 @@ constructed directly via \pkg{atom4R} routines, or via
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Modified form of the deposits client with metadata inserted.
+Updated deposits client with metadata inserted.
 }
 }
 \if{html}{\out{<hr>}}
@@ -216,7 +216,7 @@ Create a new deposit
 }
 
 \subsection{Returns}{
-A \code{data.frame} with details of the newly created deposit.
+Updated deposits client which includes data on new deposit
 }
 }
 \if{html}{\out{<hr>}}
@@ -258,8 +258,7 @@ client is used.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \code{data.frame} with details on newly uploaded file, including
-upload and download URLs, and file details.
+Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}
@@ -280,7 +279,7 @@ to be retrieved.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A \code{data.frame} containing full data of specified deposit.
+Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}

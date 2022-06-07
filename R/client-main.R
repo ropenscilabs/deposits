@@ -203,7 +203,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Deleted a nominated deposit
         #' @param deposit_id Integer identifier of deposit (generally obtained
         #' from `list_deposits` method).
-        #' @return `TRUE` is deposit successfully deleted, otherwise `FALSE`.
+        #' @return Updated 'deposits' client
 
         deposit_delete = function (deposit_id = NULL) {
 
@@ -250,7 +250,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' constructed directly via \pkg{atom4R} routines, or via
         #' \link{deposits_meta_to_dcmi}.
         #' }
-        #' @return Modified form of the deposits client with metadata inserted.
+        #' @return Updated deposits client with metadata inserted.
 
         deposit_fill_metadata = function (metadata = NULL) {
 
@@ -269,7 +269,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Create a new deposit
-        #' @return A `data.frame` with details of the newly created deposit.
+        #' @return Updated deposits client which includes data on new deposit
 
         deposit_new = function () {
 
@@ -360,8 +360,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
         #' @param path Path to local file.
-        #' @return A `data.frame` with details on newly uploaded file, including
-        #' upload and download URLs, and file details.
+        #' @return Updated 'deposits' client
 
         deposit_upload_file = function (deposit_id = NULL, path = NULL) {
 
@@ -412,7 +411,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Retrieve information on specified deposit
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
-        #' @return A `data.frame` containing full data of specified deposit.
+        #' @return Updated 'deposits' client
 
         deposit_retrieve = function (deposit_id) {
 
