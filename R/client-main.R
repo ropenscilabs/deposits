@@ -91,10 +91,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                sandbox = FALSE,
                                headers = NULL) {
 
-            self <- private$define_service (service, sandbox, headers)
+            self <- private$define_service (service, sandbox)
 
             if (is.null (headers)) {
-                token <- get_deposits_token (service = self$service)
+                service <- self$service
+                if (service == "zenodo" & self$sandbox) {
+                    service <- "zenodo-sandbox"
+                }
+                token <- get_deposits_token (service = service)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
 

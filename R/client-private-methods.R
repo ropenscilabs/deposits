@@ -4,13 +4,11 @@
 #' \link{deposits_services}).
 #' @param sandbox If `TRUE`, connect client to sandbox, rather than
 #' actual API endpoint (for "zenodo" only).
-#' @param headers Any acceptable headers. See examples in \pkg{httr2}
-#' package.
 #' @noRd
 
 depositsClient$set (
     "private", "define_service",
-    function (service, sandbox = FALSE, headers = NULL) {
+    function (service, sandbox = FALSE) {
 
         service <- match.arg (tolower (service), c ("zenodo", "figshare"))
         checkmate::assert_logical (sandbox, len = 1L)
