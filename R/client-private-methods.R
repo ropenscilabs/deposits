@@ -1,4 +1,38 @@
 
+#' @description Define service for deposits client
+#' @param service (character) of a deposits service (see
+#' \link{deposits_services}).
+#' @param sandbox If `TRUE`, connect client to sandbox, rather than
+#' actual API endpoint (for "zenodo" only).
+#' @param headers Any acceptable headers. See examples in \pkg{httr2}
+#' package.
+#' @noRd
+
+depositsClient$set (
+    "private", "define_service",
+    function (service, sandbox = FALSE, headers = NULL) {
+
+        service <- match.arg (tolower (service), c ("zenodo", "figshare"))
+        checkmate::assert_logical (sandbox, len = 1L)
+
+        if (sandbox && service == "zenodo") {
+            service <- "zenodo-sandbox"
+        }
+        self$sandbox <- sandbox
+
+        s <- deposits_services ()
+        self$service <- service
+        self$url_base <- s$api_base_url [s$name == service]
+
+        if (self$service == "zenodo-sandbox") {
+            self$service <- "zenodo"
+        }
+        self$term_map <- get_dcmi_term_map (self$service)
+
+        invisible (self)
+    }
+)
+
 #' @description Fill client 'id' and 'url_service' values from
 #' 'hostdata'
 #' @noRd

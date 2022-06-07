@@ -91,35 +91,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                sandbox = FALSE,
                                headers = NULL) {
 
-            service <- match.arg (tolower (service), c ("zenodo", "figshare"))
-            checkmate::assert_logical (sandbox, len = 1L)
-
-            if (!is.null (metadata)) {
-                metadata <- process_metadata_param (metadata)
-            }
-
-            if (sandbox && service == "zenodo") {
-                service <- "zenodo-sandbox"
-            }
-            self$sandbox <- sandbox
-
-            s <- deposits_services ()
-            self$service <- service
-            self$url_base <- s$api_base_url [s$name == service]
+            self <- private$define_service (service, sandbox, headers)
 
             if (is.null (headers)) {
                 token <- get_deposits_token (service = self$service)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
 
-            if (self$service == "zenodo-sandbox") {
-                self$service <- "zenodo"
-            }
-            self$term_map <- get_dcmi_term_map (self$service)
-
             private$deposits_list_extract ()
 
             if (!is.null (metadata)) {
+
+                metadata <- process_metadata_param (metadata)
+
                 out <- capture.output (
                     chk <- metadata$validate ()
                 )
