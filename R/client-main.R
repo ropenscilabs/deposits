@@ -320,6 +320,32 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Create a new `depositsClient` object
+        #' @param service (character) of a deposits service (see
+        #' \link{deposits_services}).
+        #' @param sandbox If `TRUE`, connect client to sandbox, rather than
+        #' actual API endpoint (for "zenodo" only).
+        #' @param headers Any acceptable headers. See examples in \pkg{httr2}
+        #' package.
+
+        deposit_service = function (service = NULL, sandbox = FALSE, headers = NULL) {
+
+            self <- private$define_service (service, sandbox)
+
+            if (is.null (headers)) {
+                service <- self$service
+                if (service == "zenodo" & self$sandbox) {
+                    service <- "zenodo-sandbox"
+                }
+                token <- get_deposits_token (service = service)
+                self$headers <- list (Authorization = paste0 ("Bearer ", token))
+            }
+
+            private$deposits_list_extract ()
+
+            invisible (self)
+        },
+
         #' @description Update metadata for specified deposit
         #' @note Client should already contain metadata updated with the
         #' 'deposit_fill_metadata()' function.

@@ -74,6 +74,7 @@ specified host service.}
 \item \href{#method-depositsClient-deposit_delete}{\code{depositsClient$deposit_delete()}}
 \item \href{#method-depositsClient-deposit_fill_metadata}{\code{depositsClient$deposit_fill_metadata()}}
 \item \href{#method-depositsClient-deposit_new}{\code{depositsClient$deposit_new()}}
+\item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
@@ -217,6 +218,30 @@ Create a new deposit
 
 \subsection{Returns}{
 Updated deposits client which includes data on new deposit
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_service"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_service}{}}}
+\subsection{Method \code{deposit_service()}}{
+Create a new \code{depositsClient} object
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service(service = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{service}}{(character) of a deposits service (see
+\link{deposits_services}).}
+
+\item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
+actual API endpoint (for "zenodo" only).}
+
+\item{\code{headers}}{Any acceptable headers. See examples in \pkg{httr2}
+package.}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
