@@ -182,6 +182,7 @@ Zenodo parameters are described at
 \item q: Search query
 \item status: either "draft" or "published"
 \item sort: either "bestmatch" (the default) or "mostrecent"
+\item size: Number of deposits per page
 \item page: Page number for pagination
 \item all_versions: Either "true" or "false"
 \item communities: Search for deposits only within specified
@@ -190,6 +191,30 @@ communities
 \item subtype: Return deposits only of specified subtype
 \item bound: A geolocation bounding box
 \item custom: Custom keywords
+}
+
+Figshare parameters are described at
+\url{https://docs.figshare.com/#articles_search}, and currently
+include:
+\itemize{
+\item resource_doi: Only return deposits matching this 'resource_doi'
+\item item_type: Return deopsits of specified type (as integer).
+\item doi: Only return deposits matching this DOI
+\item handle: Only return deposits matching this handle
+\item project_id: Only return deposits from within specified project
+\item order: Order for sorting results; one of "published_date",
+"modified_date", "views", "shares", "downloads", or "cites"
+\item search_for: Search term.
+\item page: Page number for pagination
+\item page_size: Number of deposits per page
+\item order_direction: "asc" or "desc"
+\item institution: Only return deposits from specified institution
+(as integer)
+\item group: Only return deposits from specified group (as integer)
+\item published_since: Only return deposits published since specified
+date (as YYYY-MM-DD)
+\item modified_since: Only return deposits modified since specified
+date (as YYYY-MM-DD)
 }}
 }
 \if{html}{\out{</div>}}
