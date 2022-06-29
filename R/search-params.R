@@ -17,15 +17,27 @@ process_search_params <- function (service,
     search_params <- data.frame (search_params)
     names (search_params) <- c ("param", "type")
 
+    # check names of all `...` params are in official lists:
     index <- which (!names (arglist) %in% search_params$param)
     if (length (index) > 0L) {
         stop (
             "The parameters [",
-            paste0 (search_params$param [index], collapse = ", "),
+            paste0 (names (arglist) [index], collapse = ", "),
             "] are not ",
             service,
             " search parameters; see ?depositsClient for full list."
         )
+    }
+
+    # check types of all `...` params match official lists:
+    for (i in seq_along (arglist)) {
+        expected_type <- search_params$type [search_params$param == names (arglist) [i]]
+        assert_fn <- ifelse (
+            expected_type == "string",
+            checkmate::assert_character,
+            checkmate::assert_int
+        )
+        do.call (assert_fn, list (arglist [[i]]))
     }
 
     if (service == "figshare") {
