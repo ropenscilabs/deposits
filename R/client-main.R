@@ -211,6 +211,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_delete = function (deposit_id = NULL) {
 
+            if (is.null (deposit_id)) {
+                deposit_id <- self$id
+            }
             checkmate::assert_int (deposit_id)
 
             url <- paste0 (
