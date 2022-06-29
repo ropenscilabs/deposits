@@ -205,8 +205,22 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Search all public deposits
-        #' @param ... Named pairs of query parameters described at
-        #' \url{https://developers.zenodo.org/#list36}.
+        #' @param ... Named pairs of query parameters.
+        #' Zenodo parameters are described at
+        #' \url{https://developers.zenodo.org/#list36}, and currently include:
+        #' \itemize{
+        #' \item q: Search query
+        #' \item status: either "draft" or "published"
+        #' \item sort: either "bestmatch" (the default) or "mostrecent"
+        #' \item page: Page number for pagination
+        #' \item all_versions: Either "true" or "false"
+        #' \item communities: Search for deposits only within specified
+        #' communities
+        #' \item type: Return deposits only of specified type
+        #' \item subtype: Return deposits only of specified subtype
+        #' \item bound: A geolocation bounding box
+        #' \item custom: Custom keywords
+        #' }
         #' @return A `data.frame` of data on deposits matching search parameters
         #' (with format depending on the deposits service.)
         #' @examples

@@ -175,8 +175,22 @@ Search all public deposits
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{...}}{Named pairs of query parameters described at
-\url{https://developers.zenodo.org/#list36}.}
+\item{\code{...}}{Named pairs of query parameters.
+Zenodo parameters are described at
+\url{https://developers.zenodo.org/#list36}, and currently include:
+\itemize{
+\item q: Search query
+\item status: either "draft" or "published"
+\item sort: either "bestmatch" (the default) or "mostrecent"
+\item page: Page number for pagination
+\item all_versions: Either "true" or "false"
+\item communities: Search for deposits only within specified
+communities
+\item type: Return deposits only of specified type
+\item subtype: Return deposits only of specified subtype
+\item bound: A geolocation bounding box
+\item custom: Custom keywords
+}}
 }
 \if{html}{\out{</div>}}
 }
