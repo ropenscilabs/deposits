@@ -13,8 +13,23 @@ process_search_params <- function (service,
     checkmate::assert_int (page_number)
 
     arglist <- list (...)
+    search_params <- do.call (paste0 ("search_params_", service), list ())
+    search_params <- data.frame (search_params)
+    names (search_params) <- c ("param", "type")
+
+    index <- which (!names (arglist) %in% search_params$param)
+    if (length (index) > 0L) {
+        stop (
+            "The parameters [",
+            paste0 (search_params$param [index], collapse = ", "),
+            "] are not ",
+            service,
+            " search parameters; see ?depositsClient for full list."
+        )
+    }
 
     if (service == "figshare") {
+
         if (!is.null (search_string)) {
             arglist <- c (arglist, search_for = search_string)
         }
@@ -24,6 +39,7 @@ process_search_params <- function (service,
             page = page_number
         )
     } else if (service == "zenodo") {
+
         if (!is.null (search_string)) {
             arglist <- c (arglist, q = search_string)
         }
@@ -37,4 +53,33 @@ process_search_params <- function (service,
     }
 
     return (arglist)
+}
+
+search_params_zenodo <- function () {
+    rbind (
+        c ("status", "string"),
+        c ("sort", "string"),
+        c ("all_versions", "string"),
+        c ("communities", "string"),
+        c ("type", "string"),
+        c ("subtype", "string"),
+        c ("bounds", "string"),
+        c ("custom", "string")
+    )
+}
+
+search_params_figshare <- function () {
+    rbind (
+        c ("resource_doi", "string"),
+        c ("item_type", "integer"),
+        c ("doi", "string"),
+        c ("handle", "string"),
+        c ("project_id", "integer"),
+        c ("order", "string"),
+        c ("order_direction", "string"),
+        c ("institution", "integer"),
+        c ("group", "integer"),
+        c ("published_since", "string"),
+        c ("modified_since", "string")
+    )
 }
