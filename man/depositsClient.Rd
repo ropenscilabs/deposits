@@ -41,7 +41,8 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 ## ------------------------------------------------
 
 \dontrun{
-cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+cli <- depositsClient$new (service = "figshare")
+search_results <- cli$deposits_search (search_string = "Text string query", page_size = 5L)
 }
 }
 \concept{client}
@@ -233,7 +234,8 @@ A \code{data.frame} of data on deposits matching search parameters
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{\dontrun{
-cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+cli <- depositsClient$new (service = "figshare")
+search_results <- cli$deposits_search (search_string = "Text string query", page_size = 5L)
 }
 }
 \if{html}{\out{</div>}}

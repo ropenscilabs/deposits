@@ -249,7 +249,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' (with format depending on the deposits service.)
         #' @examples
         #' \dontrun{
-        #' cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+        #' cli <- depositsClient$new (service = "figshare")
+        #' search_results <- cli$deposits_search (search_string = "Text string query", page_size = 5L)
         #' }
 
         deposits_search = function (search_string = NULL,
