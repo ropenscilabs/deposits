@@ -204,6 +204,37 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Search all public deposits
+        #' @param ... Named pairs of query parameters described at
+        #' \url{https://developers.zenodo.org/#list36}.
+        #' @return A `data.frame` of data on deposits matching search parameters
+        #' (with format depending on the deposits service.)
+        #' @examples
+        #' \dontrun{
+        #' cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+        #' }
+
+        deposits_search = function (...) {
+
+            arglist <- list (...)
+
+            url <- paste0 (
+                self$url_base,
+                ifelse (self$service == "figshare",
+                    "account/articles",
+                    "records"
+                )
+            )
+
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+            req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
+
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            return (httr2::resp_body_json (resp, simplifyVector = TRUE))
+        },
+
         #' @description Deleted a nominated deposit
         #' @param deposit_id Integer identifier of deposit (generally obtained
         #' from `list_deposits` method).

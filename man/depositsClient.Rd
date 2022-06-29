@@ -35,6 +35,14 @@ print (cli)
 # or pass metadata directly at construction of new client
 cli <- depositsClient$new ("figshare", metadata = metadata)
 }
+
+## ------------------------------------------------
+## Method `depositsClient$deposits_search`
+## ------------------------------------------------
+
+\dontrun{
+cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+}
 }
 \concept{client}
 \section{Public fields}{
@@ -71,6 +79,7 @@ specified host service.}
 \item \href{#method-depositsClient-new}{\code{depositsClient$new()}}
 \item \href{#method-depositsClient-print}{\code{depositsClient$print()}}
 \item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
+\item \href{#method-depositsClient-deposits_search}{\code{depositsClient$deposits_search()}}
 \item \href{#method-depositsClient-deposit_delete}{\code{depositsClient$deposit_delete()}}
 \item \href{#method-depositsClient-deposit_fill_metadata}{\code{depositsClient$deposit_fill_metadata()}}
 \item \href{#method-depositsClient-deposit_new}{\code{depositsClient$deposit_new()}}
@@ -153,6 +162,38 @@ service
 \subsection{Returns}{
 Updated 'deposits' client
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposits_search"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposits_search}{}}}
+\subsection{Method \code{deposits_search()}}{
+Search all public deposits
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_search(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Named pairs of query parameters described at
+\url{https://developers.zenodo.org/#list36}.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A \code{data.frame} of data on deposits matching search parameters
+(with format depending on the deposits service.)
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_delete"></a>}}
