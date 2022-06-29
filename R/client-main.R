@@ -253,9 +253,25 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
         #' }
 
-        deposits_search = function (...) {
+        deposits_search = function (search_string = NULL, ...) {
+
+            if (!is.null (search_string)) {
+                checkmate::assert_character (search_string, len = 1L)
+            }
 
             arglist <- list (...)
+
+            if (self$service == "figshare") {
+                if (!is.null (search_string)) {
+                    arglist <- c (arglist, search_for = search_string)
+                }
+            } else if (self$service == "zenodo") {
+                if (!is.null (search_string)) {
+                    arglist <- c (arglist, q = search_string)
+                }
+            } else {
+                # stop
+            }
 
             url <- paste0 (
                 self$url_base,
@@ -269,9 +285,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, method)
 
             if (self$service == "figshare") {
-                req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
-            } else {
                 req <- httr2::req_body_json (req, arglist)
+            } else {
+                req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
             }
 
             resp <- httr2::req_perform (req)
