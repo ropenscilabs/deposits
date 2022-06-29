@@ -257,35 +257,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                     page_number = 1L,
                                     ...) {
 
-            if (!is.null (search_string)) {
-                checkmate::assert_character (search_string, len = 1L)
-            }
-            checkmate::assert_int (page_size)
-            checkmate::assert_int (page_number)
-
-            arglist <- list (...)
-
-            if (self$service == "figshare") {
-                if (!is.null (search_string)) {
-                    arglist <- c (arglist, search_for = search_string)
-                }
-                arglist <- c (
-                    arglist,
-                    page_size = page_size,
-                    page = page_number
-                )
-            } else if (self$service == "zenodo") {
-                if (!is.null (search_string)) {
-                    arglist <- c (arglist, q = search_string)
-                }
-                arglist <- c (
-                    arglist,
-                    size = page_size,
-                    page = page_number
-                )
-            } else {
-                # stop
-            }
+            arglist <- process_search_params (
+                self$service,
+                search_string = search_string,
+                page_size = page_size,
+                page_number = page_number,
+                ...
+            )
 
             url <- paste0 (
                 self$url_base,
