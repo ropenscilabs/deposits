@@ -260,13 +260,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             url <- paste0 (
                 self$url_base,
                 ifelse (self$service == "figshare",
-                    "account/articles",
+                    "articles/search",
                     "records"
                 )
             )
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
-            req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
+            method <- ifelse (self$service == "figshare", "POST", "GET")
+            req <- create_httr2_helper (url, self$headers$Authorization, method)
+
+            if (self$service == "figshare") {
+                req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
+            } else {
+                req <- httr2::req_body_json (req, arglist)
+            }
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
