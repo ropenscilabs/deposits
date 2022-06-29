@@ -169,21 +169,30 @@ Updated 'deposits' client
 \subsection{Method \code{deposits_search()}}{
 Search all public deposits
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_search(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_search(
+  search_string = NULL,
+  page_size = 10L,
+  page_number = 1L,
+  ...
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{search_string}}{Single string to search for}
+
+\item{\code{page_size}}{Number of records to return in one page}
+
+\item{\code{page_number}}{Starting page for return results; used in
+combination with 'page_size' for pagination.}
+
 \item{\code{...}}{Named pairs of query parameters.
 Zenodo parameters are described at
 \url{https://developers.zenodo.org/#list36}, and currently include:
 \itemize{
-\item q: Search query
 \item status: either "draft" or "published"
 \item sort: either "bestmatch" (the default) or "mostrecent"
-\item size: Number of deposits per page
-\item page: Page number for pagination
 \item all_versions: Either "true" or "false"
 \item communities: Search for deposits only within specified
 communities
@@ -205,8 +214,6 @@ include:
 \item order: Order for sorting results; one of "published_date",
 "modified_date", "views", "shares", "downloads", or "cites"
 \item search_for: Search term.
-\item page: Page number for pagination
-\item page_size: Number of deposits per page
 \item order_direction: "asc" or "desc"
 \item institution: Only return deposits from specified institution
 (as integer)

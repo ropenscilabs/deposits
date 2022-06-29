@@ -205,15 +205,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Search all public deposits
+        #' @param search_string Single string to search for
+        #' @param page_size Number of records to return in one page
+        #' @param page_number Starting page for return results; used in
+        #' combination with 'page_size' for pagination.
         #' @param ... Named pairs of query parameters.
         #' Zenodo parameters are described at
         #' \url{https://developers.zenodo.org/#list36}, and currently include:
         #' \itemize{
-        #' \item q: Search query
         #' \item status: either "draft" or "published"
         #' \item sort: either "bestmatch" (the default) or "mostrecent"
-        #' \item size: Number of deposits per page
-        #' \item page: Page number for pagination
         #' \item all_versions: Either "true" or "false"
         #' \item communities: Search for deposits only within specified
         #' communities
@@ -235,8 +236,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \item order: Order for sorting results; one of "published_date",
         #' "modified_date", "views", "shares", "downloads", or "cites"
         #' \item search_for: Search term.
-        #' \item page: Page number for pagination
-        #' \item page_size: Number of deposits per page
         #' \item order_direction: "asc" or "desc"
         #' \item institution: Only return deposits from specified institution
         #' (as integer)
@@ -253,11 +252,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposits_search (q = "Text string query", size = 5L, sort = "bestmatch")
         #' }
 
-        deposits_search = function (search_string = NULL, ...) {
+        deposits_search = function (search_string = NULL,
+                                    page_size = 10L,
+                                    page_number = 1L,
+                                    ...) {
 
             if (!is.null (search_string)) {
                 checkmate::assert_character (search_string, len = 1L)
             }
+            checkmate::assert_int (page_size)
+            checkmate::assert_int (page_number)
 
             arglist <- list (...)
 
@@ -265,10 +269,20 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 if (!is.null (search_string)) {
                     arglist <- c (arglist, search_for = search_string)
                 }
+                arglist <- c (
+                    arglist,
+                    page_size = page_size,
+                    page = page_number
+                )
             } else if (self$service == "zenodo") {
                 if (!is.null (search_string)) {
                     arglist <- c (arglist, q = search_string)
                 }
+                arglist <- c (
+                    arglist,
+                    size = page_size,
+                    page = page_number
+                )
             } else {
                 # stop
             }
