@@ -42,6 +42,8 @@ process_search_params <- function (service,
 
     if (service == "figshare") {
 
+        check_param_values_figshare (arglist)
+
         if (!is.null (search_string)) {
             arglist <- c (arglist, search_for = search_string)
         }
@@ -51,6 +53,8 @@ process_search_params <- function (service,
             page = page_number
         )
     } else if (service == "zenodo") {
+
+        check_param_values_zenodo (arglist)
 
         if (!is.null (search_string)) {
             arglist <- c (arglist, q = search_string)
@@ -94,4 +98,77 @@ search_params_figshare <- function () {
         c ("published_since", "string"),
         c ("modified_since", "string")
     )
+}
+
+check_param_values_zenodo <- function (arglist) {
+
+    if ("all_versions" %in% names (arglist)) {
+        if (!arglist$all_versions %in% c ("true", "false")) {
+            stop (
+                "The 'add_versions' parameter must be either 'false' or 'true'",
+                call. = FALSE
+            )
+        }
+    }
+
+    if ("bounds" %in% names (arglist)) {
+        if (!(grepl ("^bounds=", arglist$bounds) &&
+            length (strsplit (arglist$bounds, ",") [[1]] == 4L))) {
+            stop (
+                "The 'bounds' parameter must be in format 'bounds=x1,y1,x2,y2'",
+                call. = FALSE
+            )
+        }
+    }
+}
+
+check_param_values_figshare <- function (arglist) {
+
+    if ("item_type" %in% names (arglist)) {
+        if (!arglist$item_type %in% 1:29) {
+            stop (
+                "The 'item_type' parameter must be an integer between 1 and 29",
+                call. = FALSE
+            )
+        }
+    }
+
+    if ("order" %in% names (arglist)) {
+        if (!arglist$order %in%
+            c ("published_date", "modified_date", "views", "shares", "downloads", "cites")) {
+            stop (
+                "The 'order' parameter must be in the specified vocabulary; ",
+                "see ?depositsClient for link to accepted values.",
+                call. = FALSE
+            )
+        }
+    }
+
+    if ("order_direction" %in% names (arglist)) {
+        if (!arglist$order_direction %in% c ("asc", "desc")) {
+            stop (
+                "The 'order_direction' parameter must be either 'asc' or 'desc'",
+                call. = FALSE
+            )
+        }
+    }
+
+    if ("published_since" %in% names (arglist)) {
+        if (!grepl ("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$", arglist$published_since)) {
+            stop (
+                "The 'published_since' parameter must be in format YYYY-MM-DD",
+                call. = FALSE
+            )
+        }
+    }
+
+    if ("modified_since" %in% names (arglist)) {
+        if (!grepl ("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$", arglist$modified_since)) {
+            stop (
+                "The 'modified_since' parameter must be in format YYYY-MM-DD",
+                call. = FALSE
+            )
+        }
+    }
+
 }
