@@ -6,7 +6,7 @@
       <deposits client>
        deposits service : figshare
                url_base : https://api.figshare.com/v2/
-       Current deposits : <none>
+       Current deposits : 1 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : <none>
