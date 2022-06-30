@@ -1,0 +1,759 @@
+{
+    "aggregations": {
+        "access_right": {
+            "buckets": [
+                {
+                    "doc_count": 787,
+                    "key": "open"
+                },
+                {
+                    "doc_count": 9,
+                    "key": "closed"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "embargoed"
+                },
+                {
+                    "doc_count": 1,
+                    "key": "restricted"
+                }
+            ],
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0
+        },
+        "file_type": {
+            "buckets": [
+                {
+                    "doc_count": 512,
+                    "key": "pdf"
+                },
+                {
+                    "doc_count": 120,
+                    "key": "zip"
+                },
+                {
+                    "doc_count": 62,
+                    "key": "xml"
+                },
+                {
+                    "doc_count": 28,
+                    "key": "jpg"
+                },
+                {
+                    "doc_count": 28,
+                    "key": "txt"
+                },
+                {
+                    "doc_count": 27,
+                    "key": "html"
+                },
+                {
+                    "doc_count": 17,
+                    "key": "gz"
+                },
+                {
+                    "doc_count": 13,
+                    "key": "md"
+                },
+                {
+                    "doc_count": 12,
+                    "key": "png"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "meta"
+                }
+            ],
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 91
+        },
+        "keywords": {
+            "buckets": [
+                {
+                    "doc_count": 34,
+                    "key": "Animalia"
+                },
+                {
+                    "doc_count": 31,
+                    "key": "Arthropoda"
+                },
+                {
+                    "doc_count": 28,
+                    "key": "Arachnida"
+                },
+                {
+                    "doc_count": 28,
+                    "key": "Araneae"
+                },
+                {
+                    "doc_count": 11,
+                    "key": "Biofield"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "Actinopodidae"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "Cultural Evolution"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "Missulena"
+                },
+                {
+                    "doc_count": 8,
+                    "key": "Multi-agent Simulation"
+                },
+                {
+                    "doc_count": 7,
+                    "key": "Mahendra Trivedi"
+                }
+            ],
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 1572
+        },
+        "type": {
+            "buckets": [
+                {
+                    "doc_count": 583,
+                    "key": "publication",
+                    "subtype": {
+                        "buckets": [
+                            {
+                                "doc_count": 308,
+                                "key": "article"
+                            },
+                            {
+                                "doc_count": 195,
+                                "key": "conferencepaper"
+                            },
+                            {
+                                "doc_count": 38,
+                                "key": "section"
+                            },
+                            {
+                                "doc_count": 14,
+                                "key": "thesis"
+                            },
+                            {
+                                "doc_count": 9,
+                                "key": "book"
+                            },
+                            {
+                                "doc_count": 6,
+                                "key": "other"
+                            },
+                            {
+                                "doc_count": 3,
+                                "key": "report"
+                            },
+                            {
+                                "doc_count": 3,
+                                "key": "workingpaper"
+                            },
+                            {
+                                "doc_count": 2,
+                                "key": "deliverable"
+                            },
+                            {
+                                "doc_count": 2,
+                                "key": "preprint"
+                            },
+                            {
+                                "doc_count": 2,
+                                "key": "softwaredocumentation"
+                            },
+                            {
+                                "doc_count": 1,
+                                "key": "technicalnote"
+                            }
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 104,
+                    "key": "software",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 63,
+                    "key": "dataset",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 22,
+                    "key": "image",
+                    "subtype": {
+                        "buckets": [
+                            {
+                                "doc_count": 21,
+                                "key": "figure"
+                            },
+                            {
+                                "doc_count": 1,
+                                "key": "photo"
+                            }
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 17,
+                    "key": "presentation",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 6,
+                    "key": "poster",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 2,
+                    "key": "other",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                },
+                {
+                    "doc_count": 1,
+                    "key": "video",
+                    "subtype": {
+                        "buckets": [
+
+                        ],
+                        "doc_count_error_upper_bound": 0,
+                        "sum_other_doc_count": 0
+                    }
+                }
+            ],
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0
+        }
+    },
+    "hits": {
+        "hits": [
+            {
+                "created": "2022-01-01T00:00:00+00:00",
+                "doi": "10.5281/zenodo.51313",
+                "files": [
+                    {
+                        "bucket": "ba5b8908-c352-4320-8327-468dceab131a",
+                        "checksum": "md5:1420e6b85c8d8f320e99a9787cab5a32",
+                        "key": "Clash-Royale-Picker-0.1.zip",
+                        "links": {
+                            "self": "sbapi/files/hash/Clash-Royale-Picker-0.1.zip"
+                        },
+                        "size": 35664335,
+                        "type": "zip"
+                    }
+                ],
+                "id": 51313,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5281/zenodo.51313.svg",
+                    "bucket": "sbapi/files/ba5b8908-c352-4320-8327-468dceab131a",
+                    "doi": "https://doi.org/10.5281/zenodo.51313",
+                    "html": "https://sandbox.zenodo.org/record/51313",
+                    "self": "sbapi/records/51313"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "affiliation": "jimmyshadow1",
+                            "name": "Shadow, Jimmy"
+                        }
+                    ],
+                    "description": "<p>Clash Royale Picker allows you to generate a random deck for Clash Royale.<\/p>",
+                    "doi": "10.5281/zenodo.51313",
+                    "keywords": [
+                        "clash",
+                        "royale",
+                        "cards",
+                        "random",
+                        "picker"
+                    ],
+                    "license": {
+                        "id": "MIT"
+                    },
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "https://github.com/jimmyshadow1/Clash-Royale-Picker/tree/0.1",
+                            "relation": "isSupplementTo",
+                            "scheme": "url"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "index": 0,
+                                "is_last": true
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Software",
+                        "type": "software"
+                    },
+                    "title": "Clash-Royale-Picker: Clash Royale Picker v0.1"
+                },
+                "owners": [
+                    21985
+                ],
+                "revision": 4,
+                "stats": {
+                    "downloads": 0.0,
+                    "unique_downloads": 0.0,
+                    "unique_views": 2.0,
+                    "views": 2.0,
+                    "volume": 0.0
+                },
+                "updated": "2022-01-01T00:00:00.914727+00:00"
+            },
+            {
+                "conceptdoi": "10.5072/zenodo.692329",
+                "conceptrecid": "692329",
+                "created": "2022-01-01T00:00:00.900591+00:00",
+                "doi": "10.5072/zenodo.692330",
+                "files": [
+                    {
+                        "bucket": "0489c46b-1384-4110-bd27-1092ac20ab21",
+                        "checksum": "md5:b0778a411c26f7b9b9ef5db8ed99566e",
+                        "key": "Test repository.csv",
+                        "links": {
+                            "self": "sbapi/files/hash/Test%20repository.csv"
+                        },
+                        "size": 9,
+                        "type": "csv"
+                    }
+                ],
+                "id": 692330,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692330.svg",
+                    "bucket": "sbapi/files/0489c46b-1384-4110-bd27-1092ac20ab21",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692329.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.692329",
+                    "doi": "https://doi.org/10.5072/zenodo.692330",
+                    "html": "https://sandbox.zenodo.org/record/692330",
+                    "latest": "sbapi/records/692330",
+                    "latest_html": "https://sandbox.zenodo.org/record/692330",
+                    "self": "sbapi/records/692330"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "affiliation": "Ghent University",
+                            "name": "Verkroost, Lynn",
+                            "orcid": "0000-0002-1442-677X"
+                        }
+                    ],
+                    "description": "<p>These are random data, generated by the imagination of Lynn Verkroost at 2022-01-01. There was no processing of the data. No specific methods or equipment were used. The used software is Microsoft Excel. The data were collected as a test during a course about research data management.<\/p>",
+                    "doi": "10.5072/zenodo.692330",
+                    "keywords": [
+                        "test",
+                        "random"
+                    ],
+                    "language": "eng",
+                    "license": {
+                        "id": "CC-BY-4.0"
+                    },
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.692329",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 1,
+                                "index": 0,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "692330"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "692329"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "Dataset to test a repository"
+                },
+                "owners": [
+                    50656
+                ],
+                "revision": 2,
+                "stats": {
+                    "downloads": 3.0,
+                    "unique_downloads": 1.0,
+                    "unique_views": 2.0,
+                    "version_downloads": 3.0,
+                    "version_unique_downloads": 1.0,
+                    "version_unique_views": 2.0,
+                    "version_views": 4.0,
+                    "version_volume": 27.0,
+                    "views": 4.0,
+                    "volume": 27.0
+                },
+                "updated": "2022-01-01T00:00:00.189675+00:00"
+            },
+            {
+                "conceptdoi": "10.5072/zenodo.1041245",
+                "conceptrecid": "1041245",
+                "created": "2022-01-01T00:00:00.103118+00:00",
+                "doi": "10.5072/zenodo.1041246",
+                "files": [
+                    {
+                        "bucket": "d5e9f525-fb2c-4e98-b099-251c16886b2b",
+                        "checksum": "md5:098f6bcd4621d373cade4e832627b4f6",
+                        "key": "doc.txt",
+                        "links": {
+                            "self": "sbapi/files/hash/doc.txt"
+                        },
+                        "size": 4,
+                        "type": "txt"
+                    }
+                ],
+                "id": 1041246,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1041246.svg",
+                    "bucket": "sbapi/files/d5e9f525-fb2c-4e98-b099-251c16886b2b",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1041245.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.1041245",
+                    "doi": "https://doi.org/10.5072/zenodo.1041246",
+                    "html": "https://sandbox.zenodo.org/record/1041246",
+                    "latest": "sbapi/records/1041246",
+                    "latest_html": "https://sandbox.zenodo.org/record/1041246",
+                    "self": "sbapi/records/1041246"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "affiliation": "UGent",
+                            "name": "Lambrechts, Laurens",
+                            "orcid": "0000-0002-1415-4591"
+                        }
+                    ],
+                    "description": "<p>Not a long abstract.<\/p>",
+                    "doi": "10.5072/zenodo.1041246",
+                    "keywords": [
+                        "test",
+                        "random"
+                    ],
+                    "language": "eng",
+                    "license": {
+                        "id": "CC-BY-4.0"
+                    },
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.1041245",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 1,
+                                "index": 0,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "1041246"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "1041245"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "Test data set"
+                },
+                "owners": [
+                    120187
+                ],
+                "revision": 1,
+                "stats": {
+                    "downloads": 1.0,
+                    "unique_downloads": 1.0,
+                    "unique_views": 1.0,
+                    "version_downloads": 1.0,
+                    "version_unique_downloads": 1.0,
+                    "version_unique_views": 1.0,
+                    "version_views": 1.0,
+                    "version_volume": 4.0,
+                    "views": 1.0,
+                    "volume": 4.0
+                },
+                "updated": "2022-01-01T00:00:00.268193+00:00"
+            },
+            {
+                "conceptdoi": "10.5072/zenodo.1067593",
+                "conceptrecid": "1067593",
+                "created": "2022-01-01T00:00:00.360210+00:00",
+                "doi": "10.5072/zenodo.1067594",
+                "files": [
+                    {
+                        "bucket": "22805f8a-6e09-4b5a-861b-c11f50a2ca24",
+                        "checksum": "md5:1857dff98ee5de594225445be09d6557",
+                        "key": "data.csv",
+                        "links": {
+                            "self": "sbapi/files/hash/data.csv"
+                        },
+                        "size": 15150,
+                        "type": "csv"
+                    }
+                ],
+                "id": 1067594,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1067594.svg",
+                    "bucket": "sbapi/files/22805f8a-6e09-4b5a-861b-c11f50a2ca24",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1067593.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.1067593",
+                    "doi": "https://doi.org/10.5072/zenodo.1067594",
+                    "html": "https://sandbox.zenodo.org/record/1067594",
+                    "latest": "sbapi/records/1067594",
+                    "latest_html": "https://sandbox.zenodo.org/record/1067594",
+                    "self": "sbapi/records/1067594"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "affiliation": "Delft University of Technology",
+                            "name": "Patrick Altmeyer"
+                        }
+                    ],
+                    "description": "<p>Dataset collected through questionnaire for course participants.<\/p>",
+                    "doi": "10.5072/zenodo.1067594",
+                    "keywords": [
+                        "random"
+                    ],
+                    "language": "ang",
+                    "license": {
+                        "id": "CC-BY-4.0"
+                    },
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.1067593",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 1,
+                                "index": 0,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "1067594"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "1067593"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "MOOC Course Dataset"
+                },
+                "owners": [
+                    125015
+                ],
+                "revision": 1,
+                "stats": {
+                    "downloads": 1.0,
+                    "unique_downloads": 1.0,
+                    "unique_views": 1.0,
+                    "version_downloads": 1.0,
+                    "version_unique_downloads": 1.0,
+                    "version_unique_views": 1.0,
+                    "version_views": 1.0,
+                    "version_volume": 15150.0,
+                    "views": 1.0,
+                    "volume": 15150.0
+                },
+                "updated": "2022-01-01T00:00:00.524657+00:00"
+            },
+            {
+                "conceptdoi": "10.5072/zenodo.264742",
+                "conceptrecid": "264742",
+                "created": "2022-01-01T00:00:00.884250+00:00",
+                "doi": "10.5072/zenodo.264743",
+                "files": [
+                    {
+                        "bucket": "785d1514-04ea-44e6-a500-3bcdd993148b",
+                        "checksum": "md5:20a8461c6b12be3783e6f55f4dba04fb",
+                        "key": "its2.bellis.NA.2022-01-01.zip",
+                        "links": {
+                            "self": "sbapi/files/hash/its2.bellis.NA.2022-01-01.zip"
+                        },
+                        "size": 58319,
+                        "type": "zip"
+                    }
+                ],
+                "id": 264743,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.264743.svg",
+                    "bucket": "sbapi/files/785d1514-04ea-44e6-a500-3bcdd993148b",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.264742.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.264742",
+                    "doi": "https://doi.org/10.5072/zenodo.264743",
+                    "html": "https://sandbox.zenodo.org/record/264743",
+                    "latest": "sbapi/records/264743",
+                    "latest_html": "https://sandbox.zenodo.org/record/264743",
+                    "self": "sbapi/records/264743"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "contributors": [
+                        {
+                            "name": "Schultz, Jörg",
+                            "type": "Researcher"
+                        }
+                    ],
+                    "creators": [
+                        {
+                            "affiliation": "CCTB",
+                            "name": "Keller, Alexander",
+                            "orcid": "0000-0001-5716-3634"
+                        },
+                        {
+                            "affiliation": "CCTB",
+                            "name": "Ankenbrand, Markus J.",
+                            "orcid": "0000-0002-6620-807X"
+                        }
+                    ],
+                    "description": "<p>call: /metabDB/bin/reference_db_creator.pl --outdir /data/test --zip --marker-search-string (ITS2 OR &#39;internal transcribed spacer 2&#39;) --taxonomic-range Bellis --sequences-per-taxon 2<\/p>",
+                    "doi": "10.5072/zenodo.264743",
+                    "keywords": [
+                        "barcoding",
+                        "ecology"
+                    ],
+                    "license": {
+                        "id": "CC0-1.0"
+                    },
+                    "notes": "some random notes",
+                    "publication_date": "2022-01-01",
+                    "references": [
+                        "Sickel et al. (2015) Increased efficiency ... doi:"
+                    ],
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.264742",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 1,
+                                "index": 0,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "264743"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "264742"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "BCdatabaser - its2.bellis.NA.2022-01-01",
+                    "version": "0.1.0"
+                },
+                "owners": [
+                    27257
+                ],
+                "revision": 4,
+                "stats": {
+                    "downloads": 1.0,
+                    "unique_downloads": 1.0,
+                    "unique_views": 6.0,
+                    "version_downloads": 0.0,
+                    "version_unique_downloads": 0.0,
+                    "version_unique_views": 3.0,
+                    "version_views": 3.0,
+                    "version_volume": 0.0,
+                    "views": 6.0,
+                    "volume": 58319.0
+                },
+                "updated": "2022-01-01T00:00:00.357000+00:00"
+            }
+        ],
+        "total": 798
+    },
+    "links": {
+        "next": "sbapi/records/?sort=bestmatch&q=random&page=2&size=5",
+        "self": "sbapi/records/?sort=bestmatch&q=random&page=1&size=5"
+    }
+}
