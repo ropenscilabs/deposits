@@ -1,3 +1,23 @@
 [
+    {
+        "id": 20198519,
+        "title": "Modified Title",
+        "doi": "",
+        "handle": "",
+        "url": "api/articles/20198519",
+        "published_date": null,
+        "thumb": "",
+        "defined_type": 3,
+        "defined_type_name": "dataset",
+        "group_id": null,
+        "url_private_api": "api/articles/20198519",
+        "url_public_api": "api/articles/20198519",
+        "url_private_html": "https://figshare.com/account/articles/20198519",
+        "url_public_html": "https://figshare.com/articles/dataset/_/20198519",
+        "timeline": {
 
+        },
+        "resource_title": null,
+        "resource_doi": null
+    }
 ]

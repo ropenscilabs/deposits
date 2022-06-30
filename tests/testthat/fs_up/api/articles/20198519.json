@@ -1,0 +1,133 @@
+{
+    "files": [
+        {
+            "upload_token": "b94b563b-ba18-47e6-893e-f3d14ff9aac6",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "txt",
+            "id": 36102956,
+            "name": "DCEntry-20198519.xml",
+            "size": 1292,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/36102956",
+            "supplied_md5": "9935c01813df508e52402f4f5d1c7413",
+            "computed_md5": "9935c01813df508e52402f4f5d1c7413"
+        },
+        {
+            "upload_token": "ac24a2b6-3e50-4191-8e43-94619b1b463b",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "txt",
+            "id": 36102959,
+            "name": "DCEntry-20198519.xml",
+            "size": 796,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/36102959",
+            "supplied_md5": "7d6ace0b9e838dbd8b43702bae8ad55e",
+            "computed_md5": "7d6ace0b9e838dbd8b43702bae8ad55e"
+        },
+        {
+            "upload_token": "e47d6e0d-a754-4cdb-948b-838de7ce221a",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_in_progress",
+            "viewer_type": "",
+            "id": 36102962,
+            "name": "DCEntry-20198519.xml",
+            "size": 1271,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/36102962",
+            "supplied_md5": "d4c3b163868dfdf85071aaa1e31735b5",
+            "computed_md5": "d4c3b163868dfdf85071aaa1e31735b5"
+        },
+        {
+            "upload_token": "62cfceb9-c994-49fc-beae-b7adfbc1c905",
+            "upload_url": "",
+            "status": "moving_to_final",
+            "preview_state": "preview_not_supported",
+            "viewer_type": "",
+            "id": 36102965,
+            "name": "data.Rds",
+            "size": 506,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/36102965",
+            "supplied_md5": "22c61006458c44ed979bf3461e330693",
+            "computed_md5": "22c61006458c44ed979bf3461e330693"
+        }
+    ],
+    "resource_title": null,
+    "resource_doi": null,
+    "group_resource_id": null,
+    "custom_fields": [
+
+    ],
+    "account_id": 2986795,
+    "authors": [
+        {
+            "id": 12574198,
+            "full_name": "C. Person",
+            "is_active": false,
+            "url_name": "_",
+            "orcid_id": ""
+        }
+    ],
+    "figshare_url": "https://figshare.com/articles/dataset/_/20198519",
+    "description": "This is the modified abstract",
+    "funding": null,
+    "funding_list": [
+
+    ],
+    "version": 0,
+    "status": "draft",
+    "size": 3865,
+    "created_date": "2022-01-01T00:00:00Z",
+    "modified_date": "2022-01-01T00:00:00Z",
+    "is_public": false,
+    "is_confidential": false,
+    "is_metadata_record": false,
+    "confidential_reason": "",
+    "metadata_reason": "",
+    "license": {
+        "value": 1,
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "tags": [
+
+    ],
+    "categories": [
+
+    ],
+    "references": [
+
+    ],
+    "has_linked_file": false,
+    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/20198519",
+    "is_embargoed": false,
+    "embargo_date": null,
+    "embargo_type": null,
+    "embargo_title": "",
+    "embargo_reason": "",
+    "embargo_options": [
+
+    ],
+    "id": 20198519,
+    "title": "Modified Title",
+    "doi": "",
+    "handle": "",
+    "url": "api/articles/20198519",
+    "published_date": null,
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "api/articles/20198519",
+    "url_public_api": "api/articles/20198519",
+    "url_private_html": "https://figshare.com/account/articles/20198519",
+    "url_public_html": "https://figshare.com/articles/dataset/_/20198519",
+    "timeline": {
+
+    }
+}
