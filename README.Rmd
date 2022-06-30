@@ -201,6 +201,7 @@ variables and functions, with functions prefixed with `deposit_` or
 3. `deposit_update(deposit_id)` to update deposit on server with local
    metadata;
 4. `deposits_list()` to update lists of current deposits within client.
+5. `deposits_search()` to search deposits in an online service.
 
 See [the introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html) for more
