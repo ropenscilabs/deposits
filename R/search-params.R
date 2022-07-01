@@ -25,7 +25,8 @@ process_search_params <- function (service,
             paste0 (names (arglist) [index], collapse = ", "),
             "] are not ",
             service,
-            " search parameters; see ?depositsClient for full list."
+            " search parameters; see ?depositsClient for full list.",
+            call. = FALSE
         )
     }
 
