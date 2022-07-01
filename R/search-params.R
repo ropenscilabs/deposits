@@ -106,7 +106,7 @@ check_param_values_zenodo <- function (arglist) {
     if ("all_versions" %in% names (arglist)) {
         if (!arglist$all_versions %in% c ("true", "false")) {
             stop (
-                "The 'add_versions' parameter must be either 'false' or 'true'",
+                "The 'all_versions' parameter must be either 'false' or 'true'",
                 call. = FALSE
             )
         }
