@@ -63,3 +63,30 @@ test_that ("general search errors", {
         "Assertion on 'page_number' failed: Must be of type 'single integerish value'"
     )
 })
+
+test_that ("figshare search errors", {
+
+    cli <- with_mock_dir ("fs_create", {
+        depositsClient$new (service = "figshare") # service doesn't matter here
+    })
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", not_an_arg = TRUE),
+        "The parameters \\[not_an_arg\\] are not figshare search parameters"
+    )
+
+})
+
+test_that ("zenodo search errors", {
+
+    cli <- with_mock_dir ("zen_create", {
+        depositsClient$new (service = "zenodo", sandbox = TRUE)
+    })
+
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", not_an_arg = TRUE),
+        "The parameters \\[not_an_arg\\] are not zenodo search parameters"
+    )
+
+})
