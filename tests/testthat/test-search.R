@@ -75,6 +75,11 @@ test_that ("figshare search errors", {
         "The parameters \\[not_an_arg\\] are not figshare search parameters"
     )
 
+    expect_error (
+        cli$deposits_search (search_string = "search string", item_type = "this"),
+        "Assertion on '\"this\"' failed: Must be of type 'single integerish value'"
+    )
+
 })
 
 test_that ("zenodo search errors", {
@@ -87,6 +92,11 @@ test_that ("zenodo search errors", {
     expect_error (
         cli$deposits_search (search_string = "search string", not_an_arg = TRUE),
         "The parameters \\[not_an_arg\\] are not zenodo search parameters"
+    )
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", type = 1L),
+        "Assertion on '1L' failed: Must be of type 'character'"
     )
 
 })
