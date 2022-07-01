@@ -41,3 +41,25 @@ test_that ("zenodo search", {
     meta <- x$hits$hits$metadata
     expect_true (any (grepl ("random", meta$description)))
 })
+
+test_that ("general search errors", {
+
+    cli <- with_mock_dir ("fs_create", {
+        depositsClient$new (service = "figshare") # service doesn't matter here
+    })
+
+    expect_error (
+        cli$deposits_search (search_string = 1L),
+        "Assertion on 'search_string' failed: Must be of type 'character'"
+    )
+
+    expect_error (
+        cli$deposits_search (page_size = "a"),
+        "Assertion on 'page_size' failed: Must be of type 'single integerish value'"
+    )
+
+    expect_error (
+        cli$deposits_search (page_number = "a"),
+        "Assertion on 'page_number' failed: Must be of type 'single integerish value'"
+    )
+})
