@@ -13,6 +13,7 @@ reference:
 - title: Metadata
   contents:
   - has_concept("meta")
+  - dcmi_terms
 - title: Miscellaneous
   contents:
   - has_concept("misc")
