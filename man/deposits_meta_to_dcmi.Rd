@@ -32,6 +32,7 @@ dc <- deposits_meta_to_dcmi (filename, id = "my-id")
 }
 \seealso{
 Other meta: 
+\code{\link{dcmi_terms}()},
 \code{\link{deposits_metadata_template}()}
 }
 \concept{meta}

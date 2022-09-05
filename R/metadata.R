@@ -37,6 +37,7 @@ process_metadata_param <- function (metadata) {
 #' \pkg{atom4R} package.
 #'
 #' @return A character vector of DCMI terms.
+#' @family meta
 #' @export
 dcmi_terms <- function () {
 

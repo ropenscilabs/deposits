@@ -15,3 +15,9 @@ The Dublin Core Metadata Initiative defines a set of terms at
 This function returns the names of those terms currently recognised by the
 \pkg{atom4R} package.
 }
+\seealso{
+Other meta: 
+\code{\link{deposits_meta_to_dcmi}()},
+\code{\link{deposits_metadata_template}()}
+}
+\concept{meta}
