@@ -83,6 +83,10 @@ deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
         error = function (e) e
     )
 
+    if (methods::is (res, "simpleError")) {
+        stop ("Error with metadata: ", res$message)
+    }
+
     invisible (!methods::is (res, "error"))
 }
 
