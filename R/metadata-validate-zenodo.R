@@ -209,7 +209,7 @@ check_zen_meta_language <- function (zen_meta_terms, meta, i) {
 
     term_i <- meta [[zen_meta_terms$term [i]]]
 
-    if (!term_i %in% iso_639_2_language_codes ()) {
+    if (!term_i %in% iso_639_2_language_codes () [, 1]) {
         out <- paste0 (
             "Metadata [",
             zen_meta_terms$term [i],
