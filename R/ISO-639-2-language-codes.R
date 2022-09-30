@@ -7,7 +7,8 @@
 #' https://www.loc.gov/standards/iso639-2/php/code_list.php
 #' The "-1" versions are two-letter, while the "-2" version are 3-letter. This
 #' effectively means that Zenodo languages have to be specified with 3 letter
-#' abbreviations, defined here.
+#' abbreviations, defined here, as taken from the webpage linked above
+#' @noRd
 
 iso_639_2_language_codes <- function () {
 
