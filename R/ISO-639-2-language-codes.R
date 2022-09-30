@@ -419,7 +419,7 @@ iso_639_2_language_codes <- function () {
         c ("pra", ""),
         c ("pro", ""),
         c ("pus", "ps"),
-        c ("qaa-qtz", "NA"),
+        # c ("qaa-qtz", "NA"), # reserved for internal use
         c ("que", "qu"),
         c ("raj", ""),
         c ("rap", ""),
