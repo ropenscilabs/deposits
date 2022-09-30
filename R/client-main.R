@@ -106,18 +106,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
-                metadata <- process_metadata_param (metadata)
-
-                out <- capture.output (
-                    chk <- metadata$validate ()
-                )
-                if (!chk) {
-                    stop (
-                        "metadata is not valid - ",
-                        "see details via metadata$validate()"
-                    )
-                }
-                self$metadata <- metadata
+                self$metadata <- validate_metadata (metadata, service)
             }
 
             return (self)
@@ -346,8 +335,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- process_metadata_param (metadata)
-            self$metadata <- metadata
+            self$metadata <- validate_metadata (metadata, self$service)
 
             if (!is.null (self$id)) {
 
