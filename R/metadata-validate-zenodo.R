@@ -92,6 +92,11 @@ check_zenodo_meta_terms <- function (zen_meta_terms, meta) {
         } else if (zen_meta_terms$format [i] == "array") {
 
             out <- c (out, check_zen_meta_array (zen_meta_terms, meta, i))
+
+        } else if (zen_meta_terms$term [i] == "language") {
+
+            # internal language vocabulary
+            out <- c (out, check_zen_meta_language (zen_meta_terms, meta, i))
         }
     }
 
@@ -192,6 +197,25 @@ check_zen_meta_array <- function (zen_meta_terms, meta, i) {
             "Metadata [",
             zen_meta_terms$term [i],
             "] must be an array/list object"
+        )
+    }
+
+    return (out)
+}
+
+check_zen_meta_language <- function (zen_meta_terms, meta, i) {
+
+    out <- NULL
+
+    term_i <- meta [[zen_meta_terms$term [i]]]
+
+    if (!term_i %in% iso_639_2_language_codes ()) {
+        out <- paste0 (
+            "Metadata [",
+            zen_meta_terms$term [i],
+            " = '",
+            meta [[zen_meta_terms$term [i]]],
+            "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
         )
     }
 
