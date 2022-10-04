@@ -75,7 +75,7 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
 #' Check standard zenodo metadata terms
 #' @noRd
-check_zenodo_meta_terms <- function (these_meta_terms, meta) {
+check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
 
     out <- NULL
 
@@ -83,20 +83,20 @@ check_zenodo_meta_terms <- function (these_meta_terms, meta) {
 
         if (grepl ("\\.csv$", these_meta_terms$vocabulary [i])) {
 
-            out <- c (out, check_zen_meta_from_file (these_meta_terms, meta, i))
+            out <- c (out, check_zen_meta_from_file (these_meta_terms, metaterms, i))
 
         } else if (nzchar (these_meta_terms$vocabulary [i])) {
 
-            out <- c (out, check_zen_meta_from_vocab (these_meta_terms, meta, i))
+            out <- c (out, check_zen_meta_from_vocab (these_meta_terms, metaterms, i))
 
         } else if (these_meta_terms$format [i] == "array") {
 
-            out <- c (out, check_zen_meta_array (these_meta_terms, meta, i))
+            out <- c (out, check_zen_meta_array (these_meta_terms, metaterms, i))
 
         } else if (these_meta_terms$term [i] == "language") {
 
             # internal language vocabulary
-            out <- c (out, check_zen_meta_language (these_meta_terms, meta, i))
+            out <- c (out, check_zen_meta_language (these_meta_terms, metaterms, i))
         }
     }
 
@@ -105,7 +105,7 @@ check_zenodo_meta_terms <- function (these_meta_terms, meta) {
 
 #' Check one zenodo metadata term against vocabulary file
 #' @noRd
-check_zen_meta_from_file <- function (these_meta_terms, meta, i) {
+check_zen_meta_from_file <- function (these_meta_terms, metaterms, i) {
 
     out <- NULL
 
@@ -119,7 +119,7 @@ check_zen_meta_from_file <- function (these_meta_terms, meta, i) {
     if (these_meta_terms$term [i] == "license") {
         voc <- c ("cc-zero", "cc-by", voc$id)
     }
-    term_i <- meta [[these_meta_terms$term [i]]]
+    term_i <- metaterms [[these_meta_terms$term [i]]]
 
     if (these_meta_terms$format [i] == "array") {
 
@@ -147,12 +147,12 @@ check_zen_meta_from_file <- function (these_meta_terms, meta, i) {
 
 #' Check one zenodo metadata term against vocabulary entry
 #' @noRd
-check_zen_meta_from_vocab <- function (these_meta_terms, meta, i) {
+check_zen_meta_from_vocab <- function (these_meta_terms, metaterms, i) {
 
     out <- NULL
 
     values <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
-    term_i <- meta [[these_meta_terms$term [i]]]
+    term_i <- metaterms [[these_meta_terms$term [i]]]
 
     if (these_meta_terms$format [i] == "array") {
 
@@ -186,11 +186,11 @@ check_zen_meta_from_vocab <- function (these_meta_terms, meta, i) {
 
 #' Check one zenodo metadata array term
 #' @noRd
-check_zen_meta_array <- function (these_meta_terms, meta, i) {
+check_zen_meta_array <- function (these_meta_terms, metaterms, i) {
 
     out <- NULL
 
-    term_i <- meta [[these_meta_terms$term [i]]]
+    term_i <- metaterms [[these_meta_terms$term [i]]]
 
     if (!is.list (term_i)) {
         out <- paste0 (
@@ -203,18 +203,18 @@ check_zen_meta_array <- function (these_meta_terms, meta, i) {
     return (out)
 }
 
-check_zen_meta_language <- function (these_meta_terms, meta, i) {
+check_zen_meta_language <- function (these_meta_terms, metaterms, i) {
 
     out <- NULL
 
-    term_i <- meta [[these_meta_terms$term [i]]]
+    term_i <- metaterms [[these_meta_terms$term [i]]]
 
     if (!term_i %in% iso_639_2_language_codes () [, 1]) {
         out <- paste0 (
             "Metadata [",
             these_meta_terms$term [i],
             " = '",
-            meta [[these_meta_terms$term [i]]],
+            metaterms [[these_meta_terms$term [i]]],
             "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
         )
     }
