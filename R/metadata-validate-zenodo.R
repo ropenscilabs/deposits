@@ -40,24 +40,14 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
         if (nzchar (these_terms$vocabulary [i])) {
 
-            values <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
-            if (!term_i %in% values) {
-                out <- c (
-                    out,
-                    paste0 (
-                        "Data [",
-                        term_i,
-                        " = '",
-                        term_i,
-                        "'] not in required vocabulary of [",
-                        these_terms$vocabulary [i],
-                        "]"
-                    )
-                )
-            }
+            out <- c (
+                out,
+                check_zen_from_vocab (these_terms, i, term_i)
+            )
+
         } else if (these_terms$format [i] == "integer") {
 
-            out <- c (out, check_zen_meta_integer (these_terms, i, term_i))
+            out <- c (out, check_zen_integer (these_terms, i, term_i))
         }
     }
 
@@ -66,7 +56,7 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
 #' Check one integer-valued zenodo metadata term
 #' @noRd
-check_zen_meta_integer <- function (these_terms, i, term_i) {
+check_zen_integer <- function (these_terms, i, term_i) {
 
     out <- NULL
 
@@ -76,6 +66,29 @@ check_zen_meta_integer <- function (these_terms, i, term_i) {
             "Data [",
             these_terms$term [i],
             "] is not coercible to integer."
+        )
+    }
+
+    return (out)
+}
+
+#' Check one zenodo metadata term against vocabulary entry
+#' @noRd
+check_zen_from_vocab <- function (these_terms, i, term_i) {
+
+    out <- NULL
+
+    voc <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
+
+    if (!all (term_i %in% voc)) {
+        out <- paste0 (
+            "Data [",
+            these_terms$term [i],
+            " = '",
+            term_i,
+            "'] must follow fixed vocabulary of [",
+            paste0 (voc, collapse = ", "),
+            "]"
         )
     }
 

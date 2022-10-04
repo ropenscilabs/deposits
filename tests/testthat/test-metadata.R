@@ -154,7 +154,7 @@ test_that ("zenodo metadata terms", {
     expect_true (!is.null (check))
     expect_length (check, 2L) # both terms are invalid
     expect_true (grepl ("is not coercible to integer", check [1]))
-    expect_true (grepl ("not in required vocabulary", check [2]))
+    expect_true (grepl ("must follow fixed vocabulary of", check [2]))
 
     metaterms$owner <- 1L
     metaterms$state <- "done" # vocab=(inprogress|done|error)
