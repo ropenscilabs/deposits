@@ -3,31 +3,31 @@ validate_figshare_terms <- function (metaterms) {
     f <- system.file (file.path ("extdata", "figshareTerms.csv"),
         package = "deposits"
     )
-    fs_terms <- utils::read.csv (f)
+    these_terms <- utils::read.csv (f)
 
-    for (i in seq (ncol (fs_terms))) {
-        fs_terms [, i] <- gsub ("^\\s+|\\s+$", "", fs_terms [, i])
+    for (i in seq (ncol (these_terms))) {
+        these_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_terms [, i])
     }
-    fs_terms$metadata <- NULL # zenodo only
-    fs_terms <- fs_terms [which (fs_terms$term %in% names (metaterms)), ]
+    these_terms$metadata <- NULL # zenodo only
+    these_terms <- these_terms [which (these_terms$term %in% names (metaterms)), ]
 
     out <- NULL
 
-    for (i in seq (nrow (fs_terms))) {
+    for (i in seq (nrow (these_terms))) {
 
-        term_i <- metaterms [[fs_terms$term [i]]]
+        term_i <- metaterms [[these_terms$term [i]]]
 
-        if (fs_terms$format [i] == "integer") {
+        if (these_terms$format [i] == "integer") {
 
-            out <- c (out, check_fs_meta_integer (fs_terms, i, term_i))
+            out <- c (out, check_fs_meta_integer (these_terms, i, term_i))
 
-        } else if (grepl ("^(array|list)", fs_terms$format [i])) {
+        } else if (grepl ("^(array|list)", these_terms$format [i])) {
 
-            out <- c (out, check_fs_meta_array (fs_terms, i, term_i))
+            out <- c (out, check_fs_meta_array (these_terms, i, term_i))
 
-        } else if (nzchar (fs_terms$vocabulary [i])) {
+        } else if (nzchar (these_terms$vocabulary [i])) {
 
-            out <- c (out, check_fs_meta_from_vocab (fs_terms, i, term_i))
+            out <- c (out, check_fs_meta_from_vocab (these_terms, i, term_i))
         }
     }
 
@@ -36,7 +36,7 @@ validate_figshare_terms <- function (metaterms) {
 
 #' Check one integer-valued figshare metadata term
 #' @noRd
-check_fs_meta_integer <- function (fs_terms, i, term_i) {
+check_fs_meta_integer <- function (these_terms, i, term_i) {
 
     out <- NULL
 
@@ -44,7 +44,7 @@ check_fs_meta_integer <- function (fs_terms, i, term_i) {
 
         out <- paste0 (
             "Data [",
-            fs_terms$term [i],
+            these_terms$term [i],
             "] is not coercible to integer."
         )
     }
@@ -54,16 +54,16 @@ check_fs_meta_integer <- function (fs_terms, i, term_i) {
 
 #' Check one figshare metadata term against vocabulary entry
 #' @noRd
-check_fs_meta_from_vocab <- function (fs_terms, i, term_i) {
+check_fs_meta_from_vocab <- function (these_terms, i, term_i) {
 
     out <- NULL
 
-    voc <- strsplit (fs_terms$vocabulary [i], "\\|") [[1]]
+    voc <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
 
     if (!all (term_i %in% voc)) {
         out <- paste0 (
             "Data [",
-            fs_terms$term [i],
+            these_terms$term [i],
             " = '",
             term_i,
             "'] must follow fixed vocabulary of [",
@@ -77,7 +77,7 @@ check_fs_meta_from_vocab <- function (fs_terms, i, term_i) {
 
 #' Check one figshare metadata array term
 #' @noRd
-check_fs_meta_array <- function (fs_terms, i, term_i) {
+check_fs_meta_array <- function (these_terms, i, term_i) {
 
     out <- NULL
 
@@ -85,15 +85,15 @@ check_fs_meta_array <- function (fs_terms, i, term_i) {
 
         out <- paste0 (
             "Data [",
-            fs_terms$term [i],
+            these_terms$term [i],
             "] must have format [",
-            fs_terms$format [i],
+            these_terms$format [i],
             "]"
         )
 
-    } else if (nzchar (fs_terms$vocabulary [i])) {
+    } else if (nzchar (these_terms$vocabulary [i])) {
 
-        voc <- strsplit (fs_terms$vocabulary [i], "\\|") [[1]]
+        voc <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
         term_names <- c (
             names (term_i),
             unlist (lapply (term_i, names))
@@ -103,7 +103,7 @@ check_fs_meta_array <- function (fs_terms, i, term_i) {
 
             out <- paste0 (
                 "Data [",
-                fs_terms$term [i],
+                these_terms$term [i],
                 " = '",
                 term_i,
                 "' must follow fixed vocabulary of [",

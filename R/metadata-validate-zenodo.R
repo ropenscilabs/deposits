@@ -1,4 +1,3 @@
-#'
 validate_zenodo_terms <- function (metaterms) {
 
     meta <- metaterms$metadata
@@ -7,21 +6,21 @@ validate_zenodo_terms <- function (metaterms) {
     f <- system.file (file.path ("extdata", "zenodoTerms.csv"),
         package = "deposits"
     )
-    zen_terms <- utils::read.csv (f)
-    for (i in seq (ncol (zen_terms))) {
-        zen_terms [, i] <- gsub ("^\\s+|\\s+$", "", zen_terms [, i])
+    these_terms <- utils::read.csv (f)
+    for (i in seq (ncol (these_terms))) {
+        these_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_terms [, i])
     }
-    zen_terms$metadata <- as.logical (zen_terms$metadata)
+    these_terms$metadata <- as.logical (these_terms$metadata)
 
-    zen_meta_terms <- zen_terms [which (zen_terms$metadata), ]
-    zen_terms <- zen_terms [which (!zen_terms$metadata), ]
+    zen_meta_terms <- these_terms [which (these_terms$metadata), ]
+    these_terms <- these_terms [which (!these_terms$metadata), ]
 
     index <- which (zen_meta_terms$term %in% names (meta))
     zen_meta_terms <- zen_meta_terms [index, ]
-    zen_terms <- zen_terms [which (zen_terms$term %in% names (metaterms)), ]
+    these_terms <- these_terms [which (these_terms$term %in% names (metaterms)), ]
 
     out <- c (
-        check_zenodo_terms (zen_terms, metaterms),
+        check_zenodo_terms (these_terms, metaterms),
         check_zenodo_meta_terms (zen_meta_terms, meta)
     )
 
@@ -30,17 +29,17 @@ validate_zenodo_terms <- function (metaterms) {
 
 #' Check standard zenodo terms - not their "metadata"
 #' @noRd
-check_zenodo_terms <- function (zen_terms, metaterms) {
+check_zenodo_terms <- function (these_terms, metaterms) {
 
     out <- NULL
 
-    for (i in seq (nrow (zen_terms))) {
+    for (i in seq (nrow (these_terms))) {
 
-        term_i <- metaterms [[zen_terms$term [i]]]
+        term_i <- metaterms [[these_terms$term [i]]]
 
-        if (nzchar (zen_terms$vocabulary [i])) {
+        if (nzchar (these_terms$vocabulary [i])) {
 
-            values <- strsplit (zen_terms$vocabulary [i], "\\|") [[1]]
+            values <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
             if (!term_i %in% values) {
                 out <- c (
                     out,
@@ -50,12 +49,12 @@ check_zenodo_terms <- function (zen_terms, metaterms) {
                         " = '",
                         term_i,
                         "'] not in required vocabulary of [",
-                        zen_terms$vocabulary [i],
+                        these_terms$vocabulary [i],
                         "]"
                     )
                 )
             }
-        } else if (zen_terms$format [i] == "integer") {
+        } else if (these_terms$format [i] == "integer") {
 
             if (suppressWarnings (is.na (as.integer (term_i)))) {
                 out <- c (
