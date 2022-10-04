@@ -23,7 +23,9 @@ validate_metadata <- function (metadata, service = "zenodo") {
     # Then check internal metadata standards
     term_map <- get_dcmi_term_map (service = service)
     metaterms <- construct_metadata_list (metadata, term_map)
+
     check <- validate_terms (metaterms, service = service)
+
     if (length (check) > 0L) {
         warning (
             "The following metadata terms do not conform:\n",
