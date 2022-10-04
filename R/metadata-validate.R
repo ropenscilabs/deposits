@@ -10,7 +10,7 @@ validate_metadata <- function (metadata, service = "zenodo") {
     metadata <- process_metadata_param (metadata)
 
     # Check sanity of XML schema via 'atom4R' routines:
-    out <- capture.output (
+    out <- utils::capture.output (
         chk <- metadata$validate ()
     )
     if (!chk) {
