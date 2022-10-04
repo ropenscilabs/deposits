@@ -1,4 +1,23 @@
 
+#' Get names of DCMI terms
+#'
+#' The Dublin Core Metadata Initiative defines a set of terms at
+#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
+#' This function returns the names of those terms currently recognised by the
+#' \pkg{atom4R} package.
+#'
+#' @return A character vector of DCMI terms.
+#' @family meta
+#' @export
+dcmi_terms <- function () {
+
+    terms <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
+    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
+    terms <- terms [which (!terms %in% not_meta)]
+
+    return (gsub ("^DC", "", terms))
+}
+
 #' Process metadata parameters in one of the three possible forms, returning a
 #' 'DCEntry' object.
 #' @param metadata Metadata as list, filename, or DCEntry object
@@ -29,26 +48,6 @@ process_metadata_param <- function (metadata) {
     return (metadata)
 }
 
-#' Get names of DCMI terms
-#'
-#' The Dublin Core Metadata Initiative defines a set of terms at
-#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
-#' This function returns the names of those terms currently recognised by the
-#' \pkg{atom4R} package.
-#'
-#' @return A character vector of DCMI terms.
-#' @family meta
-#' @export
-dcmi_terms <- function () {
-
-    terms <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
-    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
-    terms <- terms [which (!terms %in% not_meta)]
-
-    return (gsub ("^DC", "", terms))
-}
-
-
 #' Load metadata term translation table from local inst/extdata
 #' @noRd
 load_meta_terms <- function () {
@@ -57,7 +56,7 @@ load_meta_terms <- function () {
         package = "deposits"
     )
     terms <- utils::read.csv (terms)
-    for (i in seq (ncol (terms))) {
+    for (i in seq_len (ncol (terms))) {
         terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
     }
     index <- which (nzchar (terms$Zenodo) | nzchar (terms$Figshare))
@@ -152,10 +151,10 @@ construct_data_list <- function (metadata, term_map) {
 
     } else {
 
-        if ("authors" %in% names (values) & !is.list (values$authors)) {
+        if ("authors" %in% names (values) && !is.list (values$authors)) {
             values$authors <- list (list (name = values$authors))
         }
-        if ("categories" %in% names (values) &
+        if ("categories" %in% names (values) &&
             !is.integer (values$categories)) {
             message (
                 "Figshare categories must be integer values; ",
