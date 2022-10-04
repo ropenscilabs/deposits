@@ -93,7 +93,7 @@ get_dcmi_term_map <- function (service = "zenodo") {
 #' `atom4R::DCEntry` object.
 #' @param term_map The 'term_map' object of a 'deposits' client.
 #' @noRd
-construct_data_list <- function (metadata, term_map) {
+construct_metadata_list <- function (metadata, term_map) {
 
     # term_map is constructed so that first DCMI translation is the preferred
     # one, with subsequent ones offering alternative translations

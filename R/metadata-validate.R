@@ -22,7 +22,7 @@ validate_metadata <- function (metadata, service = "zenodo") {
 
     # Then check internal metadata standards
     term_map <- get_dcmi_term_map (service = service)
-    metaterms <- construct_data_list (metadata, term_map)
+    metaterms <- construct_metadata_list (metadata, term_map)
     check <- validate_terms (metaterms, service = service)
     if (length (check) > 0L) {
         warning (
@@ -36,7 +36,8 @@ validate_metadata <- function (metadata, service = "zenodo") {
 
 #' validate metadata terms
 #'
-#' @param metaterms A list of metadata terms returned from `construct_data_list()`.
+#' @param metaterms A list of metadata terms returned from
+#' `construct_metadata_list()`.
 #' @param service Name of deposits service.
 #' @return `NULL` if all metaterms are valid, otherwise a vector of any invalid
 #' metaterms.
