@@ -83,20 +83,32 @@ check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
 
         if (grepl ("\\.csv$", these_meta_terms$vocabulary [i])) {
 
-            out <- c (out, check_zen_meta_from_file (these_meta_terms, metaterms, i))
+            out <- c (
+                out,
+                check_zen_meta_from_file (these_meta_terms, metaterms, i)
+            )
 
         } else if (nzchar (these_meta_terms$vocabulary [i])) {
 
-            out <- c (out, check_zen_meta_from_vocab (these_meta_terms, metaterms, i))
+            out <- c (
+                out,
+                check_zen_meta_from_vocab (these_meta_terms, metaterms, i)
+            )
 
         } else if (these_meta_terms$format [i] == "array") {
 
-            out <- c (out, check_zen_meta_array (these_meta_terms, metaterms, i))
+            out <- c (
+                out,
+                check_zen_meta_array (these_meta_terms, metaterms, i)
+            )
 
         } else if (these_meta_terms$term [i] == "language") {
 
             # internal language vocabulary
-            out <- c (out, check_zen_meta_language (these_meta_terms, metaterms, i))
+            out <- c (
+                out,
+                check_zen_meta_language (these_meta_terms, metaterms, i)
+            )
         }
     }
 

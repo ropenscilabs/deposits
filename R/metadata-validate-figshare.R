@@ -6,11 +6,13 @@ validate_figshare_terms <- function (metaterms) {
     these_meta_terms <- utils::read.csv (f)
 
     for (i in seq_len (ncol (these_meta_terms))) {
-        these_meta_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_meta_terms [, i])
+        these_meta_terms [, i] <-
+            gsub ("^\\s+|\\s+$", "", these_meta_terms [, i])
     }
     these_meta_terms$metadata <- NULL # zenodo only
-    these_meta_terms <-
-        these_meta_terms [which (these_meta_terms$term %in% names (metaterms)), ]
+    these_meta_terms <- these_meta_terms [
+        which (these_meta_terms$term %in% names (metaterms)),
+    ]
 
     out <- c (
         # no terms here just metaterms:
@@ -43,7 +45,10 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
 
         } else if (nzchar (these_meta_terms$vocabulary [i])) {
 
-            out <- c (out, check_fs_meta_from_vocab (these_meta_terms, i, term_i))
+            out <- c (
+                out,
+                check_fs_meta_from_vocab (these_meta_terms, i, term_i)
+            )
         }
     }
 
