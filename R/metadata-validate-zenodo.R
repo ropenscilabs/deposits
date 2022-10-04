@@ -57,17 +57,26 @@ check_zenodo_terms <- function (these_terms, metaterms) {
             }
         } else if (these_terms$format [i] == "integer") {
 
-            if (suppressWarnings (is.na (as.integer (term_i)))) {
-                out <- c (
-                    out,
-                    paste0 (
-                        "Data [",
-                        term_i,
-                        "] must be an integer."
-                    )
-                )
-            }
+            out <- c (out, check_zen_meta_integer (these_terms, i, term_i))
         }
+    }
+
+    return (out)
+}
+
+#' Check one integer-valued zenodo metadata term
+#' @noRd
+check_zen_meta_integer <- function (these_terms, i, term_i) {
+
+    out <- NULL
+
+    if (is.na (suppressWarnings (as.integer (term_i)))) {
+
+        out <- paste0 (
+            "Data [",
+            these_terms$term [i],
+            "] is not coercible to integer."
+        )
     }
 
     return (out)
