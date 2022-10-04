@@ -335,7 +335,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            self$metadata <- validate_metadata (metadata, self$service)
+            metadata <- validate_metadata (metadata, self$service)
+            self$metadata <- metadata
 
             if (!is.null (self$id)) {
 
