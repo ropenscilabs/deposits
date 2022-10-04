@@ -5,15 +5,16 @@ validate_figshare_terms <- function (metaterms) {
     )
     these_terms <- utils::read.csv (f)
 
-    for (i in seq (ncol (these_terms))) {
+    for (i in seq_len (ncol (these_terms))) {
         these_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_terms [, i])
     }
     these_terms$metadata <- NULL # zenodo only
-    these_terms <- these_terms [which (these_terms$term %in% names (metaterms)), ]
+    these_terms <-
+        these_terms [which (these_terms$term %in% names (metaterms)), ]
 
     out <- NULL
 
-    for (i in seq (nrow (these_terms))) {
+    for (i in seq_len (nrow (these_terms))) {
 
         term_i <- metaterms [[these_terms$term [i]]]
 

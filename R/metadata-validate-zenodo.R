@@ -7,7 +7,7 @@ validate_zenodo_terms <- function (metaterms) {
         package = "deposits"
     )
     these_terms <- utils::read.csv (f)
-    for (i in seq (ncol (these_terms))) {
+    for (i in seq_len (ncol (these_terms))) {
         these_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_terms [, i])
     }
     these_terms$metadata <- as.logical (these_terms$metadata)
@@ -17,7 +17,8 @@ validate_zenodo_terms <- function (metaterms) {
 
     index <- which (zen_meta_terms$term %in% names (meta))
     zen_meta_terms <- zen_meta_terms [index, ]
-    these_terms <- these_terms [which (these_terms$term %in% names (metaterms)), ]
+    these_terms <-
+        these_terms [which (these_terms$term %in% names (metaterms)), ]
 
     out <- c (
         check_zenodo_terms (these_terms, metaterms),
@@ -33,7 +34,7 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
     out <- NULL
 
-    for (i in seq (nrow (these_terms))) {
+    for (i in seq_len (nrow (these_terms))) {
 
         term_i <- metaterms [[these_terms$term [i]]]
 
@@ -78,7 +79,7 @@ check_zenodo_meta_terms <- function (zen_meta_terms, meta) {
 
     out <- NULL
 
-    for (i in seq (nrow (zen_meta_terms))) {
+    for (i in seq_len (nrow (zen_meta_terms))) {
 
         if (grepl ("\\.csv$", zen_meta_terms$vocabulary [i])) {
 
