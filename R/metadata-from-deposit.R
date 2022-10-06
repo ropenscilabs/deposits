@@ -88,7 +88,11 @@ metadata_from_zenodo <- function (cli, hostdata) {
             ignore.case = TRUE
         )
 
-        value <- hostdata [[term_map$service [i]]]
+        if (term_map$meta [i]) {
+            value <- hostdata$metadata [[term_map$service [i]]]
+        } else {
+            value <- hostdata [[term_map$service [i]]]
+        }
         do.call (dcmi [[dc_fn]], list (value))
     }
     dcmi$validate ()
