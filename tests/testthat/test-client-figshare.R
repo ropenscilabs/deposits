@@ -137,3 +137,33 @@ test_that ("figshare actions", {
     # })
     # expect_true (dep)
 })
+
+
+# This is mostly tested in 'test-metadata.R'. This just tests the removal of
+# unrecognised metadata terms on initial client construction.
+test_that ("figshare metadata", {
+
+    # --------- DEPOSIT_NEW
+    metadata <- list (
+        Title = "Iris Dataset",
+        abstract = "This is the abstract",
+        Creator = list ("Edgar Anderson"),
+        Publisher = "American Iris Society",
+        Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x",
+        Language = "eng"
+    )
+
+    cli <- with_mock_dir ("fs_meta_unrecognised", {
+        depositsClient$new (
+            service = "figshare",
+            metadata = metadata
+        )
+    })
+
+    expect_null (cli$metadata$language)
+    expect_null (cli$metadata$publisher)
+    expect_null (cli$metadata$source)
+    expect_true (length (cli$metadata$title) > 0L)
+    expect_true (length (cli$metadata$abstract) > 0L)
+    expect_true (length (cli$metadata$creator) > 0L)
+})
