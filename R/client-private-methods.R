@@ -139,3 +139,35 @@ depositsClient$set ("private", "upload_dcmi_xml", function () {
 
     invisible (self)
 })
+
+#' @description Remove any DCMI terms not recognised by a given scheme on
+#' initial client construction.
+#' @noRd
+
+depositsClient$set ("private", "rm_unrecognised_dcmi_items", function () {
+
+    metaitems <- get_dcentry_items (self$metadata)
+    index <- match (tolower (metaitems), self$term_map$dcmi)
+    metaitems_not_in_scheme <- metaitems [which (is.na (index))]
+
+    if (length (metaitems_not_in_scheme) > 0L) {
+
+        message (
+            "The following metadata items are not ",
+            "recognised in the '", service, "' service:"
+        )
+        message ("   [", paste0 (metaitems_not_in_scheme, collapse = ", "), "]")
+        message ("They will now be removed.")
+        for (m in metaitems_not_in_scheme) {
+            m_nm <- grep (
+                paste0 ("^", m),
+                names (self$metadata),
+                ignore.case = TRUE,
+                value = TRUE
+            )
+            self$metadata [[m_nm]] <- NULL
+        }
+    }
+
+    invisible (self)
+})

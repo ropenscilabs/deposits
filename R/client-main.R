@@ -107,6 +107,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!is.null (metadata)) {
 
                 self$metadata <- validate_metadata (metadata, service)
+                self <- private$rm_unrecognised_dcmi_items ()
+
             }
 
             return (self)
