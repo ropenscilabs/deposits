@@ -154,7 +154,7 @@ depositsClient$set ("private", "rm_unrecognised_dcmi_items", function () {
 
         message (
             "The following metadata items are not ",
-            "recognised in the '", service, "' service:"
+            "recognised in the '", self$service, "' service:"
         )
         message ("   [", paste0 (metaitems_not_in_scheme, collapse = ", "), "]")
         message ("They will now be removed.")
