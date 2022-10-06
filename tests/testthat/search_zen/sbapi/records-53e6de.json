@@ -3,11 +3,11 @@
         "access_right": {
             "buckets": [
                 {
-                    "doc_count": 787,
+                    "doc_count": 803,
                     "key": "open"
                 },
                 {
-                    "doc_count": 9,
+                    "doc_count": 10,
                     "key": "closed"
                 },
                 {
@@ -25,11 +25,11 @@
         "file_type": {
             "buckets": [
                 {
-                    "doc_count": 512,
+                    "doc_count": 521,
                     "key": "pdf"
                 },
                 {
-                    "doc_count": 120,
+                    "doc_count": 121,
                     "key": "zip"
                 },
                 {
@@ -37,7 +37,7 @@
                     "key": "xml"
                 },
                 {
-                    "doc_count": 28,
+                    "doc_count": 31,
                     "key": "jpg"
                 },
                 {
@@ -53,7 +53,7 @@
                     "key": "gz"
                 },
                 {
-                    "doc_count": 13,
+                    "doc_count": 14,
                     "key": "md"
                 },
                 {
@@ -66,7 +66,7 @@
                 }
             ],
             "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 91
+            "sum_other_doc_count": 94
         },
         "keywords": {
             "buckets": [
@@ -112,21 +112,21 @@
                 }
             ],
             "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 1572
+            "sum_other_doc_count": 1585
         },
         "type": {
             "buckets": [
                 {
-                    "doc_count": 583,
+                    "doc_count": 597,
                     "key": "publication",
                     "subtype": {
                         "buckets": [
                             {
-                                "doc_count": 308,
+                                "doc_count": 315,
                                 "key": "article"
                             },
                             {
-                                "doc_count": 195,
+                                "doc_count": 202,
                                 "key": "conferencepaper"
                             },
                             {
@@ -175,7 +175,7 @@
                     }
                 },
                 {
-                    "doc_count": 104,
+                    "doc_count": 105,
                     "key": "software",
                     "subtype": {
                         "buckets": [
@@ -186,7 +186,7 @@
                     }
                 },
                 {
-                    "doc_count": 63,
+                    "doc_count": 64,
                     "key": "dataset",
                     "subtype": {
                         "buckets": [
@@ -237,7 +237,7 @@
                     }
                 },
                 {
-                    "doc_count": 2,
+                    "doc_count": 3,
                     "key": "other",
                     "subtype": {
                         "buckets": [
@@ -265,183 +265,6 @@
     },
     "hits": {
         "hits": [
-            {
-                "created": "2022-01-01T00:00:00+00:00",
-                "doi": "10.5281/zenodo.51313",
-                "files": [
-                    {
-                        "bucket": "ba5b8908-c352-4320-8327-468dceab131a",
-                        "checksum": "md5:1420e6b85c8d8f320e99a9787cab5a32",
-                        "key": "Clash-Royale-Picker-0.1.zip",
-                        "links": {
-                            "self": "sbapi/files/hash/Clash-Royale-Picker-0.1.zip"
-                        },
-                        "size": 35664335,
-                        "type": "zip"
-                    }
-                ],
-                "id": 51313,
-                "links": {
-                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5281/zenodo.51313.svg",
-                    "bucket": "sbapi/files/ba5b8908-c352-4320-8327-468dceab131a",
-                    "doi": "https://doi.org/10.5281/zenodo.51313",
-                    "html": "https://sandbox.zenodo.org/record/51313",
-                    "self": "sbapi/records/51313"
-                },
-                "metadata": {
-                    "access_right": "open",
-                    "access_right_category": "success",
-                    "creators": [
-                        {
-                            "affiliation": "jimmyshadow1",
-                            "name": "Shadow, Jimmy"
-                        }
-                    ],
-                    "description": "<p>Clash Royale Picker allows you to generate a random deck for Clash Royale.<\/p>",
-                    "doi": "10.5281/zenodo.51313",
-                    "keywords": [
-                        "clash",
-                        "royale",
-                        "cards",
-                        "random",
-                        "picker"
-                    ],
-                    "license": {
-                        "id": "MIT"
-                    },
-                    "publication_date": "2022-01-01",
-                    "related_identifiers": [
-                        {
-                            "identifier": "https://github.com/jimmyshadow1/Clash-Royale-Picker/tree/0.1",
-                            "relation": "isSupplementTo",
-                            "scheme": "url"
-                        }
-                    ],
-                    "relations": {
-                        "version": [
-                            {
-                                "index": 0,
-                                "is_last": true
-                            }
-                        ]
-                    },
-                    "resource_type": {
-                        "title": "Software",
-                        "type": "software"
-                    },
-                    "title": "Clash-Royale-Picker: Clash Royale Picker v0.1"
-                },
-                "owners": [
-                    21985
-                ],
-                "revision": 4,
-                "stats": {
-                    "downloads": 0.0,
-                    "unique_downloads": 0.0,
-                    "unique_views": 2.0,
-                    "views": 2.0,
-                    "volume": 0.0
-                },
-                "updated": "2022-01-01T00:00:00.914727+00:00"
-            },
-            {
-                "conceptdoi": "10.5072/zenodo.692329",
-                "conceptrecid": "692329",
-                "created": "2022-01-01T00:00:00.900591+00:00",
-                "doi": "10.5072/zenodo.692330",
-                "files": [
-                    {
-                        "bucket": "0489c46b-1384-4110-bd27-1092ac20ab21",
-                        "checksum": "md5:b0778a411c26f7b9b9ef5db8ed99566e",
-                        "key": "Test repository.csv",
-                        "links": {
-                            "self": "sbapi/files/hash/Test%20repository.csv"
-                        },
-                        "size": 9,
-                        "type": "csv"
-                    }
-                ],
-                "id": 692330,
-                "links": {
-                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692330.svg",
-                    "bucket": "sbapi/files/0489c46b-1384-4110-bd27-1092ac20ab21",
-                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692329.svg",
-                    "conceptdoi": "https://doi.org/10.5072/zenodo.692329",
-                    "doi": "https://doi.org/10.5072/zenodo.692330",
-                    "html": "https://sandbox.zenodo.org/record/692330",
-                    "latest": "sbapi/records/692330",
-                    "latest_html": "https://sandbox.zenodo.org/record/692330",
-                    "self": "sbapi/records/692330"
-                },
-                "metadata": {
-                    "access_right": "open",
-                    "access_right_category": "success",
-                    "creators": [
-                        {
-                            "affiliation": "Ghent University",
-                            "name": "Verkroost, Lynn",
-                            "orcid": "0000-0002-1442-677X"
-                        }
-                    ],
-                    "description": "<p>These are random data, generated by the imagination of Lynn Verkroost at 2022-01-01. There was no processing of the data. No specific methods or equipment were used. The used software is Microsoft Excel. The data were collected as a test during a course about research data management.<\/p>",
-                    "doi": "10.5072/zenodo.692330",
-                    "keywords": [
-                        "test",
-                        "random"
-                    ],
-                    "language": "eng",
-                    "license": {
-                        "id": "CC-BY-4.0"
-                    },
-                    "publication_date": "2022-01-01",
-                    "related_identifiers": [
-                        {
-                            "identifier": "10.5072/zenodo.692329",
-                            "relation": "isVersionOf",
-                            "scheme": "doi"
-                        }
-                    ],
-                    "relations": {
-                        "version": [
-                            {
-                                "count": 1,
-                                "index": 0,
-                                "is_last": true,
-                                "last_child": {
-                                    "pid_type": "recid",
-                                    "pid_value": "692330"
-                                },
-                                "parent": {
-                                    "pid_type": "recid",
-                                    "pid_value": "692329"
-                                }
-                            }
-                        ]
-                    },
-                    "resource_type": {
-                        "title": "Dataset",
-                        "type": "dataset"
-                    },
-                    "title": "Dataset to test a repository"
-                },
-                "owners": [
-                    50656
-                ],
-                "revision": 2,
-                "stats": {
-                    "downloads": 3.0,
-                    "unique_downloads": 1.0,
-                    "unique_views": 2.0,
-                    "version_downloads": 3.0,
-                    "version_unique_downloads": 1.0,
-                    "version_unique_views": 2.0,
-                    "version_views": 4.0,
-                    "version_volume": 27.0,
-                    "views": 4.0,
-                    "volume": 27.0
-                },
-                "updated": "2022-01-01T00:00:00.189675+00:00"
-            },
             {
                 "conceptdoi": "10.5072/zenodo.1041245",
                 "conceptrecid": "1041245",
@@ -637,6 +460,104 @@
                 "updated": "2022-01-01T00:00:00.524657+00:00"
             },
             {
+                "conceptdoi": "10.5072/zenodo.692329",
+                "conceptrecid": "692329",
+                "created": "2022-01-01T00:00:00.900591+00:00",
+                "doi": "10.5072/zenodo.692330",
+                "files": [
+                    {
+                        "bucket": "0489c46b-1384-4110-bd27-1092ac20ab21",
+                        "checksum": "md5:b0778a411c26f7b9b9ef5db8ed99566e",
+                        "key": "Test repository.csv",
+                        "links": {
+                            "self": "sbapi/files/hash/Test%20repository.csv"
+                        },
+                        "size": 9,
+                        "type": "csv"
+                    }
+                ],
+                "id": 692330,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692330.svg",
+                    "bucket": "sbapi/files/0489c46b-1384-4110-bd27-1092ac20ab21",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.692329.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.692329",
+                    "doi": "https://doi.org/10.5072/zenodo.692330",
+                    "html": "https://sandbox.zenodo.org/record/692330",
+                    "latest": "sbapi/records/692330",
+                    "latest_html": "https://sandbox.zenodo.org/record/692330",
+                    "self": "sbapi/records/692330"
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "affiliation": "Ghent University",
+                            "name": "Verkroost, Lynn",
+                            "orcid": "0000-0002-1442-677X"
+                        }
+                    ],
+                    "description": "<p>These are random data, generated by the imagination of Lynn Verkroost at 2022-01-01. There was no processing of the data. No specific methods or equipment were used. The used software is Microsoft Excel. The data were collected as a test during a course about research data management.<\/p>",
+                    "doi": "10.5072/zenodo.692330",
+                    "keywords": [
+                        "test",
+                        "random"
+                    ],
+                    "language": "eng",
+                    "license": {
+                        "id": "CC-BY-4.0"
+                    },
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.692329",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 1,
+                                "index": 0,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "692330"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "692329"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "Dataset to test a repository"
+                },
+                "owners": [
+                    50656
+                ],
+                "revision": 2,
+                "stats": {
+                    "downloads": 3.0,
+                    "unique_downloads": 1.0,
+                    "unique_views": 2.0,
+                    "version_downloads": 3.0,
+                    "version_unique_downloads": 1.0,
+                    "version_unique_views": 2.0,
+                    "version_views": 4.0,
+                    "version_volume": 27.0,
+                    "views": 4.0,
+                    "volume": 27.0
+                },
+                "updated": "2022-01-01T00:00:00.189675+00:00"
+            },
+            {
                 "conceptdoi": "10.5072/zenodo.264742",
                 "conceptrecid": "264742",
                 "created": "2022-01-01T00:00:00.884250+00:00",
@@ -748,9 +669,120 @@
                     "volume": 58319.0
                 },
                 "updated": "2022-01-01T00:00:00.357000+00:00"
+            },
+            {
+                "conceptdoi": "10.5072/zenodo.971964",
+                "conceptrecid": "971964",
+                "created": "2022-01-01T00:00:00.047933+00:00",
+                "doi": "10.5072/zenodo.1057227",
+                "files": [
+                    {
+                        "bucket": "93837686-d23b-4e18-a1e3-697c22196abb",
+                        "checksum": "md5:2249ada43f430210c63192fa2047a346",
+                        "key": "random_numbers.tar.gz",
+                        "links": {
+                            "self": "sbapi/files/hash/random_numbers.tar.gz"
+                        },
+                        "size": 1573,
+                        "type": "gz"
+                    },
+                    {
+                        "bucket": "93837686-d23b-4e18-a1e3-697c22196abb",
+                        "checksum": "md5:c1de79db39b5eb4042f6c1fce21dbabe",
+                        "key": "Untitled.png",
+                        "links": {
+                            "self": "sbapi/files/hash/Untitled.png"
+                        },
+                        "size": 1041537,
+                        "type": "png"
+                    }
+                ],
+                "id": 1057227,
+                "links": {
+                    "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1057227.svg",
+                    "bucket": "sbapi/files/93837686-d23b-4e18-a1e3-697c22196abb",
+                    "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.971964.svg",
+                    "conceptdoi": "https://doi.org/10.5072/zenodo.971964",
+                    "doi": "https://doi.org/10.5072/zenodo.1057227",
+                    "html": "https://sandbox.zenodo.org/record/1057227",
+                    "latest": "sbapi/records/1057227",
+                    "latest_html": "https://sandbox.zenodo.org/record/1057227",
+                    "self": "sbapi/records/1057227",
+                    "thumb250": "sbapi/iiif/v2/93837686-d23b-4e18-a1e3-697c22196abb:4550f2e5-a924-4610-8c55-675210aedd28:Untitled.png/full/250,/0/default.png",
+                    "thumbs": {
+                        "10": "https://sandbox.zenodo.org/record/1057227/thumb10",
+                        "100": "https://sandbox.zenodo.org/record/1057227/thumb100",
+                        "1200": "https://sandbox.zenodo.org/record/1057227/thumb1200",
+                        "250": "https://sandbox.zenodo.org/record/1057227/thumb250",
+                        "50": "https://sandbox.zenodo.org/record/1057227/thumb50",
+                        "750": "https://sandbox.zenodo.org/record/1057227/thumb750"
+                    }
+                },
+                "metadata": {
+                    "access_right": "open",
+                    "access_right_category": "success",
+                    "creators": [
+                        {
+                            "name": "Luger, Rodrigo"
+                        }
+                    ],
+                    "description": "<p>This is a collection of ten datasets, each containing ten iid zero-mean, unit-variance random numbers. These are used in an example of the showyourwork open source scientific article workflow.<br>\n<br>\nCreated using <a href=\"https://github.com/rodluger/showyourwork\">showyourwork<\/a> from <a href=\"https://github.com/rodluger/showyourwork-template/tree/6eef948d1f2d616f63829ad161de6fee5e537f8e\">this GitHub repo<\/a> using the following command:<br>\n&nbsp;<\/p>\n\n<pre><code class=\"language-bash\">cd src/figures &amp;&amp; python src/analysis/generate_random_numbers.py<\/code><\/pre>\n\n<p>&nbsp;<\/p>",
+                    "doi": "10.5072/zenodo.1057227",
+                    "license": {
+                        "id": "CC0-1.0"
+                    },
+                    "notes": "Test",
+                    "publication_date": "2022-01-01",
+                    "related_identifiers": [
+                        {
+                            "identifier": "10.5072/zenodo.971964",
+                            "relation": "isVersionOf",
+                            "scheme": "doi"
+                        }
+                    ],
+                    "relations": {
+                        "version": [
+                            {
+                                "count": 5,
+                                "index": 4,
+                                "is_last": true,
+                                "last_child": {
+                                    "pid_type": "recid",
+                                    "pid_value": "1057227"
+                                },
+                                "parent": {
+                                    "pid_type": "recid",
+                                    "pid_value": "971964"
+                                }
+                            }
+                        ]
+                    },
+                    "resource_type": {
+                        "title": "Dataset",
+                        "type": "dataset"
+                    },
+                    "title": "Random numbers"
+                },
+                "owners": [
+                    23014
+                ],
+                "revision": 1,
+                "stats": {
+                    "downloads": 0.0,
+                    "unique_downloads": 0.0,
+                    "unique_views": 3.0,
+                    "version_downloads": 15.0,
+                    "version_unique_downloads": 15.0,
+                    "version_unique_views": 30.0,
+                    "version_views": 42.0,
+                    "version_volume": 23597.0,
+                    "views": 3.0,
+                    "volume": 0.0
+                },
+                "updated": "2022-01-01T00:00:00.653418+00:00"
             }
         ],
-        "total": 798
+        "total": 815
     },
     "links": {
         "next": "sbapi/records/?sort=bestmatch&q=random&page=2&size=5",
