@@ -31,8 +31,15 @@ function (resp) {
     ptn <- paste0 (rep ("[a-z0-9]*", 5), collapse = "\\-")
     resp <- httptest2::gsub_response (
         resp,
-        paste0 ("files/", ptn, "/"),
+        paste0 ("(files|fup\\-eu\\-west\\-1\\.up)\\/", ptn, "/"),
         "files/hash/",
+        fixed = FALSE
+    )
+
+    resp <- httptest2::gsub_response (
+        resp,
+        "\\.xml\\-[a-z0-9]*\\-PUT\\.json$",
+        ".xml-123456-PUT.json",
         fixed = FALSE
     )
 

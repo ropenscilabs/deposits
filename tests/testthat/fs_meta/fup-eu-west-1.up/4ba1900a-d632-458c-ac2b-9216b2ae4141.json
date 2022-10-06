@@ -1,0 +1,16 @@
+{
+    "token": "4ba1900a-d632-458c-ac2b-9216b2ae4141",
+    "md5": "334134cac17270c753bcac2b6eab5651",
+    "size": 793,
+    "name": "37763310/DCEntry21286836.xml",
+    "status": "PENDING",
+    "parts": [
+        {
+            "partNo": 1,
+            "startOffset": 0,
+            "endOffset": 792,
+            "status": "PENDING",
+            "locked": false
+        }
+    ]
+}

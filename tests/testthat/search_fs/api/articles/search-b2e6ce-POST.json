@@ -6,7 +6,7 @@
         "doi": "10.6084/m9.figshare.5845593.v1",
         "handle": "",
         "url": "api/articles/5845593",
-        "published_date": "2022-01-01T00:00:00Z",
+        "published_date": "2022-01-01T16:18:06Z",
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
@@ -16,31 +16,8 @@
         "url_private_html": "https://figshare.com/account/articles/5845593",
         "url_public_html": "https://figshare.com/articles/dataset/random_xlsx/5845593",
         "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
-        },
-        "resource_title": "",
-        "resource_doi": ""
-    },
-    {
-        "project_id": 130610,
-        "id": 19882087,
-        "title": "Files appendix",
-        "doi": "10.6084/m9.figshare.19882087.v1",
-        "handle": "",
-        "url": "api/articles/19882087",
-        "published_date": "2022-01-01T00:00:00Z",
-        "thumb": "",
-        "defined_type": 11,
-        "defined_type_name": "online resource",
-        "group_id": null,
-        "url_private_api": "api/articles/19882087",
-        "url_public_api": "api/articles/19882087",
-        "url_private_html": "https://figshare.com/account/articles/19882087",
-        "url_public_html": "https://figshare.com/articles/online_resource/Files_appendix/19882087",
-        "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
+            "posted": "2022-01-01T16:18:06",
+            "firstOnline": "2022-01-01T16:18:06"
         },
         "resource_title": "",
         "resource_doi": ""
@@ -52,7 +29,7 @@
         "doi": "10.6084/m9.figshare.19199774.v1",
         "handle": "",
         "url": "api/articles/19199774",
-        "published_date": "2022-01-01T00:00:00Z",
+        "published_date": "2022-01-01T04:08:52Z",
         "thumb": "https://s3-eu-west-1.amazonaws.com/pfigshare-u-previews/35316127/thumb.png",
         "defined_type": 11,
         "defined_type_name": "online resource",
@@ -62,8 +39,31 @@
         "url_private_html": "https://figshare.com/account/articles/19199774",
         "url_public_html": "https://figshare.com/articles/online_resource/SuppMaterial/19199774",
         "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
+            "posted": "2022-01-01T04:08:52",
+            "firstOnline": "2022-01-01T04:08:52"
+        },
+        "resource_title": "",
+        "resource_doi": ""
+    },
+    {
+        "project_id": 130610,
+        "id": 19882087,
+        "title": "Files appendix",
+        "doi": "10.6084/m9.figshare.19882087.v1",
+        "handle": "",
+        "url": "api/articles/19882087",
+        "published_date": "2022-01-01T02:36:35Z",
+        "thumb": "",
+        "defined_type": 11,
+        "defined_type_name": "online resource",
+        "group_id": null,
+        "url_private_api": "api/articles/19882087",
+        "url_public_api": "api/articles/19882087",
+        "url_private_html": "https://figshare.com/account/articles/19882087",
+        "url_public_html": "https://figshare.com/articles/online_resource/Files_appendix/19882087",
+        "timeline": {
+            "posted": "2022-01-01T02:36:35",
+            "firstOnline": "2022-01-01T02:36:35"
         },
         "resource_title": "",
         "resource_doi": ""
@@ -75,7 +75,7 @@
         "doi": "10.6084/m9.figshare.14675409.v1",
         "handle": "",
         "url": "api/articles/14675409",
-        "published_date": "2022-01-01T00:00:00Z",
+        "published_date": "2022-01-01T18:17:06Z",
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
@@ -85,8 +85,8 @@
         "url_private_html": "https://figshare.com/account/articles/14675409",
         "url_public_html": "https://figshare.com/articles/dataset/random_numbers_json/14675409",
         "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
+            "posted": "2022-01-01T18:17:06",
+            "firstOnline": "2022-01-01T18:17:06"
         },
         "resource_title": "",
         "resource_doi": ""
@@ -98,7 +98,7 @@
         "doi": "10.6084/m9.figshare.8312348.v1",
         "handle": "",
         "url": "api/articles/8312348",
-        "published_date": "2022-01-01T00:00:00Z",
+        "published_date": "2022-01-01T15:09:39Z",
         "thumb": "https://s3-eu-west-1.amazonaws.com/ppreviews-osa-98354354135/15575366/thumb.png",
         "defined_type": 2,
         "defined_type_name": "media",
@@ -108,8 +108,8 @@
         "url_private_html": "https://figshare.com/account/articles/8312348",
         "url_public_html": "https://opticapublishing.figshare.com/articles/media/No_repeated_zones_in_proposed_light-field_near-eye_displays_using_random_holes_mp4/8312348",
         "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
+            "posted": "2022-01-01T15:09:39",
+            "firstOnline": "2022-01-01T15:09:39"
         },
         "resource_title": "Design of a light-field near-eye display using random pinholes",
         "resource_doi": "10.1364/OE.27.023763"
