@@ -197,3 +197,25 @@ construct_md_list_figshare <- function (values, term_map) {
 
     return (values)
 }
+
+#' 'atom4R' has no way of directly listing which 'DCEntry' items have content.
+#' This function does that.
+#' @noRd
+get_dcentry_items <- function (dcmi) {
+
+    dcmi_get_fns <- grep ("^getDC", ls (dcmi), value = TRUE)
+    not_these <- c ("getDCElementByValue", "getDCElements")
+    dcmi_get_fns <- dcmi_get_fns [which (!dcmi_get_fns %in% not_these)]
+
+    dcmi_has_values <- vapply (
+        dcmi_get_fns, function (f) {
+            length (dcmi [[f]] ()) > 0L
+        },
+        logical (1L)
+    )
+
+    dcmi_items <- names (dcmi_has_values) [which (dcmi_has_values)]
+    dcmi_items <- gsub ("^getDC|s$", "", dcmi_items)
+
+    return (dcmi_items)
+}
