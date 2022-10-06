@@ -1,17 +1,27 @@
 {
     "conceptrecid": "1111540",
-    "created": "2022-01-01T00:00:00.688875+00:00",
+    "created": "2022-01-01T00:00:00+00:00",
     "doi": "",
     "doi_url": "https://doi.org/",
     "files": [
         {
-            "checksum": "334134cac17270c753bcac2b6eab5651",
+            "checksum": "f9ca875e15e211bf5567d34bc7c63a8a",
+            "filename": "data.Rds",
+            "filesize": 506,
+            "id": "fd0d7946-069e-4f11-864d-494828a8729f",
+            "links": {
+                "download": "sbapi/files/hash/data.Rds",
+                "self": "sbapi/deposit/depositions/1111541/files/fd0d7946-069e-4f11-864d-494828a8729f"
+            }
+        },
+        {
+            "checksum": "958485845e969f3cd2a374fc3be62ff8",
             "filename": "DCEntry-1111541.xml",
-            "filesize": 793,
-            "id": "668740c8-b674-412f-a238-cee4f9b1f83c",
+            "filesize": 1596,
+            "id": "68a5d959-d35f-4a34-bfe4-8f7b8c335293",
             "links": {
                 "download": "sbapi/files/hash/DCEntry-1111541.xml",
-                "self": "sbapi/deposit/depositions/1111541/files/668740c8-b674-412f-a238-cee4f9b1f83c"
+                "self": "sbapi/deposit/depositions/1111541/files/68a5d959-d35f-4a34-bfe4-8f7b8c335293"
             }
         }
     ],
@@ -47,7 +57,7 @@
         "title": "Modified Title",
         "upload_type": "other"
     },
-    "modified": "2022-01-01T00:00:00.120513+00:00",
+    "modified": "2022-01-01T00:00:00+00:00",
     "owner": 115518,
     "record_id": 1111541,
     "state": "unsubmitted",
