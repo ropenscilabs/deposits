@@ -36,13 +36,6 @@ function (resp) {
         fixed = FALSE
     )
 
-    resp <- httptest2::gsub_response (
-        resp,
-        "\\.xml\\-[a-z0-9]*\\-PUT\\.json$",
-        ".xml-123456-PUT.json",
-        fixed = FALSE
-    )
-
     # Timestamp pattern:
     ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}\\.[0-9]+"
     resp <- httptest2::gsub_response (
