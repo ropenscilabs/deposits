@@ -35,7 +35,7 @@
        deposits service : zenodo
                  sandbox: TRUE
                url_base : https://sandbox.zenodo.org/api/
-       Current deposits : <none>
+       Current deposits : 2 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : <none>
