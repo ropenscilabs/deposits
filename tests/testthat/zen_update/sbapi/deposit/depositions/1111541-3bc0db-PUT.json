@@ -1,0 +1,56 @@
+{
+    "conceptrecid": "1111540",
+    "created": "2022-01-01T00:00:00.688875+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "334134cac17270c753bcac2b6eab5651",
+            "filename": "DCEntry-1111541.xml",
+            "filesize": 793,
+            "id": "668740c8-b674-412f-a238-cee4f9b1f83c",
+            "links": {
+                "download": "sbapi/files/hash/DCEntry-1111541.xml",
+                "self": "sbapi/deposit/depositions/1111541/files/668740c8-b674-412f-a238-cee4f9b1f83c"
+            }
+        }
+    ],
+    "id": 1111541,
+    "links": {
+        "bucket": "sbapi/files/31407e38-e393-4f36-ba67-f78ee5111a13",
+        "discard": "sbapi/deposit/depositions/1111541/actions/discard",
+        "edit": "sbapi/deposit/depositions/1111541/actions/edit",
+        "files": "sbapi/deposit/depositions/1111541/files",
+        "html": "https://sandbox.zenodo.org/deposit/1111541",
+        "latest_draft": "sbapi/deposit/depositions/1111541",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1111541",
+        "newversion": "sbapi/deposit/depositions/1111541/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1111541/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1111541/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1111541"
+    },
+    "metadata": {
+        "access_right": "open",
+        "creators": [
+            {
+                "name": "C. Person"
+            }
+        ],
+        "description": "This is the modified abstract",
+        "doi": "",
+        "license": "CC-BY-4.0",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1111541",
+            "recid": 1111541
+        },
+        "publication_date": "2022-01-01",
+        "title": "Modified Title",
+        "upload_type": "other"
+    },
+    "modified": "2022-01-01T00:00:00.120513+00:00",
+    "owner": 115518,
+    "record_id": 1111541,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "Modified Title"
+}
