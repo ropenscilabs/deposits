@@ -1,23 +1,17 @@
-structure (list (
-    method = "GET", url = "sbapi/files/hash/data.Rds",
-    status_code = 200L, headers = structure (list (
-        Server = "nginx",
-        Date = "Thu, 06 Oct 2022 12:03:28 GMT", `Content-Type` = "application/octet-stream",
-        `Content-Length` = "506", `Content-Disposition` = "attachment; filename=data.Rds",
-        `Accept-Ranges` = "none", `OC-Checksum` = "MD5:f9ca875e15e211bf5567d34bc7c63a8a",
-        `Accept-Ranges` = "bytes", `Content-Type` = "application/octet-stream",
-        `Content-MD5` = "f9ca875e15e211bf5567d34bc7c63a8a", `Content-Security-Policy` = "default-src 'none';",
-        `X-Content-Type-Options` = "nosniff", `X-Download-Options` = "noopen",
-        `X-Permitted-Cross-Domain-Policies` = "none", `X-Frame-Options` = "sameorigin",
-        `X-XSS-Protection` = "1; mode=block", `Last-Modified` = "Thu, 06 Oct 2022 12:03:27 GMT",
-        ETag = "\"md5:f9ca875e15e211bf5567d34bc7c63a8a\"", `X-RateLimit-Limit` = "100",
-        `X-RateLimit-Remaining` = "79", `X-RateLimit-Reset` = "1665057869",
-        `Retry-After` = "60", `Strict-Transport-Security` = "max-age=0",
-        `Referrer-Policy` = "strict-origin-when-cross-origin",
-        `Access-Control-Allow-Origin` = "*", `Access-Control-Expose-Headers` = "Content-Type, ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset",
-        `X-User-ID` = "115518"
-    ), class = "httr2_headers"), body = as.raw (c (
-        0x4e,
-        0x41
-    ))
-), class = "httr2_response")
+structure(list(method = "GET", url = "sbapi/files/hash/data.Rds", 
+    status_code = 200L, headers = structure(list(Server = "nginx", 
+        Date = "Thu, 06 Oct 2022 13:15:15 GMT", `Content-Type` = "application/octet-stream", 
+        `Content-Length` = "506", `Content-Disposition` = "attachment; filename=data.Rds", 
+        `Accept-Ranges` = "none", `OC-Checksum` = "MD5:f9ca875e15e211bf5567d34bc7c63a8a", 
+        `Accept-Ranges` = "bytes", `Content-Type` = "application/octet-stream", 
+        `Content-MD5` = "f9ca875e15e211bf5567d34bc7c63a8a", `Content-Security-Policy` = "default-src 'none';", 
+        `X-Content-Type-Options` = "nosniff", `X-Download-Options` = "noopen", 
+        `X-Permitted-Cross-Domain-Policies` = "none", `X-Frame-Options` = "sameorigin", 
+        `X-XSS-Protection` = "1; mode=block", `Last-Modified` = "Thu, 06 Oct 2022 13:15:13 GMT", 
+        ETag = "\"md5:f9ca875e15e211bf5567d34bc7c63a8a\"", `X-RateLimit-Limit` = "100", 
+        `X-RateLimit-Remaining` = "75", `X-RateLimit-Reset` = "1665062175", 
+        `Retry-After` = "59", `Strict-Transport-Security` = "max-age=0", 
+        `Referrer-Policy` = "strict-origin-when-cross-origin", 
+        `Access-Control-Allow-Origin` = "*", `Access-Control-Expose-Headers` = "Content-Type, ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset", 
+        `X-User-ID` = "115518"), class = "httr2_headers"), body = as.raw(c(0x4e, 
+    0x41))), class = "httr2_response")

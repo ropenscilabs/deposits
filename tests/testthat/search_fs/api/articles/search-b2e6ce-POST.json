@@ -23,29 +23,6 @@
         "resource_doi": ""
     },
     {
-        "project_id": 132974,
-        "id": 19199774,
-        "title": "SuppMaterial",
-        "doi": "10.6084/m9.figshare.19199774.v1",
-        "handle": "",
-        "url": "api/articles/19199774",
-        "published_date": "2022-01-01T04:08:52Z",
-        "thumb": "https://s3-eu-west-1.amazonaws.com/pfigshare-u-previews/35316127/thumb.png",
-        "defined_type": 11,
-        "defined_type_name": "online resource",
-        "group_id": null,
-        "url_private_api": "api/articles/19199774",
-        "url_public_api": "api/articles/19199774",
-        "url_private_html": "https://figshare.com/account/articles/19199774",
-        "url_public_html": "https://figshare.com/articles/online_resource/SuppMaterial/19199774",
-        "timeline": {
-            "posted": "2022-01-01T04:08:52",
-            "firstOnline": "2022-01-01T04:08:52"
-        },
-        "resource_title": "",
-        "resource_doi": ""
-    },
-    {
         "project_id": 130610,
         "id": 19882087,
         "title": "Files appendix",
@@ -64,6 +41,29 @@
         "timeline": {
             "posted": "2022-01-01T02:36:35",
             "firstOnline": "2022-01-01T02:36:35"
+        },
+        "resource_title": "",
+        "resource_doi": ""
+    },
+    {
+        "project_id": 132974,
+        "id": 19199774,
+        "title": "SuppMaterial",
+        "doi": "10.6084/m9.figshare.19199774.v1",
+        "handle": "",
+        "url": "api/articles/19199774",
+        "published_date": "2022-01-01T04:08:52Z",
+        "thumb": "https://s3-eu-west-1.amazonaws.com/pfigshare-u-previews/35316127/thumb.png",
+        "defined_type": 11,
+        "defined_type_name": "online resource",
+        "group_id": null,
+        "url_private_api": "api/articles/19199774",
+        "url_public_api": "api/articles/19199774",
+        "url_private_html": "https://figshare.com/account/articles/19199774",
+        "url_public_html": "https://figshare.com/articles/online_resource/SuppMaterial/19199774",
+        "timeline": {
+            "posted": "2022-01-01T04:08:52",
+            "firstOnline": "2022-01-01T04:08:52"
         },
         "resource_title": "",
         "resource_doi": ""

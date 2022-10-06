@@ -1,44 +1,42 @@
 [
     {
-        "conceptrecid": "1111544",
+        "conceptrecid": "1111660",
         "created": "2022-01-01T00:00:00",
         "doi": "",
         "doi_url": "https://doi.org/",
-        "id": 1111545,
+        "id": 1111661,
         "links": {
-            "discard": "sbapi/deposit/depositions/1111545/actions/discard",
-            "edit": "sbapi/deposit/depositions/1111545/actions/edit",
-            "files": "sbapi/deposit/depositions/1111545/files",
-            "html": "https://sandbox.zenodo.org/deposit/1111545",
-            "latest_draft": "sbapi/deposit/depositions/1111545",
-            "latest_draft_html": "https://sandbox.zenodo.org/deposit/1111545",
-            "publish": "sbapi/deposit/depositions/1111545/actions/publish",
-            "self": "sbapi/deposit/depositions/1111545"
+            "discard": "sbapi/deposit/depositions/1111661/actions/discard",
+            "edit": "sbapi/deposit/depositions/1111661/actions/edit",
+            "files": "sbapi/deposit/depositions/1111661/files",
+            "html": "https://sandbox.zenodo.org/deposit/1111661",
+            "publish": "sbapi/deposit/depositions/1111661/actions/publish",
+            "self": "sbapi/deposit/depositions/1111661"
         },
         "metadata": {
             "access_right": "open",
             "creators": [
                 {
-                    "name": "C. Person"
+                    "name": "A. Person,B. Person"
                 }
             ],
-            "description": "This is the modified abstract",
+            "description": "This is the abstract",
             "doi": "",
             "license": "CC-BY-4.0",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1111545",
-                "recid": 1111545
+                "doi": "10.5072/zenodo.1111661",
+                "recid": 1111661
             },
             "publication_date": "2022-01-01",
-            "title": "Modified Title",
+            "title": "New Title",
             "upload_type": "other"
         },
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
-        "record_id": 1111545,
+        "record_id": 1111661,
         "state": "unsubmitted",
         "submitted": false,
-        "title": "Modified Title"
+        "title": "New Title"
     },
     {
         "conceptdoi": "10.5072/zenodo.1077311",
