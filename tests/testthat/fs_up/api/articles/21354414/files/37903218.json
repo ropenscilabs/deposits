@@ -1,0 +1,15 @@
+{
+    "upload_token": "0427d395-3116-4192-854c-63d8a61fc26b",
+    "upload_url": "https://fup-eu-west-1.up/0427d395-3116-4192-854c-63d8a61fc26b",
+    "status": "created",
+    "preview_state": "preview_not_available",
+    "viewer_type": "",
+    "is_attached_to_public_version": false,
+    "id": 37903218,
+    "name": "data.Rds",
+    "size": 506,
+    "is_link_only": false,
+    "download_url": "https://ndownloader.figshare.com/files/37903218",
+    "supplied_md5": "f9ca875e15e211bf5567d34bc7c63a8a",
+    "computed_md5": ""
+}
