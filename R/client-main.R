@@ -539,7 +539,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            self$hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+                if (self$service == "figshare") {
+                    hostdata$created_date <- hostdata$modified_date <-
+                        "2022-01-01T00:00:00Z"
+                } else if (self$service == "zenodo") {
+                    hostdata$created <- hostdata$modified <-
+                        "2022-01-01T00:00:00.0+00:00"
+                    hostdata$publication_date <- "2022-01-01"
+                }
+            }
+            self$hostdata <- hostdata
 
             self$metadata <- metadata_from_deposit (self, self$hostdata)
 
