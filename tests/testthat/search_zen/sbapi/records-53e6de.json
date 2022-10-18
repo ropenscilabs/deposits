@@ -3,7 +3,7 @@
         "access_right": {
             "buckets": [
                 {
-                    "doc_count": 803,
+                    "doc_count": 804,
                     "key": "open"
                 },
                 {
@@ -29,7 +29,7 @@
                     "key": "pdf"
                 },
                 {
-                    "doc_count": 121,
+                    "doc_count": 120,
                     "key": "zip"
                 },
                 {
@@ -66,7 +66,7 @@
                 }
             ],
             "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 94
+            "sum_other_doc_count": 98
         },
         "keywords": {
             "buckets": [
@@ -175,7 +175,7 @@
                     }
                 },
                 {
-                    "doc_count": 105,
+                    "doc_count": 104,
                     "key": "software",
                     "subtype": {
                         "buckets": [
@@ -186,7 +186,7 @@
                     }
                 },
                 {
-                    "doc_count": 64,
+                    "doc_count": 66,
                     "key": "dataset",
                     "subtype": {
                         "buckets": [
@@ -782,7 +782,7 @@
                 "updated": "2022-01-01T00:00:00+00:00"
             }
         ],
-        "total": 815
+        "total": 816
     },
     "links": {
         "next": "sbapi/records/?sort=bestmatch&q=random&page=2&size=5",
