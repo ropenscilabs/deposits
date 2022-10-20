@@ -37,11 +37,17 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
 
         if (these_meta_terms$format [i] == "integer") {
 
-            out <- c (out, meta_validate_term_integer (these_meta_terms, i, term_i))
+            out <- c (
+                out,
+                meta_validate_term_integer (these_meta_terms, i, term_i)
+            )
 
         } else if (grepl ("^(array|list)", these_meta_terms$format [i])) {
 
-            out <- c (out, check_fs_meta_array (these_meta_terms, i, term_i))
+            out <- c (
+                out,
+                check_fs_meta_array (these_meta_terms, i, term_i)
+            )
 
         } else if (nzchar (these_meta_terms$vocabulary [i])) {
 

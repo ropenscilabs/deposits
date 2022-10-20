@@ -144,24 +144,24 @@ check_zen_meta_from_vocab <- function (these_meta_terms, metaterms, i) {
 
     out <- NULL
 
-    values <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
+    voc <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
     term_i <- metaterms [[these_meta_terms$term [i]]]
 
     if (these_meta_terms$format [i] == "array") {
 
         term_names <- unique (unlist (lapply (term_i, names)))
-        if (!all (term_names %in% values)) {
+        if (!all (term_names %in% voc)) {
             out <- paste0 (
                 "Metadata [",
                 these_meta_terms$term [i],
                 "] must be an array/list ",
                 "with names in [",
-                paste0 (values, collapse = ", "),
+                paste0 (voc, collapse = ", "),
                 "]"
             )
         }
 
-    } else if (!term_i %in% values) {
+    } else if (!term_i %in% voc) {
 
         out <- paste0 (
             "Metadata [",
