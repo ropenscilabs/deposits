@@ -8,7 +8,7 @@
 #' Check one integer-valued metadata term
 #' @noRd
 
-meta_validate_term_integer <- function (these_terms, i, term_i) {
+meta_validate_term_integer <- function (term_def, i, term_i) {
 
     out <- NULL
 
@@ -16,7 +16,7 @@ meta_validate_term_integer <- function (these_terms, i, term_i) {
 
         out <- paste0 (
             "Data [",
-            these_terms$term [i],
+            term_def$term [i],
             "] is not coercible to integer."
         )
     }
@@ -27,16 +27,16 @@ meta_validate_term_integer <- function (these_terms, i, term_i) {
 #' Check one zenodo metadata term against vocabulary entry
 #' @noRd
 
-meta_validate_term_from_vocab <- function (these_terms, i, term_i) {
+meta_validate_term_from_vocab <- function (term_def, i, term_i) {
 
     out <- NULL
 
-    voc <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
+    voc <- strsplit (term_def$vocabulary [i], "\\|") [[1]]
 
     if (!all (term_i %in% voc)) {
         out <- paste0 (
             "Data [",
-            these_terms$term [i],
+            term_def$term [i],
             " = '",
             term_i,
             "'] must follow fixed vocabulary of [",
@@ -51,18 +51,18 @@ meta_validate_term_from_vocab <- function (these_terms, i, term_i) {
 #' Check one metadata langauge entry against ISO 639-2/3 values
 #' @noRd
 
-meta_validate_language_iso639 <- function (these_terms, metaterms, i) {
+meta_validate_language_iso639 <- function (term_def, metaterms, i) {
 
     out <- NULL
 
-    term_i <- metaterms [[these_terms$term [i]]]
+    term_i <- metaterms [[term_def$term [i]]]
 
     if (!term_i %in% iso_639_2_language_codes () [, 1]) {
         out <- paste0 (
             "Metadata [",
-            these_terms$term [i],
+            term_def$term [i],
             " = '",
-            metaterms [[these_terms$term [i]]],
+            metaterms [[term_def$term [i]]],
             "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
         )
     }
@@ -72,16 +72,16 @@ meta_validate_language_iso639 <- function (these_terms, metaterms, i) {
 
 #' Check one metadata array term
 #' @noRd
-meta_validate_term_array <- function (these_terms, metaterms, i) {
+meta_validate_term_array <- function (term_def, metaterms, i) {
 
     out <- NULL
 
-    term_i <- metaterms [[these_terms$term [i]]]
+    term_i <- metaterms [[term_def$term [i]]]
 
     if (!is.list (term_i)) {
         out <- paste0 (
             "Metadata [",
-            these_terms$term [i],
+            term_def$term [i],
             "] must be an array/list object"
         )
     }
