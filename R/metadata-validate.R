@@ -1,4 +1,7 @@
-#' validate all metadata
+#' validate metadata input to client either as "metadata" parameter, or though
+#' `deposit_fill_metadata()` method.
+#'
+#' @param metadata Metadata as list, filename, or DCEntry object
 #'
 #' @noRd
 validate_metadata <- function (metadata, service = "zenodo") {
