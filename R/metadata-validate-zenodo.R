@@ -47,7 +47,10 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
         } else if (these_terms$format [i] == "integer") {
 
-            out <- c (out, meta_validate_term_integer (these_terms, i, term_i))
+            out <- c (
+                out,
+                meta_validate_term_integer (these_terms, i, term_i)
+            )
         }
     }
 
@@ -116,10 +119,7 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
 
     if (meta_term_def$format [i] == "array") {
 
-        out <- c (
-            out,
-            meta_validate_term_array (meta_term_def, metaterms, i)
-        )
+        out <- meta_validate_term_array (meta_term_def, metaterms, i)
 
     } else {
 
@@ -130,6 +130,10 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
 }
 
 #' Check one zenodo metadata term against vocabulary entry
+#'
+#' This includes one zenodo-specific validation check, because zenodo has array
+#' terms with specific vocabularies. This can be translated to a generic check
+#' if any other services also have this requirement.
 #' @noRd
 check_zen_meta_from_vocab <- function (meta_term_def, metaterms, i) {
 
