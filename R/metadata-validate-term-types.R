@@ -20,6 +20,7 @@ meta_validate_term_integer <- function (these_terms, i, term_i) {
 
 #' Check one zenodo metadata term against vocabulary entry
 #' @noRd
+
 meta_validate_term_from_vocab <- function (these_terms, i, term_i) {
 
     out <- NULL
@@ -35,6 +36,28 @@ meta_validate_term_from_vocab <- function (these_terms, i, term_i) {
             "'] must follow fixed vocabulary of [",
             paste0 (voc, collapse = ", "),
             "]"
+        )
+    }
+
+    return (out)
+}
+
+#' Check on metadata langauge entry against ISO 639-2/3 values
+#' @noRd
+
+meta_validate_language_iso639 <- function (these_meta_terms, metaterms, i) {
+
+    out <- NULL
+
+    term_i <- metaterms [[these_meta_terms$term [i]]]
+
+    if (!term_i %in% iso_639_2_language_codes () [, 1]) {
+        out <- paste0 (
+            "Metadata [",
+            these_meta_terms$term [i],
+            " = '",
+            metaterms [[these_meta_terms$term [i]]],
+            "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
         )
     }
 

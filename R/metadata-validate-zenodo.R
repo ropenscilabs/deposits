@@ -88,7 +88,7 @@ check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
             # internal language vocabulary
             out <- c (
                 out,
-                check_zen_meta_language (these_meta_terms, metaterms, i)
+                meta_validate_language_iso639 (these_meta_terms, metaterms, i)
             )
         }
     }
@@ -190,25 +190,6 @@ check_zen_meta_array <- function (these_meta_terms, metaterms, i) {
             "Metadata [",
             these_meta_terms$term [i],
             "] must be an array/list object"
-        )
-    }
-
-    return (out)
-}
-
-check_zen_meta_language <- function (these_meta_terms, metaterms, i) {
-
-    out <- NULL
-
-    term_i <- metaterms [[these_meta_terms$term [i]]]
-
-    if (!term_i %in% iso_639_2_language_codes () [, 1]) {
-        out <- paste0 (
-            "Metadata [",
-            these_meta_terms$term [i],
-            " = '",
-            metaterms [[these_meta_terms$term [i]]],
-            "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
         )
     }
 
