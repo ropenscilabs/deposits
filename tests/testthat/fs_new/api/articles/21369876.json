@@ -1,17 +1,17 @@
 {
     "files": [
         {
-            "upload_token": "e18bd8c9-df1d-44f6-aa2d-a30a7ce47b68",
+            "upload_token": "2cb84ef9-a5ca-4ef9-9be4-fb20db2961c4",
             "upload_url": "",
-            "status": "available",
+            "status": "moving_to_final",
             "preview_state": "preview_in_progress",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 37903206,
-            "name": "DCEntry-21354414.xml",
+            "id": 37923933,
+            "name": "DCEntry-21369876.xml",
             "size": 1289,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/37903206",
+            "download_url": "https://ndownloader.figshare.com/files/37923933",
             "supplied_md5": "c25de193c72971f72a0849242a6a5dd6",
             "computed_md5": "c25de193c72971f72a0849242a6a5dd6"
         }
@@ -39,7 +39,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/21354414",
+    "figshare_url": "https://figshare.com/articles/dataset/_/21369876",
     "description": "This is the abstract",
     "funding": null,
     "funding_list": [
@@ -70,7 +70,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark; A. Person, B. Person (2022): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21354414",
+    "citation": "Padgham, Mark; A. Person, B. Person (2022): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21369876",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -79,20 +79,20 @@
     "embargo_options": [
 
     ],
-    "id": 21354414,
+    "id": 21369876,
     "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/21354414",
+    "url": "api/articles/21369876",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/21354414",
-    "url_public_api": "api/articles/21354414",
-    "url_private_html": "https://figshare.com/account/articles/21354414",
-    "url_public_html": "https://figshare.com/articles/dataset/_/21354414",
+    "url_private_api": "api/articles/21369876",
+    "url_public_api": "api/articles/21369876",
+    "url_private_html": "https://figshare.com/account/articles/21369876",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21369876",
     "timeline": {
 
     }
