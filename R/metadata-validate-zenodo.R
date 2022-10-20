@@ -116,13 +116,10 @@ check_zen_meta_from_file <- function (these_meta_terms, metaterms, i) {
 
     if (these_meta_terms$format [i] == "array") {
 
-        if (!is.list (term_i)) {
-            out <- paste0 (
-                "Metadata [",
-                these_meta_terms$term [i],
-                "] must be an array"
-            )
-        }
+        out <- c (
+            out,
+            meta_validate_term_array (these_meta_terms, metaterms, i)
+        )
 
     } else if (!term_i %in% voc) {
 
