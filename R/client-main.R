@@ -160,14 +160,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 cat ("   metadata : <none>\n")
             } else {
                 these_metadata <-
-                    construct_metadata_list (self$metadata, self$term_map)
+                    metadata_dcmi_to_list (self$metadata, self$term_map)
                 n_terms <- length (these_metadata)
 
                 if (self$service == "zenodo") {
                     md <- these_metadata$metadata
                     these_metadata$metadata <- NULL
                     md <- c (these_metadata, md)
-                    # required terms from `construct_metadata_list()` in
+                    # required terms from `metadata_dcmi_to_list()` in
                     # R/metadata.R:
                     index <- which (names (md) %in%
                         c ("created", "upload_type"))
@@ -359,7 +359,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
-            metaterms <- construct_metadata_list (self$metadata, self$term_map)
+            metaterms <- metadata_dcmi_to_list (self$metadata, self$term_map)
 
             check <- validate_terms (metaterms, service = self$service)
             if (length (check) > 0L) {
@@ -450,7 +450,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            metaterms <- construct_metadata_list (self$metadata, self$term_map)
+            metaterms <- metadata_dcmi_to_list (self$metadata, self$term_map)
 
             req <- httr2::req_body_json (req, data = metaterms)
 
