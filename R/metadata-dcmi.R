@@ -159,9 +159,7 @@ construct_md_list_zenodo <- function (values, term_map) {
         values <- c ("created" = paste0 (Sys.Date ()), values)
     }
 
-    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-        values [["created"]] <- "2022-01-01T00:00:00.0+00:00"
-    }
+    values <- httptest2_dcmi_created (values)
 
     return (values)
 }
@@ -194,6 +192,8 @@ construct_md_list_figshare <- function (values, term_map) {
             values$license <- 1L
         }
     }
+
+    values <- httptest2_dcmi_created (values)
 
     return (values)
 }
