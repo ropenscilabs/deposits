@@ -94,6 +94,8 @@ get_dcmi_term_map <- function (service = "zenodo") {
 #' @param metadata The 'metadata' object of a 'deposits' client, as an
 #' `atom4R::DCEntry` object.
 #' @param term_map The 'term_map' object of a 'deposits' client.
+#' @return A named list of metadata terms extracted from metadata, and matching
+#' the terms identified and permitted in the `term_map`.
 #' @noRd
 metadata_dcmi_to_list <- function (metadata, term_map) {
 
@@ -123,77 +125,6 @@ metadata_dcmi_to_list <- function (metadata, term_map) {
 
         values <- construct_md_list_figshare (values, term_map)
     }
-
-    return (values)
-}
-
-construct_md_list_zenodo <- function (values, term_map) {
-
-    index <- which (names (values) %in%
-        term_map$service [which (term_map$meta)])
-    meta_values <- values [index]
-    values <- values [-index]
-
-    req <- list (
-        "upload_type" = "other",
-        "title" = "Title",
-        "creators" = "A. Person",
-        "description" = "Description"
-    )
-
-    index <- which (!names (req) %in% names (meta_values))
-    meta_values <- c (meta_values, req [index])
-
-    if (!is.list (meta_values$creators)) {
-        meta_values$creators <- list (list (name = meta_values$creators))
-    } else if (names (meta_values$creators) == "name") {
-        meta_values$creators <- list (meta_values$creators)
-    }
-    if ("upload_type" %in% names (meta_values)) {
-        meta_values$upload_type <- tolower (meta_values$upload_type)
-    }
-
-    values$metadata <- meta_values
-
-    if (!"created" %in% names (values)) {
-        values <- c ("created" = paste0 (Sys.Date ()), values)
-    }
-
-    values <- httptest2_dcmi_created (values)
-
-    return (values)
-}
-
-construct_md_list_figshare <- function (values, term_map) {
-
-    if ("authors" %in% names (values) && !is.list (values$authors)) {
-        values$authors <- list (list (name = values$authors))
-    }
-    if ("categories" %in% names (values) &&
-        !is.integer (values$categories)) {
-        message (
-            "Figshare categories must be integer values; ",
-            "the provided values will be removed."
-        )
-        values$categories <- NULL
-    }
-    if ("timeline" %in% names (values)) {
-        # figshare timeline allows only:
-        # [firstOnline, publisherPublication, publisherAcceptance]
-        # For demonstration purposes, only use firstOneline for now
-        values$timeline <- list (firstOnline = values$timeline [1])
-    }
-    if ("license" %in% names (values)) {
-        if (is.na (suppressWarnings (as.integer (values$license)))) {
-            warning (
-                "Figshare licenses must be integer-valued; ",
-                "the value will be reset to '1' = 'CC-BY'"
-            )
-            values$license <- 1L
-        }
-    }
-
-    values <- httptest2_dcmi_created (values)
 
     return (values)
 }
