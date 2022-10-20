@@ -1,3 +1,14 @@
+#' Add additional metadata list-item values required by figshare.
+#'
+#' This function is called as the last step in `metadata_dcmi_to_list()`.
+#'
+#' @param values Initial list of metadata constructed in
+#' `metadata_dcmi_to_list`.
+#' @param term_map The term map for a particular deposits service.
+#' @return A potentially modified version of `values`, with structures of
+#' individual items rectified to expected forms, and any otherwise missing yet
+#' required fields inserted with default values.
+#' @noRd
 
 construct_md_list_figshare <- function (values, term_map) {
 
