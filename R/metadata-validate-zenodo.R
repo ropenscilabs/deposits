@@ -6,23 +6,23 @@ validate_zenodo_terms <- function (metaterms) {
     f <- system.file (file.path ("extdata", "zenodoTerms.csv"),
         package = "deposits"
     )
-    these_terms <- utils::read.csv (f)
-    for (i in seq_len (ncol (these_terms))) {
-        these_terms [, i] <- gsub ("^\\s+|\\s+$", "", these_terms [, i])
+    term_def <- utils::read.csv (f) # metadata term definitions
+    for (i in seq_len (ncol (term_def))) {
+        term_def [, i] <- gsub ("^\\s+|\\s+$", "", term_def [, i])
     }
-    these_terms$metadata <- as.logical (these_terms$metadata)
+    term_def$metadata <- as.logical (term_def$metadata)
 
-    these_meta_terms <- these_terms [which (these_terms$metadata), ]
-    these_terms <- these_terms [which (!these_terms$metadata), ]
+    meta_term_def <- term_def [which (term_def$metadata), ]
+    term_def <- term_def [which (!term_def$metadata), ]
 
-    index <- which (these_meta_terms$term %in% names (meta))
-    these_meta_terms <- these_meta_terms [index, ]
-    these_terms <-
-        these_terms [which (these_terms$term %in% names (metaterms)), ]
+    index <- which (meta_term_def$term %in% names (meta))
+    meta_term_def <- meta_term_def [index, ]
+    term_def <-
+        term_def [which (term_def$term %in% names (metaterms)), ]
 
     out <- c (
-        check_zenodo_terms (these_terms, metaterms),
-        check_zenodo_meta_terms (these_meta_terms, meta)
+        check_zenodo_terms (term_def, metaterms),
+        check_zenodo_meta_terms (meta_term_def, meta)
     )
 
     return (out)
@@ -56,39 +56,39 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
 #' Check standard zenodo metadata terms
 #' @noRd
-check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
+check_zenodo_meta_terms <- function (meta_term_def, metaterms) {
 
     out <- NULL
 
-    for (i in seq_len (nrow (these_meta_terms))) {
+    for (i in seq_len (nrow (meta_term_def))) {
 
-        if (grepl ("\\.csv$", these_meta_terms$vocabulary [i])) {
-
-            out <- c (
-                out,
-                check_zen_meta_from_file (these_meta_terms, metaterms, i)
-            )
-
-        } else if (nzchar (these_meta_terms$vocabulary [i])) {
+        if (grepl ("\\.csv$", meta_term_def$vocabulary [i])) {
 
             out <- c (
                 out,
-                check_zen_meta_from_vocab (these_meta_terms, metaterms, i)
+                check_zen_meta_from_file (meta_term_def, metaterms, i)
             )
 
-        } else if (these_meta_terms$format [i] == "array") {
+        } else if (nzchar (meta_term_def$vocabulary [i])) {
 
             out <- c (
                 out,
-                meta_validate_term_array (these_meta_terms, metaterms, i)
+                check_zen_meta_from_vocab (meta_term_def, metaterms, i)
             )
 
-        } else if (these_meta_terms$term [i] == "language") {
+        } else if (meta_term_def$format [i] == "array") {
+
+            out <- c (
+                out,
+                meta_validate_term_array (meta_term_def, metaterms, i)
+            )
+
+        } else if (meta_term_def$term [i] == "language") {
 
             # internal language vocabulary
             out <- c (
                 out,
-                meta_validate_language_iso639 (these_meta_terms, metaterms, i)
+                meta_validate_language_iso639 (meta_term_def, metaterms, i)
             )
         }
     }
@@ -98,34 +98,34 @@ check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
 
 #' Check one zenodo metadata term against vocabulary file
 #' @noRd
-check_zen_meta_from_file <- function (these_meta_terms, metaterms, i) {
+check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
 
     out <- NULL
 
     f <- system.file (file.path (
         "extdata",
-        these_meta_terms$vocabulary [i]
+        meta_term_def$vocabulary [i]
     ),
     package = "deposits"
     )
     voc <- utils::read.csv (f)
-    if (these_meta_terms$term [i] == "license") {
+    if (meta_term_def$term [i] == "license") {
         voc <- c ("cc-zero", "cc-by", voc$id)
     }
-    term_i <- metaterms [[these_meta_terms$term [i]]]
+    term_i <- metaterms [[meta_term_def$term [i]]]
 
-    if (these_meta_terms$format [i] == "array") {
+    if (meta_term_def$format [i] == "array") {
 
         out <- c (
             out,
-            meta_validate_term_array (these_meta_terms, metaterms, i)
+            meta_validate_term_array (meta_term_def, metaterms, i)
         )
 
     } else if (!term_i %in% voc) {
 
         out <- paste0 (
             "Metadata [",
-            these_meta_terms$term [i],
+            meta_term_def$term [i],
             " = '",
             term_i,
             "'] not in required vocabulary."
@@ -137,20 +137,20 @@ check_zen_meta_from_file <- function (these_meta_terms, metaterms, i) {
 
 #' Check one zenodo metadata term against vocabulary entry
 #' @noRd
-check_zen_meta_from_vocab <- function (these_meta_terms, metaterms, i) {
+check_zen_meta_from_vocab <- function (meta_term_def, metaterms, i) {
 
     out <- NULL
 
-    voc <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
-    term_i <- metaterms [[these_meta_terms$term [i]]]
+    voc <- strsplit (meta_term_def$vocabulary [i], "\\|") [[1]]
+    term_i <- metaterms [[meta_term_def$term [i]]]
 
-    if (these_meta_terms$format [i] == "array") {
+    if (meta_term_def$format [i] == "array") {
 
         term_names <- unique (unlist (lapply (term_i, names)))
         if (!all (term_names %in% voc)) {
             out <- paste0 (
                 "Metadata [",
-                these_meta_terms$term [i],
+                meta_term_def$term [i],
                 "] must be an array/list ",
                 "with names in [",
                 paste0 (voc, collapse = ", "),
@@ -162,11 +162,11 @@ check_zen_meta_from_vocab <- function (these_meta_terms, metaterms, i) {
 
         out <- paste0 (
             "Metadata [",
-            these_meta_terms$term [i],
+            meta_term_def$term [i],
             " = '",
             term_i,
             "'] not in required vocabulary of [",
-            these_meta_terms$vocabulary [i],
+            meta_term_def$vocabulary [i],
             "]"
         )
     }

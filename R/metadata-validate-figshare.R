@@ -3,21 +3,21 @@ validate_figshare_terms <- function (metaterms) {
     f <- system.file (file.path ("extdata", "figshareTerms.csv"),
         package = "deposits"
     )
-    these_meta_terms <- utils::read.csv (f)
+    meta_term_def <- utils::read.csv (f)
 
-    for (i in seq_len (ncol (these_meta_terms))) {
-        these_meta_terms [, i] <-
-            gsub ("^\\s+|\\s+$", "", these_meta_terms [, i])
+    for (i in seq_len (ncol (meta_term_def))) {
+        meta_term_def [, i] <-
+            gsub ("^\\s+|\\s+$", "", meta_term_def [, i])
     }
-    these_meta_terms$metadata <- NULL # zenodo only
-    these_meta_terms <- these_meta_terms [
-        which (these_meta_terms$term %in% names (metaterms)),
+    meta_term_def$metadata <- NULL # zenodo only
+    meta_term_def <- meta_term_def [
+        which (meta_term_def$term %in% names (metaterms)),
     ]
 
     out <- c (
         # no terms here just metaterms:
         # check_fs_terms (these_terms, metaterms),
-        check_fs_meta_terms (these_meta_terms, metaterms)
+        check_fs_meta_terms (meta_term_def, metaterms)
     )
 
     return (out)
@@ -27,33 +27,33 @@ validate_figshare_terms <- function (metaterms) {
 #' @param meta Not used here, but kept for consistency with
 #' 'check_zenodo_meta_terms()'.
 #' @noRd
-check_fs_meta_terms <- function (these_meta_terms, metaterms) {
+check_fs_meta_terms <- function (meta_term_def, metaterms) {
 
     out <- NULL
 
-    for (i in seq_len (nrow (these_meta_terms))) {
+    for (i in seq_len (nrow (meta_term_def))) {
 
-        term_i <- metaterms [[these_meta_terms$term [i]]]
+        term_i <- metaterms [[meta_term_def$term [i]]]
 
-        if (these_meta_terms$format [i] == "integer") {
+        if (meta_term_def$format [i] == "integer") {
 
             out <- c (
                 out,
-                meta_validate_term_integer (these_meta_terms, i, term_i)
+                meta_validate_term_integer (meta_term_def, i, term_i)
             )
 
-        } else if (grepl ("^(array|list)", these_meta_terms$format [i])) {
+        } else if (grepl ("^(array|list)", meta_term_def$format [i])) {
 
             out <- c (
                 out,
-                check_fs_meta_array (these_meta_terms, i, term_i)
+                check_fs_meta_array (meta_term_def, i, term_i)
             )
 
-        } else if (nzchar (these_meta_terms$vocabulary [i])) {
+        } else if (nzchar (meta_term_def$vocabulary [i])) {
 
             out <- c (
                 out,
-                meta_validate_term_from_vocab (these_meta_terms, i, term_i)
+                meta_validate_term_from_vocab (meta_term_def, i, term_i)
             )
         }
     }
@@ -64,7 +64,7 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
 #' Check one figshare metadata array term. This is a service-specific function,
 #' because figshare has various kinds of arrays with different formats.
 #' @noRd
-check_fs_meta_array <- function (these_meta_terms, i, term_i) {
+check_fs_meta_array <- function (meta_term_def, i, term_i) {
 
     out <- NULL
 
@@ -72,15 +72,15 @@ check_fs_meta_array <- function (these_meta_terms, i, term_i) {
 
         out <- paste0 (
             "Data [",
-            these_meta_terms$term [i],
+            meta_term_def$term [i],
             "] must have format [",
-            these_meta_terms$format [i],
+            meta_term_def$format [i],
             "]"
         )
 
-    } else if (nzchar (these_meta_terms$vocabulary [i])) {
+    } else if (nzchar (meta_term_def$vocabulary [i])) {
 
-        voc <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
+        voc <- strsplit (meta_term_def$vocabulary [i], "\\|") [[1]]
         term_names <- c (
             names (term_i),
             unlist (lapply (term_i, names))
@@ -90,7 +90,7 @@ check_fs_meta_array <- function (these_meta_terms, i, term_i) {
 
             out <- paste0 (
                 "Data [",
-                these_meta_terms$term [i],
+                meta_term_def$term [i],
                 " = '",
                 term_i,
                 "' must follow fixed vocabulary of [",
