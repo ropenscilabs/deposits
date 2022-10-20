@@ -61,7 +61,8 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
     return (out)
 }
 
-#' Check one figshare metadata array term
+#' Check one figshare metadata array term. This is a service-specific function,
+#' because figshare has various kinds of arrays with different formats.
 #' @noRd
 check_fs_meta_array <- function (these_meta_terms, i, term_i) {
 
