@@ -80,7 +80,7 @@ check_zenodo_meta_terms <- function (these_meta_terms, metaterms) {
 
             out <- c (
                 out,
-                check_zen_meta_array (these_meta_terms, metaterms, i)
+                meta_validate_term_array (these_meta_terms, metaterms, i)
             )
 
         } else if (these_meta_terms$term [i] == "language") {
@@ -171,25 +171,6 @@ check_zen_meta_from_vocab <- function (these_meta_terms, metaterms, i) {
             "'] not in required vocabulary of [",
             these_meta_terms$vocabulary [i],
             "]"
-        )
-    }
-
-    return (out)
-}
-
-#' Check one zenodo metadata array term
-#' @noRd
-check_zen_meta_array <- function (these_meta_terms, metaterms, i) {
-
-    out <- NULL
-
-    term_i <- metaterms [[these_meta_terms$term [i]]]
-
-    if (!is.list (term_i)) {
-        out <- paste0 (
-            "Metadata [",
-            these_meta_terms$term [i],
-            "] must be an array/list object"
         )
     }
 
