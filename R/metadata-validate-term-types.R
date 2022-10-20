@@ -1,3 +1,9 @@
+# These are generic checks for different types of terms intended to be
+# applicable to all services. Current term types include:
+#
+# - integer
+# - terms which should match a defined vocabulary
+# - ISO 639 language codes
 
 #' Check one integer-valued metadata term
 #' @noRd
