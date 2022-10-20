@@ -47,26 +47,8 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
         } else if (these_terms$format [i] == "integer") {
 
-            out <- c (out, check_zen_integer (these_terms, i, term_i))
+            out <- c (out, meta_validate_term_integer (these_terms, i, term_i))
         }
-    }
-
-    return (out)
-}
-
-#' Check one integer-valued zenodo metadata term
-#' @noRd
-check_zen_integer <- function (these_terms, i, term_i) {
-
-    out <- NULL
-
-    if (is.na (suppressWarnings (as.integer (term_i)))) {
-
-        out <- paste0 (
-            "Data [",
-            these_terms$term [i],
-            "] is not coercible to integer."
-        )
     }
 
     return (out)

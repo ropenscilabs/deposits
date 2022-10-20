@@ -62,7 +62,7 @@ validate_terms <- function (metaterms, service = "zenodo") {
     if (service == "zenodo") {
         res <- validate_zenodo_terms (metaterms) # in metadata-validate-zenodo.R
     } else if (service == "figshare") {
-        res <- validate_figshare_terms (metaterms)
+        res <- validate_figshare_terms (metaterms) # in metadata-validate-figshare.R
     }
 
     return (res)

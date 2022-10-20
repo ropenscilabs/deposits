@@ -37,7 +37,7 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
 
         if (these_meta_terms$format [i] == "integer") {
 
-            out <- c (out, check_fs_meta_integer (these_meta_terms, i, term_i))
+            out <- c (out, meta_validate_term_integer (these_meta_terms, i, term_i))
 
         } else if (grepl ("^(array|list)", these_meta_terms$format [i])) {
 
@@ -50,24 +50,6 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
                 check_fs_meta_from_vocab (these_meta_terms, i, term_i)
             )
         }
-    }
-
-    return (out)
-}
-
-#' Check one integer-valued figshare metadata term
-#' @noRd
-check_fs_meta_integer <- function (these_meta_terms, i, term_i) {
-
-    out <- NULL
-
-    if (is.na (suppressWarnings (as.integer (term_i)))) {
-
-        out <- paste0 (
-            "Data [",
-            these_meta_terms$term [i],
-            "] is not coercible to integer."
-        )
     }
 
     return (out)
