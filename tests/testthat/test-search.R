@@ -80,6 +80,25 @@ test_that ("figshare search errors", {
         "Assertion on '\"this\"' failed: Must be of type 'single integerish value'"
     )
 
+    expect_error (
+        cli$deposits_search (search_string = "search string", item_type = 30),
+        "The 'item_type' parameter must be an integer between 1 and 29"
+    )
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", order = "not in vocab"),
+        "The 'order' parameter must be in the specified vocabulary;"
+    )
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", published_since = "invalid"),
+        "The 'published_since' parameter must be in format YYYY-MM-DD"
+    )
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", modified_since = "invalid"),
+        "The 'modified_since' parameter must be in format YYYY-MM-DD"
+    )
 })
 
 test_that ("zenodo search errors", {
