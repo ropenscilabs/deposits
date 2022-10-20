@@ -166,7 +166,7 @@ test_that ("zenodo metadata terms", {
 
     expect_true (!is.null (check))
     expect_length (check, 2L) # both terms are invalid
-    expect_true (grepl ("not in required vocabulary", check [1]))
+    expect_true (grepl ("must follow fixed vocabulary", check [1]))
     expect_true (grepl ("must be an array", check [2]))
 
     metaterms$metadata$license <- "MIT"

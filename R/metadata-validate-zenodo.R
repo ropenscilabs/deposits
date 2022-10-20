@@ -110,7 +110,7 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
     )
     voc <- utils::read.csv (f)
     if (meta_term_def$term [i] == "license") {
-        voc <- c ("cc-zero", "cc-by", voc$id)
+        meta_term_def$vocabulary <- paste0 (c ("cc-zero", "cc-by", voc$id), collapse = "|")
     }
     term_i <- metaterms [[meta_term_def$term [i]]]
 
@@ -121,15 +121,9 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
             meta_validate_term_array (meta_term_def, metaterms, i)
         )
 
-    } else if (!term_i %in% voc) {
+    } else {
 
-        out <- paste0 (
-            "Metadata [",
-            meta_term_def$term [i],
-            " = '",
-            term_i,
-            "'] not in required vocabulary."
-        )
+        out <- meta_validate_term_from_vocab (meta_term_def, i, term_i)
     }
 
     return (out)
