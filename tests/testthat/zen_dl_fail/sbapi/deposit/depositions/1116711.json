@@ -1,0 +1,66 @@
+{
+    "conceptrecid": "1116710",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "f9ca875e15e211bf5567d34bc7c63a8a",
+            "filename": "data.Rds",
+            "filesize": 506,
+            "id": "18f7a5c3-8e2c-499f-82bb-de408e5472ab",
+            "links": {
+                "download": "sbapi/files/hash/data.Rds",
+                "self": "sbapi/deposit/depositions/1116711/files/18f7a5c3-8e2c-499f-82bb-de408e5472ab"
+            }
+        },
+        {
+            "checksum": "7e55a66ee545e19ec9c4c1bf5cff31e5",
+            "filename": "DCEntry-1116711.xml",
+            "filesize": 1581,
+            "id": "11ad6188-0d80-43b5-8d75-b927ac66a2ac",
+            "links": {
+                "download": "sbapi/files/hash/DCEntry-1116711.xml",
+                "self": "sbapi/deposit/depositions/1116711/files/11ad6188-0d80-43b5-8d75-b927ac66a2ac"
+            }
+        }
+    ],
+    "id": 1116711,
+    "links": {
+        "bucket": "sbapi/files/f50bd03c-ed36-4eeb-be29-9e6b62a53787",
+        "discard": "sbapi/deposit/depositions/1116711/actions/discard",
+        "edit": "sbapi/deposit/depositions/1116711/actions/edit",
+        "files": "sbapi/deposit/depositions/1116711/files",
+        "html": "https://sandbox.zenodo.org/deposit/1116711",
+        "latest_draft": "sbapi/deposit/depositions/1116711",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1116711",
+        "newversion": "sbapi/deposit/depositions/1116711/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1116711/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1116711/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1116711"
+    },
+    "metadata": {
+        "access_right": "open",
+        "creators": [
+            {
+                "name": "C. Person"
+            }
+        ],
+        "description": "This is the modified abstract",
+        "doi": "",
+        "license": "CC-BY-4.0",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1116711",
+            "recid": 1116711
+        },
+        "publication_date": "2022-01-01",
+        "title": "Modified Title",
+        "upload_type": "other"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1116711,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "Modified Title"
+}
