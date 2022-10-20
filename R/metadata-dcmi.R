@@ -25,7 +25,7 @@ dcmi_terms <- function () {
 #' @param metadata Metadata as list, filename, or DCEntry object
 #' @return A 'DCEntry' object
 #' @noRd
-process_metadata_param <- function (metadata) {
+metadata_to_dcmi <- function (metadata) {
 
     if (is.character (metadata)) {
 

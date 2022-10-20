@@ -1,3 +1,8 @@
+# These are the main entry points to metadata validation routines called
+# directly from the main client functions. The `validate_metadata()` function is
+# called on the parameter used in client construction, while the
+# `validate_terms` function is applied to .
+
 #' validate metadata input to client either as "metadata" parameter, or though
 #' `deposit_fill_metadata()` method.
 #'
@@ -10,7 +15,7 @@ validate_metadata <- function (metadata, service = "zenodo") {
         service <- "zenodo"
     }
 
-    metadata <- process_metadata_param (metadata)
+    metadata <- metadata_to_dcmi (metadata)
 
     metadata <- httptest2_dcmi_timestamps (metadata)
 
