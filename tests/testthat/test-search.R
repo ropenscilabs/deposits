@@ -118,4 +118,13 @@ test_that ("zenodo search errors", {
         "Assertion on '1L' failed: Must be of type 'character'"
     )
 
+    expect_error (
+        cli$deposits_search (search_string = "search string", all_versions = "invalid"),
+        "The 'all_versions' parameter must be either 'false' or 'true'"
+    )
+
+    expect_error (
+        cli$deposits_search (search_string = "search string", bounds = "invalid"),
+        "The 'bounds' parameter must be in format 'bounds=x1,y1,x2,y2'"
+    )
 })
