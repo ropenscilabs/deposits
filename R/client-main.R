@@ -544,7 +544,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- standardise_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            self$metadata <- metadata_from_deposit (self, self$hostdata)
+            metadata <- metadata_from_deposit (self, self$hostdata)
+            # same for DCMI/atom4R timestamps in test environments:
+            metadata <- standardise_dcmi_timestamps (metadata)
+            self$metadata <- metadata
 
             self <- private$fill_service_id_url ()
 
