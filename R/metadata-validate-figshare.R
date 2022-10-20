@@ -80,24 +80,11 @@ check_fs_meta_array <- function (meta_term_def, i, term_i) {
 
     } else if (nzchar (meta_term_def$vocabulary [i])) {
 
-        voc <- strsplit (meta_term_def$vocabulary [i], "\\|") [[1]]
         term_names <- c (
             names (term_i),
             unlist (lapply (term_i, names))
         )
-
-        if (!all (term_names %in% voc)) {
-
-            out <- paste0 (
-                "Data [",
-                meta_term_def$term [i],
-                " = '",
-                term_i,
-                "' must follow fixed vocabulary of [",
-                paste0 (voc, collapse = ", "),
-                "]"
-            )
-        }
+        out <- meta_validate_term_from_vocab (meta_term_def, i, term_names)
     }
 
     return (out)
