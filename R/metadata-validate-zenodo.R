@@ -42,36 +42,13 @@ check_zenodo_terms <- function (these_terms, metaterms) {
 
             out <- c (
                 out,
-                check_zen_from_vocab (these_terms, i, term_i)
+                meta_validate_term_from_vocab (these_terms, i, term_i)
             )
 
         } else if (these_terms$format [i] == "integer") {
 
             out <- c (out, meta_validate_term_integer (these_terms, i, term_i))
         }
-    }
-
-    return (out)
-}
-
-#' Check one zenodo metadata term against vocabulary entry
-#' @noRd
-check_zen_from_vocab <- function (these_terms, i, term_i) {
-
-    out <- NULL
-
-    voc <- strsplit (these_terms$vocabulary [i], "\\|") [[1]]
-
-    if (!all (term_i %in% voc)) {
-        out <- paste0 (
-            "Data [",
-            these_terms$term [i],
-            " = '",
-            term_i,
-            "'] must follow fixed vocabulary of [",
-            paste0 (voc, collapse = ", "),
-            "]"
-        )
     }
 
     return (out)

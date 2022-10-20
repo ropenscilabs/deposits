@@ -47,32 +47,9 @@ check_fs_meta_terms <- function (these_meta_terms, metaterms) {
 
             out <- c (
                 out,
-                check_fs_meta_from_vocab (these_meta_terms, i, term_i)
+                meta_validate_term_from_vocab (these_meta_terms, i, term_i)
             )
         }
-    }
-
-    return (out)
-}
-
-#' Check one figshare metadata term against vocabulary entry
-#' @noRd
-check_fs_meta_from_vocab <- function (these_meta_terms, i, term_i) {
-
-    out <- NULL
-
-    voc <- strsplit (these_meta_terms$vocabulary [i], "\\|") [[1]]
-
-    if (!all (term_i %in% voc)) {
-        out <- paste0 (
-            "Data [",
-            these_meta_terms$term [i],
-            " = '",
-            term_i,
-            "'] must follow fixed vocabulary of [",
-            paste0 (voc, collapse = ", "),
-            "]"
-        )
     }
 
     return (out)
