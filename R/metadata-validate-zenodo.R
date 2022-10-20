@@ -141,12 +141,13 @@ check_zen_meta_from_vocab <- function (meta_term_def, metaterms, i) {
 
     out <- NULL
 
-    voc <- strsplit (meta_term_def$vocabulary [i], "\\|") [[1]]
     term_i <- metaterms [[meta_term_def$term [i]]]
 
     if (meta_term_def$format [i] == "array") {
 
+        voc <- strsplit (meta_term_def$vocabulary [i], "\\|") [[1]]
         term_names <- unique (unlist (lapply (term_i, names)))
+
         if (!all (term_names %in% voc)) {
             out <- paste0 (
                 "Metadata [",
@@ -158,17 +159,9 @@ check_zen_meta_from_vocab <- function (meta_term_def, metaterms, i) {
             )
         }
 
-    } else if (!term_i %in% voc) {
+    } else {
 
-        out <- paste0 (
-            "Metadata [",
-            meta_term_def$term [i],
-            " = '",
-            term_i,
-            "'] not in required vocabulary of [",
-            meta_term_def$vocabulary [i],
-            "]"
-        )
+        out <- meta_validate_term_from_vocab (meta_term_def, i, term_i)
     }
 
     return (out)

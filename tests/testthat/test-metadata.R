@@ -177,7 +177,7 @@ test_that ("zenodo metadata terms", {
     check <- validate_terms (metaterms, service = "zenodo")
     expect_true (!is.null (check))
     expect_length (check, 1L)
-    expect_true (grepl ("not in required vocabulary", check [1]))
+    expect_true (grepl ("must follow fixed vocabulary", check [1]))
 
     metaterms$metadata$upload_type <- "dataset"
     expect_null (validate_terms (metaterms, service = "zenodo"))
