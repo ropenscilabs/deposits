@@ -7,6 +7,7 @@
 #' `deposit_fill_metadata()` method.
 #'
 #' @param metadata Metadata as list, filename, or DCEntry object
+#' @return An `arom4R::DCEntry` metadata object.
 #'
 #' @noRd
 validate_metadata <- function (metadata, service = "zenodo") {
