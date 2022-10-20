@@ -89,18 +89,18 @@ test_that ("zenodo actions", {
     expect_false (cli$hostdata$metadata$description ==
         metadata$abstract)
 
-    # dep <- with_mock_dir ("zen_update", {
-    #    cli$deposit_update ()
-    # })
+    dep <- with_mock_dir ("zen_update", {
+        cli$deposit_update ()
+    })
 
-    # expect_equal (
-    #    cli$hostdata$title,
-    #    metadata$title
-    # )
-    # expect_equal (
-    #    cli$hostdata$metadata$description,
-    #    metadata$abstract
-    # )
+    expect_equal (
+        cli$hostdata$title,
+        metadata$title
+    )
+    expect_equal (
+        cli$hostdata$metadata$description,
+        metadata$abstract
+    )
 
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")
