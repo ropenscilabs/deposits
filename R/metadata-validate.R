@@ -9,8 +9,7 @@ validate_metadata <- function (metadata, service = "zenodo") {
 
     metadata <- process_metadata_param (metadata)
 
-    # standardise "updated" timestamp inserted by atom4R for test env:
-    metadata <- standardise_dcmi_timestamps (metadata)
+    metadata <- httptest2_dcmi_timestamps (metadata)
 
     # Check sanity of XML schema via 'atom4R' routines:
     out <- utils::capture.output (

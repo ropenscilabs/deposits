@@ -540,13 +540,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             httr2::resp_check_status (resp)
 
             hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
-            # standardise timestamps for httptest2 in test environments only:
-            hostdata <- standardise_hostdata_timestamps (hostdata, self$service)
+            hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
             metadata <- metadata_from_deposit (self, self$hostdata)
-            # same for DCMI/atom4R timestamps in test environments:
-            metadata <- standardise_dcmi_timestamps (metadata)
+            metadata <- httptest2_dcmi_timestamps (metadata)
             self$metadata <- metadata
 
             self <- private$fill_service_id_url ()

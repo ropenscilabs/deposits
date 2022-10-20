@@ -11,8 +11,7 @@ metadata_from_deposit <- function (cli, hostdata) {
         stop ("unknown deposit [", cli$service, "]")
     }
 
-    # standardise "updated" timestamp inserted by atom4R for test env:
-    dcmi <- standardise_dcmi_timestamps (dcmi)
+    dcmi <- httptest2_dcmi_timestamps (dcmi)
 
     return (dcmi)
 }
