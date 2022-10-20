@@ -160,7 +160,7 @@ construct_md_list_zenodo <- function (values, term_map) {
     }
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-        values$created <- "2022-01-01"
+        values [["created"]] <- "2022-01-01T00:00:00.0+00:00"
     }
 
     return (values)
