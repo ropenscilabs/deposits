@@ -9,11 +9,8 @@ validate_metadata <- function (metadata, service = "zenodo") {
 
     metadata <- process_metadata_param (metadata)
 
-    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-        # atom4R inserts actual "updated" time in the metadata
-        utime <- as.POSIXct ("2022-01-01 00:00:01", tz = "CEST")
-        metadata$setUpdated (utime)
-    }
+    # standardise "updated" timestamp inserted by atom4R for test env:
+    metadata <- standardise_dcmi_timestamps (metadata)
 
     # Check sanity of XML schema via 'atom4R' routines:
     out <- utils::capture.output (

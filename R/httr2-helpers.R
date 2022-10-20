@@ -30,3 +30,19 @@ standardise_hostdata_timestamps <- function (hostdata, service) {
 
     return (hostdata)
 }
+
+#' @description Standardise DCMI "updated" timestamps put on by `atom4R` to
+#' ensure consistent object hashes for `httptest`. Only activated in test
+#' environments in which `DEPOSITS_TEST_ENV` envvar is set.
+#' @noRd
+
+standardise_dcmi_timestamps <- function (dcmi) {
+
+    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+        # atom4R inserts actual "updated" time in the metadata
+        utime <- as.POSIXct ("2022-01-01 00:00:01", tz = "CEST")
+        dcmi$setUpdated (utime)
+    }
+
+    return (dcmi)
+}
