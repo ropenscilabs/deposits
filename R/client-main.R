@@ -421,6 +421,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             private$deposits_list_extract ()
 
+            self$hostdata <- NULL
+
             invisible (self)
         },
 
