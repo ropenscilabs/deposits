@@ -6,7 +6,7 @@ accrualPeriodicity , ,
 accrualPolicy , ,
 alternative , ,
 audience , communities(m) ,
-available , access_right,
+available , ,
 bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m) , citation
 conformsTo , ,
 created , created , timeline:firstOnline
@@ -15,7 +15,7 @@ dateCopyrighted , publication_date(m)|dates(m) , timeline:publisherPublication
 dateSubmitted , publication_date(m)|dates(m) , timeline:firstOnline
 educationLevel , ,
 extent , ,
-hasFormat , upload_type,
+hasFormat , ,
 hasPart , files|related_identifiers(m) , files
 hasVersion , version(m) ,
 instructionalMethod , ,
@@ -53,4 +53,4 @@ rights , ,
 source , doi(m), doi
 subject , keywords(m)|subjects(m) , categories
 title , title(m)|version(m) , title
-type , upload_type(m)|image_type(m), defined_type_name
+type , ,
