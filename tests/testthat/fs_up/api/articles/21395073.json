@@ -1,62 +1,62 @@
 {
     "files": [
         {
-            "upload_token": "2cb84ef9-a5ca-4ef9-9be4-fb20db2961c4",
+            "upload_token": "8c5f7380-64cf-4576-8718-a3af859304ff",
             "upload_url": "",
             "status": "available",
             "preview_state": "preview_available",
             "viewer_type": "txt",
             "is_attached_to_public_version": false,
-            "id": 37923933,
-            "name": "DCEntry-21369876.xml",
-            "size": 1289,
+            "id": 37984386,
+            "name": "DCEntry-21395073.xml",
+            "size": 1309,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/37923933",
-            "supplied_md5": "c25de193c72971f72a0849242a6a5dd6",
-            "computed_md5": "c25de193c72971f72a0849242a6a5dd6"
+            "download_url": "https://ndownloader.figshare.com/files/37984386",
+            "supplied_md5": "c8c6b8c6464c68aa0e89ce3f995b286a",
+            "computed_md5": "c8c6b8c6464c68aa0e89ce3f995b286a"
         },
         {
-            "upload_token": "95c7df64-06de-4b8b-b7c2-8a44d0f4f247",
+            "upload_token": "8311988f-d398-42d4-b928-92a35a938e6b",
             "upload_url": "",
             "status": "available",
             "preview_state": "preview_available",
             "viewer_type": "txt",
             "is_attached_to_public_version": false,
-            "id": 37923936,
-            "name": "DCEntry-21369876.xml",
+            "id": 37984392,
+            "name": "DCEntry-21395073.xml",
             "size": 793,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/37923936",
+            "download_url": "https://ndownloader.figshare.com/files/37984392",
             "supplied_md5": "45d15c91be28e903bb84408a7d50f69a",
             "computed_md5": "45d15c91be28e903bb84408a7d50f69a"
         },
         {
-            "upload_token": "142b4207-bdfd-4ac3-b2b9-5d9e6aeee0d1",
+            "upload_token": "8abdefe1-b891-4843-9fd6-dd6f969c0372",
             "upload_url": "",
             "status": "available",
             "preview_state": "preview_available",
             "viewer_type": "txt",
             "is_attached_to_public_version": false,
-            "id": 37923939,
-            "name": "DCEntry-21369876.xml",
-            "size": 1268,
+            "id": 37984395,
+            "name": "DCEntry-21395073.xml",
+            "size": 1288,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/37923939",
-            "supplied_md5": "c44f10ba4b073b624b6f140cee97f52b",
-            "computed_md5": "c44f10ba4b073b624b6f140cee97f52b"
+            "download_url": "https://ndownloader.figshare.com/files/37984395",
+            "supplied_md5": "95b89cd761f37e3c1baff023391a64fa",
+            "computed_md5": "95b89cd761f37e3c1baff023391a64fa"
         },
         {
-            "upload_token": "51aac3fa-125a-4385-acd1-5a719c626855",
+            "upload_token": "e14ffdf5-7d2b-4be6-af6e-2e85a6879c8a",
             "upload_url": "",
             "status": "moving_to_final",
             "preview_state": "preview_not_supported",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 37923942,
+            "id": 37984398,
             "name": "data.Rds",
             "size": 506,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/37923942",
+            "download_url": "https://ndownloader.figshare.com/files/37984398",
             "supplied_md5": "f9ca875e15e211bf5567d34bc7c63a8a",
             "computed_md5": "f9ca875e15e211bf5567d34bc7c63a8a"
         }
@@ -77,7 +77,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/21369876",
+    "figshare_url": "https://figshare.com/articles/dataset/_/21395073",
     "description": "This is the modified abstract",
     "funding": null,
     "funding_list": [
@@ -85,7 +85,7 @@
     ],
     "version": 0,
     "status": "draft",
-    "size": 3856,
+    "size": 3896,
     "created_date": "2022-01-01T00:00:00Z",
     "modified_date": "2022-01-01T00:00:00Z",
     "is_public": false,
@@ -108,7 +108,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21369876",
+    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21395073",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -117,20 +117,20 @@
     "embargo_options": [
 
     ],
-    "id": 21369876,
+    "id": 21395073,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/21369876",
+    "url": "api/articles/21395073",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/21369876",
-    "url_public_api": "api/articles/21369876",
-    "url_private_html": "https://figshare.com/account/articles/21369876",
-    "url_public_html": "https://figshare.com/articles/dataset/_/21369876",
+    "url_private_api": "api/articles/21395073",
+    "url_public_api": "api/articles/21395073",
+    "url_private_html": "https://figshare.com/account/articles/21395073",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21395073",
     "timeline": {
 
     }
