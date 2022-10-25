@@ -162,7 +162,7 @@ test_that ("figshare metadata", {
 
     expect_null (cli$metadata$language)
     expect_null (cli$metadata$publisher)
-    expect_null (cli$metadata$source)
+    expect_true (length (cli$metadata$source) > 0L)
     expect_true (length (cli$metadata$title) > 0L)
     expect_true (length (cli$metadata$abstract) > 0L)
     expect_true (length (cli$metadata$creator) > 0L)
