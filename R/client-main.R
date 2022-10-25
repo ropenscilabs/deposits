@@ -161,7 +161,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             } else {
                 these_metadata <-
                     metadata_dcmi_to_list (self$metadata, self$term_map)
-                n_terms <- length (these_metadata)
 
                 if (self$service == "zenodo") {
                     md <- these_metadata$metadata
