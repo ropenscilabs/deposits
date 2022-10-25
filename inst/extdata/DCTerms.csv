@@ -47,7 +47,7 @@ description , description(m)|method(m)|state , description
 format , , defined_type
 identifier , doi(m)|doi_url(m)|record_id|record_url , resource_doi|figshare_url
 language , language(m) , 
-publisher , , 
+publisher , journal_title(m)|conference_title(m)|imprint_publisher(m), 
 relation , , 
 rights , , 
 source , doi(m), doi
