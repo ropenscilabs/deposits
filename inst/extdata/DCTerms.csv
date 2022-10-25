@@ -50,7 +50,7 @@ language , language(m) ,
 publisher , , 
 relation , , 
 rights , , 
-source , , 
+source , , doi
 subject , keywords(m)|subjects(m) , categories
 title , title(m)|version(m) , title
 type , , 
