@@ -1,56 +1,56 @@
 DC , Zenodo , Figshare
 abstract , description(m)  , description
-accessRights , access_right(m)|access_conditions(m) , 
-accrualMethod , , 
-accrualPeriodicity , , 
-accrualPolicy , , 
-alternative , , 
+accessRights , access_right(m)|access_conditions(m) ,
+accrualMethod , ,
+accrualPeriodicity , ,
+accrualPolicy , ,
+alternative , ,
 audience , communities(m) ,
-available , , 
+available , access_right,
 bibliographicCitation , journal|conference|imprint|partof|thesis metadata(m) , citation
-conformsTo , , 
+conformsTo , ,
 created , created , timeline:firstOnline
 dateAccepted , publication_date(m)|dates(m) , timeline:publisherAcceptance
 dateCopyrighted , publication_date(m)|dates(m) , timeline:publisherPublication
 dateSubmitted , publication_date(m)|dates(m) , timeline:firstOnline
-educationLevel , , 
-extent , , 
-hasFormat , , 
+educationLevel , ,
+extent , ,
+hasFormat , upload_type,
 hasPart , files|related_identifiers(m) , files
 hasVersion , version(m) ,
-instructionalMethod , , 
-isFormatOf , , 
+instructionalMethod , ,
+isFormatOf , ,
 isPartOf , , projects|collections
 isReferencedBy , , projects|collections
-isReplacedBy , , 
-isRequiredBy , , 
+isReplacedBy , ,
+isRequiredBy , ,
 issued , , created_date
 isVersionOf , version(m) ,
 license , license(m) , license:url
-mediator , , 
+mediator , ,
 medium , upload_type(m)|image_type(m) , defined_type_name
-modified , modified , 
-provenance , , 
+modified , modified ,
+provenance , ,
 references , references(m) , references
-replaces , , 
-requires , , 
-rightsHolder , , 
+replaces , ,
+requires , ,
+rightsHolder , creator,
 spatial , locations(m) ,
-tableOfContents , , 
-temporal , , 
-valid , , 
-contributor , contributors(m) , 
+tableOfContents , ,
+temporal , ,
+valid , ,
+contributor , contributors(m) ,
 coverage , locations(m) ,
 creator , creators(m)|owner , authors
 date , created , timeline
 description , description(m)|method(m)|state , description
 format , , defined_type
 identifier , doi(m)|doi_url(m)|record_id|record_url , resource_doi|figshare_url
-language , language(m) , 
-publisher , journal_title(m)|conference_title(m)|imprint_publisher(m), 
-relation , , 
-rights , , 
+language , language(m) ,
+publisher , journal_title(m)|conference_title(m)|imprint_publisher(m),
+relation , ,
+rights , ,
 source , doi(m), doi
 subject , keywords(m)|subjects(m) , categories
 title , title(m)|version(m) , title
-type , , 
+type , upload_type(m)|image_type(m), defined_type_name
