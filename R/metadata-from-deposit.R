@@ -58,6 +58,9 @@ metadata_from_figshare <- function (cli, hostdata) {
             value = TRUE,
             ignore.case = TRUE
         )
+        if (length (dc_fn) != 1L) {
+            next
+        }
 
         value <- hostdata [[term_map$service [i]]]
         # https://github.com/eblondel/atom4R/issues/14
