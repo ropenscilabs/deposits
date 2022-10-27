@@ -240,7 +240,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @examples
         #' \dontrun{
         #' cli <- depositsClient$new (service = "figshare")
-        #' search_results <- cli$deposits_search (search_string = "Text string query", page_size = 5L)
+        #' search_results <- cli$deposits_search (
+        #'     search_string = "Text string query",
+        #'     page_size = 5L
+        #' )
         #' }
 
         deposits_search = function (search_string = NULL,
@@ -270,7 +273,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$service == "figshare") {
                 req <- httr2::req_body_json (req, arglist)
             } else {
-                req <- do.call (httr2::req_url_query, c (.req = list (req), arglist))
+                req <- do.call (
+                    httr2::req_url_query,
+                    c (.req = list (req), arglist)
+                )
             }
 
             resp <- httr2::req_perform (req)
@@ -406,7 +412,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
         #' package.
 
-        deposit_service = function (service = NULL, sandbox = FALSE, headers = NULL) {
+        deposit_service = function (service = NULL,
+                                    sandbox = FALSE,
+                                    headers = NULL) {
 
             self <- private$define_service (service, sandbox)
 
