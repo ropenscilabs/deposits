@@ -117,6 +117,11 @@ depositsClient$set ("private", "upload_dcmi_xml", function () {
 
     xml <- as (self$metadata$encode (), "character")
 
+    # Rm 'atom4R' self-promo guff dumped by the encode method
+    ptn <- "<\\!\\-\\-Creation\\sdate.*atom4R\\-\\->"
+    ptn <- regmatches (xml, regexpr (ptn, xml))
+    xml <- gsub (ptn, "", xml)
+
     xml <- httpstest2_xml_timestamps (xml)
 
     f <- file.path (tempdir (), paste0 ("DCEntry-", self$id, ".xml"))
