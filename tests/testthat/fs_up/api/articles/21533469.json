@@ -1,0 +1,137 @@
+{
+    "files": [
+        {
+            "upload_token": "5bf43af8-b54b-4cc5-bc43-74ac9ac04d70",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "txt",
+            "is_attached_to_public_version": false,
+            "id": 38168982,
+            "name": "DCEntry-21533469.xml",
+            "size": 985,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/38168982",
+            "supplied_md5": "944f33720eed3fa0029581be7436ccb9",
+            "computed_md5": "944f33720eed3fa0029581be7436ccb9"
+        },
+        {
+            "upload_token": "fec26ddc-c2e2-4111-b11f-abf83a613f04",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "txt",
+            "is_attached_to_public_version": false,
+            "id": 38168988,
+            "name": "DCEntry-21533469.xml",
+            "size": 469,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/38168988",
+            "supplied_md5": "32c8c6a37cf7328c1bd7bc693ce4f598",
+            "computed_md5": "32c8c6a37cf7328c1bd7bc693ce4f598"
+        },
+        {
+            "upload_token": "fbdafadb-57f7-42b7-84f7-d4c01815c787",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "txt",
+            "is_attached_to_public_version": false,
+            "id": 38169000,
+            "name": "DCEntry-21533469.xml",
+            "size": 964,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/38169000",
+            "supplied_md5": "0c81ed228932ce365ae56e1f2e2d0ec2",
+            "computed_md5": "0c81ed228932ce365ae56e1f2e2d0ec2"
+        },
+        {
+            "upload_token": "893f34f6-c17c-4f55-9d21-1b241a7828f9",
+            "upload_url": "",
+            "status": "moving_to_final",
+            "preview_state": "preview_not_supported",
+            "viewer_type": "",
+            "is_attached_to_public_version": false,
+            "id": 38169006,
+            "name": "data.Rds",
+            "size": 506,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/38169006",
+            "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
+            "computed_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6"
+        }
+    ],
+    "resource_title": null,
+    "resource_doi": null,
+    "group_resource_id": null,
+    "custom_fields": [
+
+    ],
+    "account_id": 2986795,
+    "authors": [
+        {
+            "id": 12574198,
+            "full_name": "C. Person",
+            "is_active": false,
+            "url_name": "_",
+            "orcid_id": ""
+        }
+    ],
+    "figshare_url": "https://figshare.com/articles/dataset/_/21533469",
+    "description": "This is the modified abstract",
+    "funding": null,
+    "funding_list": [
+
+    ],
+    "version": 0,
+    "status": "draft",
+    "size": 2924,
+    "created_date": "2022-01-01T00:00:00Z",
+    "modified_date": "2022-01-01T00:00:00Z",
+    "is_public": false,
+    "is_confidential": false,
+    "is_metadata_record": false,
+    "confidential_reason": "",
+    "metadata_reason": "",
+    "license": {
+        "value": 1,
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "tags": [
+
+    ],
+    "categories": [
+
+    ],
+    "references": [
+
+    ],
+    "has_linked_file": false,
+    "citation": "Person, C. (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21533469",
+    "is_embargoed": false,
+    "embargo_date": null,
+    "embargo_type": null,
+    "embargo_title": "",
+    "embargo_reason": "",
+    "embargo_options": [
+
+    ],
+    "id": 21533469,
+    "title": "Modified Title",
+    "doi": "",
+    "handle": "",
+    "url": "api/articles/21533469",
+    "published_date": null,
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "api/articles/21533469",
+    "url_public_api": "api/articles/21533469",
+    "url_private_html": "https://figshare.com/account/articles/21533469",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21533469",
+    "timeline": {
+
+    }
+}
