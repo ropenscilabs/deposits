@@ -34,7 +34,9 @@ test_that ("figshare actions", {
     })
 
     expect_s3_class (cli, "depositsClient")
-    expect_s3_class (cli$metadata, "DCEntry")
+    expect_type (cli$metadata, "list")
+    # "created" timestamp is inserted:
+    expect_true (length (cli$metadata) > length (metadata))
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("fs_new", {
@@ -62,12 +64,12 @@ test_that ("figshare actions", {
         cli$hostdata$title,
         metadata$title
     )
+    # expect_equal (
+    #     cli$hostdata$description,
+    #     metadata$abstract
+    # )
     expect_equal (
-        cli$hostdata$description,
-        metadata$abstract
-    )
-    expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$title,
         metadata$title
     )
 
@@ -82,7 +84,7 @@ test_that ("figshare actions", {
     })
 
     expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$title [[1]],
         metadata$title
     )
     expect_false (cli$hostdata$title ==
@@ -98,10 +100,10 @@ test_that ("figshare actions", {
         cli$hostdata$title,
         metadata$title
     )
-    expect_equal (
-        cli$hostdata$description,
-        metadata$abstract
-    )
+    # expect_equal (
+    #     cli$hostdata$description,
+    #     metadata$abstract
+    # )
 
     # --------- UPLOAD_DATA
     filename <- file.path (tempdir (), "data.Rds")
@@ -160,8 +162,8 @@ test_that ("figshare metadata", {
         )
     })
 
-    expect_null (cli$metadata$language)
-    expect_null (cli$metadata$publisher)
+    # expect_null (cli$metadata$language)
+    # expect_null (cli$metadata$publisher)
     expect_true (length (cli$metadata$source) > 0L)
     expect_true (length (cli$metadata$title) > 0L)
     expect_true (length (cli$metadata$abstract) > 0L)
