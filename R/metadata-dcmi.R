@@ -1,11 +1,12 @@
 # Functions to convert metadata inputs into standard DCMI terms
 
-#' Get DCMI schema from definition file
+#' Get DCMI elements  from definition file
 #'
 #' @return An \pkg{xml2} `xml_document` with the DCMI terms schema.
 #' @family meta
 #' @noRd
 dcmi_schema <- function () {
+
     path <- "extdata/dc/"
     schema <- "dcterms.xsd"
     s <- system.file (file.path (path, schema), package = "deposits")
@@ -27,11 +28,11 @@ dcmi_schema <- function () {
 #' @export
 dcmi_terms <- function () {
 
-    terms <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
-    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
-    terms <- terms [which (!terms %in% not_meta)]
+    schema <- dcmi_schema ()
+    elements <- xml2::xml_find_all (schema, "xs:element")
+    element_names <- xml2::xml_attr (elements, "name")
 
-    return (gsub ("^DC", "", terms))
+    return (element_names)
 }
 
 #' Process metadata parameters in one of the three possible forms, returning a
