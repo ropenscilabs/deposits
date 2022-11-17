@@ -635,7 +635,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             if (self$service == "figshare") {
-                if (!cli$hostdata$is_public) {
+                if (!self$hostdata$is_public) {
                     stop (
                         "Figshare only enables automated downloads of public ",
                         "files.\nYou can manually download at ", download_url
