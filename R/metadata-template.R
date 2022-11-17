@@ -151,16 +151,13 @@ fill_metadata_template <- function (template, metadata) {
 #' # Values can be entered in JSON format:
 #' m [grep ("TableOfContents", m)] <-
 #'     "  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"}"
-#' dc <- deposits_meta_to_dcmi (filename, id = "my-id")
+#' dc <- deposits_meta_from_file (filename, id = "my-id")
 #' @family meta
 #' @export
-deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
+deposits_meta_from_file <- function (filename = NULL, id = "my-id") {
 
     checkmate::assert_character (filename, len = 1L)
-    checkmate::assert_directory_exists (dirname (normalizePath (filename)))
-    if (!file.exists (filename)) {
-        stop ("filename [", filename, "] does not exist.")
-    }
+    checkmate::assert_file_exists (filename)
     checkmate::assert_character (id, len = 1L)
 
     meta <- readLines (filename)
@@ -176,18 +173,5 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
     ptn <- paste0 (not_dcmi, collapse = "|")
     meta <- meta [which (!grepl (ptn, names (meta)))]
 
-    dcmi <- atom4R::DCEntry$new ()
-    dcmi$verbose.info <- FALSE
-
-    for (n in names (meta)) {
-        dc_fn <- paste0 ("addDC", n)
-        meta_n <- meta [[n]]
-        for (m in meta_n) {
-            do.call (dcmi [[dc_fn]], list (m))
-        }
-    }
-
-    check <- dcmi$validate ()
-
-    return (dcmi)
+    return (meta)
 }

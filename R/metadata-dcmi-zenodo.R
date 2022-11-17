@@ -1,10 +1,11 @@
 #' Add additional metadata list-item values required by zenodo.
 #'
-#' This function is called as the last step in `metadata_dcmi_to_list()`.
+#' Zenodo has it's own "metadata" list item. The main thing this function does
+#' is to move appropriate terms within the initially flat 'metadata' list into
+#' the sub-component of "metadata" within the main metadata.
 #'
-#' @param values Initial list of metadata constructed in
-#' `metadata_dcmi_to_list`.
-#' @param term_map The term map for a particular deposits service.
+#' @param values Initial metadata list
+#' @param term_map The term map for the 'zenodo' deposits service.
 #' @return A potentially modified version of `values`, with structures of
 #' individual items rectified to expected forms, and any otherwise missing yet
 #' required fields inserted with default values.

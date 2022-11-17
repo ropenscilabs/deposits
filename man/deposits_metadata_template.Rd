@@ -37,6 +37,6 @@ deposits_metadata_template (filename)
 \seealso{
 Other meta: 
 \code{\link{dcmi_terms}()},
-\code{\link{deposits_meta_to_dcmi}()}
+\code{\link{deposits_meta_from_file}()}
 }
 \concept{meta}

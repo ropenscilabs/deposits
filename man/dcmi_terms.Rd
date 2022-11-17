@@ -4,7 +4,11 @@
 \alias{dcmi_terms}
 \title{Get names of DCMI terms}
 \usage{
-dcmi_terms()
+dcmi_terms(term = NULL)
+}
+\arguments{
+\item{term}{If specified, match term to official DCMI nomenclature, and
+return single match.}
 }
 \value{
 A character vector of DCMI terms.
@@ -17,7 +21,7 @@ This function returns the names of those terms currently recognised by the
 }
 \seealso{
 Other meta: 
-\code{\link{deposits_meta_to_dcmi}()},
+\code{\link{deposits_meta_from_file}()},
 \code{\link{deposits_metadata_template}()}
 }
 \concept{meta}

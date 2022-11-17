@@ -78,7 +78,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' strings or lists for multiple entries.
         #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
         #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_to_dcmi}.
+        #' \link{deposits_meta_from_file}.
         #' }
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
@@ -106,8 +106,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
-                self$metadata <- validate_metadata (metadata, service)
-                self <- private$rm_unrecognised_dcmi_items ()
+                self$metadata <- validate_metadata (metadata, service, self$term_map)
 
             }
 
@@ -159,8 +158,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (self$metadata)) {
                 cat ("   metadata : <none>\n")
             } else {
-                these_metadata <-
-                    metadata_dcmi_to_list (self$metadata, self$term_map)
+                these_metadata <- self$metadata
 
                 if (self$service == "zenodo") {
                     md <- these_metadata$metadata
@@ -336,13 +334,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' strings or lists for multiple entries.
         #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
         #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_to_dcmi}.
+        #' \link{deposits_meta_from_file}.
         #' }
         #' @return Updated deposits client with metadata inserted.
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- validate_metadata (metadata, self$service)
+            metadata <- validate_metadata (metadata, self$service, self$term_map)
             self$metadata <- metadata
 
             if (!is.null (self$id)) {
