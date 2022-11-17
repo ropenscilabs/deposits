@@ -39,8 +39,10 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
             function (i) paste0 ("   ", names (metadata) [i], " -> ", nms [i], "\n"),
             character (1L)
         )
-        warning ("Names of the following metadata terms have been changed:\n",
-                 msg)
+        message (
+            "Names of the following metadata terms have been changed:\n",
+            msg
+        )
         names (metadata) <- unname (nms)
     }
 
