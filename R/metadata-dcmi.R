@@ -1,5 +1,19 @@
-# Functions to convert metadata inputs into 'atom4R::DCEnetry' outputs, and to
-# convert 'DCEntry' objects into simple lists of terms.
+# Functions to convert metadata inputs into standard DCMI terms
+
+#' Get DCMI schema from definition file
+#'
+#' @return An \pkg{xml2} `xml_document` with the DCMI terms schema.
+#' @family meta
+#' @noRd
+dcmi_schema <- function () {
+    path <- "extdata/dc/"
+    schema <- "dcterms.xsd"
+    s <- system.file (file.path (path, schema), package = "deposits")
+    if (!file.exists (s)) {
+        stop ("Schema file [", s, "] not found")
+    }
+    xml2::read_xml (s)
+}
 
 #' Get names of DCMI terms
 #'
