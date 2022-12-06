@@ -59,7 +59,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         headers = NULL,
         #' @field hostdata (list) Data as stored by host platform
         hostdata = NULL,
-        #' @field metadata (`atom4R::DCEntry`) holds metadata
+        #' @field metadata holds metadata in `json` format
         metadata = NULL,
         #' @field term_map (data.frame) Map between DCMI and deposit terms for
         #' specified host service.
@@ -68,7 +68,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Create a new `depositsClient` object
         #' @param service (character) of a deposits service (see
         #' \link{deposits_services}).
-        #' @param metadata Either of one three possible ways of defining
+        #' @param metadata Either of one two possible ways of defining
         #' metadata:
         #' \itemize{
         #' \item The name (or full path) or a local file containing
@@ -76,9 +76,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \item A names list of metadata with names matching values given by
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
-        #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
-        #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_from_file}.
         #' }
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
@@ -324,7 +321,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         #' @description Fill deposits client with metadata, and upload to
         #' deposits service if connected.
-        #' @param metadata Either of one three possible ways of defining
+        #' @param metadata Either one of two possible ways of defining
         #' metadata:
         #' \itemize{
         #' \item The name (or full path) or a local file containing
@@ -332,9 +329,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \item A names list of metadata with names matching values given by
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
-        #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
-        #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_from_file}.
         #' }
         #' @return Updated deposits client with metadata inserted.
 

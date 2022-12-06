@@ -70,7 +70,7 @@ row per deposit.}
 
 \item{\code{hostdata}}{(list) Data as stored by host platform}
 
-\item{\code{metadata}}{(\code{atom4R::DCEntry}) holds metadata}
+\item{\code{metadata}}{holds metadata in \code{json} format}
 
 \item{\code{term_map}}{(data.frame) Map between DCMI and deposit terms for
 specified host service.}
@@ -109,7 +109,7 @@ Create a new \code{depositsClient} object
 \item{\code{service}}{(character) of a deposits service (see
 \link{deposits_services}).}
 
-\item{\code{metadata}}{Either of one three possible ways of defining
+\item{\code{metadata}}{Either of one two possible ways of defining
 metadata:
 \itemize{
 \item The name (or full path) or a local file containing
@@ -117,9 +117,6 @@ metadata constructed with \link{deposits_metadata_template};
 \item A names list of metadata with names matching values given by
 \link{dcmi_terms}, and values specified as individual character
 strings or lists for multiple entries.
-\item An \pkg{atom4R} \code{DCEntry} object containing metadata, either
-constructed directly via \pkg{atom4R} routines, or via
-\link{deposits_meta_from_file}.
 }}
 
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
@@ -283,7 +280,7 @@ deposits service if connected.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{metadata}}{Either of one three possible ways of defining
+\item{\code{metadata}}{Either one of two possible ways of defining
 metadata:
 \itemize{
 \item The name (or full path) or a local file containing
@@ -291,9 +288,6 @@ metadata constructed with \link{deposits_metadata_template};
 \item A names list of metadata with names matching values given by
 \link{dcmi_terms}, and values specified as individual character
 strings or lists for multiple entries.
-\item An \pkg{atom4R} \code{DCEntry} object containing metadata, either
-constructed directly via \pkg{atom4R} routines, or via
-\link{deposits_meta_from_file}.
 }}
 }
 \if{html}{\out{</div>}}
