@@ -125,12 +125,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (length (self$deposits) == 0L) {
                 cat (" Current deposits : <none>\n")
             } else {
-                cat (paste0 (
-                    " Current deposits : ",
-                    nrow (self$deposits),
-                    " (see 'deposits' element for details)"
-                ),
-                sep = "\n"
+                cat (
+                    paste0 (
+                        " Current deposits : ",
+                        nrow (self$deposits),
+                        " (see 'deposits' element for details)"
+                    ),
+                    sep = "\n"
                 )
             }
             cat ("\n")
@@ -168,12 +169,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     these_metadata <- md [-index]
                 }
 
-                cat (paste0 (
-                    "   metadata : ",
-                    length (these_metadata),
-                    " terms (see 'metadata' element for details)"
-                ),
-                sep = "\n"
+                cat (
+                    paste0 (
+                        "   metadata : ",
+                        length (these_metadata),
+                        " terms (see 'metadata' element for details)"
+                    ),
+                    sep = "\n"
                 )
             }
         },
