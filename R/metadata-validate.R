@@ -21,8 +21,8 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
     }
 
     if (!any (grepl ("[Cc]reated", names (metadata)))) {
-        term <- dcmi_terms ("created")
-        metadata [dcmi_terms ("created")] <- paste0 (Sys.time ())
+        metadata [dcmi_terms ("created")] <-
+            paste0 (strftime (Sys.time (), "%Y-%m-%d"))
     }
     metadata <- httptest2_dcmi_created (metadata)
 
