@@ -66,7 +66,7 @@ test_that ("zenodo actions", {
         metadata$abstract
     )
     expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$metadata$title,
         metadata$title
     )
 
@@ -81,7 +81,7 @@ test_that ("zenodo actions", {
     })
 
     expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$metadata$title,
         metadata$title
     )
     expect_false (cli$hostdata$title ==
