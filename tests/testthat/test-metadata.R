@@ -41,9 +41,9 @@ test_that ("client with metadata", {
     })
 
     expect_identical (cli1$metadata$metadata$title, "New Title")
-    expect_identical (cli1$metadata$abstract, "This is the abstract")
-    expect_identical (cli1$metadata$creator [[1]], "A. Person")
-    expect_identical (cli1$metadata$creator [[2]], "B. Person")
+    expect_identical (cli1$metadata$metadata$description, "This is the abstract")
+    expect_identical (cli1$metadata$metadata$creators [[1]], list (name = "A. Person"))
+    expect_identical (cli1$metadata$metadata$creators [[2]], list (name = "B. Person"))
 
     filename <- tempfile (pattern = "meta_", fileext = ".json")
     service <- "zenodo"
