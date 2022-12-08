@@ -28,11 +28,36 @@ construct_md_list_zenodo <- function (values, term_map) {
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
 
+    # grab any corresponding entries from 'values':
+    move_one <- function (ptn, val_list) {
+        i <- grep (ptn, names (val_list$values))
+        if (length (i) == 1L) {
+            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <- val_list$values [[i]]
+            val_list$values <- val_list$values [-i]
+        }
+        return (val_list)
+    }
+    val_list <- move_one ("^[Cc]reator", list (meta_values = meta_values, values = values))
+    val_list <- move_one ("^[Tt]itle", val_list)
+    val_list <- move_one ("^[Dd]escr", val_list)
+    val_list <- move_one ("^[Uu]pload", val_list)
+
+    meta_values <- val_list$meta_values
+    values <- val_list$values
+
     if (!is.list (meta_values$creators)) {
         meta_values$creators <- list (list (name = meta_values$creators))
+    } else if (is.null (names (meta_values$creators))) {
+        meta_values$creators <- lapply (meta_values$creators, function (i) {
+            if (!is.list (i)) {
+                i <- list (name = i)
+            }
+            return (i)
+        })
     } else if (names (meta_values$creators) == "name") {
         meta_values$creators <- list (meta_values$creators)
     }
+
     if ("upload_type" %in% names (meta_values)) {
         meta_values$upload_type <- tolower (meta_values$upload_type)
     }
@@ -40,7 +65,10 @@ construct_md_list_zenodo <- function (values, term_map) {
     values$metadata <- meta_values
 
     if (!"created" %in% names (values)) {
-        values <- c ("created" = paste0 (Sys.Date ()), values)
+        values <- c (
+            "created" = paste0 (strftime (Sys.time (), "%Y-%m-%d")),
+            values
+        )
     }
 
     values <- httptest2_dcmi_created (values)
