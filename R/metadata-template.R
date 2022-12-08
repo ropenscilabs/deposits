@@ -3,10 +3,9 @@
 #'
 #' The fields are those defined by the Dublin Core Metadata Initiative (DCMI),
 #' defined at
-#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/},
-#' extracted here from the \pkg{atom4R} package. The template produced by this
-#' function is in `json` format which can be manually edited to provide metadata
-#' for a deposit.
+#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}. The
+#' template produced by this function is in `json` format which can be manually
+#' edited to provide metadata for a deposit.
 #'
 #' @param filename Name or full path to local file where template is to be
 #' written. This file will be created. If a file of that name already exists, it
@@ -130,11 +129,11 @@ fill_metadata_template <- function (template, metadata) {
 }
 
 
-#' Read a metadata `yaml` file and convert to \pkg{atom4R} DCMI object.
+#' Read a metadata `yaml` file and convert to a metadata object.
 #'
 #' Metadata templates can be generated with \link{deposits_metadata_template},
 #' and values manually entered. This functions loads the completed template and
-#' converts it to a `DCEntry` object from the \pkg{atom4R} package.
+#' converts it to a metadata object.
 #'
 #' @param filename Name of completed metadata file generated from
 #' \link{deposits_metadata_template}.
@@ -151,16 +150,13 @@ fill_metadata_template <- function (template, metadata) {
 #' # Values can be entered in JSON format:
 #' m [grep ("TableOfContents", m)] <-
 #'     "  \"TableOfContents\": {\"one\": \"First\", \"two\": \"Second\"}"
-#' dc <- deposits_meta_to_dcmi (filename, id = "my-id")
+#' dc <- deposits_meta_from_file (filename, id = "my-id")
 #' @family meta
 #' @export
-deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
+deposits_meta_from_file <- function (filename = NULL, id = "my-id") {
 
     checkmate::assert_character (filename, len = 1L)
-    checkmate::assert_directory_exists (dirname (normalizePath (filename)))
-    if (!file.exists (filename)) {
-        stop ("filename [", filename, "] does not exist.")
-    }
+    checkmate::assert_file_exists (filename)
     checkmate::assert_character (id, len = 1L)
 
     meta <- readLines (filename)
@@ -176,18 +172,5 @@ deposits_meta_to_dcmi <- function (filename = NULL, id = "my-id") {
     ptn <- paste0 (not_dcmi, collapse = "|")
     meta <- meta [which (!grepl (ptn, names (meta)))]
 
-    dcmi <- atom4R::DCEntry$new ()
-    dcmi$verbose.info <- FALSE
-
-    for (n in names (meta)) {
-        dc_fn <- paste0 ("addDC", n)
-        meta_n <- meta [[n]]
-        for (m in meta_n) {
-            do.call (dcmi [[dc_fn]], list (m))
-        }
-    }
-
-    check <- dcmi$validate ()
-
-    return (dcmi)
+    return (meta)
 }

@@ -59,7 +59,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         headers = NULL,
         #' @field hostdata (list) Data as stored by host platform
         hostdata = NULL,
-        #' @field metadata (`atom4R::DCEntry`) holds metadata
+        #' @field metadata holds metadata in `json` format
         metadata = NULL,
         #' @field term_map (data.frame) Map between DCMI and deposit terms for
         #' specified host service.
@@ -68,7 +68,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Create a new `depositsClient` object
         #' @param service (character) of a deposits service (see
         #' \link{deposits_services}).
-        #' @param metadata Either of one three possible ways of defining
+        #' @param metadata Either of one two possible ways of defining
         #' metadata:
         #' \itemize{
         #' \item The name (or full path) or a local file containing
@@ -76,9 +76,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \item A names list of metadata with names matching values given by
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
-        #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
-        #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_to_dcmi}.
         #' }
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
@@ -106,8 +103,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
-                self$metadata <- validate_metadata (metadata, service)
-                self <- private$rm_unrecognised_dcmi_items ()
+                self$metadata <- validate_metadata (metadata, service, self$term_map)
 
             }
 
@@ -129,12 +125,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (length (self$deposits) == 0L) {
                 cat (" Current deposits : <none>\n")
             } else {
-                cat (paste0 (
-                    " Current deposits : ",
-                    nrow (self$deposits),
-                    " (see 'deposits' element for details)"
-                ),
-                sep = "\n"
+                cat (
+                    paste0 (
+                        " Current deposits : ",
+                        nrow (self$deposits),
+                        " (see 'deposits' element for details)"
+                    ),
+                    sep = "\n"
                 )
             }
             cat ("\n")
@@ -159,8 +156,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (self$metadata)) {
                 cat ("   metadata : <none>\n")
             } else {
-                these_metadata <-
-                    metadata_dcmi_to_list (self$metadata, self$term_map)
+                these_metadata <- self$metadata
 
                 if (self$service == "zenodo") {
                     md <- these_metadata$metadata
@@ -173,12 +169,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     these_metadata <- md [-index]
                 }
 
-                cat (paste0 (
-                    "   metadata : ",
-                    length (these_metadata),
-                    " terms (see 'metadata' element for details)"
-                ),
-                sep = "\n"
+                cat (
+                    paste0 (
+                        "   metadata : ",
+                        length (these_metadata),
+                        " terms (see 'metadata' element for details)"
+                    ),
+                    sep = "\n"
                 )
             }
         },
@@ -326,7 +323,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         #' @description Fill deposits client with metadata, and upload to
         #' deposits service if connected.
-        #' @param metadata Either of one three possible ways of defining
+        #' @param metadata Either one of two possible ways of defining
         #' metadata:
         #' \itemize{
         #' \item The name (or full path) or a local file containing
@@ -334,23 +331,20 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \item A names list of metadata with names matching values given by
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
-        #' \item An \pkg{atom4R} `DCEntry` object containing metadata, either
-        #' constructed directly via \pkg{atom4R} routines, or via
-        #' \link{deposits_meta_to_dcmi}.
         #' }
         #' @return Updated deposits client with metadata inserted.
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- validate_metadata (metadata, self$service)
+            metadata <- validate_metadata (metadata, self$service, self$term_map)
             self$metadata <- metadata
 
             if (!is.null (self$id)) {
 
-                self <- private$upload_dcmi_xml ()
+                # self <- private$upload_dcmi_xml ()
                 # That resets local metadata to upload version, so needs to be
                 # reset again:
-                self$metadata <- metadata
+                # self$metadata <- metadata
             }
 
             invisible (self)
@@ -364,9 +358,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
-            metaterms <- metadata_dcmi_to_list (self$metadata, self$term_map)
 
-            check <- validate_terms (metaterms, service = self$service)
+            check <- validate_terms (self$metadata, service = self$service)
+            self$metadata <- httptest2_dcmi_created (self$metadata)
             if (length (check) > 0L) {
                 warning (
                     "The following metadata terms do not conform:\n",
@@ -383,7 +377,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-            req <- httr2::req_body_json (req, data = metaterms)
+            req <- httr2::req_body_json (req, data = self$metadata)
 
             resp <- httr2::req_perform (req)
 
@@ -399,7 +393,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$deposits_list_extract ()
 
-            self <- private$upload_dcmi_xml ()
+            # self <- private$upload_dcmi_xml ()
 
             invisible (self)
         },
@@ -459,16 +453,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            metaterms <- metadata_dcmi_to_list (self$metadata, self$term_map)
-
-            req <- httr2::req_body_json (req, data = metaterms)
+            req <- httr2::req_body_json (req, data = self$metadata)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
             self <- self$deposit_retrieve (deposit_id)
 
-            self <- private$upload_dcmi_xml ()
+            # self <- private$upload_dcmi_xml ()
 
             invisible (self)
         },
@@ -552,9 +544,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            metadata <- metadata_from_deposit (self, self$hostdata)
-            metadata <- httptest2_dcmi_timestamps (metadata)
-            self$metadata <- metadata
+            # metadata <- metadata_from_deposit (self, self$hostdata)
+            # metadata <- httptest2_dcmi_timestamps (metadata)
+            # self$metadata <- metadata
 
             self <- private$fill_service_id_url ()
 
@@ -635,7 +627,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             if (self$service == "figshare") {
-                if (!cli$hostdata$is_public) {
+                if (!self$hostdata$is_public) {
                     stop (
                         "Figshare only enables automated downloads of public ",
                         "files.\nYou can manually download at ", download_url

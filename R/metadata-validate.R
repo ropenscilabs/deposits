@@ -10,32 +10,47 @@
 #' @return An `arom4R::DCEntry` metadata object.
 #'
 #' @noRd
-validate_metadata <- function (metadata, service = "zenodo") {
+validate_metadata <- function (metadata, service = "zenodo", term_map) {
+
+    if (methods::is (metadata, "character")) {
+        metadata <- deposits_meta_from_file (metadata)
+    }
 
     if (service == "zenodo-sandbox") {
         service <- "zenodo"
     }
 
-    metadata <- metadata_to_dcmi (metadata)
+    if (!any (grepl ("[Cc]reated", names (metadata)))) {
+        metadata [dcmi_terms ("created")] <-
+            paste0 (strftime (Sys.time (), "%Y-%m-%d"))
+    }
+    metadata <- httptest2_dcmi_created (metadata)
 
-    metadata <- httptest2_dcmi_timestamps (metadata)
-
-    # Check sanity of XML schema via 'atom4R' routines:
-    out <- utils::capture.output (
-        chk <- metadata$validate ()
+    # Align all metadata term names with DCMI names:
+    nms <- vapply (
+        names (metadata),
+        function (n) dcmi_terms (n),
+        character (1L)
     )
-    if (!chk) {
-        stop (
-            "metadata is not valid - ",
-            "see details via metadata$validate()"
+    index <- which (names (metadata) != unname (nms))
+    if (length (index) > 0L) {
+        msg <- vapply (
+            index,
+            function (i) paste0 ("   ", names (metadata) [i], " -> ", nms [i], "\n"),
+            character (1L)
         )
+        message (
+            "Names of the following metadata terms have been changed:\n",
+            msg
+        )
+        names (metadata) <- unname (nms)
     }
 
-    # Then check internal metadata standards
-    term_map <- get_dcmi_term_map (service = service)
-    metaterms <- metadata_dcmi_to_list (metadata, term_map)
+    if (service == "zenodo") {
+        metadata <- construct_md_list_zenodo (metadata, term_map)
+    }
 
-    check <- validate_terms (metaterms, service = service)
+    check <- validate_terms (metadata, service = service)
 
     if (length (check) > 0L) {
         warning (

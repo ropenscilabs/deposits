@@ -36,7 +36,7 @@ test_that ("zenodo actions", {
         )
     })
     expect_s3_class (cli, "depositsClient")
-    expect_s3_class (cli$metadata, "DCEntry")
+    expect_type (cli$metadata, "list")
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("zen_new", {
@@ -66,7 +66,7 @@ test_that ("zenodo actions", {
         metadata$abstract
     )
     expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$metadata$title,
         metadata$title
     )
 
@@ -81,7 +81,7 @@ test_that ("zenodo actions", {
     })
 
     expect_equal (
-        cli$metadata$title [[1]]$value,
+        cli$metadata$metadata$title,
         metadata$title
     )
     expect_false (cli$hostdata$title ==

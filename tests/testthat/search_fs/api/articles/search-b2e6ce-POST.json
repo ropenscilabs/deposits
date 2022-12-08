@@ -1,28 +1,5 @@
 [
     {
-        "project_id": null,
-        "id": 5845593,
-        "title": "random.xlsx",
-        "doi": "10.6084/m9.figshare.5845593.v1",
-        "handle": "",
-        "url": "api/articles/5845593",
-        "published_date": "2022-01-01T00:00:00Z",
-        "thumb": "",
-        "defined_type": 3,
-        "defined_type_name": "dataset",
-        "group_id": null,
-        "url_private_api": "api/articles/5845593",
-        "url_public_api": "api/articles/5845593",
-        "url_private_html": "https://figshare.com/account/articles/5845593",
-        "url_public_html": "https://figshare.com/articles/dataset/random_xlsx/5845593",
-        "timeline": {
-            "posted": "2022-01-01T00:00:00",
-            "firstOnline": "2022-01-01T00:00:00"
-        },
-        "resource_title": "",
-        "resource_doi": ""
-    },
-    {
         "project_id": 132974,
         "id": 19199774,
         "title": "SuppMaterial",
@@ -70,6 +47,29 @@
     },
     {
         "project_id": null,
+        "id": 5845593,
+        "title": "random.xlsx",
+        "doi": "10.6084/m9.figshare.5845593.v1",
+        "handle": "",
+        "url": "api/articles/5845593",
+        "published_date": "2022-01-01T00:00:00Z",
+        "thumb": "",
+        "defined_type": 3,
+        "defined_type_name": "dataset",
+        "group_id": null,
+        "url_private_api": "api/articles/5845593",
+        "url_public_api": "api/articles/5845593",
+        "url_private_html": "https://figshare.com/account/articles/5845593",
+        "url_public_html": "https://figshare.com/articles/dataset/random_xlsx/5845593",
+        "timeline": {
+            "posted": "2022-01-01T00:00:00",
+            "firstOnline": "2022-01-01T00:00:00"
+        },
+        "resource_title": "",
+        "resource_doi": ""
+    },
+    {
+        "project_id": null,
         "id": 14675409,
         "title": "random numbers.json",
         "doi": "10.6084/m9.figshare.14675409.v1",
@@ -93,25 +93,27 @@
     },
     {
         "project_id": null,
-        "id": 8312348,
-        "title": "No repeated zones in proposed light-field near-eye displays using random holes.mp4",
-        "doi": "10.6084/m9.figshare.8312348.v1",
-        "handle": "",
-        "url": "api/articles/8312348",
+        "id": 12674225,
+        "title": "Random periodic processes, periodic measures and ergodicity",
+        "doi": "",
+        "handle": "2134/12674225.v1",
+        "url": "api/articles/12674225",
         "published_date": "2022-01-01T00:00:00Z",
-        "thumb": "https://s3-eu-west-1.amazonaws.com/ppreviews-osa-98354354135/15575366/thumb.png",
-        "defined_type": 2,
-        "defined_type_name": "media",
-        "group_id": 2352,
-        "url_private_api": "api/articles/8312348",
-        "url_public_api": "api/articles/8312348",
-        "url_private_html": "https://figshare.com/account/articles/8312348",
-        "url_public_html": "https://opticapublishing.figshare.com/articles/media/No_repeated_zones_in_proposed_light-field_near-eye_displays_using_random_holes_mp4/8312348",
+        "thumb": "https://s3-eu-west-1.amazonaws.com/ppreviews-loughborough-81236/23984636/thumb.png",
+        "defined_type": 6,
+        "defined_type_name": "journal contribution",
+        "group_id": 20438,
+        "url_private_api": "api/articles/12674225",
+        "url_public_api": "api/articles/12674225",
+        "url_private_html": "https://figshare.com/account/articles/12674225",
+        "url_public_html": "https://repository.lboro.ac.uk/articles/journal_contribution/Random_periodic_processes_periodic_measures_and_ergodicity/12674225",
         "timeline": {
             "posted": "2022-01-01T00:00:00",
+            "publisherAcceptance": "2022-01-01T00:00:00",
+            "publisherPublication": "2022-01-01T00:00:00",
             "firstOnline": "2022-01-01T00:00:00"
         },
-        "resource_title": "Design of a light-field near-eye display using random pinholes",
-        "resource_doi": "10.1364/OE.27.023763"
+        "resource_title": "",
+        "resource_doi": ""
     }
 ]

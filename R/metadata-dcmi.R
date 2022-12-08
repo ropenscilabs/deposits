@@ -1,53 +1,42 @@
-# Functions to convert metadata inputs into 'atom4R::DCEnetry' outputs, and to
-# convert 'DCEntry' objects into simple lists of terms.
+# Functions to convert metadata inputs into standard DCMI terms
+
+#' Get DCMI elements  from definition file
+#'
+#' @return An \pkg{xml2} `xml_document` with the DCMI terms schema.
+#' @family meta
+#' @noRd
+dcmi_schema <- function () {
+
+    path <- "extdata/dc/"
+    schema <- "dcterms.xsd"
+    s <- system.file (file.path (path, schema), package = "deposits")
+    if (!file.exists (s)) {
+        stop ("Schema file [", s, "] not found")
+    }
+    xml2::read_xml (s)
+}
 
 #' Get names of DCMI terms
 #'
 #' The Dublin Core Metadata Initiative defines a set of terms at
 #' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
-#' This function returns the names of those terms currently recognised by the
-#' \pkg{atom4R} package.
 #'
+#' @param term If specified, match term to official DCMI nomenclature, and
+#' return single match.
 #' @return A character vector of DCMI terms.
 #' @family meta
 #' @export
-dcmi_terms <- function () {
+dcmi_terms <- function (term = NULL) {
 
-    terms <- ls (envir = asNamespace ("atom4R"), pattern = "^DC")
-    not_meta <- c ("DCElement", "DCEntry", "DCMIVocabulary")
-    terms <- terms [which (!terms %in% not_meta)]
+    schema <- dcmi_schema ()
+    elements <- xml2::xml_find_all (schema, "xs:element")
+    element_names <- xml2::xml_attr (elements, "name")
 
-    return (gsub ("^DC", "", terms))
-}
-
-#' Process metadata parameters in one of the three possible forms, returning a
-#' 'DCEntry' object.
-#' @param metadata Metadata as list, filename, or DCEntry object
-#' @return A 'DCEntry' object
-#' @noRd
-metadata_to_dcmi <- function (metadata) {
-
-    if (is.character (metadata)) {
-
-        checkmate::assert_string (metadata)
-        checkmate::assert_file_exists (metadata)
-        metadata <- deposits_meta_to_dcmi (metadata)
-
-    } else if (is.list (metadata)) {
-
-        filename <- tempfile (pattern = "meta_", fileext = ".json")
-        deposits_metadata_template (filename, metadata)
-        metadata <- deposits_meta_to_dcmi (filename)
-
-    } else {
-
-        checkmate::assert_class (
-            metadata,
-            c ("DCEntry", "AtomEntry", "R6")
-        )
+    if (!is.null (term)) {
+        element_names <- grep (term, element_names, value = TRUE, ignore.case = TRUE)
     }
 
-    return (metadata)
+    return (element_names)
 }
 
 #' Load metadata term translation table from local inst/extdata
@@ -87,66 +76,4 @@ get_dcmi_term_map <- function (service = "zenodo") {
     terms [, 2] <- gsub ("\\(m\\)$", "", terms [, 2])
 
     return (terms)
-}
-
-#' Convert metadata of atom4R::DCEntry object into a list of terms
-#'
-#' @param metadata The 'metadata' object of a 'deposits' client, as an
-#' `atom4R::DCEntry` object.
-#' @param term_map The 'term_map' object of a 'deposits' client.
-#' @return A named list of metadata terms extracted from metadata, and matching
-#' the terms identified and permitted in the `term_map`.
-#' @noRd
-metadata_dcmi_to_list <- function (metadata, term_map) {
-
-    # term_map is constructed so that first DCMI translation is the preferred
-    # one, with subsequent ones offering alternative translations
-    term_map <- term_map [which (!duplicated (term_map$dcmi)), ]
-
-    values <- lapply (term_map$dcmi, function (i) {
-        lapply (metadata [[i]], function (j) {
-            j$value
-        })
-    })
-    names (values) <- term_map$service
-    values <- values [which (vapply (values, length, integer (1)) > 0L)]
-    arrays <- c ("keywords", "contributors")
-    index <- which (!names (values) %in% arrays)
-    values [index] <- lapply (values [index], function (i) {
-        paste0 (i, collapse = ",")
-    })
-
-    is_zenodo <- any (term_map$meta)
-    if (is_zenodo) {
-
-        values <- construct_md_list_zenodo (values, term_map)
-
-    } else {
-
-        values <- construct_md_list_figshare (values, term_map)
-    }
-
-    return (values)
-}
-
-#' 'atom4R' has no way of directly listing which 'DCEntry' items have content.
-#' This function does that.
-#' @noRd
-get_dcentry_items <- function (dcmi) {
-
-    dcmi_get_fns <- grep ("^getDC", ls (dcmi), value = TRUE)
-    not_these <- c ("getDCElementByValue", "getDCElements")
-    dcmi_get_fns <- dcmi_get_fns [which (!dcmi_get_fns %in% not_these)]
-
-    dcmi_has_values <- vapply (
-        dcmi_get_fns, function (f) {
-            length (dcmi [[f]] ()) > 0L
-        },
-        logical (1L)
-    )
-
-    dcmi_items <- names (dcmi_has_values) [which (dcmi_has_values)]
-    dcmi_items <- gsub ("^getDC|s$", "", dcmi_items)
-
-    return (dcmi_items)
 }

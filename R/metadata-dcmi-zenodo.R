@@ -1,10 +1,11 @@
 #' Add additional metadata list-item values required by zenodo.
 #'
-#' This function is called as the last step in `metadata_dcmi_to_list()`.
+#' Zenodo has it's own "metadata" list item. The main thing this function does
+#' is to move appropriate terms within the initially flat 'metadata' list into
+#' the sub-component of "metadata" within the main metadata.
 #'
-#' @param values Initial list of metadata constructed in
-#' `metadata_dcmi_to_list`.
-#' @param term_map The term map for a particular deposits service.
+#' @param values Initial metadata list
+#' @param term_map The term map for the 'zenodo' deposits service.
 #' @return A potentially modified version of `values`, with structures of
 #' individual items rectified to expected forms, and any otherwise missing yet
 #' required fields inserted with default values.
@@ -27,11 +28,36 @@ construct_md_list_zenodo <- function (values, term_map) {
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
 
+    # grab any corresponding entries from 'values':
+    move_one <- function (ptn, val_list) {
+        i <- grep (ptn, names (val_list$values))
+        if (length (i) == 1L) {
+            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <- val_list$values [[i]]
+            val_list$values <- val_list$values [-i]
+        }
+        return (val_list)
+    }
+    val_list <- move_one ("^[Cc]reator", list (meta_values = meta_values, values = values))
+    val_list <- move_one ("^[Tt]itle", val_list)
+    val_list <- move_one ("^[Dd]escr", val_list)
+    val_list <- move_one ("^[Uu]pload", val_list)
+
+    meta_values <- val_list$meta_values
+    values <- val_list$values
+
     if (!is.list (meta_values$creators)) {
         meta_values$creators <- list (list (name = meta_values$creators))
+    } else if (is.null (names (meta_values$creators))) {
+        meta_values$creators <- lapply (meta_values$creators, function (i) {
+            if (!is.list (i)) {
+                i <- list (name = i)
+            }
+            return (i)
+        })
     } else if (names (meta_values$creators) == "name") {
         meta_values$creators <- list (meta_values$creators)
     }
+
     if ("upload_type" %in% names (meta_values)) {
         meta_values$upload_type <- tolower (meta_values$upload_type)
     }
@@ -39,7 +65,20 @@ construct_md_list_zenodo <- function (values, term_map) {
     values$metadata <- meta_values
 
     if (!"created" %in% names (values)) {
-        values <- c ("created" = paste0 (Sys.Date ()), values)
+        values <- c (
+            "created" = paste0 (strftime (Sys.time (), "%Y-%m-%d")),
+            values
+        )
+    }
+
+    # Finally, move any 'meta' terms in term_map from 'values' to 'meta_values':
+    index <- which (names (values) %in% term_map$dcmi [term_map$meta])
+    if (length (index) > 0) {
+        service_name <- term_map$service [match (names (values) [index], term_map$dcmi)]
+        for (i in seq_len (index)) {
+            values$metadata [[service_name [i]]] <- values [[index [i]]]
+            values <- values [-index [i]]
+        }
     }
 
     values <- httptest2_dcmi_created (values)
