@@ -71,6 +71,16 @@ construct_md_list_zenodo <- function (values, term_map) {
         )
     }
 
+    # Finally, move any 'meta' terms in term_map from 'values' to 'meta_values':
+    index <- which (names (values) %in% term_map$dcmi [term_map$meta])
+    if (length (index) > 0) {
+        service_name <- term_map$service [match (names (values) [index], term_map$dcmi)]
+        for (i in seq_len (index)) {
+            values$metadata [[service_name [i]]] <- values [[index [i]]]
+            values <- values [-index [i]]
+        }
+    }
+
     values <- httptest2_dcmi_created (values)
 
     return (values)
