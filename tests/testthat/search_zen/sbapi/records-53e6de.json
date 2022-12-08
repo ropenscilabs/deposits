@@ -3,11 +3,11 @@
         "access_right": {
             "buckets": [
                 {
-                    "doc_count": 804,
+                    "doc_count": 813,
                     "key": "open"
                 },
                 {
-                    "doc_count": 10,
+                    "doc_count": 11,
                     "key": "closed"
                 },
                 {
@@ -25,7 +25,7 @@
         "file_type": {
             "buckets": [
                 {
-                    "doc_count": 521,
+                    "doc_count": 529,
                     "key": "pdf"
                 },
                 {
@@ -37,7 +37,7 @@
                     "key": "xml"
                 },
                 {
-                    "doc_count": 31,
+                    "doc_count": 30,
                     "key": "jpg"
                 },
                 {
@@ -57,7 +57,7 @@
                     "key": "md"
                 },
                 {
-                    "doc_count": 12,
+                    "doc_count": 13,
                     "key": "png"
                 },
                 {
@@ -66,7 +66,7 @@
                 }
             ],
             "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 98
+            "sum_other_doc_count": 99
         },
         "keywords": {
             "buckets": [
@@ -107,26 +107,26 @@
                     "key": "Multi-agent Simulation"
                 },
                 {
-                    "doc_count": 7,
-                    "key": "Mahendra Trivedi"
+                    "doc_count": 8,
+                    "key": "ismir"
                 }
             ],
             "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 1585
+            "sum_other_doc_count": 1589
         },
         "type": {
             "buckets": [
                 {
-                    "doc_count": 597,
+                    "doc_count": 604,
                     "key": "publication",
                     "subtype": {
                         "buckets": [
                             {
-                                "doc_count": 315,
+                                "doc_count": 314,
                                 "key": "article"
                             },
                             {
-                                "doc_count": 202,
+                                "doc_count": 210,
                                 "key": "conferencepaper"
                             },
                             {
@@ -175,7 +175,7 @@
                     }
                 },
                 {
-                    "doc_count": 104,
+                    "doc_count": 105,
                     "key": "software",
                     "subtype": {
                         "buckets": [
@@ -186,7 +186,7 @@
                     }
                 },
                 {
-                    "doc_count": 66,
+                    "doc_count": 67,
                     "key": "dataset",
                     "subtype": {
                         "buckets": [
@@ -197,7 +197,7 @@
                     }
                 },
                 {
-                    "doc_count": 22,
+                    "doc_count": 23,
                     "key": "image",
                     "subtype": {
                         "buckets": [
@@ -206,7 +206,7 @@
                                 "key": "figure"
                             },
                             {
-                                "doc_count": 1,
+                                "doc_count": 2,
                                 "key": "photo"
                             }
                         ],
@@ -782,7 +782,7 @@
                 "updated": "2022-01-01T00:00:00+00:00"
             }
         ],
-        "total": 816
+        "total": 826
     },
     "links": {
         "next": "sbapi/records/?sort=bestmatch&q=random&page=2&size=5",
