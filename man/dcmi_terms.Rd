@@ -16,8 +16,6 @@ A character vector of DCMI terms.
 \description{
 The Dublin Core Metadata Initiative defines a set of terms at
 \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
-This function returns the names of those terms currently recognised by the
-\pkg{atom4R} package.
 }
 \seealso{
 Other meta: 

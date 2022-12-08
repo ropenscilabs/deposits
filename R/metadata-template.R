@@ -3,10 +3,9 @@
 #'
 #' The fields are those defined by the Dublin Core Metadata Initiative (DCMI),
 #' defined at
-#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/},
-#' extracted here from the \pkg{atom4R} package. The template produced by this
-#' function is in `json` format which can be manually edited to provide metadata
-#' for a deposit.
+#' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}. The
+#' template produced by this function is in `json` format which can be manually
+#' edited to provide metadata for a deposit.
 #'
 #' @param filename Name or full path to local file where template is to be
 #' written. This file will be created. If a file of that name already exists, it
@@ -130,11 +129,11 @@ fill_metadata_template <- function (template, metadata) {
 }
 
 
-#' Read a metadata `yaml` file and convert to \pkg{atom4R} DCMI object.
+#' Read a metadata `yaml` file and convert to a metadata object.
 #'
 #' Metadata templates can be generated with \link{deposits_metadata_template},
 #' and values manually entered. This functions loads the completed template and
-#' converts it to a `DCEntry` object from the \pkg{atom4R} package.
+#' converts it to a metadata object.
 #'
 #' @param filename Name of completed metadata file generated from
 #' \link{deposits_metadata_template}.

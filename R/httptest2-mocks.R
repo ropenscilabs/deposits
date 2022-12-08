@@ -40,8 +40,7 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
     return (hostdata)
 }
 
-#' @description `atom4R` inserts a "created" field into metadata which needs to
-#' be standardised.
+#' @description Standardise timestamp of metadata "created" field.
 #'
 #' This is called in the `construct_md_list_zenodo/figshare` functions.
 #' @noRd
@@ -56,8 +55,7 @@ httptest2_dcmi_created <- function (metadata) {
     return (metadata)
 }
 
-#' @description Standardise time and date stamps placed by the `atom4R`
-#' `dcmi$encode()` method.
+#' @description Standardise time and date stamps
 #'
 #' This is called only in the private `upload_dcmi_xml()` method.
 #' @noRd

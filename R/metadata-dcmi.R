@@ -20,8 +20,6 @@ dcmi_schema <- function () {
 #'
 #' The Dublin Core Metadata Initiative defines a set of terms at
 #' \url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}.
-#' This function returns the names of those terms currently recognised by the
-#' \pkg{atom4R} package.
 #'
 #' @param term If specified, match term to official DCMI nomenclature, and
 #' return single match.

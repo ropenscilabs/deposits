@@ -24,10 +24,9 @@ specifies one author.}
 \description{
 The fields are those defined by the Dublin Core Metadata Initiative (DCMI),
 defined at
-\url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/},
-extracted here from the \pkg{atom4R} package. The template produced by this
-function is in \code{json} format which can be manually edited to provide metadata
-for a deposit.
+\url{https://www.dublincore.org/specifications/dublin-core/dcmi-terms/}. The
+template produced by this function is in \code{json} format which can be manually
+edited to provide metadata for a deposit.
 }
 \examples{
 filename <- tempfile (fileext = ".json")
