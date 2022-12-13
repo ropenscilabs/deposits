@@ -1,10 +1,10 @@
-# These are the main entry points to metadata validation routines called
-# directly from the main client functions. The `validate_metadata()` function is
-# called on the parameter used in client construction, while the
-# `validate_terms` function is applied to .
 
 #' validate metadata input to client either as "metadata" parameter, or though
 #' `deposit_fill_metadata()` method.
+#'
+#' This only validates compliance with DCMI terminology, and standardises names
+#' of metadata items. DCMI dictates no structural properties of any metadata
+#' items, and thus neither does this function.
 #'
 #' @param metadata Metadata as a list or filename.
 #' @return A list of metadata terms, standardised to expected DCMI nomenclature.
