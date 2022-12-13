@@ -9,11 +9,49 @@ dcmi_schema <- function () {
 
     path <- "extdata/dc/"
     schema <- "dcterms.xsd"
-    s <- system.file (file.path (path, schema), package = "deposits")
-    if (!file.exists (s)) {
-        stop ("Schema file [", s, "] not found")
+    elements <- "dc.xsd"
+
+    read_one_xml <- function (path, file_name) {
+
+        f <- system.file (file.path (path, file_name), package = "deposits")
+        if (!file.exists (f)) {
+            stop ("Schema file [", f, "] not found")
+        }
+        xml2::read_xml (f)
     }
-    xml2::read_xml (s)
+
+    # The defined types of DCMI elements, each of which inherits from
+    # 'substitutionGroup = "any"', and is prepended with "dc:" in the
+    # 'substitionGroup' entries in the actual terms table.
+    element_types <- read_one_xml (path, elements)
+    element_types <- xml2::xml_find_all (element_types, "xs:element")
+    element_types <- xml2::xml_attr (element_types, "name")
+    element_types <- paste0 ("dc:", element_types)
+
+    schema <- read_one_xml (path, schema)
+    elements <- xml2::xml_find_all (schema, "xs:element")
+    element_names <- xml2::xml_attr (elements, "name")
+    element_groups <- xml2::xml_attr (elements, "substitutionGroup")
+
+    # The following 'substitutionGroup' entries re-map directly into "dc:"
+    # versions of the same:
+    remaps <- c (
+        "coverage",
+        "date",
+        "description",
+        "format",
+        "identifier",
+        "relation",
+        "rights",
+        "title"
+    )
+    element_groups [element_groups %in% remaps] <-
+        paste0 ("dc:", element_groups [element_groups %in% remaps])
+
+    data.frame (
+        name = element_names,
+        group = element_groups
+    )
 }
 
 #' Get names of DCMI terms
@@ -28,12 +66,14 @@ dcmi_schema <- function () {
 #' @export
 dcmi_terms <- function (term = NULL) {
 
-    schema <- dcmi_schema ()
-    elements <- xml2::xml_find_all (schema, "xs:element")
-    element_names <- xml2::xml_attr (elements, "name")
+    element_names <- dcmi_schema ()$name
 
     if (!is.null (term)) {
         element_names <- grep (term, element_names, value = TRUE, ignore.case = TRUE)
+    }
+
+    if (length (element_names) == 0L) {
+        element_names <- ""
     }
 
     return (element_names)

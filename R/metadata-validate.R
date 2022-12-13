@@ -6,18 +6,14 @@
 #' validate metadata input to client either as "metadata" parameter, or though
 #' `deposit_fill_metadata()` method.
 #'
-#' @param metadata Metadata as list, filename, or DCEntry object
-#' @return An `arom4R::DCEntry` metadata object.
+#' @param metadata Metadata as a list or filename.
+#' @return A list of metadata terms, standardised to expected DCMI nomenclature.
 #'
 #' @noRd
-validate_metadata <- function (metadata, service = "zenodo", term_map) {
+validate_metadata <- function (metadata) {
 
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
-    }
-
-    if (service == "zenodo-sandbox") {
-        service <- "zenodo"
     }
 
     if (!any (grepl ("[Cc]reated", names (metadata)))) {
@@ -32,6 +28,17 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
         function (n) dcmi_terms (n),
         character (1L)
     )
+
+    index <- which (!nzchar (nms)) # invalid term names
+    if (length (index) > 0L) {
+        warning (
+            "The following metadata terms do not conform and will be removed:\n",
+            paste0 (names (nms) [index], collapse = "\n")
+        )
+        metadata <- metadata [-index]
+        nms <- nms [-index]
+    }
+
     index <- which (names (metadata) != unname (nms))
     if (length (index) > 0L) {
         msg <- vapply (
@@ -46,39 +53,5 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
         names (metadata) <- unname (nms)
     }
 
-    if (service == "zenodo") {
-        metadata <- construct_md_list_zenodo (metadata, term_map)
-    }
-
-    check <- validate_terms (metadata, service = service)
-
-    if (length (check) > 0L) {
-        warning (
-            "The following metadata terms do not conform:\n",
-            paste0 (check, collapse = "\n")
-        )
-    }
-
     return (metadata)
-}
-
-#' validate metadata terms
-#'
-#' @param metaterms A list of metadata terms returned from
-#' `metadata_dcmi_to_list()`.
-#' @param service Name of deposits service.
-#' @return `NULL` if all metaterms are valid, otherwise a vector of any invalid
-#' metaterms.
-#' @noRd
-validate_terms <- function (metaterms, service = "zenodo") {
-
-    service <- match.arg (service, c ("figshare", "zenodo"))
-
-    if (service == "zenodo") {
-        res <- validate_zenodo_terms (metaterms) # in metadata-validate-zenodo.R
-    } else if (service == "figshare") {
-        res <- validate_figshare_terms (metaterms) # in metadata-validate-figshare.R
-    }
-
-    return (res)
 }
