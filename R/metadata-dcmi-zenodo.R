@@ -44,8 +44,10 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
         }
         return (val_list)
     }
-    val_list <- move_one ("^[Cc]reator",
-        list (meta_values = meta_values, values = values))
+    val_list <- move_one (
+        "^[Cc]reator",
+        list (meta_values = meta_values, values = values)
+    )
     val_list <- move_one ("^[Tt]itle", val_list)
     val_list <- move_one ("^[Dd]escr", val_list)
     val_list <- move_one ("^[Uu]pload", val_list)

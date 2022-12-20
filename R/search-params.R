@@ -137,8 +137,10 @@ check_param_values_figshare <- function (arglist) {
 
     if ("order" %in% names (arglist)) {
         if (!arglist$order %in%
-            c ("published_date", "modified_date", "views",
-                "shares", "downloads", "cites")) {
+            c (
+                "published_date", "modified_date", "views",
+                "shares", "downloads", "cites"
+            )) {
             stop (
                 "The 'order' parameter must be in the specified vocabulary; ",
                 "see ?depositsClient for link to accepted values.",

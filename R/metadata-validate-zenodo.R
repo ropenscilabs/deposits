@@ -105,11 +105,12 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
 
     out <- NULL
 
-    f <- system.file (file.path (
-        "extdata",
-        meta_term_def$vocabulary [i]
-    ),
-    package = "deposits"
+    f <- system.file (
+        file.path (
+            "extdata",
+            meta_term_def$vocabulary [i]
+        ),
+        package = "deposits"
     )
     voc <- utils::read.csv (f)
     if (meta_term_def$term [i] == "license") {

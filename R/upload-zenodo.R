@@ -17,7 +17,8 @@ upload_zenodo_file <- function (deposit_id, url, headers, path) {
     req$headers <- c (req$headers, "Content-Type" = "application/octet-stream")
     req <- httr2::req_body_file (
         req,
-        path = path)
+        path = path
+    )
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
