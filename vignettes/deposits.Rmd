@@ -115,12 +115,13 @@ of `ls(cli)`:
 ```{r ls-cli, eval = FALSE}
 ls (cli)
 #>  [1] "deposit_delete"        "deposit_download_file" "deposit_fill_metadata"
-#>  [4] "deposit_new"           "deposit_retrieve"      "deposit_update"
-#>  [7] "deposit_upload_file"   "deposits"              "deposits_list"
-#> [10] "headers"               "hostdata"              "id"
-#> [13] "initialize"            "metadata"              "print"
-#> [16] "sandbox"               "service"               "term_map"
-#> [19] "url_base"              "url_service"
+#>  [4] "deposit_new"           "deposit_retrieve"      "deposit_service"
+#>  [7] "deposit_update"        "deposit_upload_file"   "deposits"
+#> [10] "deposits_list"         "deposits_search"       "headers"
+#> [13] "hostdata"              "id"                    "initialize"
+#> [16] "metadata"              "print"                 "sandbox"
+#> [19] "service"               "term_map"              "url_base"
+#> [22] "url_service"
 ```
 
 The client constructed above is mostly empty, but nevertheless demonstrates the
@@ -178,7 +179,7 @@ print (cli)
 #>  Current deposits : <none>
 #>
 #>     hostdata : <none>
-#>     metadata : 3 terms (see 'metadata' element for details)
+#>     metadata : 4 terms (see 'metadata' element for details)
 ```
 
 The summary produced by calling `print()` (or, equivalently, just typing `cli`
@@ -187,17 +188,31 @@ can be seen by viewing `cli$metadata`:
 
 ```{r cli-dcmi-metadata, eval = FALSE}
 cli$metadata
-#> <DCEntry>
-#> ....|-- updated: 2022-05-23 14:13:42
-#> ....|-- title <DCTitle>
-#> ........|-- value: New Title
-#> ....|-- abstract <DCAbstract>
-#> ........|-- value: This is the abstract
-#> ....|-- creator <DCCreator>
-#> ........|-- value: A. Person
-#> ....|-- creator <DCCreator>
-#> ........|-- value: B. Person>
 ```
+```{r cli-metadata-fakey, echo = FALSE}
+metadata <- list (
+    dcmi = list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person"),
+        created = "2022-12-20"
+    ),
+    service = list (
+        created = "2022-12-20",
+        metadata = list (
+            title = "New Title",
+            upload_type = "other",
+            creators = list (
+                list (name = "A. Person"),
+                list (name = "B. Person")
+            ),
+            description = "This is the abstract"
+        )
+    )
+)
+print (metadata)
+```
+
 
 Metadata in `deposits` objects are stored as `DCEntry` objects in a format
 provided by [the `atom4R` package](https://github.com/eblondel/atom4R).
@@ -215,7 +230,7 @@ the `metadata` parameter of data specified as a list:
 
 ```{r}
 meta_file <- tempfile (pattern = "meta-", fileext = ".yaml")
-deposits_metadata_template (filename = meta_file, metadata = metadata)
+deposits_metadata_template (filename = meta_file, metadata = metadata$dcmi)
 head (readLines (meta_file))
 ```
 
@@ -250,7 +265,7 @@ print (cli)
 #>  url_deposit : https://sandbox.zenodo.org/deposit/1064327
 #>   deposit id : 1064327
 #>     hostdata : list with 14  elements
-#>     metadata : 3 terms (see 'metadata' element for details)
+#>     metadata : 4 terms (see 'metadata' element for details)
 ```
 
 The client now lists one current deposit, additional fields for the URL and
