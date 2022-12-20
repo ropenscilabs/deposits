@@ -455,7 +455,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            req <- httr2::req_body_json (req, data = self$metadata)
+            req <- httr2::req_body_json (req, data = self$metadata$service)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
