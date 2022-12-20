@@ -55,3 +55,26 @@ validate_dcmi_metadata <- function (metadata) {
 
     return (metadata)
 }
+
+#' Transform and validate DCMI metadata into service-specific form.
+#'
+#' @param metadata DCMI metadata returned from the preceding
+#' `validate_dcmi_metadata()` function.
+#' @return A list of metadata terms, standardised to nomenclature expected for
+#' the specified service.
+#'
+#' @noRd
+validate_service_metadata <- function (metadata, service) {
+
+    service <- gsub ("\\-sandbox$", "", service)
+
+    term_map <- get_dcmi_term_map (service)
+
+    if (service == "zenodo") {
+        metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
+    } else if (service == "figshare") {
+        metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
+    }
+
+    return (metadata_service)
+}

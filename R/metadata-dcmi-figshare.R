@@ -10,7 +10,7 @@
 #' required fields inserted with default values.
 #' @noRd
 
-construct_md_list_figshare <- function (values, term_map) {
+convert_dcmi_to_figshare <- function (values, term_map) {
 
     if ("authors" %in% names (values) && !is.list (values$authors)) {
         values$authors <- list (list (name = values$authors))
