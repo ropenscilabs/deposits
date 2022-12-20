@@ -26,6 +26,10 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
         "creators" = "A. Person",
         "description" = "Description"
     )
+    if ("abstract" %in% names (values) && !"description" %in% names (values)) {
+        req$description <- values$abstract
+        values$abstract <- NULL
+    }
 
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
