@@ -103,11 +103,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
-                metadata_dcmi <- validate_dcmi_metadata (metadata)
-                metadata_service <- validate_service_metadata (metadata_dcmi, service)
-                self$metadata <- list (
-                    dcmi = metadata_dcmi,
-                    service = metadata_service
+                self$metadata <- validate_metadata (
+                    metadata,
+                    gsub ("\\-sandbox$", "", self$service)
                 )
             }
 
@@ -340,12 +338,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata_dcmi <- validate_dcmi_metadata (metadata)
-            metadata_service <- validate_service_metadata (metadata_dcmi, self$service)
-            self$metadata <- list (
-                dcmi = metadata_dcmi,
-                service = metadata_service
-            )
+            self$metadata <- validate_metadata (metadata, self$service)
 
             if (!is.null (self$id)) {
 
@@ -367,6 +360,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
 
+            # Re-run service-specific metadata validation in case anything has
+            # changed:
             metadata_service <- validate_service_metadata (self$metadata$dcmi, service = self$service)
             self$metadata <- httptest2_dcmi_created (self$metadata)
 

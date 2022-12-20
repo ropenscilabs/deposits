@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.3.208",
+  "version": "0.0.3.209",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

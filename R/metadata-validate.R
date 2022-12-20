@@ -1,4 +1,25 @@
 
+#' Validate metadata and convert to service-specific form
+#'
+#' This function is a wrapper used to call the following two functions in
+#' sequence.
+#'
+#' @param metadata Metadata as list or filename.
+#' @param service Name of deposits service
+#' @return A list of two elements: 'dcmi' holding validated DCMI metadata, and
+#' 'service' holding the validated, service-specific translation of 'dcmi'
+#' @noRd
+validate_metadata <- function (metadata, service) {
+
+    metadata_dcmi <- validate_dcmi_metadata (metadata)
+    metadata_service <- validate_service_metadata (metadata_dcmi, service)
+
+    return (list (
+        dcmi = metadata_dcmi,
+        service = metadata_service
+    ))
+}
+
 #' validate metadata input to client either as "metadata" parameter, or though
 #' `deposit_fill_metadata()` method.
 #'
