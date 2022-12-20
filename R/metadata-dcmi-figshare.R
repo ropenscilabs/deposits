@@ -33,7 +33,8 @@ convert_dcmi_to_figshare <- function (values, term_map) {
         if (is.na (suppressWarnings (as.integer (values$license)))) {
             warning (
                 "Figshare licenses must be integer-valued; ",
-                "the value will be reset to '1' = 'CC-BY'"
+                "the value will be reset to '1' = 'CC-BY'",
+                call. = FALSE
             )
             values$license <- 1L
         }

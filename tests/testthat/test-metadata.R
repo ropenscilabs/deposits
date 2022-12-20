@@ -189,6 +189,22 @@ test_that ("figshare metadata terms", {
         metadata_service <- validate_service_metadata (metadata_dcmi, service = "figshare")
     )
 
+    metadata$license <- "MIT"
+    metadata_dcmi <- validate_dcmi_metadata (metadata)
+    msg <- paste0 (
+        "Figshare licenses must be integer-valued; ",
+        "the value will be reset to '1' = 'CC-BY'"
+    )
+    expect_warning (
+        metadata_service <- validate_service_metadata (metadata_dcmi, service = "figshare"),
+        msg
+    )
+    metadata$license <- 1L
+    metadata_dcmi <- validate_dcmi_metadata (metadata)
+    expect_silent (
+        metadata_service <- validate_service_metadata (metadata_dcmi, service = "figshare")
+    )
+
     # internal code:
     term_map <- get_dcmi_term_map (service = "figshare")
     metadata_service <- convert_dcmi_to_figshare (metadata_dcmi, term_map)
