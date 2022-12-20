@@ -367,14 +367,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
 
-            check <- validate_terms (self$metadata, service = self$service)
+            metadata_service <- validate_service_metadata (self$metadata$dcmi, service = self$service)
             self$metadata <- httptest2_dcmi_created (self$metadata)
-            if (length (check) > 0L) {
-                warning (
-                    "The following metadata terms do not conform:\n",
-                    paste0 (check, collapse = "\n")
-                )
-            }
 
             url <- paste0 (
                 self$url_base,
@@ -385,7 +379,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-            req <- httr2::req_body_json (req, data = self$metadata)
+            req <- httr2::req_body_json (req, data = self$metadata$service)
 
             resp <- httr2::req_perform (req)
 
