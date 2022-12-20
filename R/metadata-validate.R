@@ -72,8 +72,10 @@ validate_service_metadata <- function (metadata, service) {
 
     if (service == "zenodo") {
         metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
+        check <- validate_zenodo_terms (metadata_service)
     } else if (service == "figshare") {
         metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
+        check <- validate_figshare_terms (metadata_service)
     }
 
     return (metadata_service)
