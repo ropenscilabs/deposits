@@ -70,12 +70,22 @@ validate_service_metadata <- function (metadata, service) {
 
     term_map <- get_dcmi_term_map (service)
 
+    check <- NULL
+
     if (service == "zenodo") {
         metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
         check <- validate_zenodo_terms (metadata_service)
     } else if (service == "figshare") {
         metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
         check <- validate_figshare_terms (metadata_service)
+    }
+
+    if (length (check) > 0L) {
+        warning (
+            "The following metadata terms do not conform:\n",
+            paste0 (check, collapse = "\n"),
+            call. = FALSE
+        )
     }
 
     return (metadata_service)
