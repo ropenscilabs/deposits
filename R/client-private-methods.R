@@ -110,25 +110,21 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
     invisible (self)
 })
 
-#' @description Convert DCMI metadata to XML and update with current deposit
+#' @description Convert both DCMI and service-specific metadata to json and
+#' upload with current deposit.
 #' @noRd
 
-depositsClient$set ("private", "upload_dcmi_xml", function () {
+depositsClient$set ("private", "upload_dcmi_json", function () {
 
-    xml <- as (self$metadata$encode (), "character")
+    metadata <- self$metadata
 
-    # Rm 'atom4R' self-promo guff dumped by the encode method
-    ptn <- "<\\!\\-\\-Creation\\sdate.*atom4R\\-\\->"
-    ptn <- regmatches (xml, regexpr (ptn, xml))
-    xml <- gsub (ptn, "", xml)
+    metadata <- httpstest2_xml_timestamps (metadata)
 
-    xml <- httpstest2_xml_timestamps (xml)
-
-    f <- file.path (tempdir (), paste0 ("DCEntry-", self$id, ".xml"))
+    f <- file.path (tempdir (), paste0 ("metadata-", self$id, ".json"))
     if (file.exists (f)) {
         file.remove (f)
     }
-    writeLines (xml, f)
+    jsonlite::write_json (metadata, f, pretty = TRUE)
     self$deposit_upload_file (self$id, f)
 
     chk <- file.remove (f)

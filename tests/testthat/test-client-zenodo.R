@@ -4,8 +4,8 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-# This envvar is used only in the private 'upload_dcmi_xml()' function, in which
-# it converts the contents of the uploaded XML file to a standardised form
+# This envvar is used only in the private 'upload_dcmi_json()' function, in which
+# it converts the contents of the uploaded json file to a standardised form
 # (uniform timestamps and article id values).
 # This is also used one time in metadata.R `construct_metadata_list()` fn to set
 # the "created" date for zenodo deposits.

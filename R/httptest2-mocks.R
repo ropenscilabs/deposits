@@ -61,7 +61,7 @@ httptest2_dcmi_created <- function (metadata) {
 
 #' @description Standardise time and date stamps
 #'
-#' This is called only in the private `upload_dcmi_xml()` method.
+#' This is called only in the private `upload_dcmi_json()` method.
 #' @noRd
 
 httpstest2_xml_timestamps <- function (xml) {
