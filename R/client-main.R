@@ -158,23 +158,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (self$metadata)) {
                 cat ("   metadata : <none>\n")
             } else {
-                these_metadata <- self$metadata
-
-                if (self$service == "zenodo") {
-                    md <- these_metadata$metadata
-                    these_metadata$metadata <- NULL
-                    md <- c (these_metadata, md)
-                    # required terms from `metadata_dcmi_to_list()` in
-                    # R/metadata.R:
-                    index <- which (names (md) %in%
-                        c ("created", "upload_type"))
-                    these_metadata <- md [-index]
-                }
-
                 cat (
                     paste0 (
                         "   metadata : ",
-                        length (these_metadata),
+                        length (self$metadata$dcmi),
                         " terms (see 'metadata' element for details)"
                     ),
                     sep = "\n"

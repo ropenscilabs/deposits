@@ -64,7 +64,7 @@ test_that ("print-figshare", {
     testthat::expect_snapshot (print (cli))
 
     cli$hostdata <- list (data = "data")
-    cli$metadata <- list (updated = "2022-01-01")
+    cli$metadata <- list (dcmi = list (updated = "2022-01-01"))
     cli$id <- "1"
     cli$url_service <- "https://my.deposit"
     cli$deposits <- data.frame (n = 1:5)
@@ -85,7 +85,7 @@ test_that ("print-zenodo", {
     testthat::expect_snapshot (print (cli))
 
     cli$hostdata <- list (data = "data")
-    cli$metadata <- list (updated = "2022-01-01")
+    cli$metadata <- list (dcmi = list (updated = "2022-01-01"))
     cli$id <- "1"
     cli$url_service <- "https://my.deposit"
     cli$deposits <- data.frame (n = 1:5)

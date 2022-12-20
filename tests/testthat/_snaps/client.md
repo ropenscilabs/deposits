@@ -54,5 +54,5 @@
       url_service : https://my.deposit
        deposit id : 1
          hostdata : list with 1  elements
-         metadata : 0 terms (see 'metadata' element for details)
+         metadata : 1 terms (see 'metadata' element for details)
 
