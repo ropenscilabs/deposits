@@ -71,7 +71,7 @@ test_that ("figshare actions", {
     #     metadata$abstract
     # )
     expect_equal (
-        cli$metadata$title,
+        cli$metadata$dcmi$title,
         metadata$title
     )
 
