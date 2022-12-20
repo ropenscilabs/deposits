@@ -32,7 +32,8 @@ process_search_params <- function (service,
 
     # check types of all `...` params match official lists:
     for (i in seq_along (arglist)) {
-        expected_type <- search_params$type [search_params$param == names (arglist) [i]]
+        expected_type <-
+            search_params$type [search_params$param == names (arglist) [i]]
         assert_fn <- ifelse (
             expected_type == "string",
             checkmate::assert_character,
@@ -136,7 +137,8 @@ check_param_values_figshare <- function (arglist) {
 
     if ("order" %in% names (arglist)) {
         if (!arglist$order %in%
-            c ("published_date", "modified_date", "views", "shares", "downloads", "cites")) {
+            c ("published_date", "modified_date", "views",
+                "shares", "downloads", "cites")) {
             stop (
                 "The 'order' parameter must be in the specified vocabulary; ",
                 "see ?depositsClient for link to accepted values.",
@@ -148,14 +150,18 @@ check_param_values_figshare <- function (arglist) {
     if ("order_direction" %in% names (arglist)) {
         if (!arglist$order_direction %in% c ("asc", "desc")) {
             stop (
-                "The 'order_direction' parameter must be either 'asc' or 'desc'",
+                "The 'order_direction' parameter must be ",
+                "either 'asc' or 'desc'",
                 call. = FALSE
             )
         }
     }
 
     if ("published_since" %in% names (arglist)) {
-        if (!grepl ("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$", arglist$published_since)) {
+        if (!grepl (
+            "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            arglist$published_since
+        )) {
             stop (
                 "The 'published_since' parameter must be in format YYYY-MM-DD",
                 call. = FALSE
@@ -164,7 +170,10 @@ check_param_values_figshare <- function (arglist) {
     }
 
     if ("modified_since" %in% names (arglist)) {
-        if (!grepl ("^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$", arglist$modified_since)) {
+        if (!grepl (
+            "^[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}$",
+            arglist$modified_since
+        )) {
             stop (
                 "The 'modified_since' parameter must be in format YYYY-MM-DD",
                 call. = FALSE

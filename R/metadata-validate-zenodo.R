@@ -113,7 +113,8 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
     )
     voc <- utils::read.csv (f)
     if (meta_term_def$term [i] == "license") {
-        meta_term_def$vocabulary <- paste0 (c ("cc-zero", "cc-by", voc$id), collapse = "|")
+        meta_term_def$vocabulary <-
+            paste0 (c ("cc-zero", "cc-by", voc$id), collapse = "|")
     }
     term_i <- metaterms [[meta_term_def$term [i]]]
 

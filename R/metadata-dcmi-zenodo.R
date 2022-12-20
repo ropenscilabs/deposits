@@ -38,12 +38,14 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     move_one <- function (ptn, val_list) {
         i <- grep (ptn, names (val_list$values))
         if (length (i) == 1L) {
-            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <- val_list$values [[i]]
+            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <-
+                val_list$values [[i]]
             val_list$values <- val_list$values [-i]
         }
         return (val_list)
     }
-    val_list <- move_one ("^[Cc]reator", list (meta_values = meta_values, values = values))
+    val_list <- move_one ("^[Cc]reator",
+        list (meta_values = meta_values, values = values))
     val_list <- move_one ("^[Tt]itle", val_list)
     val_list <- move_one ("^[Dd]escr", val_list)
     val_list <- move_one ("^[Uu]pload", val_list)
@@ -80,7 +82,8 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     # Finally, move any 'meta' terms in term_map from 'values' to 'meta_values':
     # index <- which (names (values) %in% term_map$dcmi [term_map$meta])
     # if (length (index) > 0) {
-    #     service_name <- term_map$service [match (names (values) [index], term_map$dcmi)]
+    #     service_name <-
+    #         term_map$service [match (names (values) [index], term_map$dcmi)]
     #     for (i in seq_along (index)) {
     #         values$metadata [[service_name [i]]] <- values [[index [i]]]
     #         values <- values [-index [i]]

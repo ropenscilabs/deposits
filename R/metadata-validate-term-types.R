@@ -63,7 +63,8 @@ meta_validate_language_iso639 <- function (term_def, metaterms, i) {
             term_def$term [i],
             " = '",
             metaterms [[term_def$term [i]]],
-            "'] must be a three-letter ISO-639-2 or ISO-639-3 language identifier."
+            "'] must be a three-letter ",
+            "ISO-639-2 or ISO-639-3 language identifier."
         )
     }
 

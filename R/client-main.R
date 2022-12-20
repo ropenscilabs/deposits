@@ -362,7 +362,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # Re-run service-specific metadata validation in case anything has
             # changed:
-            metadata_service <- validate_service_metadata (self$metadata$dcmi, service = self$service)
+            metadata_service <- validate_service_metadata (
+                self$metadata$dcmi,
+                service = self$service
+            )
             self$metadata <- httptest2_dcmi_created (self$metadata)
 
             url <- paste0 (

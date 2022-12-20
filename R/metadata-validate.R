@@ -53,8 +53,10 @@ validate_dcmi_metadata <- function (metadata) {
     index <- which (!nzchar (nms)) # invalid term names
     if (length (index) > 0L) {
         warning (
-            "The following metadata terms do not conform and will be removed:\n",
-            paste0 (names (nms) [index], collapse = "\n")
+            "The following metadata terms do not conform ",
+            "and will be removed:\n",
+            paste0 (names (nms) [index], collapse = "\n"),
+            call. = FALSE
         )
         metadata <- metadata [-index]
         nms <- nms [-index]
@@ -64,7 +66,9 @@ validate_dcmi_metadata <- function (metadata) {
     if (length (index) > 0L) {
         msg <- vapply (
             index,
-            function (i) paste0 ("   ", names (metadata) [i], " -> ", nms [i], "\n"),
+            function (i) {
+                paste0 ("   ", names (metadata) [i], " -> ", nms [i], "\n")
+            },
             character (1L)
         )
         message (

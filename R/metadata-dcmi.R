@@ -69,7 +69,8 @@ dcmi_terms <- function (term = NULL) {
     element_names <- dcmi_schema ()$name
 
     if (!is.null (term)) {
-        element_names <- grep (term, element_names, value = TRUE, ignore.case = TRUE)
+        element_names <-
+            grep (term, element_names, value = TRUE, ignore.case = TRUE)
     }
 
     if (length (element_names) == 0L) {
