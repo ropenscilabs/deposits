@@ -10,7 +10,7 @@
 #' @return A list of metadata terms, standardised to expected DCMI nomenclature.
 #'
 #' @noRd
-validate_metadata <- function (metadata) {
+validate_dcmi_metadata <- function (metadata) {
 
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
