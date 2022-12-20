@@ -1,17 +1,17 @@
 {
     "files": [
         {
-            "upload_token": "ac4d3308-50f1-4db8-8588-3c3edf610f60",
+            "upload_token": "06b6be39-2b88-4052-80e4-2620940822c7",
             "upload_url": "",
-            "status": "available",
+            "status": "moving_to_final",
             "preview_state": "preview_not_supported",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 38480336,
+            "id": 38612618,
             "name": "data.Rds",
             "size": 506,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/38480336",
+            "download_url": "https://ndownloader.figshare.com/files/38612618",
             "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
             "computed_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6"
         }
@@ -32,7 +32,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/21696080",
+    "figshare_url": "https://figshare.com/articles/dataset/_/21757997",
     "description": "",
     "funding": null,
     "funding_list": [
@@ -63,7 +63,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark (2022): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21696080",
+    "citation": "Padgham, Mark (2022): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21757997",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -72,20 +72,20 @@
     "embargo_options": [
 
     ],
-    "id": 21696080,
-    "title": "Modified Title",
+    "id": 21757997,
+    "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/21696080",
+    "url": "api/articles/21757997",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/21696080",
-    "url_public_api": "api/articles/21696080",
-    "url_private_html": "https://figshare.com/account/articles/21696080",
-    "url_public_html": "https://figshare.com/articles/dataset/_/21696080",
+    "url_private_api": "api/articles/21757997",
+    "url_public_api": "api/articles/21757997",
+    "url_private_html": "https://figshare.com/account/articles/21757997",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21757997",
     "timeline": {
 
     }

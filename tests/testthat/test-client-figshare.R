@@ -35,8 +35,10 @@ test_that ("figshare actions", {
 
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
+    expect_length (cli$metadata, 2L)
+    expect_equal (names (cli$metadata), c ("dcmi", "service"))
     # "created" timestamp is inserted:
-    expect_true (length (cli$metadata) > length (metadata))
+    expect_true (length (cli$metadata$dcmi) > length (metadata))
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("fs_new", {
@@ -79,12 +81,10 @@ test_that ("figshare actions", {
         creator = "C. Person"
     )
 
-    dep <- with_mock_dir ("fs_meta", {
-        cli$deposit_fill_metadata (metadata)
-    })
+    cli <- cli$deposit_fill_metadata (metadata)
 
     expect_equal (
-        cli$metadata$title [[1]],
+        cli$metadata$dcmi$title [[1]],
         metadata$title
     )
     expect_false (cli$hostdata$title ==
@@ -164,8 +164,8 @@ test_that ("figshare metadata", {
 
     # expect_null (cli$metadata$language)
     # expect_null (cli$metadata$publisher)
-    expect_true (length (cli$metadata$source) > 0L)
-    expect_true (length (cli$metadata$title) > 0L)
-    expect_true (length (cli$metadata$abstract) > 0L)
-    expect_true (length (cli$metadata$creator) > 0L)
+    expect_true (length (cli$metadata$dcmi$source) > 0L)
+    expect_true (length (cli$metadata$dcmi$title) > 0L)
+    expect_true (length (cli$metadata$dcmi$abstract) > 0L)
+    expect_true (length (cli$metadata$dcmi$creator) > 0L)
 })
