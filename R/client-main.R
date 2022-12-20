@@ -340,8 +340,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- validate_dcmi_metadata (metadata)
-            self$metadata <- metadata
+            metadata_dcmi <- validate_dcmi_metadata (metadata)
+            metadata_service <- validate_service_metadata (metadata_dcmi, self$service)
+            self$metadata <- list (
+                dcmi = metadata_dcmi,
+                service = metadata_service
+            )
 
             if (!is.null (self$id)) {
 
