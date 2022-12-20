@@ -10,7 +10,7 @@
 #' required fields inserted with default values.
 #' @noRd
 
-construct_md_list_figshare <- function (values, term_map) {
+convert_dcmi_to_figshare <- function (values, term_map) {
 
     if ("authors" %in% names (values) && !is.list (values$authors)) {
         values$authors <- list (list (name = values$authors))
@@ -33,7 +33,8 @@ construct_md_list_figshare <- function (values, term_map) {
         if (is.na (suppressWarnings (as.integer (values$license)))) {
             warning (
                 "Figshare licenses must be integer-valued; ",
-                "the value will be reset to '1' = 'CC-BY'"
+                "the value will be reset to '1' = 'CC-BY'",
+                call. = FALSE
             )
             values$license <- 1L
         }

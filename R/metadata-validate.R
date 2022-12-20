@@ -1,23 +1,40 @@
-# These are the main entry points to metadata validation routines called
-# directly from the main client functions. The `validate_metadata()` function is
-# called on the parameter used in client construction, while the
-# `validate_terms` function is applied to .
+
+#' Validate metadata and convert to service-specific form
+#'
+#' This function is a wrapper used to call the following two functions in
+#' sequence.
+#'
+#' @param metadata Metadata as list or filename.
+#' @param service Name of deposits service
+#' @return A list of two elements: 'dcmi' holding validated DCMI metadata, and
+#' 'service' holding the validated, service-specific translation of 'dcmi'
+#' @noRd
+validate_metadata <- function (metadata, service) {
+
+    metadata_dcmi <- validate_dcmi_metadata (metadata)
+    metadata_service <- validate_service_metadata (metadata_dcmi, service)
+
+    return (list (
+        dcmi = metadata_dcmi,
+        service = metadata_service
+    ))
+}
 
 #' validate metadata input to client either as "metadata" parameter, or though
 #' `deposit_fill_metadata()` method.
 #'
-#' @param metadata Metadata as list, filename, or DCEntry object
-#' @return An `arom4R::DCEntry` metadata object.
+#' This only validates compliance with DCMI terminology, and standardises names
+#' of metadata items. DCMI dictates no structural properties of any metadata
+#' items, and thus neither does this function.
+#'
+#' @param metadata Metadata as a list or filename.
+#' @return A list of metadata terms, standardised to expected DCMI nomenclature.
 #'
 #' @noRd
-validate_metadata <- function (metadata, service = "zenodo", term_map) {
+validate_dcmi_metadata <- function (metadata) {
 
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
-    }
-
-    if (service == "zenodo-sandbox") {
-        service <- "zenodo"
     }
 
     if (!any (grepl ("[Cc]reated", names (metadata)))) {
@@ -32,6 +49,17 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
         function (n) dcmi_terms (n),
         character (1L)
     )
+
+    index <- which (!nzchar (nms)) # invalid term names
+    if (length (index) > 0L) {
+        warning (
+            "The following metadata terms do not conform and will be removed:\n",
+            paste0 (names (nms) [index], collapse = "\n")
+        )
+        metadata <- metadata [-index]
+        nms <- nms [-index]
+    }
+
     index <- which (names (metadata) != unname (nms))
     if (length (index) > 0L) {
         msg <- vapply (
@@ -46,39 +74,40 @@ validate_metadata <- function (metadata, service = "zenodo", term_map) {
         names (metadata) <- unname (nms)
     }
 
-    if (service == "zenodo") {
-        metadata <- construct_md_list_zenodo (metadata, term_map)
-    }
+    return (metadata)
+}
 
-    check <- validate_terms (metadata, service = service)
+#' Transform and validate DCMI metadata into service-specific form.
+#'
+#' @param metadata DCMI metadata returned from the preceding
+#' `validate_dcmi_metadata()` function.
+#' @return A list of metadata terms, standardised to nomenclature expected for
+#' the specified service.
+#'
+#' @noRd
+validate_service_metadata <- function (metadata, service) {
+
+    service <- gsub ("\\-sandbox$", "", service)
+
+    term_map <- get_dcmi_term_map (service)
+
+    check <- NULL
+
+    if (service == "zenodo") {
+        metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
+        check <- validate_zenodo_terms (metadata_service)
+    } else if (service == "figshare") {
+        metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
+        check <- validate_figshare_terms (metadata_service)
+    }
 
     if (length (check) > 0L) {
         warning (
             "The following metadata terms do not conform:\n",
-            paste0 (check, collapse = "\n")
+            paste0 (check, collapse = "\n"),
+            call. = FALSE
         )
     }
 
-    return (metadata)
-}
-
-#' validate metadata terms
-#'
-#' @param metaterms A list of metadata terms returned from
-#' `metadata_dcmi_to_list()`.
-#' @param service Name of deposits service.
-#' @return `NULL` if all metaterms are valid, otherwise a vector of any invalid
-#' metaterms.
-#' @noRd
-validate_terms <- function (metaterms, service = "zenodo") {
-
-    service <- match.arg (service, c ("figshare", "zenodo"))
-
-    if (service == "zenodo") {
-        res <- validate_zenodo_terms (metaterms) # in metadata-validate-zenodo.R
-    } else if (service == "figshare") {
-        res <- validate_figshare_terms (metaterms) # in metadata-validate-figshare.R
-    }
-
-    return (res)
+    return (metadata_service)
 }

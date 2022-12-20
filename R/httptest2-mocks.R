@@ -47,9 +47,13 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 
 httptest2_dcmi_created <- function (metadata) {
 
-    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true" &&
-        "created" %in% names (metadata)) {
-        metadata [["created"]] <- "2022-01-01T00:00:00.0+00:00"
+    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+        if ("created" %in% names (metadata$dcmi)) {
+            metadata$dcmi [["created"]] <- "2022-01-01T00:00:00.0+00:00"
+        }
+        if ("created" %in% names (metadata$service)) {
+            metadata$service [["created"]] <- "2022-01-01T00:00:00.0+00:00"
+        }
     }
 
     return (metadata)
@@ -57,7 +61,7 @@ httptest2_dcmi_created <- function (metadata) {
 
 #' @description Standardise time and date stamps
 #'
-#' This is called only in the private `upload_dcmi_xml()` method.
+#' This is called only in the private `upload_dcmi_json()` method.
 #' @noRd
 
 httpstest2_xml_timestamps <- function (xml) {

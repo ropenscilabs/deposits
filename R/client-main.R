@@ -103,8 +103,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
-                self$metadata <- validate_metadata (metadata, service, self$term_map)
-
+                self$metadata <- validate_metadata (
+                    metadata,
+                    gsub ("\\-sandbox$", "", self$service)
+                )
             }
 
             return (self)
@@ -336,12 +338,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- validate_metadata (metadata, self$service, self$term_map)
-            self$metadata <- metadata
+            self$metadata <- validate_metadata (metadata, self$service)
 
             if (!is.null (self$id)) {
 
-                # self <- private$upload_dcmi_xml ()
+                # self <- private$upload_dcmi_json ()
                 # That resets local metadata to upload version, so needs to be
                 # reset again:
                 # self$metadata <- metadata
@@ -359,14 +360,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("No metadata present; use 'fill_metadata()' first.")
             }
 
-            check <- validate_terms (self$metadata, service = self$service)
+            # Re-run service-specific metadata validation in case anything has
+            # changed:
+            metadata_service <- validate_service_metadata (self$metadata$dcmi, service = self$service)
             self$metadata <- httptest2_dcmi_created (self$metadata)
-            if (length (check) > 0L) {
-                warning (
-                    "The following metadata terms do not conform:\n",
-                    paste0 (check, collapse = "\n")
-                )
-            }
 
             url <- paste0 (
                 self$url_base,
@@ -377,7 +374,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-            req <- httr2::req_body_json (req, data = self$metadata)
+            req <- httr2::req_body_json (req, data = self$metadata$service)
 
             resp <- httr2::req_perform (req)
 
@@ -393,7 +390,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$deposits_list_extract ()
 
-            # self <- private$upload_dcmi_xml ()
+            # self <- private$upload_dcmi_json ()
 
             invisible (self)
         },
@@ -453,14 +450,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            req <- httr2::req_body_json (req, data = self$metadata)
+            req <- httr2::req_body_json (req, data = self$metadata$service)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
             self <- self$deposit_retrieve (deposit_id)
 
-            # self <- private$upload_dcmi_xml ()
+            # self <- private$upload_dcmi_json ()
 
             invisible (self)
         },

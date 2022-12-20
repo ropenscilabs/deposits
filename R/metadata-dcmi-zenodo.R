@@ -1,22 +1,24 @@
-#' Add additional metadata list-item values required by zenodo.
+#' Convert standard DCMI metadata list to form and content required for upload
+#' to zenodo API.
 #'
 #' Zenodo has it's own "metadata" list item. The main thing this function does
-#' is to move appropriate terms within the initially flat 'metadata' list into
+#' is to move appropriate terms within the initially flat 'dcmi' list into
 #' the sub-component of "metadata" within the main metadata.
 #'
-#' @param values Initial metadata list
+#' @param dcmi DCMI-compliant metadata returned from `validate_dcmi_metadata()`
+#' function.
 #' @param term_map The term map for the 'zenodo' deposits service.
-#' @return A potentially modified version of `values`, with structures of
+#' @return A potentially modified version of `dcmi`, with structures of
 #' individual items rectified to expected forms, and any otherwise missing yet
 #' required fields inserted with default values.
 #' @noRd
 
-construct_md_list_zenodo <- function (values, term_map) {
+convert_dcmi_to_zenodo <- function (dcmi, term_map) {
 
-    index <- which (names (values) %in%
+    index <- which (names (dcmi) %in%
         term_map$service [which (term_map$meta)])
-    meta_values <- values [index]
-    values <- values [-index]
+    meta_values <- dcmi [index]
+    values <- dcmi [-index]
 
     req <- list (
         "upload_type" = "other",
@@ -24,6 +26,10 @@ construct_md_list_zenodo <- function (values, term_map) {
         "creators" = "A. Person",
         "description" = "Description"
     )
+    if ("abstract" %in% names (values) && !"description" %in% names (values)) {
+        req$description <- values$abstract
+        values$abstract <- NULL
+    }
 
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
@@ -72,14 +78,14 @@ construct_md_list_zenodo <- function (values, term_map) {
     }
 
     # Finally, move any 'meta' terms in term_map from 'values' to 'meta_values':
-    index <- which (names (values) %in% term_map$dcmi [term_map$meta])
-    if (length (index) > 0) {
-        service_name <- term_map$service [match (names (values) [index], term_map$dcmi)]
-        for (i in seq_len (index)) {
-            values$metadata [[service_name [i]]] <- values [[index [i]]]
-            values <- values [-index [i]]
-        }
-    }
+    # index <- which (names (values) %in% term_map$dcmi [term_map$meta])
+    # if (length (index) > 0) {
+    #     service_name <- term_map$service [match (names (values) [index], term_map$dcmi)]
+    #     for (i in seq_along (index)) {
+    #         values$metadata [[service_name [i]]] <- values [[index [i]]]
+    #         values <- values [-index [i]]
+    #     }
+    # }
 
     values <- httptest2_dcmi_created (values)
 

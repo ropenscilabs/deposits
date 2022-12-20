@@ -4,8 +4,8 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-# This envvar is used only in the private 'upload_dcmi_xml()' function, in which
-# it converts the contents of the uploaded XML file to a standardised form
+# This envvar is used only in the private 'upload_dcmi_json()' function, in which
+# it converts the contents of the uploaded json file to a standardised form
 # (uniform timestamps and article id values).
 # This is also used one time in metadata.R `construct_metadata_list()` fn to set
 # the "created" date for zenodo deposits.
@@ -37,6 +37,10 @@ test_that ("zenodo actions", {
     })
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
+    expect_length (cli$metadata, 2L)
+    expect_equal (names (cli$metadata), c ("dcmi", "service"))
+    expect_type (cli$metadata$dcmi, "list")
+    expect_type (cli$metadata$service, "list")
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("zen_new", {
@@ -66,7 +70,7 @@ test_that ("zenodo actions", {
         metadata$abstract
     )
     expect_equal (
-        cli$metadata$metadata$title,
+        cli$metadata$dcmi$title,
         metadata$title
     )
 
@@ -81,7 +85,7 @@ test_that ("zenodo actions", {
     })
 
     expect_equal (
-        cli$metadata$metadata$title,
+        cli$metadata$dcmi$title,
         metadata$title
     )
     expect_false (cli$hostdata$title ==
