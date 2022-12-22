@@ -26,13 +26,12 @@ implemented ([zenodo](https://zenodo.org) and
 [figshare](https://figshare.com/)) align with the official entities defined in
 the [Dublin Core Metadata Initiative
 (DCMI)](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
-These DCMI entities or "terms" can be extracted from [the `atom4R`
-package](https://github.com/eblondel/atom4R/) as a `data.frame` object with the
-following lines:
+The names of recognised DCMI entities or "terms" can be seen with:
 
-```{r DC-terms, eval = FALSE}
-library (atom4R)
-terms <- getDCMIVocabulary(id = "http://purl.org/dc/terms/")$get ()
+
+```{r DC-terms, eval = TRUE}
+library (deposits)
+dcmi_terms ()
 ```
 
 The corresponding entities in the zenodo API are defined at
@@ -71,7 +70,7 @@ isReferencedBy | | projects/collections
 isReplacedBy | | 
 isRequiredBy | | 
 issued | | 
-isVersionOf | version(m) (see also DC hasVersion/identifer) | 
+isVersionOf | version(m) (see also DC hasVersion/identifier) | 
 license | license(m) | license
 mediator | | 
 medium | upload_type(m)/image_type(m) | defined_type

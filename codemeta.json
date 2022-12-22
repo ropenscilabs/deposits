@@ -7,13 +7,13 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.0.3.224",
+  "version": "0.0.3.225",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.0 (2022-04-22)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -73,6 +73,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -85,18 +86,6 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
-      "identifier": "atom4R",
-      "name": "atom4R",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://github.com/eblondel/atom4R"
-    },
-    "2": {
-      "@type": "SoftwareApplication",
       "identifier": "checkmate",
       "name": "checkmate",
       "provider": {
@@ -107,7 +96,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=checkmate"
     },
-    "3": {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "here",
       "name": "here",
@@ -119,7 +108,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=here"
     },
-    "4": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "httr2",
       "name": "httr2",
@@ -131,7 +120,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr2"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -143,12 +132,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -160,7 +149,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -172,9 +161,21 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "xml2",
+      "name": "xml2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=xml2"
+    },
     "SystemRequirements": {}
   },
-  "fileSize": "235.162KB",
+  "fileSize": "357.84KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
   "contIntegration": [

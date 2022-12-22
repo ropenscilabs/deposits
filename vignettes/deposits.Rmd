@@ -214,11 +214,10 @@ print (metadata)
 ```
 
 
-Metadata in `deposits` objects are stored as `DCEntry` objects in a format
-provided by [the `atom4R` package](https://github.com/eblondel/atom4R).
-These metadata are primarily intended for internal use within the `deposits`
-package, and shouldn't generally need to be manipulated directly by users of
-this package (although they certainly can be, as illustrated below).
+Metadata in `deposits` objects are stored as named lists. These metadata are
+primarily intended for internal use within the `deposits` package, and
+shouldn't generally need to be manipulated directly by users of this package
+(although they certainly can be, as illustrated below).
 
 ### Metadata from a local file
 
