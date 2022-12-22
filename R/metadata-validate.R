@@ -78,6 +78,8 @@ validate_dcmi_metadata <- function (metadata) {
         names (metadata) <- unname (nms)
     }
 
+    metadata <- metadata [order (names (metadata))]
+
     return (metadata)
 }
 

@@ -133,6 +133,7 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
 
+    meta_values <- meta_values [order (names (meta_values))]
     values$metadata <- meta_values
 
     if (!"created" %in% names (values)) {
@@ -141,6 +142,8 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
             values
         )
     }
+
+    values <- values [order (names (values))]
 
     values <- httptest2_dcmi_created (values)
 
