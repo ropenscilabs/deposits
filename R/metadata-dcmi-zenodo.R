@@ -58,6 +58,9 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     # --------   Align item names with zenodo requirements:
     index <- which (!names (meta_values) %in% term_map$service)
     index_not_dcmi <- which (!all (names (meta_values) [index] %in% term_map$dcmi))
+    if (all (names (meta_values) [index] %in% term_map$dcmi)) {
+        names (meta_values) [index] <- term_map$service [match (names (meta_values [index]), term_map$dcmi)]
+    }
     if (length (index_not_dcmi) > 0L) {
         stop (
             "metadata field names [",
