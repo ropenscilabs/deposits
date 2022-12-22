@@ -34,7 +34,7 @@ provenance , ,
 references , references(m) , references
 replaces , ,
 requires , ,
-rightsHolder , creator,
+rightsHolder , contributor,
 spatial , locations(m) ,
 tableOfContents , ,
 temporal , ,
