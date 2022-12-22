@@ -71,20 +71,37 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
         vapply (index, function (i) {
             index_service <- which (term_map$dcmi == names (meta_values) [i])
             if (length (index_service) > 1L) {
-                g <- regexpr ("^\\[.*[^\\]\\]", meta_values [[i]])
-                if (g > 0L) {
-                    which_field <- gsub ("\\[|\\]", "", regmatches (meta_values [[i]], g))
-                    which_field <- tolower (gsub ("\\s+", "_", which_field))
-                    if (!which_field %in% term_map$service) {
-                        stop ("field name [", which_field, "] not recognised.", call. = FALSE)
+
+                index_service_fields <- unlist (lapply (meta_values [[i]], function (j) {
+                    ret <- NA_integer_
+                    g <- regexpr ("^\\[.*[^\\]\\]", j)
+                    if (g > 0L) {
+                        which_field <- gsub ("\\[|\\]", "", regmatches (j, g))
+                        which_field <- tolower (gsub ("\\s+", "_", which_field))
+                        if (!which_field %in% term_map$service) {
+                            stop ("field name [", which_field, "] not recognised.", call. = FALSE)
+                        }
+                        ret <- which (term_map$service == which_field)
                     }
-                    index_service <- which (term_map$service == which_field)
-                    meta_values [[i]] <- gsub ("^\\[.*[^\\]\\](\\s+?)", "", meta_values [[i]])
+                    return (ret)
+                }))
+                index_service_fields <- unique (index_service_fields [which (!is.na (index_service_fields))])
+                if (length (index_service_fields) == 1L) {
+                    index_service <- index_service_fields
                 } else {
                     index_service <- index_service [1]
                 }
+
+                meta_values [[i]] <- lapply (meta_values [[i]], function (j) {
+                    ret <- j
+                    if (grepl ("^\\[.*[^\\]\\]", ret)) {
+                        ret <- gsub ("^\\[.*[^\\]\\](\\s+?)", "", ret)
+                    }
+                    return (ret)
+                })
+
+                names (meta_values) [i] <- term_map$service [index_service]
             }
-            names (meta_values) [i] <- term_map$service [index_service]
         }, character (1L))
 
     # --------   Format meta items expected to be lists:
