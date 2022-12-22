@@ -57,9 +57,7 @@ test_that ("client with metadata", {
         depositsClient$new (service, sandbox = TRUE, metadata = filename)
     })
 
-    cli1$metadata$dcmi <- cli1$metadata$dcmi [order (names (cli1$metadata$dcmi))]
-    cli2$metadata$dcmi <- cli2$metadata$dcmi [order (names (cli2$metadata$dcmi))]
-    # not identical because calling environments differ:
+    # clients are not identical because calling environments differ.
     expect_equal (cli1, cli2)
 
     meta <- deposits_meta_from_file (filename)
@@ -67,7 +65,6 @@ test_that ("client with metadata", {
         depositsClient$new (service, sandbox = TRUE, metadata = meta)
     })
 
-    cli3$metadata$dcmi <- cli3$metadata$dcmi [order (names (cli3$metadata$dcmi))]
     expect_equal (cli1, cli3)
 
     cli4 <- with_mock_dir ("meta-new4", {
@@ -75,7 +72,6 @@ test_that ("client with metadata", {
     })
     cli4$deposit_fill_metadata (meta)
 
-    cli4$metadata$dcmi <- cli4$metadata$dcmi [order (names (cli4$metadata$dcmi))]
     expect_equal (cli1, cli4)
 })
 
