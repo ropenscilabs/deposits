@@ -16,7 +16,7 @@
 convert_dcmi_to_zenodo <- function (dcmi, term_map) {
 
     index <- which (names (dcmi) %in%
-        term_map$service [which (term_map$meta)])
+        term_map$dcmi [which (term_map$meta)])
     meta_values <- dcmi [index]
     values <- dcmi [-index]
 
