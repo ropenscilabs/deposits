@@ -20,21 +20,21 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     meta_values <- dcmi [index]
     values <- dcmi [-index]
 
-    req <- list (
-        "upload_type" = "other",
-        "title" = "Title",
-        "creators" = "A. Person",
-        "description" = "Description"
-    )
-    if ("abstract" %in% names (values) && !"description" %in% names (values)) {
-        req$description <- values$abstract
-        values$abstract <- NULL
+    # Zenodo only allows 'description', not 'abstract':
+    if ("abstract" %in% names (meta_values) && "description" %in% names (meta_values)) {
+        meta_values$description <- paste0 (
+            "Abstract: \n",
+            meta_values$abstract,
+            "\nDescription: \n",
+            meta_values$description
+        )
+        meta_values$abstract <- NULL
+    } else if ("abstract" %in% names (meta_values)) {
+        meta_values$description <- meta_values$abstract
+        meta_values$abstract <- NULL
     }
 
-    index <- which (!names (req) %in% names (meta_values))
-    meta_values <- c (meta_values, req [index])
-
-    # grab any corresponding entries from 'values':
+    # --------   grab any corresponding entries from 'values':
     move_one <- function (ptn, val_list) {
         i <- grep (ptn, names (val_list$values))
         if (length (i) == 1L) {
@@ -55,6 +55,39 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     meta_values <- val_list$meta_values
     values <- val_list$values
 
+    # --------   Align item names with zenodo requirements:
+    index <- which (!names (meta_values) %in% term_map$service)
+    index_not_dcmi <- which (!all (names (meta_values) [index] %in% term_map$dcmi))
+    if (length (index_not_dcmi) > 0L) {
+        stop (
+            "metadata field names [",
+            paste0 (names (meta_values) [index_not_dcmi], collapse = ", "),
+            "] are not valid; see 'dcmi_terms()' for valid names",
+            call. = FALSE
+        )
+    }
+
+    names (meta_values) [index] <-
+        vapply (index, function (i) {
+            index_service <- which (term_map$dcmi == names (meta_values) [i])
+            if (length (index_service) > 1L) {
+                g <- regexpr ("^\\[.*[^\\]\\]", meta_values [[i]])
+                if (g > 0L) {
+                    which_field <- gsub ("\\[|\\]", "", regmatches (meta_values [[i]], g))
+                    which_field <- tolower (gsub ("\\s+", "_", which_field))
+                    if (!which_field %in% term_map$service) {
+                        stop ("field name [", which_field, "] not recognised.", call. = FALSE)
+                    }
+                    index_service <- which (term_map$service == which_field)
+                    meta_values [[i]] <- gsub ("^\\[.*[^\\]\\](\\s+?)", "", meta_values [[i]])
+                } else {
+                    index_service <- index_service [1]
+                }
+            }
+            names (meta_values) [i] <- term_map$service [index_service]
+        }, character (1L))
+
+    # --------   Format meta items expected to be lists:
     if (!is.list (meta_values$creators)) {
         meta_values$creators <- list (list (name = meta_values$creators))
     } else if (is.null (names (meta_values$creators))) {
@@ -68,9 +101,20 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
         meta_values$creators <- list (meta_values$creators)
     }
 
+    # --------   Other reformatting:
     if ("upload_type" %in% names (meta_values)) {
         meta_values$upload_type <- tolower (meta_values$upload_type)
     }
+
+    # --------   Insert required values if any missing:
+    req <- list (
+        "upload_type" = "other",
+        "title" = "Title",
+        "creators" = "A. Person",
+        "description" = "Description"
+    )
+    index <- which (!names (req) %in% names (meta_values))
+    meta_values <- c (meta_values, req [index])
 
     values$metadata <- meta_values
 
