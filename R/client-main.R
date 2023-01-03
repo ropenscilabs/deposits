@@ -383,7 +383,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$deposits_list_extract ()
 
             if (!quiet) {
-                cat ("ID of new deposit :", cli$id, "\n")
+                cat ("ID of new deposit :", self$id, "\n")
             }
 
             # self <- private$upload_dcmi_json ()
