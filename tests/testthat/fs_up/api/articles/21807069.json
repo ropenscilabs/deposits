@@ -1,0 +1,92 @@
+{
+    "files": [
+        {
+            "upload_token": "ab49b69d-769b-4040-b96e-f808628799de",
+            "upload_url": "",
+            "status": "moving_to_final",
+            "preview_state": "preview_not_supported",
+            "viewer_type": "",
+            "is_attached_to_public_version": false,
+            "id": 38696094,
+            "name": "data.Rds",
+            "size": 506,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/38696094",
+            "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
+            "computed_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6"
+        }
+    ],
+    "resource_title": null,
+    "resource_doi": null,
+    "group_resource_id": null,
+    "custom_fields": [
+
+    ],
+    "account_id": 2986795,
+    "authors": [
+        {
+            "id": 11606563,
+            "full_name": "Mark Padgham",
+            "is_active": true,
+            "url_name": "Mark_Padgham",
+            "orcid_id": ""
+        }
+    ],
+    "figshare_url": "https://figshare.com/articles/dataset/_/21807069",
+    "description": "",
+    "funding": null,
+    "funding_list": [
+
+    ],
+    "version": 0,
+    "status": "draft",
+    "size": 506,
+    "created_date": "2022-01-01T00:00:00Z",
+    "modified_date": "2022-01-01T00:00:00Z",
+    "is_public": false,
+    "is_confidential": false,
+    "is_metadata_record": false,
+    "confidential_reason": "",
+    "metadata_reason": "",
+    "license": {
+        "value": 1,
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "tags": [
+
+    ],
+    "categories": [
+
+    ],
+    "references": [
+
+    ],
+    "has_linked_file": false,
+    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21807069",
+    "is_embargoed": false,
+    "embargo_date": null,
+    "embargo_type": null,
+    "embargo_title": "",
+    "embargo_reason": "",
+    "embargo_options": [
+
+    ],
+    "id": 21807069,
+    "title": "Modified Title",
+    "doi": "",
+    "handle": "",
+    "url": "api/articles/21807069",
+    "published_date": null,
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "api/articles/21807069",
+    "url_public_api": "api/articles/21807069",
+    "url_private_html": "https://figshare.com/account/articles/21807069",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21807069",
+    "timeline": {
+
+    }
+}

@@ -18,7 +18,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/21805392",
+    "figshare_url": "https://figshare.com/articles/dataset/_/21807069",
     "description": "",
     "funding": null,
     "funding_list": [
@@ -49,7 +49,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21805392",
+    "citation": "Padgham, Mark (2023): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/21807069",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -58,20 +58,20 @@
     "embargo_options": [
 
     ],
-    "id": 21805392,
-    "title": "Modified Title",
+    "id": 21807069,
+    "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/21805392",
+    "url": "api/articles/21807069",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/21805392",
-    "url_public_api": "api/articles/21805392",
-    "url_private_html": "https://figshare.com/account/articles/21805392",
-    "url_public_html": "https://figshare.com/articles/dataset/_/21805392",
+    "url_private_api": "api/articles/21807069",
+    "url_public_api": "api/articles/21807069",
+    "url_private_html": "https://figshare.com/account/articles/21807069",
+    "url_public_html": "https://figshare.com/articles/dataset/_/21807069",
     "timeline": {
 
     }
