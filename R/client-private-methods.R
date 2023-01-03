@@ -109,3 +109,42 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 
     invisible (self)
 })
+
+#' @description Perform actual upload of local file.
+#' @noRd
+
+depositsClient$set ("private", "upload_local_file", function (deposit_id, path) {
+
+    url <- paste0 (
+        self$url_base,
+        ifelse (self$service == "figshare",
+            "account/articles",
+            "deposit/depositions"
+        )
+    )
+
+    if (self$service == "figshare") {
+
+        # in R/upload-figshare.R, which returns updated hostdata
+        self$hostdata <- upload_figshare_file (
+            deposit_id,
+            url,
+            self$headers,
+            path
+        )
+
+    } else if (self$service == "zenodo") {
+
+        # in R/upload-zenodo.R, which returns data on file upload only
+        res <- upload_zenodo_file (
+            deposit_id,
+            url,
+            self$headers,
+            path
+        )
+
+        self <- self$deposit_retrieve (deposit_id)
+    }
+
+    invisible (self)
+})

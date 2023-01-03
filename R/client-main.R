@@ -464,36 +464,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 checkmate::assert_directory_exists (dirname (path))
             }
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles",
-                    "deposit/depositions"
-                )
-            )
-
-            if (self$service == "figshare") {
-
-                # in R/upload-figshare.R, which returns updated hostdata
-                self$hostdata <- upload_figshare_file (
-                    deposit_id,
-                    url,
-                    self$headers,
-                    path
-                )
-
-            } else if (self$service == "zenodo") {
-
-                # in R/upload-zenodo.R, which returns data on file upload only
-                res <- upload_zenodo_file (
-                    deposit_id,
-                    url,
-                    self$headers,
-                    path
-                )
-
-                self <- self$deposit_retrieve (deposit_id)
-            }
+            self <- private$upload_local_file (deposit_id, path)
 
             invisible (self)
         },
