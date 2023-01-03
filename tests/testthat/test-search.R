@@ -4,9 +4,8 @@ test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
 
 testthat::skip_if (!test_all)
 
-# This envvar is used only in the private 'upload_dcmi_json()' function, in which
-# it converts the contents of the uploaded json file to a standardised form
-# (uniform timestamps and article id values).
+# This envvar is used to convert the contents of the uploaded json file to a
+# standardised form (uniform timestamps and article id values).
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
 test_that ("figshare search", {

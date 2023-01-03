@@ -109,25 +109,3 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 
     invisible (self)
 })
-
-#' @description Convert both DCMI and service-specific metadata to json and
-#' upload with current deposit.
-#' @noRd
-
-depositsClient$set ("private", "upload_dcmi_json", function () {
-
-    metadata <- self$metadata
-
-    metadata <- httpstest2_xml_timestamps (metadata)
-
-    f <- file.path (tempdir (), paste0 ("metadata-", self$id, ".json"))
-    if (file.exists (f)) {
-        file.remove (f)
-    }
-    jsonlite::write_json (metadata, f, pretty = TRUE)
-    self$deposit_upload_file (self$id, f)
-
-    chk <- file.remove (f)
-
-    invisible (self)
-})

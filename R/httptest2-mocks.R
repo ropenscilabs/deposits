@@ -61,27 +61,3 @@ httptest2_dcmi_created <- function (metadata) {
 
     return (metadata)
 }
-
-#' @description Standardise time and date stamps
-#'
-#' This is called only in the private `upload_dcmi_json()` method.
-#' @noRd
-
-httpstest2_xml_timestamps <- function (xml) {
-
-    if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
-
-        # gsub timestamps:
-        ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}T[0-9]{2}\\:[0-9]{2}\\:[0-9]{2}"
-        xml <- gsub (ptn, "2022-01-01T00:00:00", xml)
-
-        # datestamps:
-        ptn <- "[0-9]{4}\\-[0-9]{2}\\-[0-9]{2}"
-        xml <- gsub (ptn, "2022-01-01", xml)
-
-        # and integer dataset id values:
-        xml <- gsub ("dataset\\/\\_\\/[0-9]*<", "dataset/_/identifier<", xml)
-    }
-
-    return (xml)
-}
