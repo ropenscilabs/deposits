@@ -48,6 +48,9 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 httptest2_dcmi_created <- function (metadata) {
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+        if ("created" %in% names (metadata)) {
+            metadata [["created"]] <- "2022-01-01"
+        }
         if ("created" %in% names (metadata$dcmi)) {
             metadata$dcmi [["created"]] <- "2022-01-01T00:00:00.0+00:00"
         }
