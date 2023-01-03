@@ -40,12 +40,12 @@ test_that ("client with metadata", {
         depositsClient$new (service, sandbox = TRUE, metadata = metadata)
     })
 
-    expect_identical (cli1$metadata$dcmi$title, "New Title")
-    expect_identical (cli1$metadata$dcmi$abstract, "This is the abstract")
+    expect_identical (cli1$metadata$title, "New Title")
+    expect_identical (cli1$metadata$abstract, "This is the abstract")
     # expect_identical (cli1$metadata$dcmi$creator [[1]], list (name = "A. Person"))
     # expect_identical (cli1$metadata$dcmi$creator [[2]], list (name = "B. Person"))
-    expect_identical (cli1$metadata$dcmi$creator [[1]], "A. Person")
-    expect_identical (cli1$metadata$dcmi$creator [[2]], "B. Person")
+    expect_identical (cli1$metadata$creator [[1]], "A. Person")
+    expect_identical (cli1$metadata$creator [[2]], "B. Person")
 
     filename <- tempfile (pattern = "meta_", fileext = ".json")
     service <- "zenodo"
