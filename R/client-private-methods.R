@@ -115,13 +115,7 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 
 depositsClient$set ("private", "upload_local_file", function (deposit_id, path) {
 
-    url <- paste0 (
-        self$url_base,
-        ifelse (self$service == "figshare",
-            "account/articles",
-            "deposit/depositions"
-        )
-    )
+    url <- get_service_url (self)
 
     if (self$service == "figshare") {
 

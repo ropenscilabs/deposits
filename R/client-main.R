@@ -283,15 +283,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles",
-                    "deposit/depositions"
-                ),
-                "/",
-                deposit_id
-            )
+            url <- get_service_url (self, deposit_id = deposit_id)
 
             req <- create_httr2_helper (
                 url,
@@ -348,13 +340,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
             self$metadata <- httptest2_dcmi_created (self$metadata)
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles",
-                    "deposit/depositions"
-                )
-            )
+            url <- get_service_url (self)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
             req <- httr2::req_body_json (req, data = self$metadata$service)
@@ -423,14 +409,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles/",
-                    "deposit/depositions/"
-                ),
-                deposit_id
-            )
+            url <- get_service_url (self, deposit_id = deposit_id)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
@@ -478,14 +457,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
 
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles/",
-                    "deposit/depositions/"
-                ),
-                deposit_id
-            )
+            url <- get_service_url (self, deposit_id = deposit_id)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
@@ -535,14 +507,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "account/articles/",
-                    "deposit/depositions/"
-                ),
-                deposit_id
-            )
+            url <- get_service_url (self, deposit_id = deposit_id)
 
             name_field <- ifelse (self$service == "figshare",
                 "name",
