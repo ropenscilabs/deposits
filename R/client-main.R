@@ -339,9 +339,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Create a new deposit
+        #' @param quiet If `FALSE` (default), print integer identifier of newly
+        #' created deposit.
         #' @return Updated deposits client which includes data on new deposit
 
-        deposit_new = function () {
+        deposit_new = function (quiet = FALSE) {
 
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
@@ -379,6 +381,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$fill_service_id_url ()
 
             self <- private$deposits_list_extract ()
+
+            if (!quiet) {
+                cat ("ID of new deposit :", cli$id, "\n")
+            }
 
             # self <- private$upload_dcmi_json ()
 
