@@ -72,7 +72,7 @@ test_that ("zenodo actions", {
         metadata$abstract
     )
     expect_equal (
-        cli$metadata$dcmi$title,
+        cli$metadata$title,
         metadata$title
     )
 

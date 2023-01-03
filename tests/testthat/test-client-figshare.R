@@ -73,7 +73,7 @@ test_that ("figshare actions", {
     #     metadata$abstract
     # )
     expect_equal (
-        cli$metadata$dcmi$title,
+        cli$metadata$title,
         metadata$title
     )
 
@@ -86,7 +86,7 @@ test_that ("figshare actions", {
     cli <- cli$deposit_fill_metadata (metadata)
 
     expect_equal (
-        cli$metadata$dcmi$title [[1]],
+        cli$metadata$title [[1]],
         metadata$title
     )
     expect_false (cli$hostdata$title ==
