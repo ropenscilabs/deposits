@@ -445,12 +445,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             checkmate::assert_int (deposit_id)
-            if (!is.null (path)) {
-                checkmate::assert_character (path, len = 1L)
-                checkmate::assert_directory_exists (dirname (path))
-            }
+            checkmate::assert_character (path, len = 1L)
+            checkmate::assert_file_exists (path)
 
             self <- private$upload_local_file (deposit_id, path)
+
+            path_dir <- fs::path_dir (path)
+            has_dpj <- fs::file_exists (fs::path (path_dir, "datapackage.json"))
+            if (!has_dpj) {
+                private$generate_frictionless (path)
+            }
 
             invisible (self)
         },
