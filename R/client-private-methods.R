@@ -142,3 +142,24 @@ depositsClient$set ("private", "upload_local_file", function (deposit_id, path) 
 
     invisible (self)
 })
+
+#' @description Auto-generate default 'frictionless' JSON file.
+#'
+#'
+#' This generates an additional (default) "datapackage.json" file in the
+#' directory of the file specified by 'path'.
+#'
+#' @param path Full path to data object to be uploaded.
+#' @noRd
+
+depositsClient$set ("private", "generate_frictionless", function (path) {
+
+    requireNamespace ("frictionless")
+
+    resource_name <- fs::path_ext_remove (fs::path_file (path))
+    p <- frictionless::create_package ()
+    p <- frictionless::add_resource (p, resource_name = resource_name, data = path)
+    op <- options (readr.show_progress = FALSE)
+    write_package (p, fs::path_dir (path))
+    options (op)
+})
