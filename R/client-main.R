@@ -453,7 +453,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             path_dir <- fs::path_dir (path)
             has_dpj <- fs::file_exists (fs::path (path_dir, "datapackage.json"))
             if (!has_dpj) {
-                private$generate_frictionless (path)
+                private$generate_frictionless (path_dir)
+            }
+
+            metadata_updated <- private$add_meta_to_dp_json (path_dir)
+            if (metadata_updated) {
+                path <- fs::path (path_dir, "datapackage.json")
+                self <- private$upload_local_file (deposit_id, path)
             }
 
             invisible (self)

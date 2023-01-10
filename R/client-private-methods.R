@@ -157,8 +157,33 @@ depositsClient$set ("private", "generate_frictionless", function (path) {
 
     resource_name <- fs::path_ext_remove (fs::path_file (path))
     p <- frictionless::create_package ()
-    p <- frictionless::add_resource (p, resource_name = resource_name, data = path)
     op <- options (readr.show_progress = FALSE)
+    p <- frictionless::add_resource (p, resource_name = resource_name, data = path)
     frictionless::write_package (p, fs::path_dir (path))
     options (op)
+})
+
+#' @description Add metadata to /pkg{frictionless} 'datapackage.json' file.
+#'
+#' @param path Path to directory containing 'datapackage.json' file.
+#' @return A logical value of `TRUE` if 'datapackage.json' is updated; otherwise
+#' `FALSE`.
+#' @noRd
+
+depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
+
+    ret <- FALSE
+
+    path_json <- fs::path (path, "datapackage.json")
+    p <- suppressMessages (frictionless::read_package (path_json))
+
+    if (!"metadata" %in% names (p)) {
+        p <- append (p, c (metadata = list (self$metadata)), after = 1)
+        op <- options (readr.show_progress = FALSE)
+        frictionless::write_package (p, path)
+        options (op)
+        ret <- TRUE
+    }
+
+    return (ret)
 })
