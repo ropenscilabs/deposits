@@ -1,0 +1,16 @@
+{
+    "mimetype": "text/csv",
+    "updated": "2022-01-01T00:00:00+00:00",
+    "links": {
+        "self": "sbapi/files/hash/data.csv",
+        "version": "sbapi/files/hash/data.csv?versionId=cc47120b-7be7-4220-a5d7-e659bbafc7b3",
+        "uploads": "sbapi/files/hash/data.csv?uploads"
+    },
+    "is_head": true,
+    "created": "2022-01-01T00:00:00+00:00",
+    "checksum": "md5:cc624d72ede85ef061afa494d9951f6f",
+    "version_id": "cc47120b-7be7-4220-a5d7-e659bbafc7b3",
+    "delete_marker": false,
+    "key": "data.csv",
+    "size": 625
+}
