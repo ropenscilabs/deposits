@@ -109,8 +109,10 @@ test_that ("zenodo actions", {
     )
 
     # --------- UPLOAD_DATA
-    filename <- file.path (tempdir (), "data.Rds")
-    saveRDS (datasets::Orange, filename)
+    # filename <- file.path (tempdir (), "data.Rds")
+    # saveRDS (datasets::Orange, filename)
+    filename <- file.path (tempdir (), "data.csv")
+    write.csv (datasets::Orange, filename)
 
     dep <- with_mock_dir ("zen_up", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
