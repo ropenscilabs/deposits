@@ -1,14 +1,14 @@
 {
-    "token": "ab49b69d-769b-4040-b96e-f808628799de",
-    "md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
-    "size": 506,
-    "name": "38696094/data.Rds",
+    "token": "c7bab62c-4973-4fa3-89d4-51d68847e4f5",
+    "md5": "cc624d72ede85ef061afa494d9951f6f",
+    "size": 625,
+    "name": "38816937/data.csv",
     "status": "PENDING",
     "parts": [
         {
             "partNo": 1,
             "startOffset": 0,
-            "endOffset": 505,
+            "endOffset": 624,
             "status": "PENDING",
             "locked": false
         }
