@@ -54,10 +54,7 @@ test_that ("figshare actions", {
     expect_true (length (cli$hostdata) > 1L)
 
     # -------- DEPOSIT_RETRIEVE
-    deposit_id <- cli$hostdata$entity_id
-    if (is.null (deposit_id)) {
-        deposit_id <- cli$hostdata$id
-    }
+    deposit_id <- cli$id
     dep <- with_mock_dir ("fs_retr", {
         cli$deposit_retrieve (deposit_id)
     })

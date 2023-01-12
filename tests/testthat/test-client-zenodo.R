@@ -56,7 +56,7 @@ test_that ("zenodo actions", {
     expect_true (length (cli$hostdata) > 1L)
 
     # -------- DEPOSIT_RETRIEVE
-    deposit_id <- cli$hostdata$id
+    deposit_id <- cli$id
     dep <- with_mock_dir ("zen_retr", {
         cli$deposit_retrieve (deposit_id)
     })
