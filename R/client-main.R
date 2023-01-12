@@ -460,8 +460,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             metadata_updated <- private$add_meta_to_dp_json (path_dir)
             if (metadata_updated) {
-                path <- fs::path (path_dir, "datapackage.json")
-                self <- private$upload_local_file (deposit_id, path)
+                dp_path <- fs::path (path_dir, "datapackage.json")
+                self <- private$upload_local_file (deposit_id, dp_path)
+            }
+
+            # remove "datapackage.json" if it was generated here
+            if (!has_dpj) {
+                fs::file_delete (dp_path)
             }
 
             invisible (self)
