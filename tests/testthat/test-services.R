@@ -2,6 +2,10 @@
 test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
     identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
 
+# This envvar is used to convert the contents of the uploaded json file to a
+# standardised form (uniform timestamps and article id values).
+Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
+
 test_that ("services", {
 
     expect_silent (
@@ -47,12 +51,16 @@ test_that ("tokens", {
 
 test_that ("deposit_service function", {
 
-    cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+    cli <- with_mock_dir ("services_zen", {
+        depositsClient$new (service = "zenodo", sandbox = TRUE)
+    })
     expect_equal (cli$service, "zenodo")
     expect_true (cli$sandbox)
     expect_true (grepl ("zenodo", cli$url_base))
 
-    cli <- cli$deposit_service (service = "figshare")
+    cli <- with_mock_dir ("services_fs", {
+        cli$deposit_service (service = "figshare")
+    })
     expect_equal (cli$service, "figshare")
     expect_false (cli$sandbox)
     expect_true (grepl ("figshare", cli$url_base))
