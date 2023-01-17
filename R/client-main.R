@@ -35,6 +35,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
     portable = TRUE,
     cloneable = FALSE,
     private = list (
+        frictionless_json_name = "datapackage.json",
 
         # @field metadata_service holds metadata converted to specific format
         # requires by service. Derived from `metadata`.
@@ -464,14 +465,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$upload_local_file (deposit_id, path)
 
             path_dir <- fs::path_dir (path)
-            dp_path <- fs::path (path_dir, "datapackage.json")
+            dp_path <- fs::path (path_dir, private$frictionless_json_name)
             has_dpj <- fs::file_exists (dp_path)
             metadata_updated <- TRUE # Flag for local "datapackage.json"
 
             if (use_local_datapackage) {
                 if (!has_dpj) {
                     stop (
-                        "No 'datapackage.json' file found at ['",
+                        "No '",
+                        private$frictionless_json_name,
+                        "' file found at ['",
                         dp_path,
                         "']"
                     )
@@ -483,10 +486,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             } else {
                 files <- self$hostdata$files
                 file_names <- files [[private$get_file_name_field ()]]
-                if ("datapackage.json" %in% file_names) {
+                if (private$frictionless_json_name %in% file_names) {
                     self$deposit_download_file (
                         deposit_id,
-                        filename = "datapacakge.json",
+                        filename = private$frictionless_json_name,
                         path = dp_path,
                         overwrite = TRUE,
                         quiet = quiet
@@ -499,10 +502,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             if (metadata_updated) {
-                message ("Uploading 'datapackage.json'")
                 self <- private$upload_local_file (deposit_id, dp_path)
-            } else {
-                message ("NOT uploading 'datapackage.json'")
             }
 
             invisible (self)
@@ -540,18 +540,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             } else {
                 files <- private$get_hostdata_files (
                     deposit_id,
-                    "datapackage.json"
+                    private$frictionless_json_name
                 )
                 name_field <- private$get_file_name_field ()
-                if ("datapackage.json" %in% files [[name_field]]) {
+                if (private$frictionless_json_name %in% files [[name_field]]) {
                     # Rm any 'datapackage.json' that is in temp dir:
-                    dp_path <- fs::path (fs::path_temp (), "datapackage.json")
+                    dp_path <- fs::path (fs::path_temp (), private$frictionless_json_name)
                     if (fs::file_exists (dp_path)) {
                         fs::file_delete (dp_path)
                     }
                     dp_path <- self$deposit_download_file (
                         deposit_id,
-                        "datapackage.json",
+                        private$frictionless_json_name,
                         fs::path_temp ()
                     )
                     if (fs::file_exists (dp_path)) {

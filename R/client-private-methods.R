@@ -181,7 +181,7 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 
     ret <- FALSE
 
-    path_json <- fs::path (path, "datapackage.json")
+    path_json <- fs::path (path, private$frictionless_json_name)
     op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
     p <- frictionless::read_package (path_json)
     options (op)
