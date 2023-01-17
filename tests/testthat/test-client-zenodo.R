@@ -111,7 +111,7 @@ test_that ("zenodo actions", {
     # --------- UPLOAD_DATA
     # filename <- file.path (tempdir (), "data.Rds")
     # saveRDS (datasets::Orange, filename)
-    filename <- file.path (tempdir (), "data.csv")
+    filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
     dep <- with_mock_dir ("zen_up", {
@@ -134,16 +134,16 @@ test_that ("zenodo actions", {
     expect_identical (dep, cli)
 
     # -------- DEPOSIT_DOWNLOAD
-    path <- tempdir ()
-    if (file.exists (filename)) { # from upload data above
-        file.remove (filename)
+    path <- fs::path_temp ()
+    if (fs::file_exists (filename)) { # from upload data above
+        fs::file_delete (filename)
     }
 
     path <- with_mock_dir ("zen_dl", {
         cli$deposit_download_file (
             # deposit_id = deposit_id, # grabbed from cli$id
-            filename = basename (filename),
-            path = tempdir ()
+            filename = fs::path_file (filename),
+            path = fs::path_temp ()
         )
     })
     expect_identical (filename, path)

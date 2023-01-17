@@ -107,7 +107,7 @@ test_that ("figshare actions", {
     # --------- UPLOAD_DATA
     # filename <- file.path (tempdir (), "data.Rds")
     # saveRDS (datasets::Orange, filename)
-    filename <- file.path (tempdir (), "data.csv")
+    filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
     dep <- with_mock_dir ("fs_up", {
