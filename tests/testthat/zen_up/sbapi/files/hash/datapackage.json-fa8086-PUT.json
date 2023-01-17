@@ -3,13 +3,13 @@
     "updated": "2022-01-01T00:00:00+00:00",
     "links": {
         "self": "sbapi/files/hash/datapackage.json",
-        "version": "sbapi/files/hash/datapackage.json?versionId=86ee7c8a-4382-4c2c-97a7-dbc4a24c281a",
+        "version": "sbapi/files/hash/datapackage.json?versionId=237eae14-af2a-4d85-9c84-69a46233d6f8",
         "uploads": "sbapi/files/hash/datapackage.json?uploads"
     },
     "is_head": true,
     "created": "2022-01-01T00:00:00+00:00",
     "checksum": "md5:c756b788220c52d7578b1430e3e0cee0",
-    "version_id": "86ee7c8a-4382-4c2c-97a7-dbc4a24c281a",
+    "version_id": "237eae14-af2a-4d85-9c84-69a46233d6f8",
     "delete_marker": false,
     "key": "datapackage.json",
     "size": 793
