@@ -188,7 +188,10 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 
     if (!"metadata" %in% names (p)) {
         p <- append (p, c (metadata = list (self$metadata)), after = 1)
-        op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
+        op <- options (
+            readr.show_progress = FALSE,
+            readr.show_col_types = FALSE
+        )
         frictionless::write_package (p, path)
         options (op)
         ret <- TRUE
