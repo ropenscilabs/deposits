@@ -382,7 +382,10 @@ client is used.}
 remote service (if it exists), and updated with information on the
 uploaded file. If \code{TRUE}, then the local version at the base
 directory of \code{path} will be used, with any additional resources on
-the remote service appended to this file.}
+the remote service appended to this file. If the local version
+contains a "metadata" item, that metadata will also be used to
+overwrite any metadata both in the local client, and on any remote
+"datapackage.json" file.}
 }
 \if{html}{\out{</div>}}
 }
