@@ -361,7 +361,11 @@ specified, the 'id' value of current deposits client is used.}
 \subsection{Method \code{deposit_upload_file()}}{
 Upload file to an existing deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
+  deposit_id = NULL,
+  path = NULL,
+  use_local_datapackage = FALSE
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -372,6 +376,13 @@ uploaded to. If not specified, the 'id' value of current deposits
 client is used.}
 
 \item{\code{path}}{Path to local file.}
+
+\item{\code{use_local_datapackage}}{When \code{FALSE} (default), the
+\pkg{frictionless} "datapackage.json" file is obtained from the
+remote service (if it exists), and updated with information on the
+uploaded file. If \code{TRUE}, then the local version at the base
+directory of \code{path} will be used, with any additional resources on
+the remote service appended to this file.}
 }
 \if{html}{\out{</div>}}
 }

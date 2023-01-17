@@ -437,9 +437,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
         #' @param path Path to local file.
+        #' @param use_local_datapackage When `FALSE` (default), the
+        #' \pkg{frictionless} "datapackage.json" file is obtained from the
+        #' remote service (if it exists), and updated with information on the
+        #' uploaded file. If `TRUE`, then the local version at the base
+        #' directory of `path` will be used, with any additional resources on
+        #' the remote service appended to this file. If the local version
+        #' contains a "metadata" item, that metadata will also be used to
+        #' overwrite any metadata both in the local client, and on any remote
+        #' "datapackage.json" file.
         #' @return Updated 'deposits' client
 
-        deposit_upload_file = function (deposit_id = NULL, path = NULL) {
+        deposit_upload_file = function (deposit_id = NULL, path = NULL,
+                                        use_local_datapackage = FALSE) {
 
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
@@ -456,18 +466,39 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             path_dir <- fs::path_dir (path)
             dp_path <- fs::path (path_dir, "datapackage.json")
             has_dpj <- fs::file_exists (dp_path)
-            if (!has_dpj) {
-                private$generate_frictionless (path)
+            metadata_updated <- TRUE # Flag for local "datapackage.json"
+
+            if (use_local_datapackage) {
+                if (!has_dpj) {
+                    stop ("No 'datapackage.json' file found at ['", dp_path, "']")
+                }
+                dpj <- jsonlite::read_json (dp_path)
+                if (!"metadata" %in% names (dpj)) {
+                    metadata_updated <- private$add_meta_to_dp_json (path_dir) # TRUE
+                }
+            } else {
+                files <- self$hostdata$files
+                file_names <- files [[private$get_file_name_field ()]]
+                if ("datapackage.json" %in% file_names) {
+                    self$deposit_download_file (
+                        deposit_id,
+                        filename = "datapacakge.json",
+                        path = dp_path,
+                        overwrite = TRUE,
+                        quiet = quiet
+                    )
+                } else if (!has_dpj) {
+                    private$generate_frictionless (path)
+                } else {
+                    metadata_updated <- FALSE
+                }
             }
 
-            metadata_updated <- private$add_meta_to_dp_json (path_dir)
             if (metadata_updated) {
+                message ("Uploading 'datapackage.json'")
                 self <- private$upload_local_file (deposit_id, dp_path)
-            }
-
-            # remove "datapackage.json" if it was generated here
-            if (!has_dpj && fs::file_exists (dp_path)) {
-                fs::file_delete (dp_path)
+            } else {
+                message ("NOT uploading 'datapackage.json'")
             }
 
             invisible (self)
