@@ -194,3 +194,42 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 
     return (ret)
 })
+
+#' @description Get list of files from local or remote hostdata
+#'
+#' @param filename Name of file to be extracted. This is only used to check
+#' whether that file is already listed on local hostdata. If not, full file
+#' list is downloaded from remote service.
+#' @return Full data on all files associated with nominated 'deposit_id',
+#' including 'filename'.
+#' @noRd
+
+depositsClient$set ("private", "get_hostdata_files", function (deposit_id, filename) {
+
+    url <- get_service_url (self, deposit_id = deposit_id)
+
+    name_field <- ifelse (self$service == "figshare",
+        "name",
+        "filename"
+    )
+
+    if (filename %in% self$hostdata$files [[name_field]]) {
+
+        files <- self$hostdata$files
+
+    } else {
+
+        req <- create_httr2_helper (
+            url,
+            self$headers$Authorization,
+            "GET"
+        )
+        resp <- httr2::req_perform (req)
+        httr2::resp_check_status (resp)
+
+        hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+        files <- hostdata$files
+    }
+
+    return (files)
+})

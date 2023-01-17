@@ -531,30 +531,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
-            url <- get_service_url (self, deposit_id = deposit_id)
-
             name_field <- ifelse (self$service == "figshare",
                 "name",
                 "filename"
             )
 
-            if (filename %in% self$hostdata$files [[name_field]]) {
-
-                files <- self$hostdata$files
-
-            } else {
-
-                req <- create_httr2_helper (
-                    url,
-                    self$headers$Authorization,
-                    "GET"
-                )
-                resp <- httr2::req_perform (req)
-                httr2::resp_check_status (resp)
-
-                hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
-                files <- hostdata$files
-            }
+            files <- private$get_hostdata_files (deposit_id, filename)
 
             if (!filename %in% files [[name_field]]) {
                 stop ("That deposit does not contain the specified file.")
