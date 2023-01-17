@@ -475,9 +475,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Retrieve information on specified deposit
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
+        #' @param quiet If `FALSE` (default), display information on screen on
+        #' any issues encountered in retrieving deposit.
         #' @return Updated 'deposits' client
 
-        deposit_retrieve = function (deposit_id) {
+        deposit_retrieve = function (deposit_id, quiet = FALSE) {
 
             checkmate::assert_int (deposit_id)
 
@@ -491,9 +493,26 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            # metadata <- metadata_from_deposit (self, self$hostdata)
-            # metadata <- httptest2_dcmi_timestamps (metadata)
-            # self$metadata <- metadata
+            if (self$service == "figshare" && !self$hostdata$is_public) {
+                if (!quiet) {
+                    message (
+                        "Files for private Figshare deposits can only be ",
+                        "downloaded manually; no metadata can be retrieved ",
+                        "for this deposit."
+                    )
+                }
+            } else {
+                files <- private$get_hostdata_files (deposit_id, "datapackage.json")
+                name_field <- ifelse (self$service == "figshare",
+                    "name",
+                    "filename"
+                )
+                if ("datapacakge.json" %in% files [[name_field]]) {
+                    f <- cli$deposit_download_file (deposit_id, "datapackage.json", fs::path_temp ())
+                    self$metadata <- jsonlite::read_json (f, simplifyVector = FALSE)
+                    fs::file_delete (f)
+                }
+            }
 
             self <- private$fill_service_id_url ()
 

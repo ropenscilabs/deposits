@@ -391,7 +391,7 @@ Updated 'deposits' client
 \subsection{Method \code{deposit_retrieve()}}{
 Retrieve information on specified deposit
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id, quiet = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -399,6 +399,9 @@ Retrieve information on specified deposit
 \describe{
 \item{\code{deposit_id}}{The 'id' number of deposit for which information is
 to be retrieved.}
+
+\item{\code{quiet}}{If \code{FALSE} (default), display information on screen on
+any issues encountered in retrieving deposit.}
 }
 \if{html}{\out{</div>}}
 }
