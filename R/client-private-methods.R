@@ -197,6 +197,20 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
     return (ret)
 })
 
+#' @description Get the name of the "files" part of hostdata which contains the
+#' actual names of the files.
+#' @noRd
+depositsClient$set ("private", "get_file_name_field", function () {
+
+    if (self$service == "figshare") {
+        ret <- "name"
+    } else if (self$service == "zenodo") {
+        ret <- "filename"
+    }
+
+    return (ret)
+})
+
 #' @description Get list of files from local or remote hostdata
 #'
 #' @param filename Name of file to be extracted. This is only used to check
@@ -210,10 +224,7 @@ depositsClient$set ("private", "get_hostdata_files", function (deposit_id, filen
 
     url <- get_service_url (self, deposit_id = deposit_id)
 
-    name_field <- ifelse (self$service == "figshare",
-        "name",
-        "filename"
-    )
+    name_field <- private$get_file_name_field ()
 
     if (filename %in% self$hostdata$files [[name_field]]) {
 

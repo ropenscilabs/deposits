@@ -504,10 +504,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             } else {
                 files <- private$get_hostdata_files (deposit_id, "datapackage.json")
-                name_field <- ifelse (self$service == "figshare",
-                    "name",
-                    "filename"
-                )
+                name_field <- private$get_file_name_field ()
                 if ("datapackage.json" %in% files [[name_field]]) {
                     # Rm any 'datapackage.json' that is in temp dir:
                     dp_path <- fs::path (fs::path_temp (), "datapackage.json")
@@ -558,10 +555,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
-            name_field <- ifelse (self$service == "figshare",
-                "name",
-                "filename"
-            )
+            name_field <- private$get_file_name_field ()
 
             files <- private$get_hostdata_files (deposit_id, filename)
 
