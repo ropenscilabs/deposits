@@ -470,11 +470,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (use_local_datapackage) {
                 if (!has_dpj) {
-                    stop ("No 'datapackage.json' file found at ['", dp_path, "']")
+                    stop (
+                        "No 'datapackage.json' file found at ['",
+                        dp_path,
+                        "']"
+                    )
                 }
                 dpj <- jsonlite::read_json (dp_path)
                 if (!"metadata" %in% names (dpj)) {
-                    metadata_updated <- private$add_meta_to_dp_json (path_dir) # TRUE
+                    metadata_updated <- private$add_meta_to_dp_json (path_dir)
                 }
             } else {
                 files <- self$hostdata$files
@@ -534,7 +538,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                 }
             } else {
-                files <- private$get_hostdata_files (deposit_id, "datapackage.json")
+                files <- private$get_hostdata_files (
+                    deposit_id,
+                    "datapackage.json"
+                )
                 name_field <- private$get_file_name_field ()
                 if ("datapackage.json" %in% files [[name_field]]) {
                     # Rm any 'datapackage.json' that is in temp dir:
@@ -542,9 +549,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     if (fs::file_exists (dp_path)) {
                         fs::file_delete (dp_path)
                     }
-                    dp_path <- self$deposit_download_file (deposit_id, "datapackage.json", fs::path_temp ())
+                    dp_path <- self$deposit_download_file (
+                        deposit_id,
+                        "datapackage.json",
+                        fs::path_temp ()
+                    )
                     if (fs::file_exists (dp_path)) {
-                        self$metadata <- jsonlite::read_json (dp_path, simplifyVector = FALSE)$metadata
+                        self$metadata <- jsonlite::read_json (
+                            dp_path,
+                            simplifyVector = FALSE
+                        )$metadata
                         fs::file_delete (dp_path)
                     }
                 }
