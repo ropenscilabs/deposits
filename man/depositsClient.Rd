@@ -71,12 +71,6 @@ row per deposit.}
 \item{\code{hostdata}}{(list) Data as stored by host platform}
 
 \item{\code{metadata}}{holds list of DCMI-compliant metadata.}
-
-\item{\code{metadata_service}}{holds metadata converted to specific format
-requires by service. Derived from \code{metadata}.}
-
-\item{\code{term_map}}{(data.frame) Map between DCMI and deposit terms for
-specified host service.}
 }
 \if{html}{\out{</div>}}
 }

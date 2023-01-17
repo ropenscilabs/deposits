@@ -25,7 +25,7 @@ depositsClient$set (
         if (self$service == "zenodo-sandbox") {
             self$service <- "zenodo"
         }
-        self$term_map <- get_dcmi_term_map (self$service)
+        private$term_map <- get_dcmi_term_map (self$service)
 
         invisible (self)
     }

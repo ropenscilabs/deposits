@@ -36,7 +36,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
     cloneable = FALSE,
     private = list (
 
-        # private methods in R/client-private-methods.R
+        # @field metadata_service holds metadata converted to specific format
+        # requires by service. Derived from `metadata`.
+        metadata_service = NULL,
+        # @field term_map (data.frame) Map between DCMI and deposit terms for
+        # specified host service.
+        term_map = NULL
+
+        # ... other private methods in R/client-private-methods.R
     ), # end private list
 
     public = list (
@@ -61,12 +68,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         hostdata = NULL,
         #' @field metadata holds list of DCMI-compliant metadata.
         metadata = NULL,
-        #' @field metadata_service holds metadata converted to specific format
-        #' requires by service. Derived from `metadata`.
-        metadata_service = NULL,
-        #' @field term_map (data.frame) Map between DCMI and deposit terms for
-        #' specified host service.
-        term_map = NULL,
 
         #' @description Create a new `depositsClient` object
         #' @param service (character) of a deposits service (see
@@ -111,7 +112,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     gsub ("\\-sandbox$", "", self$service)
                 )
                 self$metadata <- metadata$dcmi
-                self$metadata_service <- metadata$service
+                private$metadata_service <- metadata$service
             }
 
             return (self)
@@ -323,7 +324,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             metadata <- validate_metadata (metadata, self$service)
             self$metadata <- metadata$dcmi
-            self$metadata_service <- metadata$service
+            private$metadata_service <- metadata$service
 
             invisible (self)
         },
@@ -342,7 +343,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # Re-run service-specific metadata validation in case anything has
             # changed:
             self$metadata <- httptest2_dcmi_created (self$metadata)
-            self$metadata_service <- validate_service_metadata (
+            private$metadata_service <- validate_service_metadata (
                 self$metadata,
                 service = self$service
             )
@@ -350,7 +351,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             url <- get_service_url (self)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-            req <- httr2::req_body_json (req, data = self$metadata_service)
+            req <- httr2::req_body_json (req, data = private$metadata_service)
 
             resp <- httr2::req_perform (req)
 
@@ -421,7 +422,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            req <- httr2::req_body_json (req, data = self$metadata_service)
+            req <- httr2::req_body_json (req, data = private$metadata_service)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)

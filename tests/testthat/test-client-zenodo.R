@@ -42,7 +42,7 @@ test_that ("zenodo actions", {
         c ("abstract", "created", "creator", "title")
     )
     expect_type (cli$metadata, "list")
-    expect_type (cli$metadata_service, "list")
+    # expect_type (cli$metadata_service, "list") # now a private field
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("zen_new", {
