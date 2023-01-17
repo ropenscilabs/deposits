@@ -453,19 +453,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$upload_local_file (deposit_id, path)
 
             path_dir <- fs::path_dir (path)
-            has_dpj <- fs::file_exists (fs::path (path_dir, "datapackage.json"))
+            dp_path <- fs::path (path_dir, "datapackage.json")
+            has_dpj <- fs::file_exists (dp_path)
             if (!has_dpj) {
                 private$generate_frictionless (path)
             }
 
             metadata_updated <- private$add_meta_to_dp_json (path_dir)
             if (metadata_updated) {
-                dp_path <- fs::path (path_dir, "datapackage.json")
                 self <- private$upload_local_file (deposit_id, dp_path)
             }
 
             # remove "datapackage.json" if it was generated here
-            if (!has_dpj) {
+            if (!has_dpj && fs::file_exists (dp_path)) {
                 fs::file_delete (dp_path)
             }
 
@@ -508,9 +508,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     "filename"
                 )
                 if ("datapackage.json" %in% files [[name_field]]) {
-                    f <- cli$deposit_download_file (deposit_id, "datapackage.json", fs::path_temp ())
-                    self$metadata <- jsonlite::read_json (f, simplifyVector = FALSE)$metadata
-                    fs::file_delete (f)
+                    # Rm any 'datapackage.json' that is in temp dir:
+                    dp_path <- fs::path (fs::path_temp (), "datapackage.json")
+                    if (fs::file_exists (dp_path)) {
+                        fs::file_delete (dp_path)
+                    }
+                    dp_path <- self$deposit_download_file (deposit_id, "datapackage.json", fs::path_temp ())
+                    self$metadata <- jsonlite::read_json (dp_path, simplifyVector = FALSE)$metadata
+                    if (fs::file_exists (dp_path)) {
+                        fs::file_delete (dp_path)
+                    }
                 }
             }
 
