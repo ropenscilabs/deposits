@@ -1,6 +1,6 @@
 validate_figshare_terms <- function (metaterms) {
 
-    f <- system.file (file.path ("extdata", "figshareTerms.csv"),
+    f <- system.file (fs::path ("extdata", "figshareTerms.csv"),
         package = "deposits"
     )
     meta_term_def <- utils::read.csv (f)

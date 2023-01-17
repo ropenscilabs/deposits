@@ -7,5 +7,5 @@ lic <- jsonlite::fromJSON (res$parse (encoding = "UTF-8"))
 lic <- lic$hits$hits$metadata
 lic <- lic [, c ("id", "title", "url")]
 
-path <- file.path (here::here (), "inst", "extdata", "zenodo_licenses.csv")
+path <- fs::path (here::here (), "inst", "extdata", "zenodo_licenses.csv")
 write.csv (lic, file = path, row.names = FALSE, fileEncoding = "UTF-8")

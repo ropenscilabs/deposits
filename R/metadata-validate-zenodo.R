@@ -3,7 +3,7 @@ validate_zenodo_terms <- function (metaterms) {
     meta <- metaterms$metadata
     metaterms$metadata <- NULL
 
-    f <- system.file (file.path ("extdata", "zenodoTerms.csv"),
+    f <- system.file (fs::path ("extdata", "zenodoTerms.csv"),
         package = "deposits"
     )
     term_def <- utils::read.csv (f) # metadata term definitions
@@ -106,7 +106,7 @@ check_zen_meta_from_file <- function (meta_term_def, metaterms, i) {
     out <- NULL
 
     f <- system.file (
-        file.path (
+        fs::path (
             "extdata",
             meta_term_def$vocabulary [i]
         ),

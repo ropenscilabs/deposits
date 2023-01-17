@@ -28,9 +28,9 @@
 deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
 
     checkmate::assert_character (filename, len = 1L)
-    filepath <- dirname (normalizePath (filename, mustWork = FALSE))
+    filepath <- fs::path_dir (filename)
     checkmate::assert_directory_exists (filepath)
-    if (file.exists (filename)) {
+    if (fs::file_exists (filename)) {
         stop (
             "filename [", filename, "] already exists; please delete before ",
             "calling this function."

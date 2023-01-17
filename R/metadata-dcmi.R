@@ -13,8 +13,8 @@ dcmi_schema <- function () {
 
     read_one_xml <- function (path, file_name) {
 
-        f <- system.file (file.path (path, file_name), package = "deposits")
-        if (!file.exists (f)) {
+        f <- system.file (fs::path (path, file_name), package = "deposits")
+        if (!fs::file_exists (f)) {
             stop ("Schema file [", f, "] not found")
         }
         xml2::read_xml (f)
@@ -84,7 +84,7 @@ dcmi_terms <- function (term = NULL) {
 #' @noRd
 load_meta_terms <- function () {
 
-    terms <- system.file (file.path ("extdata", "DCTerms.csv"),
+    terms <- system.file (fs::path ("extdata", "DCTerms.csv"),
         package = "deposits"
     )
     terms <- utils::read.csv (terms)

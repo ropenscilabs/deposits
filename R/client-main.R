@@ -577,13 +577,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             if (is.null (path)) {
-                path <- here::here ()
+                path <- fs::path (here::here ())
             }
-            destfile <- normalizePath (
-                file.path (path, filename),
-                mustWork = FALSE
-            )
-            if (file.exists (destfile) & !overwrite) {
+            destfile <- fs::path (path, filename)
+            if (fs::file_exists (destfile) & !overwrite) {
                 stop (
                     "File [", destfile, "] exists; either remove ",
                     "or pass `overwrite = TRUE`."
