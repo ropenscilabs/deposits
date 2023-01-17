@@ -107,5 +107,5 @@ figshare_upload_parts <- function (upload_url, headers, path) {
         system (paste ("split -b", part_size, path, "part_", "--numeric=1"))
     )
 
-    fs::dir_ls (tmpdir, pattern = "^part\\_", full.names = TRUE)
+    fs::dir_ls (tmpdir, regexp = "part\\_[0-9]+$")
 }
