@@ -514,8 +514,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         fs::file_delete (dp_path)
                     }
                     dp_path <- self$deposit_download_file (deposit_id, "datapackage.json", fs::path_temp ())
-                    self$metadata <- jsonlite::read_json (dp_path, simplifyVector = FALSE)$metadata
                     if (fs::file_exists (dp_path)) {
+                        self$metadata <- jsonlite::read_json (dp_path, simplifyVector = FALSE)$metadata
                         fs::file_delete (dp_path)
                     }
                 }
