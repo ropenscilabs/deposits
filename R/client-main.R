@@ -491,13 +491,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 files <- self$hostdata$files
                 file_names <- files [[private$get_file_name_field ()]]
                 if (private$frictionless_json_name %in% file_names) {
-                    self$deposit_download_file (
-                        deposit_id,
-                        filename = private$frictionless_json_name,
-                        path = path_dir,
-                        overwrite = TRUE,
-                        quiet = quiet
-                    )
+                    is_fs_private <- self$service == "figshare" &&
+                        !self$hostdata$is_public
+                    if (!is_fs_private) {
+                        self$deposit_download_file (
+                            deposit_id,
+                            filename = private$frictionless_json_name,
+                            path = path_dir,
+                            overwrite = TRUE,
+                            quiet = quiet
+                        )
+                    } else {
+                        metadata_updated <- FALSE
+                    }
                 } else if (!has_dpj) {
                     private$generate_frictionless (path)
                 } else {
