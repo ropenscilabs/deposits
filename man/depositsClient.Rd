@@ -364,7 +364,8 @@ Upload file to an existing deposit
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   deposit_id = NULL,
   path = NULL,
-  use_local_datapackage = FALSE
+  use_local_datapackage = FALSE,
+  quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
 
@@ -386,6 +387,9 @@ the remote service appended to this file. If the local version
 contains a "metadata" item, that metadata will also be used to
 overwrite any metadata both in the local client, and on any remote
 "datapackage.json" file.}
+
+\item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
+screen.}
 }
 \if{html}{\out{</div>}}
 }

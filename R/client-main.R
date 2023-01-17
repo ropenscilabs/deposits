@@ -447,10 +447,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' contains a "metadata" item, that metadata will also be used to
         #' overwrite any metadata both in the local client, and on any remote
         #' "datapackage.json" file.
+        #' @param quiet If `FALSE` (default), display diagnostic information on
+        #' screen.
         #' @return Updated 'deposits' client
 
-        deposit_upload_file = function (deposit_id = NULL, path = NULL,
-                                        use_local_datapackage = FALSE) {
+        deposit_upload_file = function (deposit_id = NULL,
+                                        path = NULL,
+                                        use_local_datapackage = FALSE,
+                                        quiet = FALSE) {
 
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
@@ -490,7 +494,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     self$deposit_download_file (
                         deposit_id,
                         filename = private$frictionless_json_name,
-                        path = dp_path,
+                        path = path_dir,
                         overwrite = TRUE,
                         quiet = quiet
                     )
