@@ -511,7 +511,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
-            if (metadata_updated) {
+            # httptest2 does not produce mocked download files; only the actual
+            # request result. So these files can not be uploaded here.
+            if (metadata_updated && Sys.getenv ("DEPOSITS_TEST_ENV") != "true") {
                 self <- private$upload_local_file (deposit_id, dp_path)
             }
 
@@ -561,8 +563,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     }
                     dp_path <- self$deposit_download_file (
                         deposit_id,
-                        private$frictionless_json_name,
-                        fs::path_temp ()
+                        filename = private$frictionless_json_name,
+                        path = fs::path_temp ()
                     )
                     if (fs::file_exists (dp_path)) {
                         self$metadata <- jsonlite::read_json (
