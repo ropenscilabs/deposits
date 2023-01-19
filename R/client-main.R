@@ -466,7 +466,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$upload_local_file (path)
 
+            # This does initial creation if "datapackage.json" does not exist,
+            # or downloads remote if only that exists. Either way, local version
+            # is then the most up-to-date version, but not necessarily
+            # containing information on any new resouces.
             self <- private$update_frictionless (path)
+
+            # self <- private$add_frictionless_resource (path)
 
             invisible (self)
         },
@@ -521,10 +527,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         path = fs::path_temp ()
                     )
                     if (fs::file_exists (dp_path)) {
-                        self$metadata <- jsonlite::read_json (
-                            dp_path,
-                            simplifyVector = FALSE
-                        )$metadata
+                        suppressMessages (
+                            self$metadata <- frictionless::read_package (
+                                dp_path
+                            )$metadata
+                        )
                         fs::file_delete (dp_path)
                     }
                 }
