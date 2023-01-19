@@ -113,38 +113,35 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 #' @description Perform actual upload of local file.
 #' @noRd
 
-depositsClient$set (
-    "private", "upload_local_file",
-    function (deposit_id, path) {
+depositsClient$set ("private", "upload_local_file", function (path) {
 
-        url <- get_service_url (self)
+    url <- get_service_url (self)
 
-        if (self$service == "figshare") {
+    if (self$service == "figshare") {
 
-            # in R/upload-figshare.R, which returns updated hostdata
-            self$hostdata <- upload_figshare_file (
-                deposit_id,
-                url,
-                self$headers,
-                path
-            )
+        # in R/upload-figshare.R, which returns updated hostdata
+        self$hostdata <- upload_figshare_file (
+            self$id,
+            url,
+            self$headers,
+            path
+        )
 
-        } else if (self$service == "zenodo") {
+    } else if (self$service == "zenodo") {
 
-            # in R/upload-zenodo.R, which returns data on file upload only
-            res <- upload_zenodo_file (
-                deposit_id,
-                url,
-                self$headers,
-                path
-            )
+        # in R/upload-zenodo.R, which returns data on file upload only
+        res <- upload_zenodo_file (
+            self$id,
+            url,
+            self$headers,
+            path
+        )
 
-            self <- self$deposit_retrieve (deposit_id)
-        }
-
-        invisible (self)
+        self <- self$deposit_retrieve (self$id)
     }
-)
+
+    invisible (self)
+})
 
 #' @description Auto-generate default 'frictionless' JSON file.
 #'
@@ -324,7 +321,7 @@ depositsClient$set (
         # request result. So these files can not be uploaded here.
         if (update_remote &&
             Sys.getenv ("DEPOSITS_TEST_ENV") != "true") {
-            self <- private$upload_local_file (deposit_id, dp)
+            self <- private$upload_local_file (dp)
         }
 
         if (identical (dp, dp_remote)) {

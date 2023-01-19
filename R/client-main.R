@@ -464,7 +464,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             path <- fs::path_real (path)
 
-            self <- private$upload_local_file (deposit_id, path)
+            self <- private$upload_local_file (path)
 
             self <- private$update_frictionless (path)
 
