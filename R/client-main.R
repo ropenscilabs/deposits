@@ -453,7 +453,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_upload_file = function (deposit_id = NULL,
                                         path = NULL,
-                                        use_local_datapackage = FALSE,
+                                        use_local_datapackage = TRUE,
                                         quiet = FALSE) {
 
             if (is.null (deposit_id)) {
@@ -475,13 +475,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (use_local_datapackage) {
                 if (!has_dpj) {
-                    stop (
-                        "No '",
-                        private$frictionless_json_name,
-                        "' file found at ['",
-                        dp_path,
-                        "']"
+                    message (
+                        "A 'frictionless' file has been created at:\n   ",
+                        dp_path
                     )
+                    private$generate_frictionless (path)
+                } else {
+                    metadata_updated <- FALSE
                 }
                 dpj <- jsonlite::read_json (dp_path)
                 if (!"metadata" %in% names (dpj)) {

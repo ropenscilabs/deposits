@@ -364,7 +364,7 @@ Upload file to an existing deposit
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   deposit_id = NULL,
   path = NULL,
-  use_local_datapackage = FALSE,
+  use_local_datapackage = TRUE,
   quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
