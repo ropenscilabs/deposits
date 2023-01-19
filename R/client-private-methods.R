@@ -250,68 +250,85 @@ depositsClient$set ("private", "get_hostdata_files", function (deposit_id, filen
     return (files)
 })
 
+#' @description Update remote and local frictionless data files.
+#'
+#' Currently only called on 'upload_local_file'. This compares modification
+#' times between local and remote versions (where they exist), selects the
+#' version with the latest mtime, and if updated at all, uploads it once again
+#' to the remote service, as well as updating any local copy that exists.
+#'
+#' @param path Path to local file that was uploaded.
+#' @noRd
+
 depositsClient$set (
     "private", "update_frictionless",
-    function (path, use_local_datapackage) {
+    function (path) {
 
         deposit_id <- self$id
 
+        files <- self$hostdata$files
+        file_names <- files [[private$get_file_name_field ()]]
+        mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
+        dp_remote <- ""
+
+        if (private$frictionless_json_name %in% files) {
+            dp_remote <- self$deposit_download_file (
+                deposit_id,
+                filename = private$frictionless_json_name,
+                path = fs::path_temp ()
+            )
+            mtime_remote <- fs::file_info (dp_remote)$modification_time
+        }
+
         path_dir <- fs::path_dir (path)
-        dp_path <- fs::path (path_dir, private$frictionless_json_name)
-        has_dpj <- fs::file_exists (dp_path)
-        metadata_updated <- TRUE # Flag for local "datapackage.json"
+        dp_local <- fs::path (path_dir, private$frictionless_json_name)
+        has_dpj <- fs::file_exists (dp_local)
+        if (has_dpj) {
+            mtime_local <- fs::file_info (dp_local)$modification_time
+        }
 
-        if (use_local_datapackage) {
-            if (!has_dpj) {
-                message (
-                    "A 'frictionless' file has been created at:\n   ",
-                    dp_path
-                )
-                private$generate_frictionless (path)
-            } else {
-                metadata_updated <- FALSE
-            }
-            dpj <- jsonlite::read_json (dp_path)
+        update_remote <- FALSE
+        if (mtime_remote > mtime_local) {
+            dp <- dp_remote
+        } else {
+            update_remote <- TRUE
+            dp <- dp_local
+        }
+
+        if (fs::file_exists (dp)) {
+            dpj <- jsonlite::read_json (dp)
             if (!"metadata" %in% names (dpj)) {
-                metadata_updated <- private$add_meta_to_dp_json (path_dir)
-            }
-
-            # If not updated, then only consider updated if remote service
-            # has not "metadata"
-            files <- self$hostdata$files
-            file_names <- files [[private$get_file_name_field ()]]
-            if (!"datapackage.json" %in% file_names) {
-                metadata_updated <- TRUE
+                update_remote <- private$add_meta_to_dp_json (path_dir)
+                # That method always returns 'TRUE'
             }
         } else {
-            files <- self$hostdata$files
-            file_names <- files [[private$get_file_name_field ()]]
-            if (private$frictionless_json_name %in% file_names) {
-                is_fs_private <- self$service == "figshare" &&
-                    !self$hostdata$is_public
-                if (!is_fs_private) {
-                    self$deposit_download_file (
-                        deposit_id,
-                        filename = private$frictionless_json_name,
-                        path = path_dir,
-                        overwrite = TRUE,
-                        quiet = quiet
-                    )
-                } else {
-                    metadata_updated <- FALSE
-                }
-            } else if (!has_dpj) {
-                private$generate_frictionless (path)
-            } else {
-                metadata_updated <- FALSE
-            }
+            message (
+                "frictionless metadata file has been generated as '",
+                path,
+                "'"
+            )
+            private$generate_frictionless (path)
+            update_remote <- TRUE
+        }
+
+        if (!identical (dp, dp_local)) {
+            fs::file_copy (dp, dp_local)
+            message (
+                "frictionless metadata file [",
+                path,
+                "] has been updated."
+            )
         }
 
         # httptest2 does not produce mocked download files; only the actual
         # request result. So these files can not be uploaded here.
-        if (metadata_updated &&
+        if (update_remote &&
             Sys.getenv ("DEPOSITS_TEST_ENV") != "true") {
-            self <- private$upload_local_file (deposit_id, dp_path)
+            self <- private$upload_local_file (deposit_id, dp)
+        }
+
+        if (identical (dp, dp_remote)) {
+            fs::file_delete (dp_remote)
         }
 
         invisible (self)

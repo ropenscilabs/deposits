@@ -438,7 +438,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
         #' @param path Path to local file.
-        #' @param use_local_datapackage When `FALSE` (default), the
         #' \pkg{frictionless} "datapackage.json" file is obtained from the
         #' remote service (if it exists), and updated with information on the
         #' uploaded file. If `TRUE`, then the local version at the base
@@ -453,7 +452,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_upload_file = function (deposit_id = NULL,
                                         path = NULL,
-                                        use_local_datapackage = TRUE,
                                         quiet = FALSE) {
 
             if (is.null (deposit_id)) {
@@ -468,7 +466,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$upload_local_file (deposit_id, path)
 
-            self <- private$update_frictionless (path, use_local_datapackage)
+            self <- private$update_frictionless (path)
 
             invisible (self)
         },
