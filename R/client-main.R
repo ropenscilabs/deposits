@@ -468,63 +468,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$upload_local_file (deposit_id, path)
 
-            path_dir <- fs::path_dir (path)
-            dp_path <- fs::path (path_dir, private$frictionless_json_name)
-            has_dpj <- fs::file_exists (dp_path)
-            metadata_updated <- TRUE # Flag for local "datapackage.json"
-
-            if (use_local_datapackage) {
-                if (!has_dpj) {
-                    message (
-                        "A 'frictionless' file has been created at:\n   ",
-                        dp_path
-                    )
-                    private$generate_frictionless (path)
-                } else {
-                    metadata_updated <- FALSE
-                }
-                dpj <- jsonlite::read_json (dp_path)
-                if (!"metadata" %in% names (dpj)) {
-                    metadata_updated <- private$add_meta_to_dp_json (path_dir)
-                }
-
-                # If not updated, then only consider updated if remote service
-                # has not "metadata"
-                files <- self$hostdata$files
-                file_names <- files [[private$get_file_name_field ()]]
-                if (!"datapackage.json" %in% file_names) {
-                    metadata_updated <- TRUE
-                }
-            } else {
-                files <- self$hostdata$files
-                file_names <- files [[private$get_file_name_field ()]]
-                if (private$frictionless_json_name %in% file_names) {
-                    is_fs_private <- self$service == "figshare" &&
-                        !self$hostdata$is_public
-                    if (!is_fs_private) {
-                        self$deposit_download_file (
-                            deposit_id,
-                            filename = private$frictionless_json_name,
-                            path = path_dir,
-                            overwrite = TRUE,
-                            quiet = quiet
-                        )
-                    } else {
-                        metadata_updated <- FALSE
-                    }
-                } else if (!has_dpj) {
-                    private$generate_frictionless (path)
-                } else {
-                    metadata_updated <- FALSE
-                }
-            }
-
-            # httptest2 does not produce mocked download files; only the actual
-            # request result. So these files can not be uploaded here.
-            if (metadata_updated &&
-                Sys.getenv ("DEPOSITS_TEST_ENV") != "true") {
-                self <- private$upload_local_file (deposit_id, dp_path)
-            }
+            self <- private$update_and_upload_frictionless (
+                path,
+                use_local_datapackage
+            )
 
             invisible (self)
         },
