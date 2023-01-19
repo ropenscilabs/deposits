@@ -605,9 +605,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (filename, len = 1L)
-            if (!is.null (path)) {
+            if (is.null (path)) {
+                path <- fs::path (here::here ())
+            } else {
                 checkmate::assert_character (path, len = 1L)
                 checkmate::assert_directory_exists (path)
+                path <- fs::path_real (path)
             }
             checkmate::assert_logical (quiet, len = 1L)
 
@@ -636,9 +639,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
-            if (is.null (path)) {
-                path <- fs::path (here::here ())
-            }
             destfile <- fs::path (path, filename)
             if (fs::file_exists (destfile) & !overwrite) {
                 stop (
