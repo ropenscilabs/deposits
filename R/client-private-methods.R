@@ -251,7 +251,7 @@ depositsClient$set ("private", "get_hostdata_files", function (deposit_id, filen
 })
 
 depositsClient$set (
-    "private", "update_and_upload_frictionless",
+    "private", "update_frictionless",
     function (path, use_local_datapackage) {
 
         deposit_id <- self$id
