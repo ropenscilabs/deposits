@@ -487,6 +487,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 if (!"metadata" %in% names (dpj)) {
                     metadata_updated <- private$add_meta_to_dp_json (path_dir)
                 }
+
+                # If not updated, then only consider updated if remote service
+                # has not "metadata"
+                files <- self$hostdata$files
+                file_names <- files [[private$get_file_name_field ()]]
+                if (!"datapackage.json" %in% file_names) {
+                    metadata_updated <- TRUE
+                }
             } else {
                 files <- self$hostdata$files
                 file_names <- files [[private$get_file_name_field ()]]
