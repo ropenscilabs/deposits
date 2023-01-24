@@ -316,7 +316,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     }
 
     if (!identical (dp, dp_local)) {
-        fs::file_copy (dp, dp_local)
+        fs::file_copy (dp, dp_local, overwrite = TRUE)
         message (
             "frictionless metadata file [",
             path,
@@ -331,6 +331,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     if (!new_resource_name %in% resource_names) {
 
         p <- frictionless::create_package ()
+        op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
         suppressMessages (
             p <- frictionless::add_resource (
                 p,
@@ -338,6 +339,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
                 data = path
             )
         )
+        options (op)
 
         dpj$resources <- c (dpj$resources, p$resources)
 
