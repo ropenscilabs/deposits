@@ -1,4 +1,3 @@
-
 #' @description Define service for deposits client
 #' @param service (character) of a deposits service (see
 #' \link{deposits_services}).
@@ -149,6 +148,7 @@ depositsClient$set ("private", "upload_local_file", function (path) {
 #' directory of the file specified by 'path'.
 #'
 #' @param path Full path to data object to be uploaded.
+#' @return The frictionless data package (as a named list)
 #' @noRd
 
 depositsClient$set ("private", "generate_frictionless", function (path) {
@@ -165,6 +165,8 @@ depositsClient$set ("private", "generate_frictionless", function (path) {
     )
     frictionless::write_package (p, fs::path_dir (path))
     options (op)
+
+    return (p)
 })
 
 #' @description Add metadata to /pkg{frictionless} 'datapackage.json' file.
@@ -307,7 +309,9 @@ depositsClient$set ("private", "update_frictionless", function (path) {
             path,
             "'"
         )
-        private$generate_frictionless (path)
+        p <- private$generate_frictionless (path) # return frictionless data
+        chk <- private$add_meta_to_dp_json (path_dir) # always true
+        # 'p' is then not up-to-date, but not used from here so okay for now.
         update_remote <- TRUE
     }
 
