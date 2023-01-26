@@ -345,6 +345,8 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     dpj <- frictionless::read_package (dp_local)
     resource_names <- vapply (dpj$resources, function (i) i$name, character (1L))
     new_resource_name <- fs::path_ext_remove (fs::path_file (path))
+    dp_file_names <- vapply (dpj$resources, function (i) i$path, character (1L))
+
     if (!new_resource_name %in% resource_names) {
 
         p <- frictionless::create_package ()
@@ -364,6 +366,17 @@ depositsClient$set ("private", "update_frictionless", function (path) {
         frictionless::write_package (dpj, fs::path_dir (dp_local))
 
         update_remote <- TRUE
+
+    } else if (!all (dp_file_names %in% file_names)) {
+
+        # "datapackage.json" lists resources not yet uploaded.
+        dp_not_uploaded <- dp_file_names [which (!dp_file_names %in% file_names)]
+        message (
+            "Your 'datapackage.json' includes the following resources ",
+            "which have not yet been uploaded: [",
+            paste0 (dp_not_uploaded, collapse = ", "),
+            "]"
+        )
     }
 
     # httptest2 does not produce mocked download files; only the actual
