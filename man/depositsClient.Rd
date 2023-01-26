@@ -364,7 +364,6 @@ Upload file to an existing deposit
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   deposit_id = NULL,
   path = NULL,
-  use_local_datapackage = TRUE,
   quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
@@ -376,9 +375,7 @@ Upload file to an existing deposit
 uploaded to. If not specified, the 'id' value of current deposits
 client is used.}
 
-\item{\code{path}}{Path to local file.}
-
-\item{\code{use_local_datapackage}}{When \code{FALSE} (default), the
+\item{\code{path}}{Path to local file.
 \pkg{frictionless} "datapackage.json" file is obtained from the
 remote service (if it exists), and updated with information on the
 uploaded file. If \code{TRUE}, then the local version at the base
