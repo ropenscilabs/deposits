@@ -83,7 +83,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
     dp_remote <- ""
 
-    if (private$frictionless_json_name %in% files) {
+    if (private$frictionless_json_name %in% file_names) {
         dp_remote <- self$deposit_download_file (
             deposit_id,
             filename = private$frictionless_json_name,
