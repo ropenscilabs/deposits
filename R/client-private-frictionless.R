@@ -83,16 +83,14 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
     dp_remote <- ""
 
-    if (private$frictionless_json_name %in% file_names) {
+    if (private$frictionless_json_name %in% file_names &&
+        !is_deposits_test_env ()) {
         dp_remote <- self$deposit_download_file (
             deposit_id,
             filename = private$frictionless_json_name,
             path = fs::path_temp ()
         )
-        # Files are only not downloaded in test envs:
-        if (fs::file_exists (dp_remote)) {
-            mtime_remote <- fs::file_info (dp_remote)$modification_time
-        }
+        mtime_remote <- fs::file_info (dp_remote)$modification_time
     }
 
     path_dir <- fs::path_dir (path)
@@ -200,8 +198,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
 
     # httptest2 does not produce mocked download files; only the actual
     # request result. So these files can not be uploaded here.
-    if (update_remote &&
-        Sys.getenv ("DEPOSITS_TEST_ENV") != "true") {
+    if (update_remote && !is_deposits_test_env ()) {
         self <- private$upload_local_file (dp)
     }
 

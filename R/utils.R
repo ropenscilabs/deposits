@@ -25,3 +25,7 @@ is_file_binary <- function (file, bin.ints = c (1:8, 14:25), nbytes = 1000, nbin
 
     return (n > nbin)
 }
+
+is_deposits_test_env <- function () {
+    Sys.getenv ("DEPOSITS_TEST_ENV") == "true"
+}
