@@ -89,7 +89,10 @@ depositsClient$set ("private", "update_frictionless", function (path) {
             filename = private$frictionless_json_name,
             path = fs::path_temp ()
         )
-        mtime_remote <- fs::file_info (dp_remote)$modification_time
+        # Files are only not downloaded in test envs:
+        if (fs::file_exists (dp_remote)) {
+            mtime_remote <- fs::file_info (dp_remote)$modification_time
+        }
     }
 
     path_dir <- fs::path_dir (path)
