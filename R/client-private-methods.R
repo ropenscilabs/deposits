@@ -224,32 +224,35 @@ depositsClient$set ("private", "get_file_name_field", function () {
 #' including 'filename'.
 #' @noRd
 
-depositsClient$set ("private", "get_hostdata_files", function (deposit_id, filename) {
+depositsClient$set (
+    "private", "get_hostdata_files",
+    function (deposit_id, filename) {
 
-    url <- get_service_url (self, deposit_id = deposit_id)
+        url <- get_service_url (self, deposit_id = deposit_id)
 
-    name_field <- private$get_file_name_field ()
+        name_field <- private$get_file_name_field ()
 
-    if (filename %in% self$hostdata$files [[name_field]]) {
+        if (filename %in% self$hostdata$files [[name_field]]) {
 
-        files <- self$hostdata$files
+            files <- self$hostdata$files
 
-    } else {
+        } else {
 
-        req <- create_httr2_helper (
-            url,
-            self$headers$Authorization,
-            "GET"
-        )
-        resp <- httr2::req_perform (req)
-        httr2::resp_check_status (resp)
+            req <- create_httr2_helper (
+                url,
+                self$headers$Authorization,
+                "GET"
+            )
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
 
-        hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
-        files <- hostdata$files
+            hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            files <- hostdata$files
+        }
+
+        return (files)
     }
-
-    return (files)
-})
+)
 
 #' @description Update remote and local frictionless data files.
 #'
@@ -343,14 +346,18 @@ depositsClient$set ("private", "update_frictionless", function (path) {
 
     # -------- Update local version with new resources
     dpj <- frictionless::read_package (dp_local)
-    resource_names <- vapply (dpj$resources, function (i) i$name, character (1L))
+    resource_names <-
+        vapply (dpj$resources, function (i) i$name, character (1L))
     new_resource_name <- fs::path_ext_remove (fs::path_file (path))
     dp_file_names <- vapply (dpj$resources, function (i) i$path, character (1L))
 
     if (!new_resource_name %in% resource_names) {
 
         p <- frictionless::create_package ()
-        op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
+        op <- options (
+            readr.show_progress = FALSE,
+            readr.show_col_types = FALSE
+        )
         suppressMessages (
             p <- frictionless::add_resource (
                 p,
