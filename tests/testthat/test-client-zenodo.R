@@ -57,7 +57,7 @@ test_that ("zenodo new", {
 
 # Mock client from previous tests, recreated below to test further
 # functionality:
-new_mock_deposit <- function () {
+new_mock_zen_deposit <- function () {
 
     service <- "zenodo"
     metadata <- list (
@@ -83,8 +83,8 @@ new_mock_deposit <- function () {
 
 test_that ("zenodo retrieve", {
 
-    cli <- new_mock_deposit ()
-    # metadata used in `new_mock_deposit` fn, but needed below to compare in
+    cli <- new_mock_zen_deposit ()
+    # metadata used in `new_mock_zen_deposit` fn, but needed below to compare in
     # tests.
     metadata <- list (
         title = "New Title",
@@ -148,7 +148,7 @@ test_that ("zenodo retrieve", {
 
 test_that ("zenodo deposits_list", {
 
-    cli <- new_mock_deposit ()
+    cli <- new_mock_zen_deposit ()
 
     dep <- with_mock_dir ("zen_list", {
         cli$deposits_list ()
@@ -161,7 +161,7 @@ test_that ("zenodo deposits_list", {
 
 test_that ("zenodo upload", {
 
-    cli <- new_mock_deposit ()
+    cli <- new_mock_zen_deposit ()
     deposit_id <- cli$id
 
     # --------- UPLOAD_DATA
@@ -185,7 +185,7 @@ test_that ("zenodo upload", {
 
 test_that ("zenodo download", {
 
-    cli <- new_mock_deposit ()
+    cli <- new_mock_zen_deposit ()
     deposit_id <- cli$id
     filename <- fs::path (fs::path_temp (), "data.csv")
 
