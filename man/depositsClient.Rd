@@ -60,6 +60,11 @@ search_results <- cli$deposits_search (
 \item{\code{deposits}}{(data.frame) Current deposits hosted on service, one
 row per deposit.}
 
+\item{\code{frictionless}}{(logical) Default behaviour of \code{TRUE} assumes
+uploads are data files in rectangular form, able to be described by
+\pkg{frictionless} metadata. \pkg{frictionless} integration is
+by-passed when this parameter if \code{FALSE}.}
+
 \item{\code{url_base}}{(character) Base URL of host service API}
 
 \item{\code{url_service}}{(character) URL of deposit service}

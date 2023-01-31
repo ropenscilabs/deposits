@@ -57,6 +57,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @field deposits (data.frame) Current deposits hosted on service, one
         #' row per deposit.
         deposits = NULL,
+        #' @field frictionless (logical) Default behaviour of `TRUE` assumes
+        #' uploads are data files in rectangular form, able to be described by
+        #' \pkg{frictionless} metadata. \pkg{frictionless} integration is
+        #' by-passed when this parameter if `FALSE`.
+        frictionless = TRUE,
         #' @field url_base (character) Base URL of host service API
         url_base = NULL,
         #' @field url_service (character) URL of deposit service
@@ -531,6 +536,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         )
                         fs::file_delete (dp_path)
                     }
+                } else {
+                    self$frictionless <- FALSE
                 }
             }
 

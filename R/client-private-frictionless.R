@@ -100,7 +100,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
         mtime_local <- fs::file_info (dp_local)$modification_time
     }
 
-    update_remote <- binary_without_frictionless <- FALSE
+    update_remote <- FALSE
     if (mtime_remote > mtime_local) {
         dp <- dp_remote
     } else {
@@ -116,32 +116,34 @@ depositsClient$set ("private", "update_frictionless", function (path) {
             update_remote <- private$add_meta_to_dp_json (path_dir)
             # That method always returns 'TRUE'
         }
-    } else if (is_file_binary (path)) {
-        warning (
-            "There is no frictionless 'datapackage.json' file either ",
-            "locally or on the '",
-            self$service,
-            "' deposit, nor can one be generated from binary data.\n",
-            "It is recommended to first generate a local ",
-            "'datapackage.json' file for you data. See documentation at ",
-            "https://docs.ropensci.org/frictionless"
-        )
-        update_remote <- FALSE
+    } else if (self$frictionless) {
+        if (is_file_binary (path)) {
+            warning (
+                "There is no frictionless 'datapackage.json' file either ",
+                "locally or on the '",
+                self$service,
+                "' deposit, nor can one be generated from binary data.\n",
+                "It is recommended to first generate a local ",
+                "'datapackage.json' file for you data. See documentation at ",
+                "https://docs.ropensci.org/frictionless"
+            )
+            update_remote <- FALSE
 
-        binary_without_frictionless <- TRUE
-    } else {
-        p <- private$generate_frictionless (path) # return frictionless data
-        message (
-            "frictionless metadata file has been generated as '",
-            path,
-            "'"
-        )
-        chk <- private$add_meta_to_dp_json (path_dir) # always true
-        # 'p' is then not up-to-date, but not used from here so okay for now.
-        update_remote <- TRUE
+            self$frictionless <- FALSE
+        } else {
+            p <- private$generate_frictionless (path) # return frictionless data
+            message (
+                "frictionless metadata file has been generated as '",
+                path,
+                "'"
+            )
+            chk <- private$add_meta_to_dp_json (path_dir) # always true
+            # 'p' is then not up-to-date, but not used from here so okay for now.
+            update_remote <- TRUE
+        }
     }
 
-    if (binary_without_frictionless) {
+    if (!self$frictionless) {
         invisible (return (self))
     }
 
