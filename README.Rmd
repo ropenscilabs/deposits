@@ -19,8 +19,10 @@ output:
 
 The `deposits` R package is a universal client for depositing and accessing
 research data anywhere. Currently supported services are
-[zenodo](https://zenodo.org) and [figshare](https://figshare.com). Instructions
-for installing and setting up the package are in [a separate
+[zenodo](https://zenodo.org) and [figshare](https://figshare.com). The package
+works seamlessly with [the "frictionless" data
+workflow](https://frictionlessdata.io/). Instructions for installing and
+setting up the package are in [a separate
 vignette](https://docs.ropensci.org/deposits/articles/install-setup.html). This
 README gives a brief overview of package usage, with more detail in [the
 introductory
@@ -42,6 +44,23 @@ offers an ideal environment for testing the functionality of this
 package.
 
 
+## The "frictionless" data workflow
+
+Prior to describing the `deposits` workflow, it is useful to understand the
+["frictionless" data workflow](https://frictionlessdata.io/), which provides a
+standardised way to document the contents and structure of data files through a
+separate metadata file. The `deposits` package links directly with [rOpenSci's
+`frictionless` package](https://docs.ropensci.org/frictionless) for writing,
+editing, and reading frictionless metadata files.
+
+The `deposits` package nevertheless aims to make this integration as seamless
+and painless as possible. No knowledge of the frictionless workflow is
+necessary, and the `deposits` workflow should "just work" in many cases,
+appropriately constructing frictionless metadata files and uploading them to
+deposits services. It is of course also possible to use the `deposits` package
+without frictionless metadata. All of these possibilities are illustrated in
+the following sections.
+
 ## The deposits workflow
 
 The `deposits` package uses [the `R6` package](https://github.com/r-lib/R6) to
@@ -52,7 +71,7 @@ constructed with the `new()` function:
 
 ```{r client-new, eval = FALSE}
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
-cli
+print (cli)
 #> <deposits client>
 #>  deposits service : zenodo
 #>            sandbox: TRUE
@@ -63,6 +82,15 @@ cli
 #>    metadata : <none>
 ```
 
+The upper section of information shown by printing the client describes
+information on the client in general, and aspects of the nominated service
+associated with the user (identified through the token, as described in [the
+"Installation and Setup"
+vignette](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens)).
+The lower section contains information on the current deposit held within the
+client. A new client initially contains no information on a deposit, and so
+these lower sections are empty.
+
 Having constructed a new client, the deposits workflow then involves the
 following main steps:
 
@@ -72,14 +100,33 @@ following main steps:
 
 ### Metadata
 
-Metadata are data describing a deposit, while "data" are the deposit itself,
-generally uploaded as files as described below. Metadata include details on
-authors, titles, file types, descriptions, and many other terms. These can be
-included in a deposits client in several ways, and either on initial
-construction of an client, or as a separate step applied to an existing client.
+The `deposits` package ultimately aims to simplify the management of *data* on
+external repositories. All of these platforms require additional metadata
+describing the data to be deposited. The `deposits` package works with two
+main types of metadata:
 
-One of the easiest ways to specify metadata is as a list of named terms like
-the following example:
+1. Metadata which describe a deposit and associated properties, such as author
+   names and affiliations, deposit titles and descriptions, dates, keywords, 
+   links to other deposits or publications, and many other terms.
+2. Metadata which describe the actual contents of the data to be deposited.
+   These kinds of metadata are (optionally) generated and (always) handled here
+   by [the `frictionless`
+   package](https://docs.ropensci.org/frictionless).
+
+As explained at the outset, the `deposits` package can be used without knowing
+or understanding anything about [the `frictionless`
+package](https://docs.ropensci.org/frictionless). Most of this present section
+therefore concerns the first of these two kinds of metadata, with brief
+demonstrations of the second kind used to illustrate how the frictionless
+workflow integrates with the general `deposits` workflow. The term "metadata"
+throughout the following should be understood to refer to the first of the
+above kinds of metadata; the second kind is always referred to as "frictionless
+metadata."
+
+Metadata can be included in a deposits client in two main ways, either on
+initial construction of a client, or through attaching metadata to an existing
+client. One of the easiest ways to specify metadata is as a list of named terms
+like the following example:
 
 ```{r metadata}
 metadata <- list (
@@ -98,7 +145,7 @@ cli <- depositsClient$new (
     sandbox = TRUE,
     metadata = metadata
 )
-cli
+print (cli)
 #> <deposits client>
 #>  deposits service : zenodo
 #>            sandbox: TRUE
@@ -106,11 +153,12 @@ cli
 #>  Current deposits : <none>
 #>
 #>    hostdata : <none>
-#>    metadata : 3 terms (see 'metadata' element for details)
+#>    metadata : 4 terms (see 'metadata' element for details)
 ```
 
-Equivalently, they can be added to an existing client with [the
-`deposit_fill_metadata()`
+The "metadata" component of the client now holds 4 terms (including an
+additional "created" datestamp). Equivalently, metadata can be added to an
+existing client with [the `deposit_fill_metadata()`
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_fill_metadata):
 
 ```{r client-fill-metadata, eval = FALSE}
@@ -118,9 +166,15 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposit_fill_metadata (metadata)
 ```
 
+
 Note that R6 functions are called directly on the client, with the object
-itself (`cli`) updated by the call. Other ways of specifying and entering
-metadata are described in [the introductory
+itself (`cli`) updated by the call. There is thus no need to call,
+```{r client-fill-return, eval = FALSE}
+cli <- cli$deposit_fill_metadata (metadata)
+```
+as the `cli` object is updated by the call as shown above, and does not need to
+be assigned to any return value. Other ways of specifying and entering metadata
+are described in [the introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
 
 ### Create a new deposit
@@ -130,7 +184,8 @@ deposit on the associated server using the `deposit_new()` function:
 
 ```{r deposit_new, eval = FALSE}
 cli$deposit_new ()
-cli
+#> ID of new deposit : 1065666
+print (cil)
 #> <deposits client>
 #>  deposits service : zenodo
 #>            sandbox: TRUE
@@ -140,7 +195,7 @@ cli
 #>  url_service : https://sandbox.zenodo.org/deposit/1065666
 #>   deposit id : 1065666
 #>     hostdata : list with 14  elements
-#>     metadata : 11 terms (see 'metadata' element for details)
+#>     metadata : 4 terms (see 'metadata' element for details)
 ```
 
 The client now includes several additional elements, notably a "deposit id"
