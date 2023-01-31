@@ -18,8 +18,10 @@ clean:
 
 doc: clean
 	Rscript -e 'devtools::document()'
-	Rscript -e 'rmarkdown::render("README.Rmd")'
-	Rscript -e "pkgdown::build_article('$(VIGNETTE)', quiet=FALSE)"
+	Rscript -e 'rmarkdown::render("$(README).Rmd")'
+	Rscript -e "pkgdown::build_home(quiet=FALSE)"
+	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
+	Rscript -e "pkgdown::build_reference()"
 
 open:
 	xdg-open docs/articles/$(VIGNETTE).html &
