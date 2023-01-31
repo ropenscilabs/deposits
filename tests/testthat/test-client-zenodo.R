@@ -1,4 +1,3 @@
-
 test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
     identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
 
@@ -10,7 +9,7 @@ testthat::skip_if (!test_all)
 # the "created" date for zenodo deposits.
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
-test_that ("zenodo actions", {
+test_that ("zenodo new", {
 
     service <- "zenodo"
 
@@ -54,6 +53,44 @@ test_that ("zenodo actions", {
     expect_false (is.null (cli$hostdata))
     expect_type (cli$hostdata, "list")
     expect_true (length (cli$hostdata) > 1L)
+})
+
+# Mock client from previous tests, recreated below to test further
+# functionality:
+new_mock_deposit <- function () {
+
+    service <- "zenodo"
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
+
+    # Mock client from previous tests:
+    cli <- with_mock_dir ("zen_client", {
+        depositsClient$new (
+            service = service,
+            sandbox = TRUE,
+            metadata = metadata
+        )
+    })
+    cli <- with_mock_dir ("zen_new", {
+        cli$deposit_new ()
+    })
+
+    return (cli)
+}
+
+test_that ("zenodo retrieve", {
+
+    cli <- new_mock_deposit ()
+    # metadata used in `new_mock_deposit` fn, but needed below to compare in
+    # tests.
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list ("A. Person", "B. Person")
+    )
 
     # -------- DEPOSIT_RETRIEVE
     deposit_id <- cli$id
@@ -107,6 +144,25 @@ test_that ("zenodo actions", {
         cli$hostdata$metadata$description,
         metadata$abstract
     )
+})
+
+test_that ("zenodo deposits_list", {
+
+    cli <- new_mock_deposit ()
+
+    dep <- with_mock_dir ("zen_list", {
+        cli$deposits_list ()
+    })
+
+    expect_s3_class (dep, "depositsClient")
+    expect_identical (dep, cli)
+})
+
+
+test_that ("zenodo upload", {
+
+    cli <- new_mock_deposit ()
+    deposit_id <- cli$id
 
     # --------- UPLOAD_DATA
     # filename <- file.path (tempdir (), "data.Rds")
@@ -125,15 +181,14 @@ test_that ("zenodo actions", {
         unname (tools::md5sum (filename))
     )
 
-    # -------- DEPOSITS_LIST
-    dep <- with_mock_dir ("zen_list", {
-        cli$deposits_list ()
-    })
+})
 
-    expect_s3_class (dep, "depositsClient")
-    expect_identical (dep, cli)
+test_that ("zenodo download", {
 
-    # -------- DEPOSIT_DOWNLOAD
+    cli <- new_mock_deposit ()
+    deposit_id <- cli$id
+    filename <- fs::path (fs::path_temp (), "data.csv")
+
     path <- fs::path_temp ()
     if (fs::file_exists (filename)) { # from upload data above
         fs::file_delete (filename)
@@ -161,9 +216,10 @@ test_that ("zenodo actions", {
         }),
         "That deposit does not contain the specified file."
     )
+})
 
-    # -------- DEPOSIT_DELETE
-    # can't mock that because it returns an empty body
+# can't mock delete because it returns an empty body
+test_that ("zenodo delete", {
     # dep <- with_mock_dir ("zen_del", {
     #    cli$deposit_delete (deposit_id)
     # })
