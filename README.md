@@ -94,12 +94,12 @@ following main steps:
 2.  Create a new deposit on the nominated service; and
 3.  Upload files for the deposit.
 
-### Metadata
+### Fill client with metadata
 
 The `deposits` package ultimately aims to simplify the management of
-*data* on external repositories. All of these platforms require
-additional metadata describing the data to be deposited. The `deposits`
-package works with two main types of metadata:
+data on external repositories. All of these platforms require additional
+metadata describing the data to be deposited, with the `deposits`
+package working with two main types of metadata:
 
 1.  Metadata which describe a deposit and associated properties, such as
     author names and affiliations, deposit titles and descriptions,
@@ -112,18 +112,20 @@ package works with two main types of metadata:
 
 As explained at the outset, the `deposits` package can be used without
 knowing or understanding anything about [the `frictionless`
-package](https://docs.ropensci.org/frictionless). Most of this present
-section therefore concerns the first of these two kinds of metadata,
-with brief demonstrations of the second kind used to illustrate how the
+package](https://docs.ropensci.org/frictionless) or [frictionless
+workflows](https://frictionlessdata.io). Most of this present section
+therefore concerns the first of these two kinds of metadata, with brief
+demonstrations of the second kind used to illustrate how the
 frictionless workflow integrates with the general `deposits` workflow.
 The term “metadata” throughout the following should be understood to
 refer to the first of the above kinds of metadata; the second kind is
-always referred to as “frictionless metadata.”
+always referred to here as “frictionless metadata.”
 
 Metadata can be included in a deposits client in two main ways, either
-on initial construction of a client, or through attaching metadata to an
-existing client. One of the easiest ways to specify metadata is as a
-list of named terms like the following example:
+on initial construction, or through attaching metadata to an existing
+client. In both cases, metadata may be specified in a variety of ways,
+one of the easiest of which is to specify metadata is as a list of named
+terms like the following example:
 
 ``` r
 metadata <- list (
@@ -163,6 +165,10 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposit_fill_metadata (metadata)
 ```
 
+Other ways of specifying and entering metadata are described in [the
+introductory
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
+
 Note that R6 functions are called directly on the client, with the
 object itself (`cli`) updated by the call. There is thus no need to
 call,
@@ -172,9 +178,7 @@ cli <- cli$deposit_fill_metadata (metadata)
 ```
 
 as the `cli` object is updated by the call as shown above, and does not
-need to be assigned to any return value. Other ways of specifying and
-entering metadata are described in [the introductory
-vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
+need to be assigned to any return value.
 
 ### Create a new deposit
 
