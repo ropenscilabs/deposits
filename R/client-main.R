@@ -79,8 +79,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @field metadata holds list of DCMI-compliant metadata.
         metadata = NULL,
 
-        #' @description Create a new `depositsClient` object
-        #' @param service (character) of a deposits service (see
+        #' @description Create a new `depositsClient` object, as an \pkg{R6}
+        #' client with methods listed via `deposits_emthods()`.
+        #'
+        #' @param service (character) Name of a deposits service (see
         #' \link{deposits_services}).
         #' @param metadata Either of one two possible ways of defining
         #' metadata:
@@ -96,6 +98,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
         #' package.
         #' @return A new `depositsClient` object
+        #' @examples
+        #' \dontrun{
+        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+        #' # List methods of client:
+        #' cli$deposits_methods ()
+        #' # List all current deposits associated with user token:
+        #' cli$deposits_list ()
+        #' }
 
         initialize = function (service,
                                metadata = NULL,
@@ -128,7 +138,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (self)
         },
 
-        #' @description print method for the `depositsClient` class
+        #' @description `print` method for the `depositsClient` class, providing
+        #' an on-screen overview of current contents and structure of client.
         #' @param x self
         #' @param ... ignored
 
@@ -207,8 +218,21 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
 
         #' @description Update 'deposits' item of current deposits for given
-        #' service
-        #' @return Updated 'deposits' client
+        #' service. The list of deposits contained within the "deposits" item of
+        #' a client may not be up-to-date; this method can be used for force
+        #' synchronisation with the external service, so that "deposits" lists
+        #' all current deposits.
+        #' @return (Invisibly) Updated 'deposits' client
+        #' @examples
+        #' \dontrun{
+        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+        #' print (cli)
+        #' # ... then if "Current deposits" does not seem up-to-date:
+        #' cli$deposits_list ()
+        #' # That will ensure that all external deposits are then listed,
+        #' # and can be viewed with:
+        #' cli$deposits
+        #' }
 
         deposits_list = function () {
 
@@ -217,7 +241,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Search all public deposits
+        #' @description Search all public deposits.
         #' @param search_string Single string to search for
         #' @param page_size Number of records to return in one page
         #' @param page_number Starting page for return results; used in
@@ -267,6 +291,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #'     search_string = "Text string query",
         #'     page_size = 5L
         #' )
+        #' # The 'search_string' can be used to specify precise searches:
+        #' cli <- depositsClient$new (service = "zenodo")
+        #' search_results <- cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
         #' }
 
         deposits_search = function (search_string = NULL,
@@ -308,10 +335,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (httr2::resp_body_json (resp, simplifyVector = TRUE))
         },
 
-        #' @description Deleted a nominated deposit
+        #' @description Deleted a specified deposit from the remote service.
+        #' This removes the deposits from the associated service, along with all
+        #' corresponding 'hostdata' in the local client.
         #' @param deposit_id Integer identifier of deposit (generally obtained
         #' from `list_deposits` method).
-        #' @return Updated 'deposits' client
+        #' @return (Invisibly) Updated 'deposits' client
 
         deposit_delete = function (deposit_id = NULL) {
 
@@ -349,7 +378,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
         #' }
-        #' @return Updated deposits client with metadata inserted.
+        #' @return (Invisibly) Updated deposits client with metadata inserted.
 
         deposit_fill_metadata = function (metadata = NULL) {
 
@@ -360,10 +389,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Create a new deposit
+        #' @description Initiate a new deposit on the external deposits service.
         #' @param quiet If `FALSE` (default), print integer identifier of newly
         #' created deposit.
-        #' @return Updated deposits client which includes data on new deposit
+        #' @return (Invisibly) Updated deposits client which includes data on new deposit
 
         deposit_new = function (quiet = FALSE) {
 
@@ -405,13 +434,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Create a new `depositsClient` object
-        #' @param service (character) of a deposits service (see
+        #' @description Switch external services associated with a
+        #' `depositsClient` object.
+        #' @param service (character) Name of a deposits service (see
         #' \link{deposits_services}).
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
         #' package.
+        #' @return (Invisibly) Updated deposits client.
 
         deposit_service = function (service = NULL,
                                     sandbox = FALSE,
@@ -435,11 +466,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Update metadata for specified deposit
-        #' @note Client should already contain metadata updated with the
-        #' 'deposit_fill_metadata()' function.
+        #' @description Update local metadata by downloading from specified
+        #' deposit. This can be used, for example, to synchronise local client
+        #' metadata after they have been modified through other methods, such as
+        #' online through the service's web interface.
         #' @param deposit_id The 'id' number of deposit to update. If not
         #' specified, the 'id' value of current deposits client is used.
+        #' @return (Invisibly) Updated deposits client.
 
         deposit_update = function (deposit_id = NULL) {
 
@@ -463,22 +496,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Upload file to an existing deposit
+        #' @description Upload a local file to an specified deposit.
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
-        #' @param path Path to local file.
-        #' \pkg{frictionless} "datapackage.json" file is obtained from the
-        #' remote service (if it exists), and updated with information on the
-        #' uploaded file. If `TRUE`, then the local version at the base
-        #' directory of `path` will be used, with any additional resources on
-        #' the remote service appended to this file. If the local version
-        #' contains a "metadata" item, that metadata will also be used to
-        #' overwrite any metadata both in the local client, and on any remote
+        #' @param path Path to local file to be uploaded. If the file to be
+        #' uploaded is able to be read as a tabular data file, an associated
+        #' \pkg{frictionless} "datapackage.json" file will also be uploaded if
+        #' it exists, or created if it does not. The metadata within a client
+        #' will also be used to fill or update any metadata within the
         #' "datapackage.json" file.
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
-        #' @return Updated 'deposits' client
+        #' @return (Invisibly) Updated 'deposits' client
 
         deposit_upload_file = function (deposit_id = NULL,
                                         path = NULL,
@@ -504,12 +534,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Retrieve information on specified deposit
+        #' @description Retrieve information on specified deposit.
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
         #' @param quiet If `FALSE` (default), display information on screen on
         #' any issues encountered in retrieving deposit.
-        #' @return Updated 'deposits' client
+        #' @return (Invisibly) Updated 'deposits' client
 
         deposit_retrieve = function (deposit_id, quiet = FALSE) {
 
@@ -571,7 +601,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Download a specified 'filename' from a deposit
+        #' @description Download a specified 'filename' from a deposit.
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' downloaded from. If not specified, the 'id' value of current deposits
         #' client is used.

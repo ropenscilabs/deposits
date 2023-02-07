@@ -12,10 +12,6 @@ currently including Figshare and Zenodo. Use of a 'deposits' client is
 controlled by the methods listed below. Those looking for help with client
 usage are advised to head to that section.
 }
-\note{
-Client should already contain metadata updated with the
-'deposit_fill_metadata()' function.
-}
 \examples{
 \dontrun{
 # make a client
@@ -40,6 +36,32 @@ cli <- depositsClient$new ("figshare", metadata = metadata)
 }
 
 ## ------------------------------------------------
+## Method `depositsClient$new`
+## ------------------------------------------------
+
+\dontrun{
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+# List methods of client:
+cli$deposits_methods ()
+# List all current deposits associated with user token:
+cli$deposits_list ()
+}
+
+## ------------------------------------------------
+## Method `depositsClient$deposits_list`
+## ------------------------------------------------
+
+\dontrun{
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+print (cli)
+# ... then if "Current deposits" does not seem up-to-date:
+cli$deposits_list ()
+# That will ensure that all external deposits are then listed,
+# and can be viewed with:
+cli$deposits
+}
+
+## ------------------------------------------------
 ## Method `depositsClient$deposits_search`
 ## ------------------------------------------------
 
@@ -49,6 +71,9 @@ search_results <- cli$deposits_search (
     search_string = "Text string query",
     page_size = 5L
 )
+# The 'search_string' can be used to specify precise searches:
+cli <- depositsClient$new (service = "zenodo")
+search_results <- cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
 }
 }
 \concept{client}
@@ -104,7 +129,8 @@ by-passed when this parameter if \code{FALSE}.}
 \if{html}{\out{<a id="method-depositsClient-new"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-new}{}}}
 \subsection{Method \code{new()}}{
-Create a new \code{depositsClient} object
+Create a new \code{depositsClient} object, as an \pkg{R6}
+client with methods listed via \code{deposits_emthods()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(service, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
 }
@@ -112,7 +138,7 @@ Create a new \code{depositsClient} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{service}}{(character) of a deposits service (see
+\item{\code{service}}{(character) Name of a deposits service (see
 \link{deposits_services}).}
 
 \item{\code{metadata}}{Either of one two possible ways of defining
@@ -136,12 +162,27 @@ package.}
 \subsection{Returns}{
 A new \code{depositsClient} object
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+# List methods of client:
+cli$deposits_methods ()
+# List all current deposits associated with user token:
+cli$deposits_list ()
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-print"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-print}{}}}
 \subsection{Method \code{print()}}{
-print method for the \code{depositsClient} class
+\code{print} method for the \code{depositsClient} class, providing
+an on-screen overview of current contents and structure of client.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$print(x, ...)}\if{html}{\out{</div>}}
 }
@@ -174,20 +215,39 @@ Nothing; methods are listed on screen.
 \if{latex}{\out{\hypertarget{method-depositsClient-deposits_list}{}}}
 \subsection{Method \code{deposits_list()}}{
 Update 'deposits' item of current deposits for given
-service
+service. The list of deposits contained within the "deposits" item of
+a client may not be up-to-date; this method can be used for force
+synchronisation with the external service, so that "deposits" lists
+all current deposits.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_list()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-Updated 'deposits' client
+(Invisibly) Updated 'deposits' client
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+print (cli)
+# ... then if "Current deposits" does not seem up-to-date:
+cli$deposits_list ()
+# That will ensure that all external deposits are then listed,
+# and can be viewed with:
+cli$deposits
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposits_search"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposits_search}{}}}
 \subsection{Method \code{deposits_search()}}{
-Search all public deposits
+Search all public deposits.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_search(
   search_string = NULL,
@@ -258,6 +318,9 @@ search_results <- cli$deposits_search (
     search_string = "Text string query",
     page_size = 5L
 )
+# The 'search_string' can be used to specify precise searches:
+cli <- depositsClient$new (service = "zenodo")
+search_results <- cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
 }
 }
 \if{html}{\out{</div>}}
@@ -269,7 +332,9 @@ search_results <- cli$deposits_search (
 \if{html}{\out{<a id="method-depositsClient-deposit_delete"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete}{}}}
 \subsection{Method \code{deposit_delete()}}{
-Deleted a nominated deposit
+Deleted a specified deposit from the remote service.
+This removes the deposits from the associated service, along with all
+corresponding 'hostdata' in the local client.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete(deposit_id = NULL)}\if{html}{\out{</div>}}
 }
@@ -283,7 +348,7 @@ from \code{list_deposits} method).}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Updated 'deposits' client
+(Invisibly) Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}
@@ -311,14 +376,14 @@ strings or lists for multiple entries.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Updated deposits client with metadata inserted.
+(Invisibly) Updated deposits client with metadata inserted.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_new"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_new}{}}}
 \subsection{Method \code{deposit_new()}}{
-Create a new deposit
+Initiate a new deposit on the external deposits service.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_new(quiet = FALSE)}\if{html}{\out{</div>}}
 }
@@ -332,14 +397,15 @@ created deposit.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Updated deposits client which includes data on new deposit
+(Invisibly) Updated deposits client which includes data on new deposit
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_service"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_service}{}}}
 \subsection{Method \code{deposit_service()}}{
-Create a new \code{depositsClient} object
+Switch external services associated with a
+\code{depositsClient} object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service(service = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
 }
@@ -347,7 +413,7 @@ Create a new \code{depositsClient} object
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{service}}{(character) of a deposits service (see
+\item{\code{service}}{(character) Name of a deposits service (see
 \link{deposits_services}).}
 
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
@@ -358,12 +424,18 @@ package.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_update"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_update}{}}}
 \subsection{Method \code{deposit_update()}}{
-Update metadata for specified deposit
+Update local metadata by downloading from specified
+deposit. This can be used, for example, to synchronise local client
+metadata after they have been modified through other methods, such as
+online through the service's web interface.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
 }
@@ -376,12 +448,15 @@ specified, the 'id' value of current deposits client is used.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_upload_file"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_upload_file}{}}}
 \subsection{Method \code{deposit_upload_file()}}{
-Upload file to an existing deposit
+Upload a local file to an specified deposit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   deposit_id = NULL,
@@ -397,14 +472,11 @@ Upload file to an existing deposit
 uploaded to. If not specified, the 'id' value of current deposits
 client is used.}
 
-\item{\code{path}}{Path to local file.
-\pkg{frictionless} "datapackage.json" file is obtained from the
-remote service (if it exists), and updated with information on the
-uploaded file. If \code{TRUE}, then the local version at the base
-directory of \code{path} will be used, with any additional resources on
-the remote service appended to this file. If the local version
-contains a "metadata" item, that metadata will also be used to
-overwrite any metadata both in the local client, and on any remote
+\item{\code{path}}{Path to local file to be uploaded. If the file to be
+uploaded is able to be read as a tabular data file, an associated
+\pkg{frictionless} "datapackage.json" file will also be uploaded if
+it exists, or created if it does not. The metadata within a client
+will also be used to fill or update any metadata within the
 "datapackage.json" file.}
 
 \item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
@@ -413,14 +485,14 @@ screen.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Updated 'deposits' client
+(Invisibly) Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_retrieve"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_retrieve}{}}}
 \subsection{Method \code{deposit_retrieve()}}{
-Retrieve information on specified deposit
+Retrieve information on specified deposit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id, quiet = FALSE)}\if{html}{\out{</div>}}
 }
@@ -437,14 +509,14 @@ any issues encountered in retrieving deposit.}
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-Updated 'deposits' client
+(Invisibly) Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_download_file"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_download_file}{}}}
 \subsection{Method \code{deposit_download_file()}}{
-Download a specified 'filename' from a deposit
+Download a specified 'filename' from a deposit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_download_file(
   deposit_id = NULL,

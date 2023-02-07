@@ -16,13 +16,13 @@ clean:
 	-rm -fr deposits.Rcheck
 	-rm -fr src/*.{o,so}
 
-readme: 
-	Rscript -e 'rmarkdown::render("$(README).Rmd")'
-
 doc: 
 	Rscript -e 'devtools::document()'
 
-site: clean
+readme: 
+	Rscript -e 'rmarkdown::render("$(README).Rmd")'
+
+site: clean doc readme
 	Rscript -e "pkgdown::build_home(quiet=FALSE)"
 	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
 	Rscript -e "pkgdown::build_reference()"
