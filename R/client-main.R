@@ -575,7 +575,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         fs::path_temp (),
                         private$frictionless_json_name
                     )
-                    if (fs::file_exists (dp_path)) {
+                    dp_exists <- fs::file_exists (dp_path)
+                    if (dp_exists) {
                         fs::file_delete (dp_path)
                     }
                     dp_path <- self$deposit_download_file (
@@ -589,7 +590,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                 dp_path
                             )$metadata
                         )
-                        fs::file_delete (dp_path)
+                        # only delete if 'datapackage.json' created here:
+                        if (!dp_exists) {
+                            fs::file_delete (dp_path)
+                        }
                     }
                 } else {
                     self$frictionless <- FALSE
