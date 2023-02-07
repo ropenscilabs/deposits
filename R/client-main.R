@@ -3,8 +3,12 @@
 
 #' @title depositsClient
 #'
-#' @description R6 class for constructing deposits queries
-#' @return a `depositsClient` class (R6 class)
+#' @description An R6 client for managing deposits on external services,
+#' currently including Figshare and Zenodo. Use of a 'deposits' client is
+#' controlled by the methods listed below. Those looking for help with client
+#' usage are advised to head to that section.
+#'
+#' @return A `depositsClient` class (R6 class)
 #' @examples
 #' \dontrun{
 #' # make a client
