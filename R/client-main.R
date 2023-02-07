@@ -509,6 +509,29 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
         #' @return (Invisibly) Updated 'deposits' client
+        #' @examples
+        #' \dontrun{
+        #' # Initiate deposit and fill with metadata:
+        #' metadata <- list (
+        #'     Title = "Iris Dataset",
+        #'     Creator = "Edgar Anderson",
+        #'     Publisher = "American Iris Society",
+        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #' )
+        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+        #' cli$deposit_new ()
+        #'
+        #' # Create some local data and upload to deposit:
+        #' path <- fs::path (fs::path_temp (), "iris.csv")
+        #' write.csv (datasets::iris, path)
+        #' cli$deposit_upload_file (path = path)
+        #'
+        #' # Confirm that uploaded files include \pkg{frictionless}
+        #' # "datapackage.json" file, and also that local version has been
+        #' # created:
+        #' cli$hostdata$files
+        #' fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+        #' }
 
         deposit_upload_file = function (deposit_id = NULL,
                                         path = NULL,

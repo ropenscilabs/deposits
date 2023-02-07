@@ -75,6 +75,33 @@ search_results <- cli$deposits_search (
 cli <- depositsClient$new (service = "zenodo")
 search_results <- cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
 }
+
+## ------------------------------------------------
+## Method `depositsClient$deposit_upload_file`
+## ------------------------------------------------
+
+\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    Title = "Iris Dataset",
+    Creator = "Edgar Anderson",
+    Publisher = "American Iris Society",
+    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "iris.csv")
+write.csv (datasets::iris, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+}
 }
 \concept{client}
 \section{Public fields}{
@@ -487,6 +514,35 @@ screen.}
 \subsection{Returns}{
 (Invisibly) Updated 'deposits' client
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    Title = "Iris Dataset",
+    Creator = "Edgar Anderson",
+    Publisher = "American Iris Society",
+    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "iris.csv")
+write.csv (datasets::iris, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_retrieve"></a>}}
