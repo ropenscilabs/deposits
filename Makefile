@@ -30,7 +30,7 @@ site: clean
 docall: readme doc site
 
 open:
-	xdg-open docs/articles/$(VIGNETTE).html &
+	xdg-open docs/index.html &
 
 test:
 	Rscript -e 'devtools::test()'
