@@ -3,9 +3,9 @@ README=README
 
 .PHONY: all build check doc test
 
-all: doc build check
+all: docall build check
 
-build: doc
+build: docall
 	R CMD build .
 
 #check: build
@@ -16,12 +16,18 @@ clean:
 	-rm -fr deposits.Rcheck
 	-rm -fr src/*.{o,so}
 
-doc: clean
-	Rscript -e 'devtools::document()'
+readme: 
 	Rscript -e 'rmarkdown::render("$(README).Rmd")'
+
+doc: 
+	Rscript -e 'devtools::document()'
+
+site: clean
 	Rscript -e "pkgdown::build_home(quiet=FALSE)"
 	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
 	Rscript -e "pkgdown::build_reference()"
+
+docall: readme doc site
 
 open:
 	xdg-open docs/articles/$(VIGNETTE).html &
