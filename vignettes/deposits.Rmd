@@ -108,20 +108,27 @@ the [main `README` document](https://docs.ropensci.org/deposits/#api-keys).
 Authentication tokens are checked when new clients are constructed, so the
 `$new()` function will only succeed with valid tokens.
 
-As also described in that `README`, the main functions of a `deposits` client
-are all prefixed with either `deposit_` or `deposits_`, as seen from the result
-of `ls(cli)`:
+As also described in that `README`, all methods of a `deposits` client
+can be seen with [the `deposits_methods()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposits-methods-):
 
 ```{r ls-cli, eval = FALSE}
-ls (cli)
-#>  [1] "deposit_delete"        "deposit_download_file" "deposit_fill_metadata"
-#>  [4] "deposit_new"           "deposit_retrieve"      "deposit_service"
-#>  [7] "deposit_update"        "deposit_upload_file"   "deposits"
-#> [10] "deposits_list"         "deposits_search"       "headers"
-#> [13] "hostdata"              "id"                    "initialize"
-#> [16] "metadata"              "print"                 "sandbox"
-#> [19] "service"               "term_map"              "url_base"
-#> [22] "url_service"
+cli$deposits_methods ()
+#> List of methods for a deposits client:
+#>
+#>    - deposit_delete
+#>    - deposit_download_file
+#>    - deposit_fill_metadata
+#>    - deposit_new
+#>    - deposit_retrieve
+#>    - deposit_service
+#>    - deposit_update
+#>    - deposit_upload_file
+#>    - deposits_list
+#>    - deposits_methods
+#>    - deposits_search
+#>
+#>  see `?depositsClient` for full details of all methods.
 ```
 
 The client constructed above is mostly empty, but nevertheless demonstrates the
@@ -147,11 +154,9 @@ the initial metadata has been specified and uploaded.
 
 A new deposit is initially constructed by filling the `metadata` field with a
 local representation of metadata. The `hostdata` field is filled only after
-this initial deposit metadata has been uploaded to the external service. These
-two fields thus further differ through `metadata` being a local, and
-locally-defined, representation of metadata for a deposit, whereas `hostdata`
-are always provided and defined by the external service. The best way to
-understand this distinction is through a practical demonstration.
+this initial deposit metadata has been uploaded to the external service. The
+best way to understand the distinction between `metadata` and `hostdata` is
+through a practical demonstration.
 
 ### Metadata as a list
 
@@ -183,7 +188,7 @@ print (cli)
 ```
 
 The summary produced by calling `print()` (or, equivalently, just typing `cli`
-in the console) says that the object now includes three metadata terms. They
+in the console) says that the object now includes four metadata terms. They
 can be seen by viewing `cli$metadata`:
 
 ```{r cli-dcmi-metadata, eval = FALSE}
@@ -191,24 +196,10 @@ cli$metadata
 ```
 ```{r cli-metadata-fakey, echo = FALSE}
 metadata <- list (
-    dcmi = list (
-        title = "New Title",
-        abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person"),
-        created = "2022-12-20"
-    ),
-    service = list (
-        created = "2022-12-20",
-        metadata = list (
-            title = "New Title",
-            upload_type = "other",
-            creators = list (
-                list (name = "A. Person"),
-                list (name = "B. Person")
-            ),
-            description = "This is the abstract"
-        )
-    )
+    abstract = "This is the abstract",
+    created = "2023-01-01",
+    creator = list ("A. Person", "B. Person"),
+    title = "New Title"
 )
 print (metadata)
 ```
@@ -224,19 +215,21 @@ shouldn't generally need to be manipulated directly by users of this package
 Another convenient way to specify metadata is to use [the
 `deposits_metadata_template()`
 funciton](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
-to write a local YAML representation of metadata. This function also accepts
-the `metadata` parameter of data specified as a list:
+to write a local [".json" representation](https://www.json.org/json-en.html) of
+metadata. This local file includes all metadata fields recognised by a deposits
+client. The function also accepts an optional `metadata` parameter which
+accepts a named list of values used to pre-populate entries in the resultant
+file.
 
 ```{r}
 meta_file <- tempfile (pattern = "meta-", fileext = ".yaml")
-deposits_metadata_template (filename = meta_file, metadata = metadata$dcmi)
+deposits_metadata_template (filename = meta_file, metadata = metadata)
 head (readLines (meta_file))
 ```
 
-Those metadata can then be directly edited using any text file editor, and the
-modified results saved to a local file. The name of that file can then also be
-passed as the `metadata` parameter of a new `deposits` client. The following
-code thus produces the same results as above:
+Those metadata can then be directly edited using any text file editor. The name
+of the file can then also be passed as the `metadata` parameter of a new
+`deposits` client. The following code thus produces the same results as above:
 
 ```{r new-cli-with-meta-file, eval = FALSE}
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = meta_file)
@@ -245,15 +238,16 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = meta_f
 ## Creating a new deposit
 
 
-A `deposits` client with metadata can be used to initiate a new deposit on the
-associated external service with the `$deposit_new()` function. This is not to
-be confused with the `$new()` function which creates a new client. The
-`$deposit_new()` function uses an existing client to create a new deposit on
-the external service. Using the client constructed above with our sample
-metadata gives the following result:
+Once filled with metadata, a `deposits` client can be used to initiate a new
+deposit on the associated external service with the `$deposit_new()` function.
+This is not to be confused with the `$new()` function which creates a new
+client. The `$deposit_new()` function uses an existing client to create a new
+deposit on the external service. Using the client constructed above with our
+sample metadata gives the following result:
 
 ```{r deposit_new, eval = FALSE}
 cli$deposit_new ()
+#> ID of new deposit: 1064327
 print (cli)
 #> <deposits client>
 #>  deposits service : zenodo
@@ -271,8 +265,9 @@ The client now lists one current deposit, additional fields for the URL and
 "id" of the deposit, and has a `hostdata` field with 14 elements. Importantly,
 the `id` field holds a unique integer value used to identify particular
 deposits both on all external services, and as the `deposit_id` parameter of
-`deposits` client functions. The following code demonstrates by constructing a
-new client with no metadata.
+`deposits` client functions.
+
+If we now construct a new, empty client, we see the following result:
 
 ```{r new-cli-after-deposit, eval = FALSE}
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
@@ -293,19 +288,19 @@ deposit". We can examine that to get the associated "id" value:
 ```{r id-value, eval = FALSE}
 cli$deposits$id
 #> [1] 1064327
-deposit_id <- cli$deposits$id
 ```
 
 We can then retrieve the metadata we previously uploaded with the
 `deposit_retrieve()` function:
 
 ```{r deposit-retrieve, eval = FALSE}
-cli$deposit_retrieve (deposit_id = deposit_id)
+cli$deposit_retrieve (deposit_id = cli$deposits$deposit_id)
 ```
 
 The local client then holds identical information to the previous client
 immediately after calling `deposit_new()` - that is, `retrieve_deposit()` has
-filled the local client with all of the metadata from that deposit.
+filled the local client with all of the metadata from the previously-created
+deposit.
 
 
 ## Uploading files to deposits
@@ -320,8 +315,8 @@ above.
 
 
 ```{r upload-file, eval = FALSE}
-path <- file.path (tempdir (), "data.Rds")
-saveRDS (datasets::Orange, path)
+path <- file.path (tempdir (), "data.csv")
+write.csv (datasets::Orange, path, row.names = FALSE)
 cli$deposit_upload_file (path = path)
 ```
 
@@ -331,23 +326,27 @@ element:
 
 ```{r cli-hostdata-files, eval = FALSE}
 cli$hostdata$files
-#>                           checksum               filename filesize
-#> 1 22c61006458c44ed979bf3461e330693 data-18e115882cf14.Rds      506
-#>                                     id
-#> 1 00cad89d-4084-4337-b96a-2f1e232b2b6c
-#>                                                                                     links.download
-#> 1 https://sandbox.zenodo.org/api/files/e3f727dc-1dfd-4849-88cf-994f630105cf/data-18e115882cf14.Rds
+#>                           checksum         filename filesize                                   id
+#> 1 cc624d72ede85ef061afa494d9951f6f         data.csv      625 56c44dd6-5f84-4212-9a65-d37f64ca886f
+#> 2 eaeb7c4f8a931c99e662172299a0b17f datapackage.json      812 32d556ef-5b65-4b9d-a8a8-2e7bed11da5d
+#>                                                                               links.download
+#> 1         https://sandbox.zenodo.org/api/files/561f4971-9e86-4235-b574-f5662f6088e3/data.csv
+#> 2 https://sandbox.zenodo.org/api/files/561f4971-9e86-4235-b574-f5662f6088e3/datapackage.json
 #>                                                                                              links.self
-#> 1 https://sandbox.zenodo.org/api/deposit/depositions/1064327/files/00cad89d-4084-4337-b96a-2f1e232b2b6c
+#> 1 https://sandbox.zenodo.org/api/deposit/depositions/1161632/files/56c44dd6-5f84-4212-9a65-d37f64ca886f
+#> 2 https://sandbox.zenodo.org/api/deposit/depositions/1161632/files/32d556ef-5b65-4b9d-a8a8-2e7bed11da5d
 ```
 
-Files can be downloaded with the converse `download_file` function,
-demonstrated here by first removing the local copy, and then downloading it
+The list of files includes a "datapackage.json" file generated by [the
+`frictionless` package](https://docs.ropensci.org/frictionless), as described
+in [the main README](https://docs.ropensci.org/deposits/index.html). Files can
+be downloaded with the converse `download_file` function, demonstrated here by
+first removing the local copy, and then downloading it
 from the deposits service:
 
 ```{r dl_file, eval = FALSE}
 file.remove (path)
-file <- cli$deposit_download_file (filename = "data.Rds", path = tempdir ())
-identical (readRDS (file), datasets::Orange)
-#> [1] TRUE
+file <- cli$deposit_download_file (filename = "data.csv", path = tempdir ())
+file
+#> [1] /tmp/RtmpcO59N8/data.csv
 ```
