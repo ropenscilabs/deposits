@@ -4,7 +4,7 @@
 \alias{depositsClient}
 \title{depositsClient}
 \value{
-a \code{depositsClient} class (R6 class)
+A \code{depositsClient} class (R6 class)
 }
 \description{
 An R6 client for managing deposits on external services,
@@ -87,6 +87,7 @@ by-passed when this parameter if \code{FALSE}.}
 \itemize{
 \item \href{#method-depositsClient-new}{\code{depositsClient$new()}}
 \item \href{#method-depositsClient-print}{\code{depositsClient$print()}}
+\item \href{#method-depositsClient-deposits_methods}{\code{depositsClient$deposits_methods()}}
 \item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
 \item \href{#method-depositsClient-deposits_search}{\code{depositsClient$deposits_search()}}
 \item \href{#method-depositsClient-deposit_delete}{\code{depositsClient$deposit_delete()}}
@@ -153,6 +154,19 @@ print method for the \code{depositsClient} class
 \item{\code{...}}{ignored}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposits_methods"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposits_methods}{}}}
+\subsection{Method \code{deposits_methods()}}{
+List public methods of a 'deposits' client.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_methods()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Nothing; methods are listed on screen.
 }
 }
 \if{html}{\out{<hr>}}

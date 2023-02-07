@@ -185,6 +185,27 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
         },
 
+        #' @description List public methods of a 'deposits' client.
+        #' @return Nothing; methods are listed on screen.
+
+        deposits_methods = function () {
+
+            m <- sort (grep ("^deposit", ls (self), value = TRUE))
+            fns <- vapply (m, function (i) {
+                class (cli [[i]]) [1] == "function"
+            }, logical (1L))
+            m <- m [which (fns)]
+            cat (
+                "List of methods for a deposits client:\n\n",
+                paste0 ("  - ", m, "\n"),
+                "\n",
+                "see `?depositsClient` for full details of all methods.\n"
+            )
+
+            invisible (self)
+        },
+
+
         #' @description Update 'deposits' item of current deposits for given
         #' service
         #' @return Updated 'deposits' client
