@@ -136,7 +136,16 @@ depositsClient$set ("private", "upload_local_file", function (path) {
             path
         )
 
+        frictionless <- self$frictionless
+
         self <- self$deposit_retrieve (self$id)
+
+        initial_upload <- all (
+            self$hostdata$file$filename %in% fs::path_file (path)
+        )
+        if (initial_upload && frictionless && !self$frictionless) {
+            self$frictionless <- TRUE
+        }
     }
 
     invisible (self)
