@@ -116,21 +116,42 @@ cli$deposits_methods ()
 ```
 
 All of those methods then work similarly, by calling
-`cli$<name_of_method>(<parameters>)`. A typical deposits workflow, and
-associated methods, involves the following steps:
+`cli$<method>(<parameters>)`. Note that R6 functions are called directly on the
+client, with the object itself (`cli`) updated by the call. For example, [the
+`deposit_fil_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
+described below can be used to specify metadata for a deposit. This works by
+simply calling,
 
-1. Fill the client with metadata (using the `new()` or
-   `deposit_fill_metadata()` methods);
-2. Create a new deposit on the nominated service (using the `deposit_new()`
+```{r client-fill-return, eval = FALSE}
+cli$deposit_fill_metadata (metadata)
+```
+The `cli` object is then updated by this call, without needing to be assigned
+to a return value (like `cli <- cli$<method>`).
+
+A typical deposits workflow, and associated methods, involves the following
+steps:
+
+1. Fill the client with metadata (using the
+   [`new()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-new-)
+   or
+   [`deposit_fill_metadata()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_fill_metadata) methods);
+2. Create a new deposit on the nominated service (using the
+   [`deposit_new()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-)
    method); and
-3. Upload files for the deposit (using the `deposit_upload_file()` method).
+3. Upload files for the deposit (using the
+   [`deposit_upload_file()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
+   method).
+
+The following sections describe each of these steps in more detail.
 
 ### Fill client with metadata
 
-The `deposits` package ultimately aims to simplify the management of data on
-external repositories. All of these platforms require additional metadata
-describing the data to be deposited, with the `deposits` package working with
-two main types of metadata:
+The *metadata* of a deposit describe the nature and properties of the data
+being deposited. A deposit is first created by uploading metadata to a deposits
+service; only then can actual data be uploaded and associated with the deposit
+described by the metadata. The `deposits` package works with two main types of
+metadata:
 
 1. Metadata which describe a deposit and associated properties, such as author
    names and affiliations, deposit titles and descriptions, dates, keywords, 
@@ -152,10 +173,9 @@ metadata; the second kind is always referred to here as "frictionless
 metadata."
 
 Metadata can be included in a deposits client in two main ways, either on
-initial construction, or through attaching metadata to an existing client. In
-both cases, metadata may be specified in a variety of ways, one of the easiest
-of which is to specify metadata is as a list of named terms like the following
-example:
+initial construction, or through attaching metadata to an existing client. One
+of the easiest of specifying metadata is as a list of named terms like the
+following example:
 
 ```{r metadata}
 metadata <- list (
@@ -198,19 +218,16 @@ cli$deposit_fill_metadata (metadata)
 Other ways of specifying and entering metadata are described in [the
 introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
+At that stage, the metadata are only associated with the local client. The
+following section describes how to use those metadata to initiate a deposit on
+an external service.
 
-Note that R6 functions are called directly on the client, with the object
-itself (`cli`) updated by the call. There is thus no need to call,
-```{r client-fill-return, eval = FALSE}
-cli <- cli$deposit_fill_metadata (metadata)
-```
-as the `cli` object is updated by the call as shown above, and does not need to
-be assigned to any return value.
 
 ### Create a new deposit
 
 The metadata filled with the above steps can then be used to initiate a new
-deposit on the associated server using the `deposit_new()` function:
+deposit on the associated server using [the `deposit_new()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-).
 
 ```{r deposit_new, eval = FALSE}
 cli$deposit_new ()
@@ -236,8 +253,9 @@ in a web browser will require logging in for all private and sandbox deposits).
 
 ### Uploading (and downloading) files
 
-A deposit is really about data, not just metadata. Uploading data to a deposit
-is as simple as the following function:
+A deposit is really about data, not just metadata. Data can be uploaded to a deposit
+with [the `deposit_upload_file()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-):
 
 ```{r deposit_upload, eval = FALSE}
 cli$deposit_upload_file (path = "<path>/<to>/my-data.dat")
@@ -267,29 +285,9 @@ path <- cli$deposit_download_file ("my-data.dat")
 ```
 
 Files are by default downloaded to the current working directory, or elsewhere
-specified by an additional `path` parameter. The `deposit_download_file()`
-function is the only main client function which returns a value, in this case
-of the full path to the downloaded file.
-
-### Additional functions
-
-A deposits client offers a few functions beyond those demonstrated above.
-The command `ls(cli)` lists all elements of the R6 client, including all
-variables and functions, with functions prefixed with `deposit_` or
-`deposits_`. Additional functions include:
-
-
-1. `deposit_delete(deposit_id)` to delete a nominated deposit;
-2. `deposit_retrieve(deposit_id)` to populate a local deposits client with
-   information on a specified deposit;
-3. `deposit_update(deposit_id)` to update deposit on server with local
-   metadata;
-4. `deposits_list()` to update lists of current deposits within client.
-5. `deposits_search()` to search deposits in an online service.
-
-See [the introductory
-vignette](https://docs.ropensci.org/deposits/articles/deposits.html) for more
-details.
+specified by an additional `path` parameter. Unlike most methods for deposit
+clients, which invisibly return an updated version of the client, the
+`deposit_download_file()` returns the full local path to the downloaded file.
 
 ## Code of Conduct
 
