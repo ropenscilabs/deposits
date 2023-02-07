@@ -35,9 +35,8 @@ deposits_services ()
     ## 2 zenodo-sandbox https://developers.zenodo.org/ https://sandbox.zenodo.org/api/
     ## 3       figshare     https://docs.figshare.com/    https://api.figshare.com/v2/
 
-[`zenodo`](https://zenodo.org) offers a “sandbox” environment, which
-offers an ideal environment for testing the functionality of this
-package.
+The [`zenodo`](https://zenodo.org) “sandbox” environment offers an ideal
+environment for testing the functionality of this package.
 
 ## The “frictionless” data workflow
 
@@ -54,8 +53,7 @@ seamless and painless as possible. No knowledge of the frictionless
 workflow is necessary, and the `deposits` workflow should “just work” in
 many cases, appropriately constructing frictionless metadata files and
 uploading them to deposits services. It is of course also possible to
-use the `deposits` package without frictionless metadata. All of these
-possibilities are illustrated in the following sections.
+use the `deposits` package without frictionless metadata.
 
 ## The deposits workflow
 
@@ -87,12 +85,43 @@ The lower section contains information on the current deposit held
 within the client. A new client initially contains no information on a
 deposit, and so these lower sections are empty.
 
-Having constructed a new client, the deposits workflow then involves the
-following main steps:
+The code above demonstrates how `R6` objects work, through calling
+“methods” or functions on the main “object” via the `$` symbol. The
+“new” method must be called on [a `depositsClient`
+object](https://docs.ropensci.org/deposits/reference/depositsClient.html).
+From that point on, all other methods are called on that object itself.
+For example, the following calls lists all methods implemented by the
+client:
 
-1.  Fill the client with metadata;
-2.  Create a new deposit on the nominated service; and
-3.  Upload files for the deposit.
+``` r
+cli$deposits_methods ()
+#> List of methods for a deposits client:
+#>
+#>    - deposit_delete
+#>    - deposit_download_file
+#>    - deposit_fill_metadata
+#>    - deposit_new
+#>    - deposit_retrieve
+#>    - deposit_service
+#>    - deposit_update
+#>    - deposit_upload_file
+#>    - deposits_list
+#>    - deposits_methods
+#>    - deposits_search
+#>
+#>  see `?depositsClient` for full details of all methods.
+```
+
+All of those methods then work similarly, by calling
+`cli$<name_of_method>(<parameters>)`. A typical deposits workflow, and
+associated methods, involves the following steps:
+
+1.  Fill the client with metadata (using the `new()` or
+    `deposit_fill_metadata()` methods);
+2.  Create a new deposit on the nominated service (using the
+    `deposit_new()` method); and
+3.  Upload files for the deposit (using the `deposit_upload_file()`
+    method).
 
 ### Fill client with metadata
 
