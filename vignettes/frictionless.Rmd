@@ -136,3 +136,27 @@ function](https://docs.ropensci.org/deposits/reference/depositsClient.html#metho
 ```{r upload-datapackage, eval = FALSE}
 cli$deposit_upload_file (path = path)
 ```
+
+## Using deposits client to edit frictionless metadata
+
+The metadata in a `deposits` client may be directly edited and updated. The
+metadata shown above may, for example, simply be extended like this:
+
+```{r extend-client-metadata, eval = FALSE}
+cli$metadata$description <- "A description"
+```
+
+The local and remote "datapackage.json" files may be updated to the current
+state of a `deposits` client with [the `deposit_update_frictionless()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_update_frictionless).
+This method accepts the optional parameter, `path`, of the directory to local
+data and "datapackage.json" files. Calling the method will then update both
+local and remote versions of "datapackage.json" to include all changes to
+client metadata.
+
+```{r update-frictionless, eval = FALSE}
+cli$deposit_update_frictionless (path = dirname (path))
+```
+
+Both local and remote versions will then include the additional "description"
+in their "metadata" items.
