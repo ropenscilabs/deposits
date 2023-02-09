@@ -1,0 +1,89 @@
+---
+title: "frictionless workflows with deposits"
+author: 
+  - "Mark Padgham"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{frictionless}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set (
+    collapse = TRUE,
+    warning = TRUE,
+    message = TRUE,
+    width = 120,
+    comment = "#>",
+    fig.retina = 2,
+    fig.path = "README-"
+)
+```
+
+As described in [the main
+README](https://docs.ropensci.org/deposits/index.html#the-deposits-workflow),
+the `deposits` package is designed to work with [rOpenSci's `frictionless`
+package](https://docs.ropensci.org/frictionless) for documentation of datasets.
+The [`frictionless` package](https://docs.ropensci.org/frictionless) is an R
+implementation of [the general "frictionless"
+workflow](https://frictionlessdata.io). To take advantage of the frictionless
+workflow in `deposits`, it is only necessary to know that the workflow involves
+documenting datasets in a file called
+["datapackage.json"](https://frictionlessdata.io/blog/2016/07/21/publish-any/#_2-add-a-datapackage-json-file).
+
+## Generating "datapackage.json" files
+
+The [`frictionless` package](https://docs.ropensci.org/frictionless) can
+automatically generate "datapackage.json" files for any tabular input data.
+This functionality is included within the `deposits` package to enable the
+workflow demonstrated in [the main
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html). This
+workflow used the following code, starting by creating a local file with some
+tabular data in an empty directory.
+
+```{r temp-beaver}
+dir.create (file.path (tempdir (), "data"))
+path <- file.path (tempdir (), "data", "beaver1.csv")
+write.csv (datasets::beaver1, path, row.names = FALSE)
+```
+
+We then need to construct a `deposits` client, and specify metadata, in this
+case those describing [the `beaver1`
+dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html).
+
+```{r beaver-metadata, eval = FALSE}
+metadata <- list (
+    Creator = "P. S. Reynolds",
+    Title = "Time-series analyses of beaver body temperatures"
+)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+```
+
+These data can then be used to initiate a new deposit on the Zenodo sandbox
+service, and to upload the local data.
+
+```{r beaver-new, eval = FALSE}
+cli$deposit_new ()
+#> ID of new deposit : 1162420
+cli$deposit_upload_file (path = path)
+```
+
+The client then lists two files that were uploaded, and the local directory
+also now has a "datapackage.json" file:
+
+```{r beaver-datapackage, eval = FALSE}
+cli$hostdata$files
+#>                           checksum         filename filesize                                   id
+#> 1 c8e7ff1e2e4323198b4be5227ff63864      beaver1.csv     1909 7744e507-c835-42f6-9b42-2da0e01ebc3d
+#> 2 aa2479fa09c364fbfa3abca2893fd233 datapackage.json      781 5ef79016-17b4-4254-bc28-c3f173a46415
+#>                                                                               links.download
+#> 1      https://sandbox.zenodo.org/api/files/00cfea55-21a2-412c-9296-87ea6b1b8c69/beaver1.csv
+#> 2 https://sandbox.zenodo.org/api/files/00cfea55-21a2-412c-9296-87ea6b1b8c69/datapackage.json
+#>                                                                                              links.self
+#> 1 https://sandbox.zenodo.org/api/deposit/depositions/1162420/files/7744e507-c835-42f6-9b42-2da0e01ebc3d
+#> 2 https://sandbox.zenodo.org/api/deposit/depositions/1162420/files/5ef79016-17b4-4254-bc28-c3f173a46415
+
+list.files (file.path (tempdir (), "data"))
+#> [1] "beaver1.csv"      "datapackage.json"
+```
