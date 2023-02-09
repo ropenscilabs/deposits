@@ -549,10 +549,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$upload_local_file (path)
 
-            # This does initial creation if "datapackage.json" does not exist,
-            # or downloads remote if only that exists. Either way, local version
-            # is then the most up-to-date version.
-            self <- private$update_frictionless (path)
+            # Create "datapackage.json" if it does not exist, or download remote
+            # if only that exists. Either way, local version is then the most
+            # up-to-date version.
+            if (fs::path_file (path) != private$frictionless_json_name) {
+                self <- private$update_frictionless (path)
+            }
 
             invisible (self)
         },
