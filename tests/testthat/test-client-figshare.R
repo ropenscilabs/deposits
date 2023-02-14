@@ -179,6 +179,40 @@ test_that ("figshare upload", {
     expect_true (all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$name))
 })
 
+test_that ("figshare update frictionless", {
+
+    cli <- new_mock_fs_deposit ()
+    deposit_id <- cli$id
+    path <- fs::path (fs::path_temp (), "data")
+    fs::dir_create (path)
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename)
+    dp <- fs::path (path, "datapackage.json")
+    if (fs::file_exists (dp)) {
+        fs::file_delete (dp)
+    }
+    cli <- with_mock_dir ("fs_up", {
+        cli$deposit_upload_file (path = filename) # deposit_id from cli$id
+    })
+
+    files_old <- cli$hostdata$files
+    p_old <- frictionless::read_package (fs::path (path, "datapackage.json"))
+
+    cli$metadata$title <- "Modified Title"
+    cli$metadata$abstract <- "This is the modified abstract"
+    cli$metadata$creator <- c (cli$metadata$creator, "C. Person")
+
+    cli$deposit_update_frictionless (path = path)
+    expect_identical (files_old, cli$hostdata$files)
+    p_new <- frictionless::read_package (fs::path (path, "datapackage.json"))
+    expect_false (identical (p_old, p_new))
+    expect_identical (p_old$resources, p_new$resources)
+    expect_false (identical (p_old$metadata, p_new$metadata))
+    expect_identical (p_new$metadata$title, "Modified Title")
+    expect_true ("C. Person" %in% p_new$metadata$creator)
+    expect_false ("C. Person" %in% p_old$metadata$creator)
+})
+
 test_that ("figshare upload binary", {
 
     service <- "figshare"

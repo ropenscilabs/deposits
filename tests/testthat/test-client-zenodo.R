@@ -260,16 +260,20 @@ test_that ("zenodo update frictionless", {
     fs::dir_create (path)
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
+    dp <- fs::path (path, "datapackage.json")
+    if (fs::file_exists (dp)) {
+        fs::file_delete (dp)
+    }
     cli <- with_mock_dir ("zen_up", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 
+    files_old <- cli$hostdata$files
+    p_old <- frictionless::read_package (fs::path (path, "datapackage.json"))
+
     cli$metadata$title <- "Modified Title"
     cli$metadata$abstract <- "This is the modified abstract"
     cli$metadata$creator <- c (cli$metadata$creator, "C. Person")
-
-    files_old <- cli$hostdata$files
-    p_old <- frictionless::read_package (fs::path (path, "datapackage.json"))
 
     cli$deposit_update_frictionless (path = path)
     expect_identical (files_old, cli$hostdata$files)
