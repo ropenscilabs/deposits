@@ -732,7 +732,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!path_is_local) {
 
                 name_field <- private$get_file_name_field ()
-                if (!private$frictionless_json_name %in% cli$hostdata$files [[name_field]]) {
+                if (!private$frictionless_json_name %in% self$hostdata$files [[name_field]]) {
                     stop (
                         self$service, " deposit#", self$id, " has no '",
                         private$frictionless_json_name, "' file",
@@ -748,7 +748,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             path_json <- fs::path (path, private$frictionless_json_name)
             p <- frictionless::read_package (path_json)
-            p$metadata <- cli$metadata
+            p$metadata <- self$metadata
             if (path_is_local) {
                 op <- options (
                     readr.show_progress = FALSE,
