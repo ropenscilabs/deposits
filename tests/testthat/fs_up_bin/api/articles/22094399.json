@@ -1,32 +1,47 @@
 {
     "files": [
         {
-            "upload_token": "2cc6c4be-12a5-4edc-98ed-b7fbbc9c448e",
+            "upload_token": "eb32d95f-7db0-46af-bc29-8e569aedfc22",
             "upload_url": "",
             "status": "available",
             "preview_state": "preview_available",
             "viewer_type": "dataset",
             "is_attached_to_public_version": false,
-            "id": 39255461,
+            "id": 39255512,
             "name": "data.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39255461",
+            "download_url": "https://ndownloader.figshare.com/files/39255512",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         },
         {
-            "upload_token": "6d463091-c08b-4b69-b07a-319ac70d08f7",
+            "upload_token": "d7f716a8-f3ac-40f3-ac43-b1415a4db54d",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
+            "is_attached_to_public_version": false,
+            "id": 39255515,
+            "name": "data2.csv",
+            "size": 625,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/39255515",
+            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
+        },
+        {
+            "upload_token": "14125c98-1a72-4fb9-83b0-6f23c03f22ea",
             "upload_url": "",
             "status": "moving_to_final",
             "preview_state": "preview_not_supported",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39255464,
+            "id": 39255527,
             "name": "data.Rds",
             "size": 506,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39255464",
+            "download_url": "https://ndownloader.figshare.com/files/39255527",
             "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
             "computed_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6"
         }
@@ -47,7 +62,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22094372",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22094399",
     "description": "",
     "funding": null,
     "funding_list": [
@@ -55,7 +70,7 @@
     ],
     "version": 0,
     "status": "draft",
-    "size": 1131,
+    "size": 1756,
     "created_date": "2022-01-01T00:00:00Z",
     "modified_date": "2022-01-01T00:00:00Z",
     "is_public": false,
@@ -78,7 +93,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22094372",
+    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22094399",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -87,20 +102,20 @@
     "embargo_options": [
 
     ],
-    "id": 22094372,
+    "id": 22094399,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22094372",
+    "url": "api/articles/22094399",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22094372",
-    "url_public_api": "api/articles/22094372",
-    "url_private_html": "https://figshare.com/account/articles/22094372",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22094372",
+    "url_private_api": "api/articles/22094399",
+    "url_public_api": "api/articles/22094399",
+    "url_private_html": "https://figshare.com/account/articles/22094399",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22094399",
     "timeline": {
 
     }
