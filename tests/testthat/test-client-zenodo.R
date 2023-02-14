@@ -186,6 +186,27 @@ test_that ("zenodo upload", {
 
 })
 
+test_that ("zenodo upload bindary", {
+
+    cli <- new_mock_zen_deposit ()
+    deposit_id <- cli$id
+
+    filename <- file.path (tempdir (), "data.Rds")
+    saveRDS (datasets::Orange, filename)
+
+    cli <- with_mock_dir ("zen_up_bin", {
+        cli$deposit_upload_file (path = filename)
+    })
+
+    expect_true (nrow (cli$hostdata$files) > 0L)
+    i <- which (cli$hostdata$files$filename == "data.Rds")
+    expect_identical (
+        gsub ("^md5\\:", "", cli$hostdata$files$checksum [i]),
+        unname (tools::md5sum (filename))
+    )
+
+})
+
 test_that ("zenodo download", {
 
     cli <- new_mock_zen_deposit ()
