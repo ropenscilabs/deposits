@@ -153,8 +153,6 @@ test_that ("figshare upload", {
     cli <- new_mock_fs_deposit ()
     deposit_id <- cli$id
 
-    # filename <- file.path (tempdir (), "data.Rds")
-    # saveRDS (datasets::Orange, filename)
     filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
@@ -167,6 +165,27 @@ test_that ("figshare upload", {
     expect_identical (
         dep$files$supplied_md5,
         dep$files$computed_md5
+    )
+})
+
+test_that ("figshare upload binary", {
+
+    service <- "figshare"
+    cli <- new_mock_fs_deposit ()
+    deposit_id <- cli$id
+
+    filename <- file.path (tempdir (), "data.Rds")
+    saveRDS (datasets::Orange, filename)
+
+    dep <- with_mock_dir ("fs_up_bin", {
+        cli$deposit_upload_file (deposit_id, filename)
+    })
+
+    expect_identical (dep, cli)
+    expect_true (length (cli$hostdata$files) > 0L)
+    expect_identical (
+        dep$hostdata$files$supplied_md5,
+        dep$hostdata$files$computed_md5
     )
 })
 
