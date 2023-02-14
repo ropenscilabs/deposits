@@ -1,4 +1,3 @@
-
 test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
     identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
 
@@ -62,6 +61,7 @@ test_that ("print-figshare", {
     )
 
     testthat::expect_snapshot (print (cli))
+    testthat::expect_snapshot (cli$deposits_methods ())
 
     cli$hostdata <- list (data = "data")
     cli$metadata <- list (dcmi = list (updated = "2022-01-01"))
@@ -83,6 +83,7 @@ test_that ("print-zenodo", {
     )
 
     testthat::expect_snapshot (print (cli))
+    testthat::expect_snapshot (cli$deposits_methods ())
 
     cli$hostdata <- list (data = "data")
     cli$metadata <- list (dcmi = list (updated = "2022-01-01"))

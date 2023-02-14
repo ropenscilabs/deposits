@@ -14,6 +14,28 @@
 ---
 
     Code
+      cli$deposits_methods()
+    Output
+      List of methods for a deposits client:
+      
+         - deposit_delete
+         - deposit_download_file
+         - deposit_fill_metadata
+         - deposit_new
+         - deposit_retrieve
+         - deposit_service
+         - deposit_update
+         - deposit_update_frictionless
+         - deposit_upload_file
+         - deposits_list
+         - deposits_methods
+         - deposits_search
+       
+       see `?depositsClient` for full details of all methods.
+
+---
+
+    Code
       print(cli)
     Output
       <deposits client>
@@ -39,6 +61,28 @@
       
          hostdata : <none>
          metadata : <none>
+
+---
+
+    Code
+      cli$deposits_methods()
+    Output
+      List of methods for a deposits client:
+      
+         - deposit_delete
+         - deposit_download_file
+         - deposit_fill_metadata
+         - deposit_new
+         - deposit_retrieve
+         - deposit_service
+         - deposit_update
+         - deposit_update_frictionless
+         - deposit_upload_file
+         - deposits_list
+         - deposits_methods
+         - deposits_search
+       
+       see `?depositsClient` for full details of all methods.
 
 ---
 
