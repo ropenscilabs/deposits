@@ -1,19 +1,19 @@
 [
     {
-        "conceptrecid": "1164378",
+        "conceptrecid": "1164390",
         "created": "2022-01-01T00:00:00",
         "doi": "",
         "doi_url": "https://doi.org/",
-        "id": 1164379,
+        "id": 1164391,
         "links": {
-            "discard": "sbapi/deposit/depositions/1164379/actions/discard",
-            "edit": "sbapi/deposit/depositions/1164379/actions/edit",
-            "files": "sbapi/deposit/depositions/1164379/files",
-            "html": "https://sandbox.zenodo.org/deposit/1164379",
-            "latest_draft": "sbapi/deposit/depositions/1164379",
-            "latest_draft_html": "https://sandbox.zenodo.org/deposit/1164379",
-            "publish": "sbapi/deposit/depositions/1164379/actions/publish",
-            "self": "sbapi/deposit/depositions/1164379"
+            "discard": "sbapi/deposit/depositions/1164391/actions/discard",
+            "edit": "sbapi/deposit/depositions/1164391/actions/edit",
+            "files": "sbapi/deposit/depositions/1164391/files",
+            "html": "https://sandbox.zenodo.org/deposit/1164391",
+            "latest_draft": "sbapi/deposit/depositions/1164391",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/1164391",
+            "publish": "sbapi/deposit/depositions/1164391/actions/publish",
+            "self": "sbapi/deposit/depositions/1164391"
         },
         "metadata": {
             "access_right": "open",
@@ -26,8 +26,8 @@
             "doi": "",
             "license": "CC-BY-4.0",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1164379",
-                "recid": 1164379
+                "doi": "10.5072/zenodo.1164391",
+                "recid": 1164391
             },
             "publication_date": "2022-01-01",
             "title": "Modified Title",
@@ -35,7 +35,7 @@
         },
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
-        "record_id": 1164379,
+        "record_id": 1164391,
         "state": "unsubmitted",
         "submitted": false,
         "title": "Modified Title"

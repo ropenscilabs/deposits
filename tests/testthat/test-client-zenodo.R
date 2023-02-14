@@ -183,7 +183,17 @@ test_that ("zenodo upload", {
         gsub ("^md5\\:", "", cli$hostdata$files$checksum [1]),
         unname (tools::md5sum (filename))
     )
+    n_files <- nrow (cli$hostdata$files)
 
+    # --------- UPLOAD ADDITIONAL DATA
+    # Initial uploads differ to subsequent uploads; this tests the latter
+    filename <- fs::path (fs::path_temp (), "data2.csv")
+    write.csv (datasets::Orange, filename)
+    cli <- with_mock_dir ("zen_up2", {
+        cli$deposit_upload_file (path = filename) # deposit_id from cli$id
+    })
+    expect_true (nrow (cli$hostdata$files) > n_files)
+    expect_true (all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$filename))
 })
 
 test_that ("zenodo upload bindary", {
