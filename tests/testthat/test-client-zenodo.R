@@ -175,9 +175,12 @@ test_that ("zenodo upload", {
     })
 
     expect_identical (dep, cli)
-    expect_true (length (cli$hostdata$files) > 0L)
+    # This should have two files, but zenodo requires downloading which can't be
+    # mocked, and that prevents frictionless uploading. See
+    # https://github.com/ropenscilabs/deposits/blob/3c8dc71809fe17f68fc0fbd83f730ae8a1c1a646/R/client-private-frictionless.R#L201-L202
+    expect_true (nrow (cli$hostdata$files) > 0L)
     expect_identical (
-        gsub ("^md5\\:", "", dep$hostdata$files$checksum [1]),
+        gsub ("^md5\\:", "", cli$hostdata$files$checksum [1]),
         unname (tools::md5sum (filename))
     )
 
