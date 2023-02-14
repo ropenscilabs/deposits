@@ -203,7 +203,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             m <- sort (grep ("^deposit", ls (self), value = TRUE))
             fns <- vapply (m, function (i) {
-                class (cli [[i]]) [1] == "function"
+                class (self [[i]]) [1] == "function"
             }, logical (1L))
             m <- m [which (fns)]
             cat (
