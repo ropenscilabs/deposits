@@ -21,7 +21,9 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     values <- dcmi [-index]
 
     # Zenodo only allows 'description', not 'abstract':
-    if ("abstract" %in% names (meta_values) && "description" %in% names (meta_values)) {
+    if ("abstract" %in% names (meta_values) &&
+        "description" %in% names (meta_values)) {
+
         meta_values$description <- paste0 (
             "Abstract: \n",
             meta_values$abstract,
@@ -29,7 +31,9 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
             meta_values$description
         )
         meta_values$abstract <- NULL
+
     } else if ("abstract" %in% names (meta_values)) {
+
         meta_values$description <- meta_values$abstract
         meta_values$abstract <- NULL
     }
@@ -57,10 +61,15 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
 
     # --------   Align item names with zenodo requirements:
     index <- which (!names (meta_values) %in% term_map$service)
-    index_not_dcmi <- which (!all (names (meta_values) [index] %in% term_map$dcmi))
+    index_not_dcmi <-
+        which (!all (names (meta_values) [index] %in% term_map$dcmi))
+
     if (all (names (meta_values) [index] %in% term_map$dcmi)) {
-        names (meta_values) [index] <- term_map$service [match (names (meta_values [index]), term_map$dcmi)]
+        names (meta_values) [index] <- term_map$service [
+            match (names (meta_values [index]), term_map$dcmi)
+        ]
     }
+
     if (length (index_not_dcmi) > 0L) {
         stop (
             "metadata field names [",
@@ -69,33 +78,49 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
             call. = FALSE
         )
 
-        names (meta_values) [index] <-
-            vapply (index, function (i) {
-                index_service <- which (term_map$dcmi == names (meta_values) [i])
-                if (length (index_service) > 1L) {
+        names (meta_values) [index] <- vapply (index, function (i) {
 
-                    index_service_fields <- unlist (lapply (meta_values [[i]], function (j) {
+            index_service <-
+                which (term_map$dcmi == names (meta_values) [i])
+
+            if (length (index_service) > 1L) {
+
+                index_service_fields <-
+                    unlist (lapply (meta_values [[i]], function (j) {
+
                         ret <- NA_integer_
                         g <- regexpr ("^\\[.*[^\\]\\]", j)
                         if (g > 0L) {
-                            which_field <- gsub ("\\[|\\]", "", regmatches (j, g))
-                            which_field <- tolower (gsub ("\\s+", "_", which_field))
+                            which_field <-
+                                gsub ("\\[|\\]", "", regmatches (j, g))
+                            which_field <-
+                                tolower (gsub ("\\s+", "_", which_field))
                             if (!which_field %in% term_map$service) {
-                                stop ("field name [", which_field, "] not recognised.", call. = FALSE)
+                                stop (
+                                    "field name [",
+                                    which_field,
+                                    "] not recognised.",
+                                    call. = FALSE
+                                )
                             }
                             ret <- which (term_map$service == which_field)
                         }
                         return (ret)
                     }))
-                    index_service_fields <- unique (index_service_fields [which (!is.na (index_service_fields))])
-                    if (length (index_service_fields) == 1L) {
-                        index_service <- index_service_fields
-                    } else {
-                        index_service <- index_service [1]
-                    }
+
+                index_service_fields <- unique (index_service_fields [
+                    which (!is.na (index_service_fields))
+                ])
+                if (length (index_service_fields) == 1L) {
+                    index_service <- index_service_fields
+                } else {
+                    index_service <- index_service [1]
                 }
-                term_map$service [index_service]
-            }, character (1L))
+            }
+
+            term_map$service [index_service]
+
+        }, character (1L))
 
         meta_values <- lapply (meta_values, function (i) {
             lapply (i, function (j) {
