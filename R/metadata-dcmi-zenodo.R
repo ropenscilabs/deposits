@@ -38,24 +38,7 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
         meta_values$abstract <- NULL
     }
 
-    # --------   grab any corresponding entries from 'values':
-    move_one <- function (ptn, val_list) {
-        i <- grep (ptn, names (val_list$values))
-        if (length (i) == 1L) {
-            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <-
-                val_list$values [[i]]
-            val_list$values <- val_list$values [-i]
-        }
-        return (val_list)
-    }
-    val_list <- move_one (
-        "^[Cc]reator",
-        list (meta_values = meta_values, values = values)
-    )
-    val_list <- move_one ("^[Tt]itle", val_list)
-    val_list <- move_one ("^[Dd]escr", val_list)
-    val_list <- move_one ("^[Uu]pload", val_list)
-
+    val_list <- mv_zen_values_to_metavalues (values, meta_values)
     meta_values <- val_list$meta_values
     values <- val_list$values
 
@@ -173,4 +156,30 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     values <- httptest2_dcmi_created (values)
 
     return (values)
+}
+
+#' Move any terms defined in 'values' into zenodo 'metavalues' list
+#'
+#' @noRd
+mv_zen_values_to_metavalues <- function (values, meta_values) {
+
+    move_one <- function (ptn, val_list) {
+        i <- grep (ptn, names (val_list$values))
+        if (length (i) == 1L) {
+            val_list$meta_values [[grep (ptn, names (val_list$meta_values))]] <-
+                val_list$values [[i]]
+            val_list$values <- val_list$values [-i]
+        }
+        return (val_list)
+    }
+
+    val_list <- move_one (
+        "^[Cc]reator",
+        list (meta_values = meta_values, values = values)
+    )
+    val_list <- move_one ("^[Tt]itle", val_list)
+    val_list <- move_one ("^[Dd]escr", val_list)
+    val_list <- move_one ("^[Uu]pload", val_list)
+
+    return (val_list)
 }
