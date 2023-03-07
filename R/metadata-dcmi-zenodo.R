@@ -42,37 +42,12 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     meta_values <- val_list$meta_values
     values <- val_list$values
 
-    # --------   Align item names with zenodo requirements:
     meta_values <- match_meta_names_to_zen_api (meta_values, term_map)
-
-    # --------   Format meta items expected to be lists:
-    if (!is.list (meta_values$creators)) {
-        meta_values$creators <- list (list (name = meta_values$creators))
-    } else if (is.null (names (meta_values$creators))) {
-        meta_values$creators <- lapply (meta_values$creators, function (i) {
-            if (!is.list (i)) {
-                i <- list (name = i)
-            }
-            return (i)
-        })
-    } else if (names (meta_values$creators) == "name") {
-        meta_values$creators <- list (meta_values$creators)
-    }
-
-    # --------   Other reformatting:
+    meta_values <- convert_zen_meta_vals_to_lists (meta_values)
     if ("upload_type" %in% names (meta_values)) {
         meta_values$upload_type <- tolower (meta_values$upload_type)
     }
-
-    # --------   Insert required values if any missing:
-    req <- list (
-        "upload_type" = "other",
-        "title" = "Title",
-        "creators" = "A. Person",
-        "description" = "Description"
-    )
-    index <- which (!names (req) %in% names (meta_values))
-    meta_values <- c (meta_values, req [index])
+    meta_values <- insert_zen_required_meta_values (meta_values)
 
     meta_values <- meta_values [order (names (meta_values))]
     values$metadata <- meta_values
@@ -187,6 +162,38 @@ match_meta_names_to_zen_api <- function (meta_values, term_map) {
             })
         })
     }
+
+    return (meta_values)
+}
+
+convert_zen_meta_vals_to_lists <- function (meta_values) {
+
+    if (!is.list (meta_values$creators)) {
+        meta_values$creators <- list (list (name = meta_values$creators))
+    } else if (is.null (names (meta_values$creators))) {
+        meta_values$creators <- lapply (meta_values$creators, function (i) {
+            if (!is.list (i)) {
+                i <- list (name = i)
+            }
+            return (i)
+        })
+    } else if (names (meta_values$creators) == "name") {
+        meta_values$creators <- list (meta_values$creators)
+    }
+
+    return (meta_values)
+}
+
+insert_zen_required_meta_values <- function (meta_values) {
+
+    req <- list (
+        "upload_type" = "other",
+        "title" = "Title",
+        "creators" = "A. Person",
+        "description" = "Description"
+    )
+    index <- which (!names (req) %in% names (meta_values))
+    meta_values <- c (meta_values, req [index])
 
     return (meta_values)
 }
