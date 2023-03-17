@@ -1,6 +1,0 @@
-term, required, vocabulary
-name, yes, family then given name
-type, yes, ContactPerson|DataCollector|DataCurator|DataManager|Distributor|Editor|Funder|HostingInstitution|Producer|ProjectLeader|ProjectManager|ProjectMember|RegistrationAgency|RegistrationAuthority|RelatedPerson|Researcher|ResearchGroup|RightsHolder|Supervisor|Sponsor|WorkPackageLeader|Other
-affiliation, no,
-orcid, no, 
-gnd, no,
