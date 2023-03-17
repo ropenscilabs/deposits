@@ -1,0 +1,249 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "DCMI terms metadata schema",
+    "type": "object",
+    "properties": {
+        "abstract": {
+            "type": "string"
+        },
+        "accessRights": {
+            "description": "Information about who access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies.",
+            "type": "string"
+        },
+        "accrualMethod": {
+            "type": "object",
+            "description": "See https://www.dublincore.org/specifications/dublin-core/collection-description/accrual-method/",
+            "items": {
+                "method": {
+                    "type": "string",
+                    "enum": ["deposit", "donation", "purchase", "loan", "license", "item_creation"]
+                },
+                "description": "string"
+            }
+        },
+        "accrualPeriodicity": {
+            "description": "Recommended vocabulary at https://www.dublincore.org/specifications/dublin-core/collection-description/frequency/",
+            "type": "string"
+        },
+        "accrualPolicy": {
+            "description": "See https://www.dublincore.org/specifications/dublin-core/collection-description/accrual-policy/",
+            "type": "string",
+            "enum": ["closed", "passive", "active", "partial"]
+        },
+        "alternative": {
+            "description": "Alternative name or title for the resource",
+            "type": "string"
+        },
+        "audience": {
+            "description": "A class of agents for whom the resource is intended or useful. Recommended practice is to use this property with non-literal values from a vocabulary of audience types.",
+            "type": "string"
+        },
+        "available": {
+            "type": "string",
+            "format": "date"
+        },
+        "bibliographicCitation": {
+            "description": "A bibliographic reference for the resource.",
+            "type": "string"
+        },
+        "conformsTo": {
+            "description": "An established standard to which the described resource conforms.",
+            "type": "string"
+        },
+        "contributor": {
+            "description": "An entity responsible for making contributions to the resource.",
+            "type": "string"
+        },
+        "coverage": {
+            "description": "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant.",
+            "type": "string"
+        },
+        "created": {
+            "type": "string",
+            "anyOf": [
+                { "format": "date" },
+                { "format": "date-time" }
+            ]
+        },
+        "creator": {
+            "type": "string"
+        },
+        "date": {
+            "description": "A point or period of time associated with an event in the lifecycle of the resource.",
+            "type": "string",
+            "format": "date"
+        },
+        "dateAccepted": {
+            "type": "string",
+            "format": "date"
+        },
+        "dateCopyrighted": {
+            "type": "string",
+            "format": "date"
+        },
+        "dateSubmitted": {
+            "type": "string",
+            "format": "date"
+        },
+        "description": {
+            "type": "string"
+        },
+        "educationLevel": {
+            "description": "A class of agents, defined in terms of progression through an educational or training context, for which the described resource is intended.",
+            "type": "string"
+        },
+        "extent": {
+            "description": "The size or duration of the resource. Recommended practice is to specify the file size in megabytes and duration in ISO 8601 format.",
+            "type": "string"
+        },
+        "format": {
+            "description": "The file format, physical medium, or dimensions of the resource. Recommended practice is to use a controlled vocabulary where available. For example, for file formats one could use the list of Internet Media Types [MIME]. Examples of dimensions include size and duration.",
+            "type": "string"
+        },
+        "hasFormat": {
+            "description": "A related resource that is substantially the same as the pre-existing described resource, but in another format. This property is an inverse property of Is Format Of.",
+            "type": "string"
+        },
+        "hasPart": {
+            "description": "A related resource that is included either physically or logically in the described resource. This property is an inverse property of Is Part Of.",
+            "type": "string"
+        },
+        "hasVersion": {
+            "description": "A related resource that is a version, edition, or adaptation of the described resource. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Is Version Of.",
+            "type": "string"
+        },
+        "identifier": {
+            "description": "An unambiguous reference to the resource within a given context. Recommended practice is to identify the resource by means of a string conforming to an identification system. Examples include International Standard Book Number (ISBN), Digital Object Identifier (DOI), and Uniform Resource Name (URN). Persistent identifiers should be provided as HTTP URIs.",
+            "type": "string"
+        },
+        "instructionalMethod": {
+            "description": "A process, used to engender knowledge, attitudes and skills, that the described resource is designed to support. Instructional Method typically includes ways of presenting instructional materials or conducting instructional activities, patterns of learner-to-learner and learner-to-instructor interactions, and mechanisms by which group and individual levels of learning are measured. Instructional methods include all aspects of the instruction and learning processes from planning and implementation through evaluation and feedback.",
+            "type": "string"
+        },
+        "isFormatOf": {
+            "description": "A pre-existing related resource that is substantially the same as the described resource, but in another format. This property is an inverse property of Has Format.",
+            "type": "string"
+        },
+        "isPartOf": {
+            "description": "A related resource in which the described resource is physically or logically included. This property is an inverse property of Has Part.",
+            "type": "string"
+        },
+        "isReferencedBy": {
+            "description": "A related resource that references, cites, or otherwise points to the described resource. This property is an inverse property of References.",
+            "type": "string"
+        },
+        "isReplacedBy": {
+            "description": "A related resource that supplants, displaces, or supersedes the described resource. This property is an inverse property of Replaces.",
+            "type": "string"
+        },
+        "isRequiredBy": {
+            "description": "A related resource that requires the described resource to support its function, delivery, or coherence. This property is an inverse property of Requires.",
+            "type": "string"
+        },
+        "issued": {
+            "description": "Date of formal issuance of the resource.",
+            "type": "string",
+            "anyOf": [
+                { "format": "date" },
+                { "format": "date-time" }
+            ]
+        },
+        "isVersionOf": {
+            "description": "A related resource of which the described resource is a version, edition, or adaptation. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Has Version.",
+            "type": "string"
+        },
+        "language": {
+            "description": "A language of the resource. Recommended practice is to use either a non-literal value representing a language from a controlled vocabulary such as ISO 639-2 or ISO 639-3, or a literal value consisting of an IETF Best Current Practice 47 [IETF-BCP47] language tag.",
+            "type": "string"
+        },
+        "license": {
+            "description": "A legal document giving official permission to do something with the resource. Recommended practice is to identify the license document with a URI. If this is not possible or feasible, a literal value that identifies the license may be provided.",
+            "type": "string"
+        },
+        "mediator": {
+            "description": "An entity that mediates access to the resource. In an educational context, a mediator might be a parent, teacher, teaching assistant, or care-giver.",
+            "type": "string"
+        },
+        "medium": {
+            "description": "The material or physical carrier of the resource.",
+            "type": "string"
+        },
+        "modified": {
+            "description": "Date on which the resource was changed.",
+            "type": "string",
+            "anyOf": [
+                { "format": "date" },
+                { "format": "date-time" }
+            ]
+        },
+        "provenance": {
+            "description": "A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.",
+            "type": "string"
+        },
+        "publisher": {
+            "description": "An entity responsible for making the resource available.",
+            "type": "string"
+        },
+        "references": {
+            "description": "A related resource that is referenced, cited, or otherwise pointed to by the described resource. This property is an inverse property of Is Referenced By.",
+            "type": "string"
+        },
+        "relation": {
+            "description": "A related resource. Recommended practice is to identify the related resource by means of a URI. If this is not possible or feasible, a string conforming to a formal identification system may be provided.",
+            "type": "string"
+        },
+        "replaces": {
+            "description": "A related resource that is supplanted, displaced, or superseded by the described resource. This property is an inverse property of Is Replaced By.",
+            "type": "string"
+        },
+        "requires": {
+            "description": "A related resource that is required by the described resource to support its function, delivery, or coherence. This property is an inverse property of Is Required By.",
+            "type": "string"
+        },
+        "rights": {
+            "description": "Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights. Recommended practice is to refer to a rights statement with a URI. If this is not possible or feasible, a literal value (name, label, or short text) may be provided.",
+            "type": "string"
+        },
+        "rightsHolder": {
+            "description": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.",
+            "type": "string"
+        },
+        "source": {
+            "description": "A related resource from which the described resource is derived. The described resource may be derived from the related resource in whole or in part. Best practice is to identify the related resource by means of a URI or a string conforming to a formal identification system.",
+            "type": "string"
+        },
+        "spatial": {
+            "description": "Spatial characteristics of the resource.",
+            "type": "string"
+        },
+        "subject": {
+            "description": "A topic of the resource. Recommended practice is to refer to the subject with a URI. If this is not possible or feasible, a literal value that identifies the subject may be provided. Both should preferably refer to a subject in a controlled vocabulary.",
+            "type": "string"
+        },
+        "tableOfContents": {
+            "description": "A list of subunits of the resource.",
+            "type": "string"
+        },
+        "temporal": {
+            "description": "Temporal characteristics of the resource.",
+            "type": "string"
+        },
+        "title": {
+            "description": "A name given to the resource.",
+            "type": "string"
+        },
+        "type": {
+            "description": "The nature or genre of the resource. Recommended practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMI-TYPE]. To describe the file format, physical medium, or dimensions of the resource, use the property Format.",
+            "type": "string"
+        },
+        "valid": {
+            "description": "Date (often a range) of validity of a resource. Recommended practice is to describe the date, date/time, or period of time as recommended for the property Date, of which this is a subproperty.",
+            "type": "string",
+            "anyOf": [
+                { "format": "date" },
+                { "format": "date-time" }
+            ]
+        }
+    },
+    "required": []
+}
