@@ -1,4 +1,3 @@
-
 #' Validate metadata and convert to service-specific form
 #'
 #' This function is a wrapper used to call the following two functions in
@@ -39,7 +38,7 @@ validate_dcmi_metadata <- function (metadata) {
 
     if (!any (grepl ("[Cc]reated", names (metadata)))) {
         metadata [dcmi_terms ("created")] <-
-            paste0 (strftime (Sys.time (), "%Y-%m-%d"))
+            paste0 (strftime (Sys.time (), "%Y-%m-%dT%H:%M:%S"))
     }
     metadata <- httptest2_dcmi_created (metadata)
 
@@ -101,17 +100,23 @@ validate_service_metadata <- function (metadata, service) {
 
     if (service == "zenodo") {
         metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
-        check <- validate_zenodo_terms (metadata_service)
     } else if (service == "figshare") {
         metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
-        check <- validate_figshare_terms (metadata_service)
     }
 
-    if (length (check) > 0L) {
-        warning (
-            "The following metadata terms do not conform:\n",
-            paste0 (check, collapse = "\n"),
-            call. = FALSE
+    schema <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
+
+    f <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata_service, f, auto_unbox = TRUE)
+    v <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+
+    if (!v) {
+        print (attr (v, "error") [, 1:5])
+        stop (
+            "Stopping because the metadata terms listed above ",
+            "do not confirm with the expected schema."
         )
     }
 

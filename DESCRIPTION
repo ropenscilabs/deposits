@@ -16,6 +16,7 @@ Imports:
     here,
     httr2,
     jsonlite,
+    jsonvalidate,
     methods,
     R6,
     withr,
