@@ -1,0 +1,13 @@
+structure(list(method = "POST", url = "sbapi/deposit/depositions", 
+    status_code = 201L, headers = structure(list(Server = "nginx", 
+        Date = "Fri, 17 Mar 2023 15:05:43 GMT", `Content-Type` = "application/json", 
+        `Content-Length` = "1238", ETag = "\"0\"", `Last-Modified` = "Fri, 17 Mar 2023 15:05:43 GMT", 
+        Link = "<https://sandbox.zenodo.org/api/deposit/depositions/1174172/files>; rel=\"files\", <https://sandbox.zenodo.org/api/deposit/depositions/1174172/actions/edit>; rel=\"edit\", <https://sandbox.zenodo.org/api/deposit/depositions/1174172>; rel=\"self\", <https://sandbox.zenodo.org/api/deposit/depositions/1174172/actions/publish>; rel=\"publish\", <https://sandbox.zenodo.org/deposit/1174172>; rel=\"html\", <https://sandbox.zenodo.org/api/deposit/depositions/1174172/actions/discard>; rel=\"discard\"", 
+        location = "sbapi/deposit/depositions/1174172", `X-RateLimit-Limit` = "100", 
+        `X-RateLimit-Remaining` = "97", `X-RateLimit-Reset` = "1679065604", 
+        `Retry-After` = "60", `X-Frame-Options` = "sameorigin", 
+        `X-XSS-Protection` = "1; mode=block", `X-Content-Type-Options` = "nosniff", 
+        `Strict-Transport-Security` = "max-age=0", `Referrer-Policy` = "strict-origin-when-cross-origin", 
+        `Access-Control-Allow-Origin` = "*", `Access-Control-Expose-Headers` = "Content-Type, ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset", 
+        `X-User-ID` = "115518", `X-Request-ID` = "e9bb44b7bdcbb383a4982990d70b71d0"), class = "httr2_headers"), 
+    body = charToRaw("{\"conceptrecid\":\"1174171\",\"created\":\"2022-01-01T00:00:00+00:00\",\"doi\":\"\",\"doi_url\":\"https://doi.org/\",\"files\":[],\"id\":1174172,\"links\":{\"bucket\":\"sbapi/files/ee0d9c21-4b29-4ed7-90af-e36dd38aeb04\",\"discard\":\"sbapi/deposit/depositions/1174172/actions/discard\",\"edit\":\"sbapi/deposit/depositions/1174172/actions/edit\",\"files\":\"sbapi/deposit/depositions/1174172/files\",\"html\":\"https://sandbox.zenodo.org/deposit/1174172\",\"latest_draft\":\"sbapi/deposit/depositions/1174172\",\"latest_draft_html\":\"https://sandbox.zenodo.org/deposit/1174172\",\"publish\":\"sbapi/deposit/depositions/1174172/actions/publish\",\"self\":\"sbapi/deposit/depositions/1174172\"},\"metadata\":{\"access_right\":\"closed\",\"creators\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"This is the abstract\",\"doi\":\"\",\"prereserve_doi\":{\"doi\":\"10.5072/zenodo.1174172\",\"recid\":1174172},\"publication_date\":\"2022-01-01\",\"title\":\"New Title\",\"upload_type\":\"other\"},\"modified\":\"2022-01-01T00:00:00+00:00\",\"owner\":115518,\"record_id\":1174172,\"state\":\"unsubmitted\",\"submitted\":false,\"title\":\"New Title\"}")), class = "httr2_response")
