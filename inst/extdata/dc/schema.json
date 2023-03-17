@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "DCMI terms metadata schema",
+    "description": "Modified for usage in deposits package, notably by requiring more complex structures for many generic 'string' properties.",
     "type": "object",
     "properties": {
         "abstract": {
@@ -66,7 +67,14 @@
             ]
         },
         "creator": {
-            "type": "string"
+            "type": "array",
+            "items": {
+                "name": "character",
+                "affiliation": "character",
+                "orcid": "character",
+                "gnd": "character"
+            },
+            "required": ["name"]
         },
         "date": {
             "description": "A point or period of time associated with an event in the lifecycle of the resource.",
