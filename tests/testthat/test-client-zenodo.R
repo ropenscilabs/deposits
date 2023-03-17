@@ -116,7 +116,7 @@ test_that ("zenodo retrieve", {
     metadata <- list (
         title = "Modified Title",
         abstract = "This is the modified abstract",
-        creator = "C. Person"
+        creator = list ("C. Person")
     )
 
     dep <- with_mock_dir ("zen_meta", {
