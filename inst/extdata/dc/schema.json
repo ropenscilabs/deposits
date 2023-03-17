@@ -19,7 +19,9 @@
                     "type": "string",
                     "enum": ["deposit", "donation", "purchase", "loan", "license", "item_creation"]
                 },
-                "description": "string"
+                "^description$": {
+                    "type": "string"
+                }
             }
         },
         "accrualPeriodicity": {
@@ -69,10 +71,18 @@
         "creator": {
             "type": "array",
             "items": {
-                "name": "character",
-                "affiliation": "character",
-                "orcid": "character",
-                "gnd": "character"
+                "name": {
+                    "type": "string"
+                },
+                "affiliation": {
+                    "type": "string"
+                },
+                "orcid": {
+                    "type": "string"
+                },
+                "gnd": {
+                    "type": "string"
+                }
             },
             "required": ["name"]
         },

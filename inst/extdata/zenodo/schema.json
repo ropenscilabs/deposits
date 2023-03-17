@@ -13,10 +13,18 @@
         "files": {
             "type": "array",
             "items": {
-                "$id": "string",
-                "filename": "string",
-                "filesize": "integer",
-                "checksum": "string"
+                "^id$": {
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "filesize": {
+                    "type": "integer"
+                },
+                "checksum": {
+                    "type": "string"
+                }
             }
         },
         "id": {
@@ -47,10 +55,18 @@
                 "creators": {
                     "type": "array",
                     "items": {
-                        "name": "character",
-                        "affiliation": "character",
-                        "orcid": "character",
-                        "gnd": "character"
+                        "name": {
+                            "type": "string"
+                        },
+                        "affiliation": {
+                            "type": "string"
+                        },
+                        "orcid": {
+                            "type": "string"
+                        },
+                        "gnd": {
+                            "type": "string"
+                        }
                     },
                     "required": ["name"]
                 },
@@ -89,7 +105,9 @@
                 "relatied_identifiers": {
                     "type": "array",
                     "items": {
-                        "identifier": "string",
+                        "identifier": {
+                            "type": "string"
+                        },
                         "relation": {
                             "type": "string",
                             "enum": ["isCitedBy", "cites", "isSupplementTo",
@@ -112,7 +130,9 @@
                 "contributors": {
                     "type": "array",
                     "items": {
-                        "name": "string",
+                        "name": {
+                            "type": "string"
+                        },
                         "^type$": {
                             "type": "string",
                             "enum": ["ContactPerson", "DataCollector",
@@ -125,9 +145,15 @@
                                 "upervisor", "Sponsor", "WorkPackageLeader",
                                 "Other"]
                         },
-                        "affiliation": "string",
-                        "orcid": "string",
-                        "gnd": "string"
+                        "affiliation": {
+                            "type": "string"
+                        },
+                        "orcid": {
+                            "type": "string"
+                        },
+                        "gnd": {
+                            "type": "string"
+                        }
                     },
                     "required": ["name", "type"]
                 },
