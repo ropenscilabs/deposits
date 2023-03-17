@@ -94,7 +94,7 @@ validate_dcmi_metadata <- function (metadata) {
     if (!v) {
         print (attr (v, "error") [, 1:5])
         stop (
-            "Stopping because the DCMU metadata terms listed above ",
+            "Stopping because the DCMI metadata terms listed above ",
             "do not confirm with the expected schema."
         )
     }
