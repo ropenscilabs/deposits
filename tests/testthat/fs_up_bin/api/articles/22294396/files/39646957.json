@@ -1,15 +1,15 @@
 {
-    "upload_token": "2a26d0fa-c65b-4301-948f-fa05b459eea9",
-    "upload_url": "https://fup-eu-west-1.up/2a26d0fa-c65b-4301-948f-fa05b459eea9",
+    "upload_token": "3b5f5d84-ee3d-4850-a1ad-edc24edfaddf",
+    "upload_url": "https://fup-eu-west-1.up/3b5f5d84-ee3d-4850-a1ad-edc24edfaddf",
     "status": "created",
     "preview_state": "preview_not_available",
     "viewer_type": "",
     "is_attached_to_public_version": false,
-    "id": 39646843,
+    "id": 39646957,
     "name": "data.Rds",
     "size": 506,
     "is_link_only": false,
-    "download_url": "https://ndownloader.figshare.com/files/39646843",
+    "download_url": "https://ndownloader.figshare.com/files/39646957",
     "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
     "computed_md5": ""
 }
