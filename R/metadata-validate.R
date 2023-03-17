@@ -36,15 +36,6 @@ validate_dcmi_metadata <- function (metadata) {
         metadata <- deposits_meta_from_file (metadata)
     }
 
-    if (!any (grepl ("[Cc]reated", names (metadata)))) {
-        datetime <- format.POSIXct (Sys.time (), "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
-        # change terminal "+0000" to "+00:00":
-        ptn <- regmatches (datetime, regexpr ("[0-9]{2}$", datetime))
-        datetime <- gsub (paste0 (ptn, "$"), paste0 (":", ptn), datetime)
-        metadata [dcmi_terms ("created")] <- paste0 (datetime)
-    }
-    metadata <- httptest2_dcmi_created (metadata)
-
     # Align all metadata term names with DCMI names:
     nms <- vapply (
         names (metadata),
@@ -78,6 +69,33 @@ validate_dcmi_metadata <- function (metadata) {
             msg
         )
         names (metadata) <- unname (nms)
+    }
+
+    metadata <- metadata [order (names (metadata))]
+    if (!any (grepl ("[Cc]reated", names (metadata)))) {
+        datetime <-
+            format.POSIXct (Sys.time (), "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
+        # change terminal "+0000" to "+00:00":
+        ptn <- regmatches (datetime, regexpr ("[0-9]{2}$", datetime))
+        datetime <- gsub (paste0 (ptn, "$"), paste0 (":", ptn), datetime)
+        metadata [dcmi_terms ("created")] <- paste0 (datetime)
+    }
+    metadata <- httptest2_dcmi_created (metadata)
+
+    schema <- system.file (fs::path ("extdata", "dc", "schema.json"),
+        package = "deposits"
+    )
+
+    f <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata, f, auto_unbox = TRUE)
+    v <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+
+    if (!v) {
+        print (attr (v, "error") [, 1:5])
+        stop (
+            "Stopping because the DCMU metadata terms listed above ",
+            "do not confirm with the expected schema."
+        )
     }
 
     metadata <- metadata [order (names (metadata))]
