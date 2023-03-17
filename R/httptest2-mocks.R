@@ -27,12 +27,12 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
 
+        mockdate <- "2022-01-01T00:00:00+00:00"
+
         if (service == "figshare") {
-            hostdata$created_date <- hostdata$modified_date <-
-                "2022-01-01T00:00:00Z"
+            hostdata$created_date <- hostdata$modified_date <- mockdate
         } else if (service == "zenodo") {
-            hostdata$created <- hostdata$modified <-
-                "2022-01-01T00:00:00.0+00:00"
+            hostdata$created <- hostdata$modified <- mockdate
             hostdata$publication_date <- "2022-01-01"
         }
     }
@@ -48,14 +48,15 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 httptest2_dcmi_created <- function (metadata) {
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
+        mockdate <- "2022-01-01T00:00:00+00:00"
         if ("created" %in% names (metadata)) {
-            metadata [["created"]] <- "2022-01-01"
+            metadata [["created"]] <- mockdate
         }
         if ("created" %in% names (metadata$dcmi)) {
-            metadata$dcmi [["created"]] <- "2022-01-01T00:00:00.0+00:00"
+            metadata$dcmi [["created"]] <- mockdate
         }
         if ("created" %in% names (metadata$service)) {
-            metadata$service [["created"]] <- "2022-01-01T00:00:00.0+00:00"
+            metadata$service [["created"]] <- mockdate
         }
     }
 

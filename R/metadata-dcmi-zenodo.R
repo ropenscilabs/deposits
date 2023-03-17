@@ -53,10 +53,12 @@ convert_dcmi_to_zenodo <- function (dcmi, term_map) {
     values$metadata <- meta_values
 
     if (!"created" %in% names (values)) {
-        values <- c (
-            "created" = paste0 (strftime (Sys.time (), "%Y-%m-%d")),
-            values
-        )
+        datetime <-
+            format.POSIXct (Sys.time (), "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
+        # change terminal "+0000" to "+00:00":
+        ptn <- regmatches (datetime, regexpr ("[0-9]{2}$", datetime))
+        datetime <- gsub (paste0 (ptn, "$"), paste0 (":", ptn), datetime)
+        values <- c ("created" = datetime, values)
     }
 
     values <- values [order (names (values))]
