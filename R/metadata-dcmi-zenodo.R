@@ -190,7 +190,9 @@ insert_zen_required_meta_values <- function (meta_values) {
         "upload_type" = "other",
         "title" = "Title",
         "creators" = "A. Person",
-        "description" = "Description"
+        "description" = "Description",
+        "publication_date" = paste0 (Sys.Date ()),
+        "access_right" = "closed"
     )
     index <- which (!names (req) %in% names (meta_values))
     meta_values <- c (meta_values, req [index])
