@@ -37,8 +37,11 @@ validate_dcmi_metadata <- function (metadata) {
     }
 
     if (!any (grepl ("[Cc]reated", names (metadata)))) {
-        metadata [dcmi_terms ("created")] <-
-            paste0 (strftime (Sys.time (), "%Y-%m-%dT%H:%M:%S"))
+        datetime <- format.POSIXct (Sys.time (), "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
+        # change terminal "+0000" to "+00:00":
+        ptn <- regmatches (datetime, regexpr ("[0-9]{2}$", datetime))
+        datetime <- gsub (paste0 (ptn, "$"), paste0 (":", ptn), datetime)
+        metadata [dcmi_terms ("created")] <- paste0 (datetime)
     }
     metadata <- httptest2_dcmi_created (metadata)
 
