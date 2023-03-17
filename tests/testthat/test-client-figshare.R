@@ -118,7 +118,7 @@ test_that ("figshare update", {
     metadata <- list (
         title = "Modified Title",
         abstract = "This is the modified abstract",
-        creator = "C. Person"
+        creator = list ("C. Person")
     )
 
     cli <- cli$deposit_fill_metadata (metadata)

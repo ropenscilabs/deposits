@@ -1,47 +1,47 @@
 {
     "files": [
         {
-            "upload_token": "eb32d95f-7db0-46af-bc29-8e569aedfc22",
+            "upload_token": "d6ced311-1070-4590-be10-0dff30696502",
             "upload_url": "",
             "status": "available",
-            "preview_state": "preview_available",
-            "viewer_type": "dataset",
+            "preview_state": "preview_in_progress",
+            "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39255512,
+            "id": 39646837,
             "name": "data.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39255512",
+            "download_url": "https://ndownloader.figshare.com/files/39646837",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         },
         {
-            "upload_token": "d7f716a8-f3ac-40f3-ac43-b1415a4db54d",
+            "upload_token": "b6fb6ee8-450b-4a17-bec3-4c98b2b2def3",
             "upload_url": "",
             "status": "available",
-            "preview_state": "preview_available",
-            "viewer_type": "dataset",
+            "preview_state": "preview_in_progress",
+            "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39255515,
+            "id": 39646840,
             "name": "data2.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39255515",
+            "download_url": "https://ndownloader.figshare.com/files/39646840",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         },
         {
-            "upload_token": "14125c98-1a72-4fb9-83b0-6f23c03f22ea",
+            "upload_token": "2a26d0fa-c65b-4301-948f-fa05b459eea9",
             "upload_url": "",
             "status": "moving_to_final",
-            "preview_state": "preview_not_supported",
+            "preview_state": "preview_in_progress",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39255527,
+            "id": 39646843,
             "name": "data.Rds",
             "size": 506,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39255527",
+            "download_url": "https://ndownloader.figshare.com/files/39646843",
             "supplied_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6",
             "computed_md5": "3ac485c9229cb2bd9f65bc0c3dfb2bb6"
         }
@@ -62,7 +62,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22094399",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22294264",
     "description": "",
     "funding": null,
     "funding_list": [
@@ -93,7 +93,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22094399",
+    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22294264",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -102,20 +102,20 @@
     "embargo_options": [
 
     ],
-    "id": 22094399,
+    "id": 22294264,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22094399",
+    "url": "api/articles/22294264",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22094399",
-    "url_public_api": "api/articles/22094399",
-    "url_private_html": "https://figshare.com/account/articles/22094399",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22094399",
+    "url_private_api": "api/articles/22294264",
+    "url_public_api": "api/articles/22294264",
+    "url_private_html": "https://figshare.com/account/articles/22294264",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22294264",
     "timeline": {
 
     }
