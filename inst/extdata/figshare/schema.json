@@ -1,0 +1,127 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "figshare metadata schema",
+    "type": "object",
+    "properties": {
+        "title": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        },
+        "is_metadata_record": {
+            "type": "boolean",
+            "description": "True if article has no files"
+        },
+        "metadata_reason": {
+            "type": "string",
+            "description": "Reason for is_metadata_record being true"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "keywords": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "references": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            }
+        },
+        "categories": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            }
+        },
+        "categories_by_source_id": {
+            "type": "array",
+            "description": "Supersedes the 'categories' property",
+            "items": {
+                "type": "string"
+            }
+        },
+        "authors": {
+            "type": "array",
+            "description": "If an 'id' is provided, it will take priority, and everything else will be ignored",
+            "items": {
+                "$id": "integer",
+                "name": "character",
+                "first_name": "character",
+                "last_name": "character",
+                "email": "character",
+                "orcid_id": "character"
+            }
+        },
+        "custom_fields": {
+            "_info": { "type": "object" },
+            "additionalProperties": { "type": "string" }
+        },
+        "custom_fields_list": {
+            "name": "string",
+            "value": "string",
+            "description": "Supersedes 'custom_fields'"
+        },
+        "defined_type": {
+            "type": "string",
+            "enum": ["figure", "online_resource", "preprint", "book",
+                "conference_contribution", "media", "dataset", "poster",
+                "journal_contribution", "presentation", "thesis", "software"]
+        },
+        "funding": {
+            "type": "string"
+        },
+        "funding_list": {
+            "type": "array",
+            "items": {
+                "^id$": "integer",
+                "title": "string"
+            }
+        },
+        "license": {
+            "type": "integer"
+        },
+        "doi": {
+            "type": "string"
+        },
+        "handle": {
+            "type": "string",
+            "description": "Not applicable for regular users"
+        },
+        "resource_doi": {
+            "type": "string",
+            "description": "Not applicable for regular users."
+        },
+        "resource_title": {
+            "type": "string",
+            "description": "Not applicable for regular users."
+        },
+        "timeline": {
+            "firstOnline": {
+                "type": "string",
+                "format": "date"
+            },
+            "publisherPublication": {
+                "type": "string",
+                "format": "date"
+            },
+            "publisherAcceptance": {
+                "type": "string",
+                "format": "date"
+            }
+        },
+        "group_id": {
+            "type": "integer",
+            "description": "Not applicable for regular users."
+        }
+    },
+    "required": ["title"]
+}
