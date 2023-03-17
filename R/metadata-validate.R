@@ -84,6 +84,11 @@ validate_dcmi_metadata <- function (metadata) {
 
 #' Transform and validate DCMI metadata into service-specific form.
 #'
+#' The validation is performed via JSON schemas included in the 'inst/extdata'
+#' directory of this package, one for each deposits service. These schemas
+#' specify names and details of all expected metadata terms for each service.
+#' Failure to validate against a schema produces an error here.
+#'
 #' @param metadata DCMI metadata returned from the preceding
 #' `validate_dcmi_metadata()` function.
 #' @return A list of metadata terms, standardised to nomenclature expected for
