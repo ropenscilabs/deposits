@@ -18,7 +18,7 @@ translate_dc_to_service <- function (meta, service) {
     meta <- separate_multiple_sources (meta, translations, source_schema)
     meta <- concatenate_multiple_targets (meta, translations)
 
-    v <- validate_service_metadata_new (meta, service)
+    v <- validate_service_metadata (meta, service)
     if (!v) {
         print (attr (v, "error") [, 1:5])
         stop (
@@ -156,7 +156,17 @@ concatenate_multiple_targets <- function (meta, translations) {
     return (meta)
 }
 
-validate_service_metadata_new <- function (meta, service) {
+#' Validate service-specific metadata
+#'
+#' The validation is performed via JSON schemas included in the 'inst/extdata'
+#' directory of this package, one for each deposits service. These schemas
+#' specify names and details of all expected metadata terms for each service.
+#'
+#' @param meta Service-specific metadata
+#' @return Results of `jsonvalidate::json_validate`.
+#'
+#' @noRd
+validate_service_metadata <- function (meta, service) {
 
     schema <- system.file (fs::path ("extdata", service, "schema.json"),
         package = "deposits"
