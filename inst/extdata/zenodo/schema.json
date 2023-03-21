@@ -317,7 +317,7 @@
                 "access_right"
             ]
         },
-        "timestamp": {
+        "modified": {
             "type": "string",
             "format": "date-time"
         },
