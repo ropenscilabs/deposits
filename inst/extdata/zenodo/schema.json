@@ -102,7 +102,7 @@
                 "notes": {
                     "type": "string"
                 },
-                "relatied_identifiers": {
+                "related_identifiers": {
                     "type": "array",
                     "items": {
                         "identifier": {
