@@ -1,6 +1,6 @@
 {
     "rootPath": "/",
-    "targetPath": "/meta",
+    "targetPath": "/metadata",
     "translations": {
         "abstract": {
             "targets": ["description"]
