@@ -77,7 +77,7 @@
             "targets": ["dates"]
         },
         "description": {
-            "targets": ["description"]
+            "targets": ["description", "grants", "keywords", "method", "notes", "version"]
         },
         "educationLevel": {
             "targets": ["notes"]
@@ -128,7 +128,7 @@
             "targets": ["language"]
         },
         "license": {
-            "targets": ["license"]
+            "targets": ["license", "access_right", "access_conditions"]
         },
         "mediator": {
             "targets": ["notes"]
@@ -165,7 +165,7 @@
             ]
         },
         "references": {
-            "targets": ["related_identifiers"]
+            "targets": ["references"]
         },
         "relation": {
             "targets": ["related_identifiers"]
