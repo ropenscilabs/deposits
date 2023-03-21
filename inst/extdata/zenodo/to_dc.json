@@ -1,10 +1,10 @@
 {
-    "properties": {
+    "translations": {
         "created": {
             "targets": ["created"]
         },
         "modified": {
-            "targets": ["dates"]
+            "targets": ["description"]
         },
         "owner": {
         },
@@ -15,13 +15,12 @@
         "state": {
         },
         "submitted": {
-            "targets": ["dates"]
         },
         "title": {
             "targets": ["title"]
         },
         "metadata": {
-            "properties": {
+            "translations": {
                 "upload_type": {
                     "targets": ["format"]
                 },
@@ -50,7 +49,7 @@
                     "targets": ["rights", "license"]
                 },
                 "embargo_date": {
-                    "targets": ["dates"]
+                    "targets": ["description"]
                 },
                 "access_conditions": {
                     "targets": ["rights", "license"]
