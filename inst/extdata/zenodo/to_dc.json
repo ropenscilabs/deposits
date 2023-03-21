@@ -1,0 +1,177 @@
+{
+    "properties": {
+        "created": {
+            "targets": ["created"]
+        },
+        "modified": {
+            "targets": ["dates"]
+        },
+        "owner": {
+        },
+        "record_id": {
+        },
+        "record_url": {
+        },
+        "state": {
+        },
+        "submitted": {
+            "targets": ["dates"]
+        },
+        "title": {
+            "targets": ["title"]
+        },
+        "metadata": {
+            "properties": {
+                "upload_type": {
+                    "targets": ["format"]
+                },
+                "publication_type": {
+                    "targets": ["type"]
+                },
+                "image_type": {
+                    "targets": ["type"]
+                },
+                "publication_date": {
+                    "targets": ["issued"]
+                },
+                "title": {
+                    "targets": ["title"]
+                },
+                "creators": {
+                    "targets": ["creator"]
+                },
+                "description": {
+                    "targets": ["description"]
+                },
+                "access_right": {
+                    "targets": ["rights", "license"]
+                },
+                "license": {
+                    "targets": ["rights", "license"]
+                },
+                "embargo_date": {
+                    "targets": ["dates"]
+                },
+                "access_conditions": {
+                    "targets": ["rights", "license"]
+                },
+                "doi": {
+                    "targets": ["identifier"]
+                },
+                "prereserve_doi": {
+                    "targets": [""]
+                },
+                "keywords": {
+                    "targets": ["description"]
+                },
+                "notes": {
+                    "targets": ["description"]
+                },
+                "related_identifiers": {
+                    "targets": [
+                        "hasFormat",
+                        "hasPart",
+                        "hasVersion",
+                        "isFormatOf",
+                        "isPartOf",
+                        "isReferencedBy",
+                        "isReplacedBy",
+                        "isRequiredBy",
+                        "isVersionOf",
+                        "references",
+                        "relation",
+                        "replaces",
+                        "requires",
+                        "source"
+                    ]
+                },
+                "contributors": {
+                    "targets": ["contributor"]
+                },
+                "references": {
+                    "targets": ["references"]
+                },
+                "communities": {
+                    "targets": [""]
+                },
+                "grants": {
+                    "targets": ["description"]
+                },
+                "journal_title": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "journal_volume": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "journal_issue": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "journal_pages": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_title": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_acronym": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_dates": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_place": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_url": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_session": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "conference_session_part": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "imprint_publisher": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "imprint_isbn": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "imprint_place": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "partof_title": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "partof_pages": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "thesis_supervisors": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "thesis_university": {
+                    "targets": ["bibliographicCitation"]
+                },
+                "subjects": {
+                    "targets": ["subject"]
+                },
+                "version": {
+                    "targets": ["description"]
+                },
+                "language": {
+                    "targets": ["language"]
+                },
+                "locations": {
+                    "targets": ["spatial"]
+                },
+                "dates": {
+                    "targets": ["available", "coverage", "date", "dateAccepted",
+                        "dateCopyrighted", "dateSubmitted", "issued",
+                        "modified", "temporal", "valid"]
+                },
+                "method": {
+                    "targets": ["description"]
+                }
+            }
+        }
+    }
+}
