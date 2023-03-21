@@ -8,14 +8,17 @@
 translate_dc_to_service <- function (meta, service) {
 
     translations <- get_service_translation (service)
-    translations <- translations [which (translations$source %in% names (meta)), ]
+    translations <-
+        translations [which (translations$source %in% names (meta)), ]
 
     dc <- system.file (fs::path ("extdata", "dc", "schema.json"),
         package = "deposits"
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
-    meta <- separate_multiple_sources (meta, translations, source_schema)
+    meta <- separate_multiple_sources (
+        meta, translations, source_schema, service
+    )
     meta <- concatenate_multiple_targets (meta, translations)
 
     v <- validate_service_metadata (meta, service)
@@ -35,7 +38,8 @@ translate_dc_to_service <- function (meta, service) {
 translate_service_to_dc <- function (meta, service) {
 
     translations <- get_service_translation (service)
-    translations <- translations [which (translations$target %in% names (meta)), ]
+    translations <-
+        translations [which (translations$target %in% names (meta)), ]
     s <- translations$source
     translations$source <- translations$target
     translations$target <- s
@@ -45,7 +49,9 @@ translate_service_to_dc <- function (meta, service) {
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
-    meta <- separate_multiple_sources (meta, translations, source_schema)
+    meta <- separate_multiple_sources (
+        meta, translations, source_schema, service
+    )
     meta <- concatenate_multiple_targets (meta, translations)
 
     meta <- validate_dcmi_metadata (meta)
@@ -63,7 +69,7 @@ get_service_translation <- function (service) {
     )
     tr <- jsonlite::read_json (tr, simplify = TRUE)
 
-    root_path <- tr$rootPath
+    # root_path <- tr$rootPath
     target_path <- tr$targetPath
 
     tr <- tr$translations
@@ -85,12 +91,11 @@ get_service_translation <- function (service) {
 #' Separate single source metadata entries into potentially multiple target
 #' forms, divided by markdown headers.
 #' @noRd
-separate_multiple_sources <- function (meta, translations, source_schema) {
+separate_multiple_sources <- function (meta, translations,
+                                       source_schema, service) {
 
     index <- which (duplicated (translations$source))
     multiple_sources <- unique (translations$source [index])
-    m_single <- meta [which (!names (meta) %in% multiple_sources)]
-    m_multiple <- meta [which (names (meta) %in% multiple_sources)]
 
     for (m in multiple_sources) {
         content <- strsplit (meta [[m]], "\n") [[1]]
@@ -108,7 +113,11 @@ separate_multiple_sources <- function (meta, translations, source_schema) {
                 index <- index [-1]
                 desc <- strsplit (source_schema [[m]]$description, ";") [[1]]
                 desc <- grep (service, desc, value = TRUE)
-                desc_target <- gsub ("\\:\\s?", "", regmatches (desc, regexpr ("\\:.*$", desc)))
+                desc_target <- gsub (
+                    "\\:\\s?",
+                    "",
+                    regmatches (desc, regexpr ("\\:.*$", desc))
+                )
                 names (content) [1] <- desc_target
             }
             content [index] <- lapply (content [index], function (i) i [-1])
@@ -146,7 +155,8 @@ concatenate_multiple_targets <- function (meta, translations) {
         })
         content <- cbind (sources, unlist (meta [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
-        content <- apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
+        content <-
+            apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
         content <- paste0 (content, collapse = "\n\n")
 
         meta <- meta [which (!names (meta) %in% sources)]
@@ -174,7 +184,8 @@ validate_service_metadata <- function (meta, service) {
 
     f <- fs::file_temp (ext = ".json")
     jsonlite::write_json (meta, f, auto_unbox = TRUE)
-    res <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+    res <-
+        jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
 
     return (res)
 }
