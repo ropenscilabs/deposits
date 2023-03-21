@@ -10,10 +10,13 @@ translate_dc_to_service <- function (meta, service) {
     translations <- get_service_translation (service)
     translations <- translations [which (translations$source %in% names (meta)), ]
 
-    target_schema <- jsonlite::read_json ("./inst/extdata/dc/schema.json")$properties
+    dc <- system.file (fs::path ("extdata", "dc", "schema.json"),
+        package = "deposits"
+    )
+    source_schema <- jsonlite::read_json (dc)$properties
 
-    meta <- separate_multiple_sources (meta, translations, target_schema)
-    meta <- concatenate_multiple_targets (meta, translations, target_schema)
+    meta <- separate_multiple_sources (meta, translations, source_schema)
+    meta <- concatenate_multiple_targets (meta, translations)
 
     v <- validate_service_metadata_new (meta, service)
     if (!v) {
@@ -61,7 +64,7 @@ get_service_translation <- function (service) {
 #' Separate single source metadata entries into potentially multiple target
 #' forms, divided by markdown headers.
 #' @noRd
-separate_multiple_sources <- function (meta, translations, target_schema) {
+separate_multiple_sources <- function (meta, translations, source_schema) {
 
     index <- which (duplicated (translations$source))
     multiple_sources <- unique (translations$source [index])
@@ -82,7 +85,7 @@ separate_multiple_sources <- function (meta, translations, target_schema) {
             if (length (what) < length (content)) {
                 # Then get name of default (first) item)
                 index <- index [-1]
-                desc <- strsplit (target_schema [[m]]$description, ";") [[1]]
+                desc <- strsplit (source_schema [[m]]$description, ";") [[1]]
                 desc <- grep (service, desc, value = TRUE)
                 desc_target <- gsub ("\\:\\s?", "", regmatches (desc, regexpr ("\\:.*$", desc)))
                 names (content) [1] <- desc_target
@@ -110,7 +113,7 @@ separate_multiple_sources <- function (meta, translations, target_schema) {
 #' Concatenate potentially multiple source items into single target items,
 #' constructing markdown-formatted headers to separate each.
 #' @noRd
-concatenate_multiple_targets <- function (meta, translations, target_schema) {
+concatenate_multiple_targets <- function (meta, translations) {
 
     index <- which (duplicated (translations$target))
     multiple_targets <- unique (translations$target [index])
