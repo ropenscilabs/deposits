@@ -32,6 +32,27 @@ translate_dc_to_service <- function (meta, service) {
     return (meta)
 }
 
+translate_service_to_dc <- function (meta, service) {
+
+    translations <- get_service_translation (service)
+    translations <- translations [which (translations$target %in% names (meta)), ]
+    s <- translations$source
+    translations$source <- translations$target
+    translations$target <- s
+
+    dc <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
+    source_schema <- jsonlite::read_json (dc)$properties
+
+    meta <- separate_multiple_sources (meta, translations, source_schema)
+    meta <- concatenate_multiple_targets (meta, translations)
+
+    meta <- validate_dcmi_metadata (meta)
+
+    return (meta)
+}
+
 # Read JSON translation schema from DCMI to specified service, and return as
 # `data.frame` object.
 #' @noRd
@@ -120,6 +141,9 @@ concatenate_multiple_targets <- function (meta, translations) {
 
     for (m in multiple_targets) {
         sources <- translations$source [translations$target == m]
+        meta [sources] <- lapply (meta [sources], function (i) {
+            paste0 (i, collapse = ", ")
+        })
         content <- cbind (sources, unlist (meta [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
         content <- apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
