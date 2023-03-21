@@ -104,7 +104,8 @@
             "format": "date"
         },
         "description": {
-            "type": "string"
+            "type": "string",
+            "description": "zenodo term: description"
         },
         "educationLevel": {
             "description": "A class of agents, defined in terms of progression through an educational or training context, for which the described resource is intended.",
