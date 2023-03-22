@@ -16,6 +16,8 @@ translate_dc_to_service <- function (metadata, service) {
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
+    # -------- metadata translation functions -------
+    #
     # initial_names are used in final `rename_metadata_items` call, to ensure
     # only items with initial DCMI names are renamed. The intermediate routines
     # create items already renamed to target format.
@@ -24,8 +26,11 @@ translate_dc_to_service <- function (metadata, service) {
         metadata, translations, source_schema, service
     )
     metadata <- concatenate_multiple_targets (metadata, translations)
-    initial_names <- names (metadata) [which (names (metadata) %in% initial_names)]
+    initial_names <-
+        names (metadata) [which (names (metadata) %in% initial_names)]
     metadata <- rename_metadata_items (metadata, translations, initial_names)
+    metadata <- construct_metadata_paths (metadata, translations)
+    # -------- end metadata translation functions -------
 
     v <- validate_service_metadata (metadata, service)
     if (!v) {
@@ -186,4 +191,42 @@ rename_metadata_items <- function (metadata, translations, initial_names) {
     names (metadata) [initial_index] <- translations$target [index]
 
     return (metadata)
+}
+
+#' Use the 'path' element of the metadata translation table to rearrange
+#' metadata items into the paths specified there.
+#'
+#' Note that this currently only works for single-depth paths, and will need
+#' modification for any systems with multiple path components.
+#'
+#' @param metadata Service-specific metadata converted through application of
+#' all of the preceding functions in this file.
+#' @return Modified version of `metadata`, with items rearranged into
+#' sub-components as specified by `translations$path`.
+#' @noRd
+construct_metadata_paths <- function (metadata, translations) {
+
+    index <- which (translations$path == "/")
+    root_targets <- translations$target [index]
+    root <- metadata [root_targets]
+    metadata <- metadata [-which (names (metadata) %in% root_targets)]
+
+    if (length (metadata) == 0L) {
+        return (root)
+    }
+
+    translations <- translations [-index, ]
+    translations <- split (translations, f = as.factor (translations$path))
+
+    res <- lapply (translations, function (i) {
+        metadata [which (names (metadata) %in% i$target)]
+    })
+    paths <- vapply (translations,
+        function (i) gsub ("^\\/", "", i$path [1]),
+        character (1L),
+        USE.NAMES = FALSE
+    )
+    names (res) <- paths
+
+    return (c (root, res))
 }
