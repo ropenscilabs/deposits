@@ -293,7 +293,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' )
         #' # The 'search_string' can be used to specify precise searches:
         #' cli <- depositsClient$new (service = "zenodo")
-        #' search_results <- cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
+        #' search_results <-
+        #'    cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
         #' }
 
         deposits_search = function (search_string = NULL,
@@ -395,7 +396,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Initiate a new deposit on the external deposits service.
         #' @param quiet If `FALSE` (default), print integer identifier of newly
         #' created deposit.
-        #' @return (Invisibly) Updated deposits client which includes data on new deposit
+        #' @return (Invisibly) Updated deposits client which includes data on
+        #' new deposit
 
         deposit_new = function (quiet = FALSE) {
 
@@ -523,7 +525,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #'     Publisher = "American Iris Society",
         #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
         #' )
-        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
+        #' cli <- depositsClient$new (
+        #'     service = "zenodo",
+        #'     sandbox = TRUE,
+        #'     metadata = metadata
+        #' )
         #' cli$deposit_new ()
         #'
         #' # Create some local data and upload to deposit:
@@ -720,13 +726,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' "datapackage.json" file(s).
         #' @param deposit_id The 'id' number of deposit to update. If not
         #' specified, the 'id' value of current deposits client is used.
-        #' @param path (Optional) path to local directory containing deposit data and
-        #' a \pkg{frictionless} "datapackage.json" file. If specified, that
-        #' local "datapackage.json" will be updated, and the updated version
-        #' then uploaded to the deposits service.
+        #' @param path (Optional) path to local directory containing deposit
+        #' data and a \pkg{frictionless} "datapackage.json" file. If specified,
+        #' that local "datapackage.json" will be updated, and the updated
+        #' version then uploaded to the deposits service.
         #' @return (Invisibly) Updated deposits client.
 
-        deposit_update_frictionless = function (deposit_id = NULL, path = NULL) {
+        deposit_update_frictionless = function (deposit_id = NULL,
+                                                path = NULL) {
 
             if (!is.null (path)) {
                 checkmate::assert_directory_exists (path)
@@ -737,7 +744,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!path_is_local) {
 
                 name_field <- private$get_file_name_field ()
-                if (!private$frictionless_json_name %in% self$hostdata$files [[name_field]]) {
+                if (!private$frictionless_json_name %in%
+                    self$hostdata$files [[name_field]]) {
                     stop (
                         self$service, " deposit#", self$id, " has no '",
                         private$frictionless_json_name, "' file",
