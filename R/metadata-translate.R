@@ -16,10 +16,16 @@ translate_dc_to_service <- function (metadata, service) {
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
+    # initial_names are used in final `rename_metadata_items` call, to ensure
+    # only items with initial DCMI names are renamed. The intermediate routines
+    # create items already renamed to target format.
+    initial_names <- names (metadata)
     metadata <- separate_multiple_sources (
         metadata, translations, source_schema, service
     )
     metadata <- concatenate_multiple_targets (metadata, translations)
+    initial_names <- names (metadata) [which (names (metadata) %in% initial_names)]
+    metadata <- rename_metadata_items (metadata, translations, initial_names)
 
     v <- validate_service_metadata (metadata, service)
     if (!v) {
@@ -162,6 +168,22 @@ concatenate_multiple_targets <- function (metadata, translations) {
         metadata <- metadata [which (!names (metadata) %in% sources)]
         metadata [m] <- content
     }
+
+    return (metadata)
+}
+
+#' Rename items from values in "source" to values in "target".
+#'
+#' This is called after `separate_multiple_sources()` and
+#' `concatenate_multiple_targets()`, both of which potentially construct
+#' entities already renamed to target format. This then only remaps entries with
+#' names matching any entries in source format.
+#' @noRd
+rename_metadata_items <- function (metadata, translations, initial_names) {
+
+    initial_index <- match (initial_names, names (metadata))
+    index <- match (names (metadata) [initial_index], translations$source)
+    names (metadata) [initial_index] <- translations$target [index]
 
     return (metadata)
 }
