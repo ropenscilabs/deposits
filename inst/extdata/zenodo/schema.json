@@ -56,21 +56,23 @@
                 "creators": {
                     "type": "array",
                     "items": {
-                        "name": {
-                            "type": "string"
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "affiliation": {
+                                "type": "string"
+                            },
+                            "orcid": {
+                                "type": "string"
+                            },
+                            "gnd": {
+                                "type": "string"
+                            }
                         },
-                        "affiliation": {
-                            "type": "string"
-                        },
-                        "orcid": {
-                            "type": "string"
-                        },
-                        "gnd": {
-                            "type": "string"
-                        }
-                    },
-                    "enum": ["name", "affiliation", "orcid", "gnd"],
-                    "required": ["name"]
+                        "required": ["name"]
+                    }
                 },
                 "description": {
                     "type": "string"
