@@ -214,17 +214,22 @@ rename_metadata_items <- function (metadata, translations, initial_names) {
 #' @noRd
 construct_metadata_paths <- function (metadata, translations) {
 
+    root <- NULL
     index <- which (translations$path == "/")
-    root_targets <- translations$target [index]
-    root_targets <- root_targets [which (root_targets %in% names (metadata))]
-    root <- metadata [root_targets]
-    metadata <- metadata [-which (names (metadata) %in% root_targets)]
+
+    if (length (index) > 0L) {
+        root_targets <- translations$target [index]
+        root_targets <- unique (root_targets [which (root_targets %in% names (metadata))])
+        root <- metadata [root_targets]
+        metadata <- metadata [-which (names (metadata) %in% root_targets)]
+
+        translations <- translations [-index, ]
+    }
 
     if (length (metadata) == 0L) {
         return (root)
     }
 
-    translations <- translations [-index, ]
     translations <- split (translations, f = as.factor (translations$path))
 
     res <- lapply (translations, function (i) {

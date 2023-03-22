@@ -71,11 +71,6 @@ validate_dcmi_metadata <- function (metadata) {
         names (metadata) <- unname (nms)
     }
 
-    if (!any (grepl ("[Cc]reated", names (metadata)))) {
-        metadata [dcmi_terms ("created")] <- deposit_timestamp (Sys.time ())
-    }
-    metadata <- httptest2_dcmi_created (metadata)
-
     metadata <- metadata [order (names (metadata))]
 
     schema <- system.file (fs::path ("extdata", "dc", "schema.json"),
