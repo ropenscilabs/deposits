@@ -51,14 +51,28 @@
         },
         "authors": {
             "type": "array",
-            "description": "If an 'id' is provided, it will take priority, and everything else will be ignored",
             "items": {
-                "$id": "integer",
-                "name": "character",
-                "first_name": "character",
-                "last_name": "character",
-                "email": "character",
-                "orcid_id": "character"
+                "type": "object",
+                "properties": {
+                    "^id$": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "orcid_id": {
+                        "type": "string"
+                    }
+                }
             }
         },
         "custom_fields": {
