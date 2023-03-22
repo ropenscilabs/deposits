@@ -382,7 +382,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
-            metadata <- validate_metadata (metadata, self$service)
+            metadata <- validate_metadata (
+                metadata,
+                gsub ("\\-sandbox$", "", self$service)
+            )
             self$metadata <- metadata$dcmi
             private$metadata_service <- metadata$service
 
