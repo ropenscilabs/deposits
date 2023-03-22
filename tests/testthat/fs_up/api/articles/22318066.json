@@ -1,32 +1,17 @@
 {
     "files": [
         {
-            "upload_token": "30b25ec3-ff30-4f62-a5c7-fe1b1db733d6",
-            "upload_url": "",
-            "status": "available",
-            "preview_state": "preview_available",
-            "viewer_type": "dataset",
-            "is_attached_to_public_version": false,
-            "id": 39646951,
-            "name": "data.csv",
-            "size": 625,
-            "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39646951",
-            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
-            "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
-        },
-        {
-            "upload_token": "d064778a-a112-48b8-a703-2d71c7879e2f",
+            "upload_token": "07d4f5ea-1ebc-4413-ac97-3bf90b610b51",
             "upload_url": "",
             "status": "available",
             "preview_state": "preview_in_progress",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39646954,
-            "name": "data2.csv",
+            "id": 39705733,
+            "name": "data.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39646954",
+            "download_url": "https://ndownloader.figshare.com/files/39705733",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         }
@@ -40,22 +25,22 @@
     "account_id": 2986795,
     "authors": [
         {
-            "id": 11606563,
-            "full_name": "Mark Padgham",
-            "is_active": true,
-            "url_name": "Mark_Padgham",
+            "id": 12574198,
+            "full_name": "C. Person",
+            "is_active": false,
+            "url_name": "_",
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22294396",
-    "description": "",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22318066",
+    "description": "This is the modified abstract",
     "funding": null,
     "funding_list": [
 
     ],
     "version": 0,
     "status": "draft",
-    "size": 1250,
+    "size": 625,
     "created_date": "2022-01-01T00:00:00Z",
     "modified_date": "2022-01-01T00:00:00Z",
     "is_public": false,
@@ -78,7 +63,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22294396",
+    "citation": "Person, C. (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22318066",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -87,20 +72,20 @@
     "embargo_options": [
 
     ],
-    "id": 22294396,
+    "id": 22318066,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22294396",
+    "url": "api/articles/22318066",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22294396",
-    "url_public_api": "api/articles/22294396",
-    "url_private_html": "https://figshare.com/account/articles/22294396",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22294396",
+    "url_private_api": "api/articles/22318066",
+    "url_public_api": "api/articles/22318066",
+    "url_private_html": "https://figshare.com/account/articles/22318066",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22318066",
     "timeline": {
 
     }
