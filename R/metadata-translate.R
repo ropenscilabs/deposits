@@ -165,27 +165,3 @@ concatenate_multiple_targets <- function (metadata, translations) {
 
     return (metadata)
 }
-
-#' Validate service-specific metadata
-#'
-#' The validation is performed via JSON schemas included in the 'inst/extdata'
-#' directory of this package, one for each deposits service. These schemas
-#' specify names and details of all expected metadata terms for each service.
-#'
-#' @param metadata Service-specific metadata
-#' @return Results of `jsonvalidate::json_validate`.
-#'
-#' @noRd
-validate_service_metadata <- function (metadata, service) {
-
-    schema <- system.file (fs::path ("extdata", service, "schema.json"),
-        package = "deposits"
-    )
-
-    f <- fs::file_temp (ext = ".json")
-    jsonlite::write_json (metadata, f, auto_unbox = TRUE)
-    res <-
-        jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
-
-    return (res)
-}
