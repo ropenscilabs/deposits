@@ -32,7 +32,7 @@ test_that ("client with metadata", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
 
     cli1 <- with_mock_dir ("meta-new1", {
@@ -41,10 +41,8 @@ test_that ("client with metadata", {
 
     expect_identical (cli1$metadata$title, "New Title")
     expect_identical (cli1$metadata$abstract, "This is the abstract")
-    # expect_identical (cli1$metadata$dcmi$creator [[1]], list (name = "A. Person"))
-    # expect_identical (cli1$metadata$dcmi$creator [[2]], list (name = "B. Person"))
-    expect_identical (cli1$metadata$creator [[1]], "A. Person")
-    expect_identical (cli1$metadata$creator [[2]], "B. Person")
+    expect_identical (cli1$metadata$creator [[1]], list (name = "A. Person"))
+    expect_identical (cli1$metadata$creator [[2]], list (name = "B. Person"))
 
     filename <- tempfile (pattern = "meta_", fileext = ".json")
     service <- "zenodo"
@@ -80,7 +78,7 @@ test_that ("client with invalid metadata", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
     filename <- tempfile (pattern = "meta_", fileext = ".json")
     if (file.exists (filename)) {
@@ -104,7 +102,7 @@ test_that ("zenodo metadata terms", {
         created = Sys.Date (),
         title = "New Title",
         description = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
 
     metadata_dcmi <- validate_dcmi_metadata (metadata)
@@ -112,10 +110,13 @@ test_that ("zenodo metadata terms", {
 
     metadata_dcmi$owner <- "me" # should be integer
     metadata_dcmi$state <- "notinvocab" # vocab=(inprogress|done|error)
-    expect_error (
-        validate_service_metadata (metadata_dcmi, service = "zenodo"),
-        "Stopping because the metadata terms listed above do not confirm"
+    expect_false (
+        v <- validate_service_metadata (metadata_dcmi, service = "zenodo")
     )
+    errs <- attr (v, "errors")
+    expect_false (is.null (errs))
+    expect_s3_class (errs, "data.frame")
+    expect_true (nrow (errs) > 0L)
 
     metadata_dcmi$owner <- 1L
     metadata_dcmi$state <- "done" # vocab=(inprogress|done|error)
@@ -130,7 +131,7 @@ test_that ("figshare metadata terms", {
         created = Sys.Date (),
         title = "New Title",
         description = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
     metadata_dcmi <- validate_dcmi_metadata (metadata)
     expect_silent (
@@ -143,10 +144,14 @@ test_that ("figshare metadata terms", {
         "Figshare licenses must be integer-valued; ",
         "the value will be reset to '1' = 'CC-BY'"
     )
-    expect_warning (
-        metadata_service <- validate_service_metadata (metadata_dcmi, service = "figshare"),
-        msg
+    expect_false (
+        v <- validate_service_metadata (metadata_dcmi, service = "figshare")
     )
+    errs <- attr (v, "errors")
+    expect_false (is.null (errs))
+    expect_s3_class (errs, "data.frame")
+    expect_true (nrow (errs) > 0L)
+
     metadata$license <- 1L
     expect_error (
         metadata_dcmi <- validate_dcmi_metadata (metadata),
