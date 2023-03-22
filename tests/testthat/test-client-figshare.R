@@ -21,7 +21,7 @@ test_that ("figshare new", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
 
     cli <- with_mock_dir ("fs_client", {
@@ -33,13 +33,12 @@ test_that ("figshare new", {
 
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 4L)
+    expect_length (cli$metadata, 3L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "created", "creator", "title")
+        c ("abstract", "creator", "title")
     )
-    # "created" timestamp is inserted:
-    expect_true (length (cli$metadata) > length (metadata))
+    expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
 
     dep <- with_mock_dir ("fs_new", {
@@ -53,9 +52,7 @@ test_that ("figshare new", {
     expect_true (length (cli$hostdata) > 1L)
 })
 
-new_mock_fs_deposit <- function () {
-
-    service <- "figshare"
+new_mock_deposit <- function (service = "figshare") {
 
     cli <- with_mock_dir ("fs_create", {
         depositsClient$new (service = service)
@@ -63,7 +60,7 @@ new_mock_fs_deposit <- function () {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
     cli <- with_mock_dir ("fs_client", {
         depositsClient$new (
@@ -81,7 +78,7 @@ new_mock_fs_deposit <- function () {
 test_that ("figshare retrieve", {
 
     service <- "figshare"
-    cli <- new_mock_fs_deposit ()
+    cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
     metadata <- list (
         title = "New Title",
@@ -112,13 +109,13 @@ test_that ("figshare retrieve", {
 test_that ("figshare update", {
 
     service <- "figshare"
-    cli <- new_mock_fs_deposit ()
+    cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
 
     metadata <- list (
         title = "Modified Title",
         abstract = "This is the modified abstract",
-        creator = list ("C. Person")
+        creator = list (list (name = "C. Person"))
     )
 
     cli <- cli$deposit_fill_metadata (metadata)
@@ -150,7 +147,7 @@ test_that ("figshare update", {
 test_that ("figshare upload", {
 
     service <- "figshare"
-    cli <- new_mock_fs_deposit ()
+    cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
 
     filename <- fs::path (fs::path_temp (), "data.csv")
@@ -181,7 +178,8 @@ test_that ("figshare upload", {
 
 test_that ("figshare update frictionless", {
 
-    cli <- new_mock_fs_deposit ()
+    service <- "figshare"
+    cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
     path <- fs::path (fs::path_temp (), "data")
     fs::dir_create (path)
@@ -200,7 +198,7 @@ test_that ("figshare update frictionless", {
 
     cli$metadata$title <- "Modified Title"
     cli$metadata$abstract <- "This is the modified abstract"
-    cli$metadata$creator <- c (cli$metadata$creator, "C. Person")
+    cli$metadata$creator <- list (cli$metadata$creator, list (name = "C. Person"))
 
     cli$deposit_update_frictionless (path = path)
     expect_identical (files_old, cli$hostdata$files)
@@ -216,7 +214,7 @@ test_that ("figshare update frictionless", {
 test_that ("figshare upload binary", {
 
     service <- "figshare"
-    cli <- new_mock_fs_deposit ()
+    cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
 
     filename <- file.path (tempdir (), "data.Rds")
@@ -236,7 +234,8 @@ test_that ("figshare upload binary", {
 
 test_that ("figshare list", {
 
-    cli <- new_mock_fs_deposit ()
+    service <- "figshare"
+    cli <- new_mock_deposit (service = service)
 
     dep <- with_mock_dir ("fs_list", {
         cli$deposits_list ()
@@ -271,7 +270,7 @@ test_that ("figshare metadata", {
     metadata <- list (
         Title = "Iris Dataset",
         abstract = "This is the abstract",
-        Creator = list ("Edgar Anderson"),
+        Creator = list (list (name = "Edgar Anderson")),
         Publisher = "American Iris Society",
         Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x",
         Language = "eng"
