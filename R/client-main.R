@@ -388,6 +388,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata,
                 gsub ("\\-sandbox$", "", self$service)
             )
+            metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
             private$metadata_service <- metadata$service
 
@@ -494,7 +495,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
-            req <- httr2::req_body_json (req, data = private$metadata_service)
+            # Re-generate service metadata:
+            metadata_service <- translate_dc_to_service (
+                self$metadata,
+                service = gsub ("\\-sandbox$", "", self$service)
+            )
+            metadata_service <- httptest2_created_timestamp (metadata_service)
+
+            req <- httr2::req_body_json (req, data = metadata_service)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
