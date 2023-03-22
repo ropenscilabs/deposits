@@ -1,27 +1,27 @@
 #' Translate DCMI metadata into service-specifi form.
 #'
-#' @param meta Validated DCMI metadata as returned from
+#' @param metadata Validated DCMI metadata as returned from
 #' `validate_dcmi_metadata()`.
 #' @param service Name of target service for which metadata are to be
 #' translated.
 #' @noRd
-translate_dc_to_service <- function (meta, service) {
+translate_dc_to_service <- function (metadata, service) {
 
     translations <- get_service_translation (service)
     translations <-
-        translations [which (translations$source %in% names (meta)), ]
+        translations [which (translations$source %in% names (metadata)), ]
 
     dc <- system.file (fs::path ("extdata", "dc", "schema.json"),
         package = "deposits"
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
-    meta <- separate_multiple_sources (
-        meta, translations, source_schema, service
+    metadata <- separate_multiple_sources (
+        metadata, translations, source_schema, service
     )
-    meta <- concatenate_multiple_targets (meta, translations)
+    metadata <- concatenate_multiple_targets (metadata, translations)
 
-    v <- validate_service_metadata (meta, service)
+    v <- validate_service_metadata (metadata, service)
     if (!v) {
         print (attr (v, "error") [, 1:5])
         stop (
@@ -32,14 +32,14 @@ translate_dc_to_service <- function (meta, service) {
         )
     }
 
-    return (meta)
+    return (metadata)
 }
 
-translate_service_to_dc <- function (meta, service) {
+translate_service_to_dc <- function (metadata, service) {
 
     translations <- get_service_translation (service)
     translations <-
-        translations [which (translations$target %in% names (meta)), ]
+        translations [which (translations$target %in% names (metadata)), ]
     s <- translations$source
     translations$source <- translations$target
     translations$target <- s
@@ -49,14 +49,14 @@ translate_service_to_dc <- function (meta, service) {
     )
     source_schema <- jsonlite::read_json (dc)$properties
 
-    meta <- separate_multiple_sources (
-        meta, translations, source_schema, service
+    metadata <- separate_multiple_sources (
+        metadata, translations, source_schema, service
     )
-    meta <- concatenate_multiple_targets (meta, translations)
+    metadata <- concatenate_multiple_targets (metadata, translations)
 
-    meta <- validate_dcmi_metadata (meta)
+    metadata <- validate_dcmi_metadata (metadata)
 
-    return (meta)
+    return (metadata)
 }
 
 # Read JSON translation schema from DCMI to specified service, and return as
@@ -91,14 +91,14 @@ get_service_translation <- function (service) {
 #' Separate single source metadata entries into potentially multiple target
 #' forms, divided by markdown headers.
 #' @noRd
-separate_multiple_sources <- function (meta, translations,
+separate_multiple_sources <- function (metadata, translations,
                                        source_schema, service) {
 
     index <- which (duplicated (translations$source))
     multiple_sources <- unique (translations$source [index])
 
     for (m in multiple_sources) {
-        content <- strsplit (meta [[m]], "\n") [[1]]
+        content <- strsplit (metadata [[m]], "\n") [[1]]
         targets <- grep ("^\\#+", content)
         if (length (targets) > 0) {
             what <- gsub ("^\\#+\\s?", "", content [targets])
@@ -133,37 +133,37 @@ separate_multiple_sources <- function (meta, translations,
                 return (i)
             })
 
-            meta <- c (meta [which (!names (meta) == m)], content)
+            metadata <- c (metadata [which (!names (metadata) == m)], content)
         }
     }
 
-    return (meta)
+    return (metadata)
 }
 
 #' Concatenate potentially multiple source items into single target items,
 #' constructing markdown-formatted headers to separate each.
 #' @noRd
-concatenate_multiple_targets <- function (meta, translations) {
+concatenate_multiple_targets <- function (metadata, translations) {
 
     index <- which (duplicated (translations$target))
     multiple_targets <- unique (translations$target [index])
 
     for (m in multiple_targets) {
         sources <- translations$source [translations$target == m]
-        meta [sources] <- lapply (meta [sources], function (i) {
+        metadata [sources] <- lapply (metadata [sources], function (i) {
             paste0 (i, collapse = ", ")
         })
-        content <- cbind (sources, unlist (meta [sources]))
+        content <- cbind (sources, unlist (metadata [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
         content <-
             apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
         content <- paste0 (content, collapse = "\n\n")
 
-        meta <- meta [which (!names (meta) %in% sources)]
-        meta [m] <- content
+        metadata <- metadata [which (!names (metadata) %in% sources)]
+        metadata [m] <- content
     }
 
-    return (meta)
+    return (metadata)
 }
 
 #' Validate service-specific metadata
@@ -172,18 +172,18 @@ concatenate_multiple_targets <- function (meta, translations) {
 #' directory of this package, one for each deposits service. These schemas
 #' specify names and details of all expected metadata terms for each service.
 #'
-#' @param meta Service-specific metadata
+#' @param metadata Service-specific metadata
 #' @return Results of `jsonvalidate::json_validate`.
 #'
 #' @noRd
-validate_service_metadata <- function (meta, service) {
+validate_service_metadata <- function (metadata, service) {
 
     schema <- system.file (fs::path ("extdata", service, "schema.json"),
         package = "deposits"
     )
 
     f <- fs::file_temp (ext = ".json")
-    jsonlite::write_json (meta, f, auto_unbox = TRUE)
+    jsonlite::write_json (metadata, f, auto_unbox = TRUE)
     res <-
         jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
 
