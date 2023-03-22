@@ -35,7 +35,8 @@
             "properties": {
                 "upload_type": {
                     "type": "string",
-                    "enum": ["publication", "poster", "presentation", "dataset", "image", "video", "software", "lesson", "physicalobject", "other"]
+                    "enum": ["publication", "poster", "presentation", "dataset", "image", "video", "software", "lesson", "physicalobject", "other"],
+                    "default": "other"
                 },
                 "publication_type": {
                     "type": "string",
@@ -76,7 +77,7 @@
                 "access_right": {
                     "type": "string",
                     "enum": ["open", "embargoed", "restricted", "closed"],
-                    "default": "open"
+                    "default": "closed"
                 },
                 "license": {
                     "type": "string"
