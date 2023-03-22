@@ -11,7 +11,7 @@
 validate_metadata <- function (metadata, service) {
 
     metadata_dcmi <- validate_dcmi_metadata (metadata)
-    metadata_service <- translate_dc_to_service (metadata, service = service)
+    metadata_service <- translate_dc_to_service (metadata_dcmi, service = service)
 
     return (list (
         dcmi = metadata_dcmi,
