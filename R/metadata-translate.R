@@ -91,7 +91,9 @@ get_service_translation <- function (service) {
     tr_paths <- unname (lapply (tr, function (i) i$targetPath))
     index <- which (!vapply (tr_paths, is.null, logical (1L)))
     target_path <- rep (target_path, length (tr))
-    target_path [index] <- tr_paths [[index]]
+    if (length (index) > 0L) {
+        target_path [index] <- tr_paths [[index]]
+    }
 
     n <- vapply (tr_to, length, integer (1L))
     data.frame (
@@ -113,8 +115,12 @@ separate_multiple_sources <- function (metadata, translations,
     for (m in multiple_sources) {
         content <- strsplit (metadata [[m]], "\n") [[1]]
         targets <- grep ("^\\#+", content)
+        what <- gsub ("^\\#+\\s?", "", content [targets])
+        index <- which (what %in% translations$source)
+        targets <- targets [index]
+        what <- what [index]
+
         if (length (targets) > 0) {
-            what <- gsub ("^\\#+\\s?", "", content [targets])
             index <- rep (0L, length (content))
             index [targets] <- 1L
             index <- cumsum (index)
@@ -143,7 +149,7 @@ separate_multiple_sources <- function (metadata, translations,
                 while (!nzchar (i [length (i)])) {
                     i <- i [-length (i)]
                 }
-                return (i)
+                return (paste0 (i, collapse = "\n"))
             })
 
             metadata <- c (metadata [which (!names (metadata) == m)], content)
@@ -210,6 +216,7 @@ construct_metadata_paths <- function (metadata, translations) {
 
     index <- which (translations$path == "/")
     root_targets <- translations$target [index]
+    root_targets <- root_targets [which (root_targets %in% names (metadata))]
     root <- metadata [root_targets]
     metadata <- metadata [-which (names (metadata) %in% root_targets)]
 
@@ -253,8 +260,11 @@ required_service_values <- function (service) {
         function (i) "properties" %in% names (i),
         logical (1L)
     ))
-    trawl_these <- list (target_schema [[index]])
-    trawl_names <- names (target_schema) [index]
+    trawl_these <- trawl_names <- NULL
+    if (length (index) > 0L) {
+        trawl_these <- list (target_schema [[index]])
+        trawl_names <- names (target_schema) [index]
+    }
 
     while (length (trawl_these) > 0L) {
 
