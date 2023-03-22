@@ -69,6 +69,7 @@
                             "type": "string"
                         }
                     },
+                    "enum": ["name", "affiliation", "orcid", "gnd"],
                     "required": ["name"]
                 },
                 "description": {
@@ -274,6 +275,14 @@
                     "type": "string"
                 }
             },
+            "required": [
+                "upload_type",
+                "publication_date",
+                "title",
+                "creators",
+                "description",
+                "access_right"
+            ],
             "if": {
                 "properties": {
                     "upload_type": { "const": "publication" }
@@ -308,15 +317,7 @@
                 },
                 "required": ["access_right"]
             },
-            "then": { "required": ["access_conditons"] },
-            "required": [
-                "upload_type",
-                "publication_date",
-                "title",
-                "creators",
-                "description",
-                "access_right"
-            ]
+            "then": { "required": ["access_conditons"] }
         },
         "modified": {
             "type": "string",
