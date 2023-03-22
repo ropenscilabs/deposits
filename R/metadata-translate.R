@@ -28,8 +28,10 @@ translate_dc_to_service <- function (metadata, service) {
     metadata <- concatenate_multiple_targets (metadata, translations)
     initial_names <-
         names (metadata) [which (names (metadata) %in% initial_names)]
+
     metadata <- rename_metadata_items (metadata, translations, initial_names)
     metadata <- construct_metadata_paths (metadata, translations)
+    metadata <- insert_default_service_metadata (metadata, service)
     # -------- end metadata translation functions -------
 
     v <- validate_service_metadata (metadata, service)
@@ -229,4 +231,149 @@ construct_metadata_paths <- function (metadata, translations) {
     names (res) <- paths
 
     return (c (root, res))
+}
+
+#' Extract all required metadata keys from service JSON schema
+#'
+#' @return A `data.frame` with three columns of (1) name of required key; (2)
+#' default value; and (3) path in metadata structure.
+#' @noRd
+required_service_values <- function (service) {
+
+    schema <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
+    target_schema <- jsonlite::read_json (schema, simplify = TRUE)
+    required <- target_schema$required
+    target_path <- rep ("", length (required))
+
+    target_schema <- target_schema$properties
+    index <- which (vapply (
+        target_schema,
+        function (i) "properties" %in% names (i),
+        logical (1L)
+    ))
+    trawl_these <- list (target_schema [[index]])
+    trawl_names <- names (target_schema) [index]
+
+    while (length (trawl_these) > 0L) {
+
+        i <- trawl_these [[1]]
+        nm_i <- trawl_names [1]
+
+        required <- c (required, i$required)
+        target_path <- c (target_path, rep (nm_i, length (i$required)))
+
+        index <- which (vapply (
+            i$properties,
+            function (i) "properties" %in% names (i),
+            logical (1L)
+        ))
+
+        trawl_these <- c (trawl_these, i$properties [index])
+        trawl_names <- c (
+            trawl_names,
+            paste0 (nm_i, "/", names (i$properties) [index])
+        )
+
+        trawl_these <- trawl_these [-1]
+        trawl_names <- trawl_names [-1]
+    }
+
+    # Then extract default values.
+    res <- data.frame (
+        name = required,
+        path = target_path
+    )
+    tmp <- split (res, f = as.factor (res$path))
+
+    defaults <- lapply (tmp, function (i) {
+
+        if (!nzchar (i$path [1])) {
+
+            lapply (target_schema [i$name], function (j) {
+                res_j <- NA_character_
+                if ("default" %in% names (j)) {
+                    res_j <- j$default
+                }
+                return (res_j)
+            })
+
+        } else {
+
+            path <- strsplit (i$path [1], "\\/") [[1]]
+            s <- target_schema
+            while (length (path) > 0L) {
+                s <- s [[path]]$properties
+                path <- path [-1]
+            }
+
+            lapply (s [i$name], function (j) {
+                res_j <- NA_character_
+                if ("default" %in% names (j)) {
+                    res_j <- j$default
+                }
+                return (res_j)
+            })
+        }
+    })
+
+    res$default <- unname (unlist (defaults))
+
+    return (res)
+}
+
+insert_default_service_metadata <- function (metadata, service) {
+
+    defaults <- required_service_values (service)
+    # Fill default date-time stamps:
+    index <- which (
+        is.na (defaults$default) &
+            grepl ("created", defaults$name, ignore.case = TRUE)
+    )
+    defaults$default [index] <- deposit_timestamp (Sys.time ())
+    index <- which (
+        is.na (defaults$default) &
+            grepl ("date", defaults$name, ignore.case = TRUE)
+    )
+    defaults$default [index] <- paste0 (Sys.Date ())
+
+    defaults <- defaults [which (!is.na (defaults$default)), ]
+
+    for (p in unique (defaults$path)) {
+
+        defaults_p <- defaults [which (defaults$path == p), ]
+        other_paths <- unique (defaults$path [which (defaults$path != p)])
+
+        if (!nzchar (p)) {
+
+            # root path
+            meta_p <- metadata [which (!names (metadata) %in% other_paths)]
+            meta_not_p <- metadata [which (names (metadata) %in% other_paths)]
+            index <- which (!defaults_p$name %in% names (meta_p))
+            if (length (index) > 0L) {
+                nms0 <- names (meta_p)
+                meta_p <- c (meta_p, defaults_p$default [index])
+                names (meta_p) <- c (nms0, defaults_p$name [index])
+                metadata <- c (meta_p, meta_not_p)
+            }
+
+        } else {
+
+            meta_p <- metadata [[which (names (metadata) %in% p)]]
+            meta_not_p <- metadata [which (!names (metadata) %in% p)]
+            index <- which (!defaults_p$name %in% names (meta_p))
+            if (length (index) > 0L) {
+                nms0 <- names (meta_p)
+                meta_p <- c (meta_p, defaults_p$default [index])
+                names (meta_p) <- c (nms0, defaults_p$name [index])
+
+                nms0 <- names (meta_not_p)
+                metadata <- c (meta_not_p, list (meta_p))
+                names (metadata) <- c (nms0, p)
+            }
+        }
+    }
+
+    return (metadata)
 }
