@@ -29,3 +29,13 @@ is_file_binary <- function (file, bin.ints = c (1:8, 14:25), nbytes = 1000, nbin
 is_deposits_test_env <- function () {
     Sys.getenv ("DEPOSITS_TEST_ENV") == "true"
 }
+
+deposit_timestamp <- function (datetime) {
+    checkmate::assert_class (datetime, "POSIXct")
+    datetime <- format.POSIXct (datetime, "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
+    # change terminal "+0000" to "+00:00":
+    ptn <- regmatches (datetime, regexpr ("[0-9]{2}$", datetime))
+    datetime <- gsub (paste0 (ptn, "$"), paste0 (":", ptn), datetime)
+
+    return (datetime)
+}
