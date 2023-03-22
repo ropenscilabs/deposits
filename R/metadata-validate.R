@@ -1,4 +1,3 @@
-
 #' Validate metadata and convert to service-specific form
 #'
 #' This function is a wrapper used to call the following two functions in
@@ -12,7 +11,7 @@
 validate_metadata <- function (metadata, service) {
 
     metadata_dcmi <- validate_dcmi_metadata (metadata)
-    metadata_service <- validate_service_metadata (metadata_dcmi, service)
+    metadata_service <- translate_dc_to_service (metadata_dcmi, service = service)
 
     return (list (
         dcmi = metadata_dcmi,
@@ -36,12 +35,6 @@ validate_dcmi_metadata <- function (metadata) {
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
     }
-
-    if (!any (grepl ("[Cc]reated", names (metadata)))) {
-        metadata [dcmi_terms ("created")] <-
-            paste0 (strftime (Sys.time (), "%Y-%m-%d"))
-    }
-    metadata <- httptest2_dcmi_created (metadata)
 
     # Align all metadata term names with DCMI names:
     nms <- vapply (
@@ -80,40 +73,47 @@ validate_dcmi_metadata <- function (metadata) {
 
     metadata <- metadata [order (names (metadata))]
 
+    schema <- system.file (fs::path ("extdata", "dc", "schema.json"),
+        package = "deposits"
+    )
+
+    f <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata, f, auto_unbox = TRUE)
+    v <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+
+    if (!v) {
+        print (attr (v, "error") [, 1:5])
+        stop (
+            "Stopping because the DCMI metadata terms listed above ",
+            "do not confirm with the expected schema."
+        )
+    }
+
+    metadata <- metadata [order (names (metadata))]
+
     return (metadata)
 }
 
-#' Transform and validate DCMI metadata into service-specific form.
+#' Validate service-specific metadata
 #'
-#' @param metadata DCMI metadata returned from the preceding
-#' `validate_dcmi_metadata()` function.
-#' @return A list of metadata terms, standardised to nomenclature expected for
-#' the specified service.
+#' The validation is performed via JSON schemas included in the 'inst/extdata'
+#' directory of this package, one for each deposits service. These schemas
+#' specify names and details of all expected metadata terms for each service.
+#'
+#' @param metadata Service-specific metadata
+#' @return Results of `jsonvalidate::json_validate`.
 #'
 #' @noRd
 validate_service_metadata <- function (metadata, service) {
 
-    service <- gsub ("\\-sandbox$", "", service)
+    schema <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
 
-    term_map <- get_dcmi_term_map (service)
+    f <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata, f, auto_unbox = TRUE)
+    res <-
+        jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
 
-    check <- NULL
-
-    if (service == "zenodo") {
-        metadata_service <- convert_dcmi_to_zenodo (metadata, term_map)
-        check <- validate_zenodo_terms (metadata_service)
-    } else if (service == "figshare") {
-        metadata_service <- convert_dcmi_to_figshare (metadata, term_map)
-        check <- validate_figshare_terms (metadata_service)
-    }
-
-    if (length (check) > 0L) {
-        warning (
-            "The following metadata terms do not conform:\n",
-            paste0 (check, collapse = "\n"),
-            call. = FALSE
-        )
-    }
-
-    return (metadata_service)
+    return (res)
 }

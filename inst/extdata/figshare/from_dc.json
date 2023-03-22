@@ -1,0 +1,179 @@
+{
+    "rootPath": "/",
+    "targetPath": "/",
+    "translations": {
+        "abstract": {
+            "targets": ["description"]
+        },
+        "accessRights": {
+            "targets": ["description"]
+        },
+        "accrualMethod": {
+            "targets": ["description"]
+        },
+        "accrualPeriodicity": {
+            "targets": ["description"]
+        },
+        "accrualPolicy": {
+            "targets": ["description"]
+        },
+        "alternative": {
+            "targets": ["description"]
+        },
+        "audience": {
+            "targets": ["description"]
+        },
+        "available": {
+            "targets": ["timeline"]
+        },
+        "bibliographicCitation": {
+            "targets": ["description"]
+        },
+        "conformsTo": {
+            "targets": ["description"]
+        },
+        "contributor": {
+            "targets": ["description"]
+        },
+        "coverage": {
+            "targets": ["description"]
+        },
+        "created": {
+            "targets": ["timeline"]
+        },
+        "creator": {
+            "targets": ["authors"]
+        },
+        "date": {
+            "targets": ["timeline"]
+        },
+        "dateAccepted": {
+            "targets": ["timeline"]
+        },
+        "dateCopyrighted": {
+            "targets": ["timeline"]
+        },
+        "dateSubmitted": {
+            "targets": ["timeline"]
+        },
+        "description": {
+            "targets": [
+                "description",
+                "tags",
+                "keywords",
+                "custom_fields",
+                "custom_fields_list",
+                "funding",
+                "funding_list"
+            ]
+        },
+        "educationLevel": {
+            "targets": ["description"]
+        },
+        "extent": {
+            "targets": ["description"]
+        },
+        "format": {
+            "targets": ["defined_type"]
+        },
+        "hasFormat": {
+            "targets": ["description"]
+        },
+        "hasPart": {
+            "targets": ["description"]
+        },
+        "hasVersion": {
+            "targets": ["description"]
+        },
+        "identifier": {
+            "targets": ["description"]
+        },
+        "instructionalMethod": {
+            "targets": ["description"]
+        },
+        "isFormatOf": {
+            "targets": ["description"]
+        },
+        "isPartOf": {
+            "targets": ["description"]
+        },
+        "isReferencedBy": {
+            "targets": ["description"]
+        },
+        "isReplacedBy": {
+            "targets": ["description"]
+        },
+        "isRequiredBy": {
+            "targets": ["description"]
+        },
+        "issued": {
+            "targets": ["description", "timeline"]
+        },
+        "isVersionOf": {
+            "targets": ["description"]
+        },
+        "language": {
+            "targets": ["description"]
+        },
+        "license": {
+            "targets": ["license"]
+        },
+        "mediator": {
+            "targets": ["description"]
+        },
+        "medium": {
+            "targets": ["defined_type"]
+        },
+        "modified": {
+            "targets": ["timeline"]
+        },
+        "provenance": {
+            "targets": ["description"]
+        },
+        "publisher": {
+            "targets": ["description"]
+        },
+        "references": {
+            "targets": ["description", "references"]
+        },
+        "relation": {
+            "targets": ["description"]
+        },
+        "replaces": {
+            "targets": ["description"]
+        },
+        "requires": {
+            "targets": ["description"]
+        },
+        "rights": {
+            "targets": ["description"]
+        },
+        "rightsHolder": {
+            "targets": ["description"]
+        },
+        "source": {
+            "targets": ["description"]
+        },
+        "spatial": {
+            "targets": ["description"]
+        },
+        "subject": {
+            "targets": ["categories"]
+        },
+        "tableOfContents": {
+            "targets": ["description"]
+        },
+        "temporal": {
+            "targets": ["description"]
+        },
+        "title": {
+            "targets": ["title"]
+        },
+        "type": {
+            "targets": ["defined_type"]
+        },
+        "valid": {
+            "targets": ["timeline"]
+        }
+    }
+}

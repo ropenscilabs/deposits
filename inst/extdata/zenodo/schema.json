@@ -1,0 +1,351 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "zenodo metadata schema",
+    "type": "object",
+    "properties": {
+        "created": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "doi": {
+            "type": "string"
+        },
+        "files": {
+            "type": "array",
+            "items": {
+                "^id$": {
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "filesize": {
+                    "type": "integer"
+                },
+                "checksum": {
+                    "type": "string"
+                }
+            }
+        },
+        "id": {
+            "type": "integer"
+        },
+        "metadata": {
+            "type": "object",
+            "properties": {
+                "upload_type": {
+                    "type": "string",
+                    "enum": ["publication", "poster", "presentation", "dataset", "image", "video", "software", "lesson", "physicalobject", "other"],
+                    "default": "other"
+                },
+                "publication_type": {
+                    "type": "string",
+                    "enum": ["annotationcollection", "book", "section", "conferencepaper", "datamanagementplan", "article", "patent", "preprint", "deliverable", "milestone", "proposal", "report", "softwaredocumentation", "taxonomictreatment", "technicalnote", "thesis", "workingpaper", "other"]
+                },
+                "image_type": {
+                    "type": "string",
+                    "enum": ["figure", "plot", "drawing", "diagram", "photo", "other"]
+                },
+                "publication_date": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "creators": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "affiliation": {
+                                "type": "string"
+                            },
+                            "orcid": {
+                                "type": "string"
+                            },
+                            "gnd": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["name"]
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "access_right": {
+                    "type": "string",
+                    "enum": ["open", "embargoed", "restricted", "closed"],
+                    "default": "closed"
+                },
+                "license": {
+                    "type": "string"
+                },
+                "embargo_date": {
+                    "type": "string"
+                },
+                "access_conditions": {
+                    "type": "string"
+                },
+                "doi": {
+                    "type": "string"
+                },
+                "prereserve_doi": {
+                    "type": "boolean"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "notes": {
+                    "type": "string"
+                },
+                "related_identifiers": {
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                },
+                "contributors": {
+                    "type": "array",
+                    "items": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "^type$": {
+                            "type": "string",
+                            "enum": ["ContactPerson", "DataCollector",
+                                "DataCurator", "DataManager", "istributor",
+                                "Editor", "HostingInstitution", "Producer",
+                                "ProjectLeader", "ProjectManager",
+                                "ProjectMember", "RegistrationAgency",
+                                "RegistrationAuthority", "RelatedPerson",
+                                "Researcher", "ResearchGroup", "RightsHolder",
+                                "upervisor", "Sponsor", "WorkPackageLeader",
+                                "Other"]
+                        },
+                        "affiliation": {
+                            "type": "string"
+                        },
+                        "orcid": {
+                            "type": "string"
+                        },
+                        "gnd": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["name", "type"]
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "communities": {
+                    "type": "array",
+                    "items": {
+                        "identifer": "string"
+                    }
+                },
+                "grants": {
+                    "type": "array",
+                    "items": {
+                        "$id": "character"
+                    }
+                },
+                "journal_title": {
+                    "type": "string"
+                },
+                "journal_volume": {
+                    "type": "string"
+                },
+                "journal_issue": {
+                    "type": "string"
+                },
+                "journal_pages": {
+                    "type": "string"
+                },
+                "conference_title": {
+                    "type": "string"
+                },
+                "conference_acronym": {
+                    "type": "string"
+                },
+                "conference_dates": {
+                    "type": "string"
+                },
+                "conference_place": {
+                    "type": "string"
+                },
+                "conference_url": {
+                    "type": "string"
+                },
+                "conference_session": {
+                    "type": "string"
+                },
+                "conference_session_part": {
+                    "type": "string"
+                },
+                "imprint_publisher": {
+                    "type": "string"
+                },
+                "imprint_isbn": {
+                    "type": "string"
+                },
+                "imprint_place": {
+                    "type": "string"
+                },
+                "partof_title": {
+                    "type": "string"
+                },
+                "partof_pages": {
+                    "type": "string"
+                },
+                "thesis_supervisors": {
+                    "type": "array"
+                },
+                "thesis_university": {
+                    "type": "string"
+                },
+                "subjects": {
+                    "type": "array",
+                    "tiems": {
+                        "term": "string",
+                        "identifier": "string",
+                        "scheme": "string"
+                    }
+                },
+                "version": {
+                    "type": "string"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "items": {
+                            "lat": "numeric",
+                            "lon": "numeric",
+                            "place": "string",
+                            "description": "string"
+                        },
+                        "required": ["place"]
+                    }
+                },
+                "dates": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "items": {
+                            "start": "string",
+                            "end": "string",
+                            "^type$": "string",
+                            "description": "string"
+                        },
+                        "required": ["type"]
+                    }
+                },
+                "method": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "upload_type",
+                "publication_date",
+                "title",
+                "creators",
+                "description",
+                "access_right"
+            ],
+            "if": {
+                "properties": {
+                    "upload_type": { "const": "publication" }
+                },
+                "required": ["upload_type"]
+            },
+            "then": { "required": ["publication_type"] },
+            "if": {
+                "properties": {
+                    "upload_type": { "const": "image" }
+                },
+                "required": ["upload_type"]
+            },
+            "then": { "required": ["image_type"] },
+            "if": {
+                "properties": {
+                    "access_right": { "const": "open" }
+                },
+                "required": ["access_right"]
+            },
+            "then": { "required": ["license"] },
+            "if": {
+                "properties": {
+                    "access_right": { "const": "embargoed" }
+                },
+                "required": ["access_right"]
+            },
+            "then": { "required": ["license", "embargo_date"] },
+            "if": {
+                "properties": {
+                    "access_right": { "const": "restricted" }
+                },
+                "required": ["access_right"]
+            },
+            "then": { "required": ["access_conditons"] }
+        },
+        "modified": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "owner": {
+            "type": "integer"
+        },
+        "record_id": {
+            "type": "integer"
+        },
+        "record_url": {
+            "type": "string",
+            "format": "uri"
+        },
+        "state": {
+            "type": "string",
+            "enum": ["inprogress", "done", "error"]
+        },
+        "submitted": {
+            "type": "boolean"
+        },
+        "title": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "required": ["created"]
+}

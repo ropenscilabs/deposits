@@ -1,0 +1,210 @@
+{
+    "rootPath": "/",
+    "targetPath": "/metadata",
+    "translations": {
+        "abstract": {
+            "targets": ["description"]
+        },
+        "accessRights": {
+            "targets": ["access_right"]
+        },
+        "accrualMethod": {
+            "targets": ["notes"]
+        },
+        "accrualPeriodicity": {
+            "targets": ["notes"]
+        },
+        "accrualPolicy": {
+            "targets": ["notes"]
+        },
+        "alternative": {
+            "targets": ["notes"]
+        },
+        "audience": {
+            "targets": ["notes"]
+        },
+        "available": {
+            "targets": ["dates"]
+        },
+        "bibliographicCitation": {
+            "targets": [
+                "journal_title",
+                "journal_volume",
+                "journal_issue",
+                "journal_pages",
+                "conference_title",
+                "conference_acronym",
+                "conference_dates",
+                "conference_place",
+                "conference_url",
+                "conference_session",
+                "conference_session_part",
+                "imprint_publisher",
+                "imprint_isbn",
+                "imprint_place",
+                "partof_title",
+                "partof_pages",
+                "thesis_supervisors",
+                "thesis_university"
+            ]
+        },
+        "conformsTo": {
+            "targets": ["notes"]
+        },
+        "contributor": {
+            "targets": ["contributors"]
+        },
+        "coverage": {
+            "targets": ["locations", "dates"]
+        },
+        "created": {
+            "targetPath": "/",
+            "targets": ["created"]
+        },
+        "creator": {
+            "targets": ["creators"]
+        },
+        "date": {
+            "targets": ["dates"]
+        },
+        "dateAccepted": {
+            "targets": ["dates"]
+        },
+        "dateCopyrighted": {
+            "targets": ["dates"]
+        },
+        "dateSubmitted": {
+            "targets": ["dates"]
+        },
+        "description": {
+            "targets": ["description", "embargo_date", "grants", "keywords", "method", "notes", "version"]
+        },
+        "educationLevel": {
+            "targets": ["notes"]
+        },
+        "extent": {
+            "targets": ["notes"]
+        },
+        "format": {
+            "targets": ["upload_type", "image_type"]
+        },
+        "hasFormat": {
+            "targets": ["related_identifiers"]
+        },
+        "hasPart": {
+            "targets": ["related_identifiers"]
+        },
+        "hasVersion": {
+            "targets": ["related_identifiers"]
+        },
+        "identifier": {
+            "targets": ["doi"]
+        },
+        "instructionalMethod": {
+            "targets": ["notes"]
+        },
+        "isFormatOf": {
+            "targets": ["related_identifiers"]
+        },
+        "isPartOf": {
+            "targets": ["related_identifiers"]
+        },
+        "isReferencedBy": {
+            "targets": ["related_identifiers"]
+        },
+        "isReplacedBy": {
+            "targets": ["related_identifiers"]
+        },
+        "isRequiredBy": {
+            "targets": ["related_identifiers"]
+        },
+        "issued": {
+            "targets": ["publication_date", "dates"]
+        },
+        "isVersionOf": {
+            "targets": ["related_identifiers"]
+        },
+        "language": {
+            "targets": ["language"]
+        },
+        "license": {
+            "targets": ["license", "access_right", "access_conditions"]
+        },
+        "mediator": {
+            "targets": ["notes"]
+        },
+        "medium": {
+            "targets": ["upload_type"]
+        },
+        "modified": {
+            "targets": ["dates"]
+        },
+        "provenance": {
+            "targets": ["notes"]
+        },
+        "publisher": {
+            "targets": [
+                "journal_title",
+                "journal_volume",
+                "journal_issue",
+                "journal_pages",
+                "conference_title",
+                "conference_acronym",
+                "conference_dates",
+                "conference_place",
+                "conference_url",
+                "conference_session",
+                "conference_session_part",
+                "imprint_publisher",
+                "imprint_isbn",
+                "imprint_place",
+                "partof_title",
+                "partof_pages",
+                "thesis_supervisors",
+                "thesis_university"
+            ]
+        },
+        "references": {
+            "targets": ["references"]
+        },
+        "relation": {
+            "targets": ["related_identifiers"]
+        },
+        "replaces": {
+            "targets": ["related_identifiers"]
+        },
+        "requires": {
+            "targets": ["related_identifiers"]
+        },
+        "rights": {
+            "targets": ["access_right", "access_conditions", "license"]
+        },
+        "rightsHolder": {
+            "targets": ["notes"]
+        },
+        "source": {
+            "targets": ["related_identifiers"]
+        },
+        "spatial": {
+            "targets": ["locations"]
+        },
+        "subject": {
+            "targets": ["subjects"]
+        },
+        "tableOfContents": {
+            "targets": ["notes"]
+        },
+        "temporal": {
+            "targets": ["dates"]
+        },
+        "title": {
+            "targets": ["title"]
+        },
+        "type": {
+            "targets": ["upload_type", "publication_type", "image_type"]
+        },
+        "valid": {
+            "targets": ["dates"]
+        }
+    }
+}
