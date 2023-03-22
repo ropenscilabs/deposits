@@ -131,6 +131,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     metadata,
                     gsub ("\\-sandbox$", "", self$service)
                 )
+                metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
             }
@@ -411,8 +412,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$metadata,
                 gsub ("\\-sandbox$", "", self$service)
             )
+            metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
-            self$metadata <- httptest2_dcmi_created (self$metadata)
             private$metadata_service <- metadata$service
 
             url <- get_service_url (self)

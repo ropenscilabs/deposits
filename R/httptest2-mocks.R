@@ -42,10 +42,9 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 
 #' @description Standardise timestamp of metadata "created" field.
 #'
-#' This is called in the `construct_md_list_zenodo/figshare` functions.
 #' @noRd
 
-httptest2_dcmi_created <- function (metadata) {
+httptest2_created_timestamp <- function (metadata) {
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
         mockdate <- "2022-01-01T00:00:00+00:00"
