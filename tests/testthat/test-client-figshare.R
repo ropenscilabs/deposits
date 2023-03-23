@@ -52,29 +52,6 @@ test_that ("figshare new", {
     expect_true (length (cli$hostdata) > 1L)
 })
 
-new_mock_deposit <- function (service = "figshare") {
-
-    cli <- with_mock_dir ("fs_create", {
-        depositsClient$new (service = service)
-    })
-    metadata <- list (
-        title = "New Title",
-        abstract = "This is the abstract",
-        creator = list (list (name = "A. Person"), list (name = "B. Person"))
-    )
-    cli <- with_mock_dir ("fs_client", {
-        depositsClient$new (
-            service = service,
-            metadata = metadata
-        )
-    })
-    cli <- with_mock_dir ("fs_new", {
-        cli$deposit_new ()
-    })
-
-    return (cli)
-}
-
 test_that ("figshare retrieve", {
 
     service <- "figshare"
