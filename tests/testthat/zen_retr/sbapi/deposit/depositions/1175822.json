@@ -1,0 +1,49 @@
+{
+    "conceptrecid": "1175821",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+
+    ],
+    "id": 1175822,
+    "links": {
+        "bucket": "sbapi/files/50844a61-6d1a-4e9d-b31d-180520e47181",
+        "discard": "sbapi/deposit/depositions/1175822/actions/discard",
+        "edit": "sbapi/deposit/depositions/1175822/actions/edit",
+        "files": "sbapi/deposit/depositions/1175822/files",
+        "html": "https://sandbox.zenodo.org/deposit/1175822",
+        "latest_draft": "sbapi/deposit/depositions/1175822",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1175822",
+        "newversion": "sbapi/deposit/depositions/1175822/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1175822/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1175822/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1175822"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "A. Person"
+            },
+            {
+                "name": "B. Person"
+            }
+        ],
+        "description": "This is the abstract",
+        "doi": "",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1175822",
+            "recid": 1175822
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1175822,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}

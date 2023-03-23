@@ -30,10 +30,22 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
         mockdate <- "2022-01-01T00:00:00+00:00"
 
         if (service == "figshare") {
+
             hostdata$created_date <- hostdata$modified_date <- mockdate
+
         } else if (service == "zenodo") {
-            hostdata$created <- hostdata$modified <- mockdate
-            hostdata$publication_date <- "2022-01-01"
+
+            hostdata$created <- mockdate
+
+            if ("modified" %in% names (hostdata)) {
+                hostdata$modified <- mockdate
+            }
+            if ("publication_date" %in% names (hostdata)) {
+                hostdata$publication_date <- "2022-01-01"
+            }
+            if ("publication_date" %in% names (hostdata$metadata)) {
+                hostdata$metadata$publication_date <- "2022-01-01"
+            }
         }
     }
 
