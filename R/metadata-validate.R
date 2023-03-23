@@ -86,12 +86,15 @@ validate_dcmi_metadata <- function (metadata) {
         errs <- attr (v, "error")
         nms <- c ("instancePath", "schemaPath", "keyword", "params", "message")
         required <- errs$parentSchema$items$required
-        required <- vapply (
-            required,
-            function (i) ifelse (is.null (i), NA_character_, i [1]),
-            character (1L)
-        )
-        errs <- cbind (errs [, nms], required)
+        errs <- errs [, nms]
+        if (!is.null (required)) {
+            required <- vapply (
+                required,
+                function (i) ifelse (is.null (i), NA_character_, i [1]),
+                character (1L)
+            )
+            errs <- cbind (errs, required)
+        }
         print (errs)
         stop (
             "Stopping because the DCMI metadata terms listed above ",
