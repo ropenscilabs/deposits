@@ -55,7 +55,10 @@
         },
         "contributor": {
             "description": "An entity responsible for making contributions to the resource.",
-            "type": "string"
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         },
         "coverage": {
             "description": "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant.",
@@ -71,20 +74,23 @@
         "creator": {
             "type": "array",
             "items": {
-                "name": {
-                    "type": "string"
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "affiliation": {
+                        "type": "string"
+                    },
+                    "orcid": {
+                        "type": "string"
+                    },
+                    "gnd": {
+                        "type": "string"
+                    }
                 },
-                "affiliation": {
-                    "type": "string"
-                },
-                "orcid": {
-                    "type": "string"
-                },
-                "gnd": {
-                    "type": "string"
-                }
-            },
-            "required": ["name"]
+                "required": ["name"]
+            }
         },
         "date": {
             "description": "A point or period of time associated with an event in the lifecycle of the resource.",
