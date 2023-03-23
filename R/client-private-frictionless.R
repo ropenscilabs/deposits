@@ -138,7 +138,8 @@ depositsClient$set ("private", "update_frictionless", function (path) {
                 "'"
             )
             chk <- private$add_meta_to_dp_json (path_dir) # always true
-            # 'p' is then not up-to-date, but not used from here so okay for now.
+            # 'p' is then not up-to-date, but not used from here so okay for
+            # now.
             update_remote <- TRUE
         }
     }
@@ -189,7 +190,8 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     } else if (!all (dp_file_names %in% file_names)) {
 
         # "datapackage.json" lists resources not yet uploaded.
-        dp_not_uploaded <- dp_file_names [which (!dp_file_names %in% file_names)]
+        dp_not_uploaded <-
+            dp_file_names [which (!dp_file_names %in% file_names)]
         message (
             "Your 'datapackage.json' includes the following resources ",
             "which have not yet been uploaded: [",

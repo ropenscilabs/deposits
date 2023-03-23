@@ -66,6 +66,10 @@ dcmi_schema <- function () {
 #' @export
 dcmi_terms <- function (term = NULL) {
 
+    if (!is.null (term)) {
+        checkmate::assert_character (term, len = 1L)
+    }
+
     element_names <- dcmi_schema ()$name
 
     if (!is.null (term)) {

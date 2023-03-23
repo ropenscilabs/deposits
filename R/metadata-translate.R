@@ -219,7 +219,8 @@ construct_metadata_paths <- function (metadata, translations) {
 
     if (length (index) > 0L) {
         root_targets <- translations$target [index]
-        root_targets <- unique (root_targets [which (root_targets %in% names (metadata))])
+        root_targets <-
+            unique (root_targets [which (root_targets %in% names (metadata))])
         root <- metadata [root_targets]
         metadata <- metadata [-which (names (metadata) %in% root_targets)]
 
@@ -338,7 +339,7 @@ required_service_values <- function (service) {
     return (res)
 }
 
-insert_default_service_metadata <- function (metadata, service) {
+insert_default_service_metadata <- function (metadata, service) { # nolint
 
     defaults <- required_service_values (service)
     # Fill default date-time stamps:

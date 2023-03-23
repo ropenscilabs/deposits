@@ -19,9 +19,11 @@
 #'      characters above which a file is considered binary. Defaults to 2.
 #' @noRd
 
-is_file_binary <- function (file, bin.ints = c (1:8, 14:25), nbytes = 1000, nbin = 2) {
+is_file_binary <- function (file, bin_ints = c (1:8, 14:25),
+                            nbytes = 1000, nbin = 2) {
+
     x <- as.integer (readBin (file, "raw", nbytes))
-    n <- sum (x %in% bin.ints)
+    n <- sum (x %in% bin_ints)
 
     return (n > nbin)
 }
@@ -31,6 +33,7 @@ is_deposits_test_env <- function () {
 }
 
 deposit_timestamp <- function (datetime) {
+
     checkmate::assert_class (datetime, "POSIXct")
     datetime <- format.POSIXct (datetime, "%Y-%m-%dT%H:%M:%S%z", usetz = FALSE)
     # change terminal "+0000" to "+00:00":
