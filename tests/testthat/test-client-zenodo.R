@@ -198,7 +198,7 @@ test_that ("zenodo upload", {
     expect_true (all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$filename))
 })
 
-test_that ("zenodo upload bindary", {
+test_that ("zenodo upload binary", {
 
     service <- "zenodo"
     cli <- new_mock_zen_deposit (service = service)
