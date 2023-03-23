@@ -83,14 +83,21 @@ validate_dcmi_metadata <- function (metadata) {
     v <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
 
     if (!v) {
-        print (attr (v, "error") [, 1:5])
+        errs <- attr (v, "error")
+        nms <- c ("instancePath", "schemaPath", "keyword", "params", "message")
+        required <- errs$parentSchema$items$required
+        required <- vapply (
+            required,
+            function (i) ifelse (is.null (i), NA_character_, i [1]),
+            character (1L)
+        )
+        errs <- cbind (errs [, nms], required)
+        print (errs)
         stop (
             "Stopping because the DCMI metadata terms listed above ",
             "do not confirm with the expected schema."
         )
     }
-
-    metadata <- metadata [order (names (metadata))]
 
     return (metadata)
 }
