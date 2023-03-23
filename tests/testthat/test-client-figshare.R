@@ -56,6 +56,44 @@ test_that ("figshare new", {
     expect_true (length (cli$hostdata) > 1L)
 })
 
+test_that ("figshare default metadata", {
+
+    service <- "figshare"
+
+    # The first 'description' is not named, and should default to 'description':
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "This is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
+    )
+
+    metadata <- validate_metadata (metadata, service)
+
+    # Expect DCMI metadata to remain the same:
+    # Expect NO markdown header inserted:
+    expect_false (grepl ("^\\#\\#\\sdescription", metadata$dcmi$description))
+    desc <- strsplit (metadata$dcmi$description, "\n") [[1]]
+    # Actual description remains as first item:
+    expect_equal ("This is the description", desc [1])
+
+    # Expect service metadata to have markdown header inserted:
+    desc <- metadata$service$description
+    expect_true (grepl ("\\#\\#\\sdescription", desc))
+    desc <- strsplit (desc, "\n") [[1]]
+    # Expect abstract is now first:
+    expect_true (grepl ("^\\#\\#\\sabstract", desc [1]))
+    # Expect markdown description title has been inserted:
+    expect_true (any (grepl ("\\#\\#\\sdescription", desc)))
+    pos_title <- grep ("\\#\\#\\sdescription", desc)
+    pos_txt <- grep ("This is the description", desc)
+    expect_true ((pos_txt - pos_title) > 0)
+    expect_true ((pos_txt - pos_title) <= 2)
+})
+
 test_that ("figshare retrieve", {
 
     service <- "figshare"
