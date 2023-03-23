@@ -80,37 +80,20 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     # -------- Ensure local "datapackage.json" is up to date
     files <- self$hostdata$files
     file_names <- files [[private$get_file_name_field ()]]
-    mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
-    dp_remote <- ""
 
-    if (private$frictionless_json_name %in% file_names &&
-        !is_deposits_test_env ()) {
-        dp_remote <- self$deposit_download_file (
-            deposit_id,
-            filename = private$frictionless_json_name,
-            path = fs::path_temp ()
-        )
-        mtime_remote <- fs::file_info (dp_remote)$modification_time
-    }
+    local_dp_check <- ensure_latest_local_dpsjon (
+        cli,
+        file_names,
+        path,
+        private$frictionless_json_name
+    )
 
+    update_remote <- local_dp_check$update_remote
     path_dir <- fs::path_dir (path)
-    dp_local <- fs::path (path_dir, private$frictionless_json_name)
-    has_dpj <- fs::file_exists (dp_local)
-    if (has_dpj) {
-        mtime_local <- fs::file_info (dp_local)$modification_time
-    }
 
-    update_remote <- FALSE
-    if (mtime_remote > mtime_local) {
-        dp <- dp_remote
-    } else {
-        update_remote <- TRUE
-        dp <- dp_local
-    }
-
-    if (fs::file_exists (dp)) {
+    if (fs::file_exists (local_dp_check$dp)) {
         suppressMessages (
-            dpj <- frictionless::read_package (dp)
+            dpj <- frictionless::read_package (local_dp_check$dp)
         )
         if (!"metadata" %in% names (dpj)) {
             update_remote <- private$add_meta_to_dp_json (path_dir)
@@ -148,8 +131,12 @@ depositsClient$set ("private", "update_frictionless", function (path) {
         invisible (return (self))
     }
 
-    if (!identical (dp, dp_local)) {
-        fs::file_copy (dp, dp_local, overwrite = TRUE)
+    if (!identical (local_dp_check$dp, local_dp_check$dp_local)) {
+        fs::file_copy (
+            local_dp_check$dp,
+            local_dp_check$dp_local,
+            overwrite = TRUE
+        )
         message (
             "frictionless metadata file [",
             path,
@@ -158,7 +145,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     }
 
     # -------- Update local version with new resources
-    dpj <- frictionless::read_package (dp_local)
+    dpj <- frictionless::read_package (local_dp_check$dp_local)
     resource_names <-
         vapply (dpj$resources, function (i) i$name, character (1L))
     new_resource_name <- fs::path_ext_remove (fs::path_file (path))
@@ -166,24 +153,12 @@ depositsClient$set ("private", "update_frictionless", function (path) {
 
     if (!new_resource_name %in% resource_names) {
 
-        p <- frictionless::create_package ()
-        op <- options (
-            readr.show_progress = FALSE,
-            readr.show_col_types = FALSE
-        )
-        suppressMessages (
-            p <- frictionless::add_resource (
-                p,
-                resource_name = new_resource_name,
-                data = path
-            )
-        )
-        options (op)
-
+        p <- create_new_frictionless (new_resource_name, path)
         dpj$resources <- c (dpj$resources, p$resources)
 
         # Update local version:
-        frictionless::write_package (dpj, fs::path_dir (dp_local))
+        path_loc <- fs::path_dir (local_dp_check$dp_local)
+        frictionless::write_package (dpj, path_loc)
 
         update_remote <- TRUE
 
@@ -203,12 +178,76 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     # httptest2 does not produce mocked download files; only the actual
     # request result. So these files can not be uploaded here.
     if (update_remote && !is_deposits_test_env ()) {
-        self <- private$upload_local_file (dp)
+        self <- private$upload_local_file (local_dp_check$dp)
     }
 
-    if (identical (dp, dp_remote)) {
-        fs::file_delete (dp_remote)
+    if (identical (local_dp_check$dp, local_dp_check$dp_remote)) {
+        fs::file_delete (local_dp_check$dp_remote)
     }
 
     invisible (self)
 })
+
+#' Ensure local 'datapacakge.json' is up to date.
+#'
+#' @param cli Client, which is 'self' in the private method which calls this.
+#' Used only to call the 'deposit_download_file' method to download the
+#' 'datapackage.json' file.
+#' @noRd
+ensure_latest_local_dpsjon <- function (cli, file_names,
+                                        path, frictionless_json_name) {
+
+    mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
+    dp_remote <- ""
+
+    if (frictionless_json_name %in% file_names &&
+        !is_deposits_test_env ()) {
+        dp_remote <- cli$deposit_download_file (
+            deposit_id,
+            filename = frictionless_json_name,
+            path = fs::path_temp ()
+        )
+        mtime_remote <- fs::file_info (dp_remote)$modification_time
+    }
+
+    path_dir <- fs::path_dir (path)
+    dp_local <- fs::path (path_dir, frictionless_json_name)
+    has_dpj <- fs::file_exists (dp_local)
+    if (has_dpj) {
+        mtime_local <- fs::file_info (dp_local)$modification_time
+    }
+
+    update_remote <- FALSE
+    if (mtime_remote > mtime_local) {
+        dp <- dp_remote
+    } else {
+        update_remote <- TRUE
+        dp <- dp_local
+    }
+
+    return (list (
+        dp = dp,
+        dp_local = dp_local,
+        dp_remote = dp_remote,
+        update_remote = update_remote
+    ))
+}
+
+create_new_frictionless <- function (new_resource_name, path) {
+
+    p <- frictionless::create_package ()
+    op <- options (
+        readr.show_progress = FALSE,
+        readr.show_col_types = FALSE
+    )
+    suppressMessages (
+        p <- frictionless::add_resource (
+            p,
+            resource_name = new_resource_name,
+            data = path
+        )
+    )
+    options (op)
+
+    return (p)
+}
