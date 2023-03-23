@@ -4,7 +4,11 @@ new_mock_deposit <- function (service = "zenodo") {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list (list (name = "A. Person"), list (name = "B. Person"))
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     prfx <- ifelse (service == "zenodo", "zen", "fs")

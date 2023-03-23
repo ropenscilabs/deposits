@@ -21,7 +21,11 @@ test_that ("figshare new", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list (list (name = "A. Person"), list (name = "B. Person"))
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     cli <- with_mock_dir ("fs_client", {
@@ -33,10 +37,10 @@ test_that ("figshare new", {
 
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 3L)
+    expect_length (cli$metadata, 4L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "title")
+        c ("abstract", "creator", "description", "title")
     )
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
@@ -60,7 +64,11 @@ test_that ("figshare retrieve", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person")
+        creator = list ("A. Person", "B. Person"),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     dep <- with_mock_dir ("fs_retr", {
@@ -92,7 +100,11 @@ test_that ("figshare update", {
     metadata <- list (
         title = "Modified Title",
         abstract = "This is the modified abstract",
-        creator = list (list (name = "C. Person"))
+        creator = list (list (name = "C. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     cli <- cli$deposit_fill_metadata (metadata)

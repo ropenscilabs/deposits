@@ -23,7 +23,11 @@ test_that ("zenodo new", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list (list (name = "A. Person"), list (name = "B. Person"))
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     cli <- with_mock_dir ("zen_client", {
@@ -35,10 +39,10 @@ test_that ("zenodo new", {
     })
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 3L)
+    expect_length (cli$metadata, 4L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "title")
+        c ("abstract", "creator", "description", "title")
     )
     expect_type (cli$metadata, "list")
     # expect_type (cli$metadata_service, "list") # now a private field
@@ -64,7 +68,11 @@ test_that ("zenodo retrieve", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list (list (name = "A. Person"), list (name = "B. Person"))
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     # -------- DEPOSIT_RETRIEVE
@@ -80,10 +88,6 @@ test_that ("zenodo retrieve", {
         metadata$title
     )
     expect_equal (
-        cli$hostdata$metadata$description,
-        metadata$abstract
-    )
-    expect_equal (
         cli$metadata$title,
         metadata$title
     )
@@ -91,7 +95,11 @@ test_that ("zenodo retrieve", {
     metadata <- list (
         title = "Modified Title",
         abstract = "This is the modified abstract",
-        creator = list (list (name = "C. Person"))
+        creator = list (list (name = "C. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## keywords\none, two\nthree\n\n## version\n1.0"
+        )
     )
 
     dep <- with_mock_dir ("zen_meta", {
@@ -114,10 +122,6 @@ test_that ("zenodo retrieve", {
     expect_equal (
         cli$hostdata$title,
         metadata$title
-    )
-    expect_equal (
-        cli$hostdata$metadata$description,
-        metadata$abstract
     )
 })
 
