@@ -8,6 +8,18 @@
 translate_dc_to_service <- function (metadata, service) {
 
     translations <- get_service_translation (service)
+
+    # Extract translation of names of keys within items:
+    translation_items <- translations [grep ("\\@", translations$source), ]
+    translation_items <- data.frame (
+        item = gsub ("\\@.*$", "", translation_items$source),
+        source = gsub ("^.*\\@", "", translation_items$source),
+        path = translation_items$path,
+        target = gsub ("^.*\\@", "", translation_items$target)
+    )
+
+    index <- which (translation_items$item %in% names (metadata))
+    translation_items <- translation_items [index, ]
     translations <-
         translations [which (translations$source %in% names (metadata)), ]
 
@@ -21,6 +33,9 @@ translate_dc_to_service <- function (metadata, service) {
     # initial_names are used in final `rename_metadata_items` call, to ensure
     # only items with initial DCMI names are renamed. The intermediate routines
     # create items already renamed to target format.
+    if (nrow (translation_items) > 0L) {
+        metadata <- rename_metadata_keys (metadata, translation_items)
+    }
     initial_names <- names (metadata)
     metadata <- separate_multiple_sources (
         metadata, translations, source_schema, service
@@ -96,11 +111,64 @@ get_service_translation <- function (service) {
     }
 
     n <- vapply (tr_to, length, integer (1L))
-    data.frame (
+    res <- data.frame (
         source = rep (tr_from, times = n),
         path = rep (target_path, times = n),
         target = unlist (tr_to)
     )
+
+    # plus any additional translations of key names within items:
+    index <- which (vapply (
+        tr,
+        function (i) "translations" %in% names (i),
+        logical (1L)
+    ))
+    if (length (index) > 0L) {
+        tr_items <- lapply (index, function (i) {
+            out <- tr [[i]]$translations
+            cbind (item = rep (names (tr) [i], nrow (out)), out)
+        })
+        tr_items <- do.call (rbind, tr_items)
+        rownames (tr_items) <- NULL
+        out <- data.frame (
+            source = paste0 (tr_items$item, "@", tr_items$source),
+            path = res$path [match (tr_items$item, res$source)],
+            target = paste0 (tr_items$item, "@", tr_items$target)
+        )
+
+        res <- rbind (res, out)
+    }
+
+    return (res)
+}
+
+#' Use schema translation of names of keys within items to modify metadata
+#' names.
+#'
+#' This is used, for example, to change 'metadata$created$orcid' to
+#' 'metadata$created$orcid_id'.
+#'
+#' @noRd
+rename_metadata_keys <- function (metadata, translation_items) {
+
+    for (i in seq_len (nrow (translation_items))) {
+        item_i <- translation_items$item [i]
+        source_i <- translation_items$source [i]
+        target_i <- translation_items$target [i]
+
+        index <- which (names (metadata [[item_i]]) == source_i)
+        if (length (index) > 0L) {
+            names (metadata [[item_i]]) [index] <- target_i
+        } else {
+            metadata [[item_i]] <- lapply (metadata [[item_i]], function (j) {
+                index <- which (names (j) == source_i)
+                names (j) [index] <- target_i
+                return (j)
+            })
+        }
+    }
+
+    return (metadata)
 }
 
 #' Separate single source metadata entries into potentially multiple target

@@ -42,7 +42,10 @@
             "targets": ["timeline"]
         },
         "creator": {
-            "targets": ["authors"]
+            "targets": ["authors"],
+            "translations": [
+                { "source": "orcid", "target": "orcid_id" }
+            ]
         },
         "date": {
             "targets": ["timeline"]
