@@ -72,7 +72,8 @@
                     "orcid_id": {
                         "type": "string"
                     }
-                }
+                },
+                "additionalProperties": false,
             }
         },
         "custom_fields": {

@@ -76,19 +76,40 @@
             "items": {
                 "type": "object",
                 "properties": {
+                    "^id$": {
+                        "description": "figshare only",
+                        "type": "integer"
+                    },
                     "name": {
+                        "description": "figshare and zenodo",
+                        "type": "string"
+                    },
+                    "first_name": {
+                        "description": "figshare only",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "figshare only",
                         "type": "string"
                     },
                     "affiliation": {
+                        "description": "zenodo only",
                         "type": "string"
                     },
                     "orcid": {
+                        "description": "zenodo only",
                         "type": "string"
                     },
                     "gnd": {
+                        "description": "zenodo only",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "figshare only",
                         "type": "string"
                     }
                 },
+                "additionalProperties": false,
                 "required": ["name"]
             }
         },
