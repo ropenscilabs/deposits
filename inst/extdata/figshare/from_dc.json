@@ -63,7 +63,6 @@
             "targets": [
                 "description",
                 "tags",
-                "keywords",
                 "custom_fields",
                 "custom_fields_list",
                 "funding",
@@ -161,7 +160,7 @@
             "targets": ["description"]
         },
         "subject": {
-            "targets": ["categories"]
+            "targets": ["categories", "keywords"]
         },
         "tableOfContents": {
             "targets": ["description"]
