@@ -246,7 +246,8 @@ separate_multiple_sources <- function (metadata, translations,
             for (i in seq_along (content)) {
                 this_type <- schema_types$type [i]
                 if (this_type == "array") {
-                    this_content <- strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
+                    this_content <-
+                        strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
                     content [[i]] <- as.list (this_content)
                 }
             }
@@ -262,8 +263,10 @@ separate_multiple_sources <- function (metadata, translations,
 #'
 #' This is a sub-function of `separate_multiple_sources()`.
 #'
-#' @param m One of the `multiple_sources` items from `separate_multiple_sources()`.
-#' @param what The item to be translated, generally extracted as markdown heading from a DCMI metadata item.
+#' @param m One of the `multiple_sources` items from
+#' `separate_multiple_sources()`.
+#' @param what The item to be translated, generally extracted as markdown
+#' heading from a DCMI metadata item.
 #' @param tr_full The full translation table for the specified service.
 #' @noRd
 check_translation_source <- function (m, what, tr_full) {
