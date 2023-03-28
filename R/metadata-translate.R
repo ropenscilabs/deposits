@@ -228,29 +228,7 @@ separate_multiple_sources <- function (metadata, translations,
                 return (paste0 (i, collapse = "\n"))
             })
 
-            # Get expected schema type, and convert to array if needed:
-            schema_types <- lapply (names (content), function (nm) {
-                itype <- ifelse (
-                    "items" %in% names (service_schema [[nm]]),
-                    service_schema [[nm]]$items$type,
-                    NA_character_
-                )
-                c (service_schema [[nm]]$type, itype)
-            })
-            schema_types <- data.frame (cbind (
-                names (content),
-                do.call (rbind, schema_types)
-            ))
-            names (schema_types) <- c ("name", "type", "item_type")
-
-            for (i in seq_along (content)) {
-                this_type <- schema_types$type [i]
-                if (this_type == "array") {
-                    this_content <-
-                        strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
-                    content [[i]] <- as.list (this_content)
-                }
-            }
+            content <- convert_target_format (content, service_schema)
 
             metadata <- c (metadata [which (!names (metadata) == m)], content)
         }
@@ -291,6 +269,43 @@ check_translation_source <- function (m, what, tr_full) {
             call. = FALSE
         )
     }
+}
+
+#' Convert translation targets to format specified in schema.
+#'
+#' @param content Content as string extracted from one markdown-formatted item
+#' in input metadata.
+#' @param service_schema JSON schema for specified service, converted to R list
+#' with \pkg{jsonlite}.
+#' @noRd
+convert_target_format <- function (content, service_schema) {
+
+    schema_types <- lapply (names (content), function (nm) {
+        itype <- ifelse (
+            "items" %in% names (service_schema [[nm]]),
+            service_schema [[nm]]$items$type,
+            NA_character_
+        )
+        c (service_schema [[nm]]$type, itype)
+    })
+
+    schema_types <- data.frame (cbind (
+        names (content),
+        do.call (rbind, schema_types)
+    ))
+    names (schema_types) <- c ("name", "type", "item_type")
+
+    for (i in seq_along (content)) {
+
+        this_type <- schema_types$type [i]
+        if (this_type == "array") {
+            this_content <-
+                strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
+            content [[i]] <- as.list (this_content)
+        }
+    }
+
+    return (content)
 }
 
 #' Concatenate potentially multiple source items into single target items,
