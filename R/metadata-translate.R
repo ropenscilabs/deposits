@@ -190,19 +190,39 @@ separate_multiple_sources <- function (metadata, translations,
     }
 
     for (m in multiple_sources) {
+
         content <- strsplit (metadata [[m]], "\n") [[1]]
         targets <- grep ("^\\#+", content)
+
+        if (targets [1] > min (which (nzchar (content)))) {
+            # First content is default without markdown header
+            tr_target <- tr_full$target [tr_full$source == m] [1]
+            content <- c (paste0 ("## ", tr_target), content)
+            targets <- grep ("^\\#+", content)
+        }
+
         what <- gsub ("^\\#+\\s?", "", content [targets])
         index <- which (what %in% tr_full$target)
         targets <- targets [index]
         what <- what [index]
 
         # Check that translation source is correct:
-        src <- unique (tr_full$source [tr_full$target %in% what])
-        if (!m %in% src) {
+        chk <- lapply (what, function (s) {
+            src <- unique (tr_full$source [tr_full$target %in% s])
+            out <- list ()
+            if (!m %in% src) {
+                out <- list (what = s, src = src)
+            }
+            return (out)
+        })
+        chk <- chk [which (vapply (chk, length, integer (1L)) > 0L)]
+
+        if (length (chk) > 0L) {
+            what <- chk [[1]]$what
+            src <- chk [[1]]$src
             stop (
-                "Metadata source for [", what, "] should be ",
-                ifelse (length (src) > 0, "one of", ""), " [",
+                "Metadata source for [", what, "] should be",
+                ifelse (length (src) > 1, " one of", ""), " [",
                 paste0 (src, collapse = ", "), "] and not [", m, "]",
                 call. = FALSE
             )
@@ -215,18 +235,6 @@ separate_multiple_sources <- function (metadata, translations,
             content <- split (content, f = as.factor (index))
 
             index <- seq_along (content)
-            if (length (what) < length (content)) {
-                # Then get name of default (first) item)
-                index <- index [-1]
-                desc <- strsplit (source_schema [[m]]$description, ";") [[1]]
-                desc <- grep (service, desc, value = TRUE)
-                desc_target <- gsub (
-                    "\\:\\s?",
-                    "",
-                    regmatches (desc, regexpr ("\\:.*$", desc))
-                )
-                names (content) [1] <- desc_target
-            }
             content [index] <- lapply (content [index], function (i) i [-1])
             names (content) [index] <- what
 
