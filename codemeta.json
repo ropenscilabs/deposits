@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropenscilabs/deposits",
   "issueTracker": "https://github.com/ropenscilabs/deposits/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0.054",
+  "version": "0.1.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -158,10 +158,22 @@
     },
     "6": {
       "@type": "SoftwareApplication",
+      "identifier": "jsonvalidate",
+      "name": "jsonvalidate",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=jsonvalidate"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "7": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "R6",
       "name": "R6",
@@ -173,7 +185,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=R6"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "withr",
       "name": "withr",
@@ -185,7 +197,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=withr"
     },
-    "9": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
@@ -197,14 +209,11 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
-    "SystemRequirements": {}
+    "SystemRequirements": null
   },
-  "fileSize": "387.664KB",
+  "fileSize": "462.358KB",
   "relatedLink": "https://docs.ropensci.org/deposits/",
   "readme": "https://github.com/ropenscilabs/deposits/blob/main/README.md",
-  "contIntegration": [
-    "https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check",
-    "https://codecov.io/gh/ropenscilabs/deposits"
-  ],
+  "contIntegration": ["https://github.com/ropenscilabs/deposits/actions?query=workflow%3AR-CMD-check", "https://codecov.io/gh/ropenscilabs/deposits"],
   "developmentStatus": "https://www.repostatus.org/#wip"
 }
