@@ -52,10 +52,10 @@ test_that ("metadata validate", {
     )
 
     metadata$creator <- list (
-        list (name = "A. Person", id = "no", orcid = ORCID), # id must be integer
+        list (name = "A. Person", id = "no", orcid = ORCID),
         list (name = "B. Person")
     )
-    expect_error (
+    expect_error ( # id must be integer
         metadata_valid <- validate_metadata (metadata, service = "figshare"),
         "Stopping because the DCMI metadata terms listed above do not conform"
     )
