@@ -24,8 +24,9 @@ test_that ("figshare new", {
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
         description = paste0 (
             "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+            "## version\n1.0"
+        ),
+        subject = "## keywords\none, two\nthree\n\n"
     )
 
     cli <- with_mock_dir ("fs_client", {
@@ -37,10 +38,10 @@ test_that ("figshare new", {
 
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 4L)
+    expect_length (cli$metadata, 5L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "description", "title")
+        c ("abstract", "creator", "description", "subject", "title")
     )
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
@@ -71,7 +72,19 @@ test_that ("figshare default metadata", {
         )
     )
 
-    metadata <- validate_metadata (metadata, service)
+    expect_error (
+        metadata <- validate_metadata (metadata, service),
+        paste0 (
+            "Metadata source for \\[keywords\\] should be ",
+            "\\[subject\\] and not \\[description\\]"
+        )
+    )
+    metadata$description <- "This is the description\n\n## version\n1.0"
+    metadata$subject <- "## keywords\none, two\nthree"
+
+    expect_silent (
+        metadata <- validate_metadata (metadata, service)
+    )
 
     # Expect DCMI metadata to remain the same:
     # Expect NO markdown header inserted:
@@ -105,8 +118,9 @@ test_that ("figshare retrieve", {
         creator = list ("A. Person", "B. Person"),
         description = paste0 (
             "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+            "## version\n1.0"
+        ),
+        subject = "## keywords\none, two\nthree\n\n"
     )
 
     dep <- with_mock_dir ("fs_retr", {
@@ -141,8 +155,9 @@ test_that ("figshare update", {
         creator = list (list (name = "C. Person")),
         description = paste0 (
             "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+            "## version\n1.0"
+        ),
+        subject = "## keywords\none, two\nthree\n\n"
     )
 
     cli <- cli$deposit_fill_metadata (metadata)
