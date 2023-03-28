@@ -15,6 +15,18 @@ test_that ("metadata validate", {
         not = "Not a property"
     )
 
+    expect_error (
+        suppressWarnings (
+            metadata_valid <- validate_metadata (metadata, service = "zenodo")
+        ),
+        paste0 (
+            "Metadata source for \\[keywords\\] should be ",
+            "\\[subject\\] and not \\[description\\]"
+        )
+    )
+    metadata$description <-
+        "## description\nThis is the description\n\n## version\n1.0"
+    metadata$subject <- "## keywords\none, two\nthree"
     expect_warning (
         metadata_valid <- validate_metadata (metadata, service = "zenodo"),
         "The following metadata terms do not conform and will be removed"
