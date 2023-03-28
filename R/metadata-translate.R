@@ -273,6 +273,8 @@ check_translation_source <- function (m, what, tr_full) {
 
 #' Convert translation targets to format specified in schema.
 #'
+#' This is a sub-function of `separate_multiple_sources()`.
+#'
 #' @param content Content as string extracted from one markdown-formatted item
 #' in input metadata.
 #' @param service_schema JSON schema for specified service, converted to R list
