@@ -54,7 +54,7 @@
             "items": {
                 "type": "object",
                 "properties": {
-                    "^id$": {
+                    "id": {
                         "type": "integer"
                     },
                     "name": {
