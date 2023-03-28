@@ -54,7 +54,7 @@ translate_dc_to_service <- function (metadata, service) {
         print (attr (v, "error") [, 1:5])
         stop (
             "Stopping because the metadata terms listed above ",
-            "do not confirm with the expected schema for the ",
+            "do not conform with the expected schema for the ",
             service,
             " service."
         )

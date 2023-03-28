@@ -155,6 +155,6 @@ test_that ("figshare metadata terms", {
     metadata$license <- 1L
     expect_error (
         metadata_dcmi <- validate_dcmi_metadata (metadata),
-        "Stopping because the DCMI metadata terms listed above do not confirm"
+        "Stopping because the DCMI metadata terms listed above do not conform"
     )
 })
