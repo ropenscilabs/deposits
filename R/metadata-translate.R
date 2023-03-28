@@ -206,27 +206,7 @@ separate_multiple_sources <- function (metadata, translations,
         targets <- targets [index]
         what <- what [index]
 
-        # Check that translation source is correct:
-        chk <- lapply (what, function (s) {
-            src <- unique (tr_full$source [tr_full$target %in% s])
-            out <- list ()
-            if (!m %in% src) {
-                out <- list (what = s, src = src)
-            }
-            return (out)
-        })
-        chk <- chk [which (vapply (chk, length, integer (1L)) > 0L)]
-
-        if (length (chk) > 0L) {
-            what <- chk [[1]]$what
-            src <- chk [[1]]$src
-            stop (
-                "Metadata source for [", what, "] should be",
-                ifelse (length (src) > 1, " one of", ""), " [",
-                paste0 (src, collapse = ", "), "] and not [", m, "]",
-                call. = FALSE
-            )
-        }
+        check_translation_source (m, what, tr_full)
 
         if (length (targets) > 0) {
             index <- rep (0L, length (content))
@@ -276,6 +256,38 @@ separate_multiple_sources <- function (metadata, translations,
     }
 
     return (metadata)
+}
+
+#' Check that the source for translation items is correct, and error if not.
+#'
+#' This is a sub-function of `separate_multiple_sources()`.
+#'
+#' @param m One of the `multiple_sources` items from `separate_multiple_sources()`.
+#' @param what The item to be translated, generally extracted as markdown heading from a DCMI metadata item.
+#' @param tr_full The full translation table for the specified service.
+#' @noRd
+check_translation_source <- function (m, what, tr_full) {
+
+    chk <- lapply (what, function (s) {
+        src <- unique (tr_full$source [tr_full$target %in% s])
+        out <- list ()
+        if (!m %in% src) {
+            out <- list (what = s, src = src)
+        }
+        return (out)
+    })
+    chk <- chk [which (vapply (chk, length, integer (1L)) > 0L)]
+
+    if (length (chk) > 0L) {
+        what <- chk [[1]]$what
+        src <- chk [[1]]$src
+        stop (
+            "Metadata source for [", what, "] should be",
+            ifelse (length (src) > 1, " one of", ""), " [",
+            paste0 (src, collapse = ", "), "] and not [", m, "]",
+            call. = FALSE
+        )
+    }
 }
 
 #' Concatenate potentially multiple source items into single target items,
