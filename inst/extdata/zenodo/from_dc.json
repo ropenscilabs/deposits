@@ -77,7 +77,7 @@
             "targets": ["dates"]
         },
         "description": {
-            "targets": ["description", "embargo_date", "grants", "keywords", "method", "notes", "version"]
+            "targets": ["description", "embargo_date", "grants", "method", "notes", "version"]
         },
         "educationLevel": {
             "targets": ["notes"]
@@ -189,7 +189,7 @@
             "targets": ["locations"]
         },
         "subject": {
-            "targets": ["subjects"]
+            "targets": ["subjects", "keywords"]
         },
         "tableOfContents": {
             "targets": ["notes"]
