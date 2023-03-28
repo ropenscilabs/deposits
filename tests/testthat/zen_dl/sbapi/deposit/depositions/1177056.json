@@ -1,0 +1,71 @@
+{
+    "conceptrecid": "1177055",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data2.csv",
+            "filesize": 625,
+            "id": "99fec1f6-f956-4b39-a5cb-ced1dd46adc0",
+            "links": {
+                "download": "sbapi/files/hash/data2.csv",
+                "self": "sbapi/deposit/depositions/1177056/files/99fec1f6-f956-4b39-a5cb-ced1dd46adc0"
+            }
+        },
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data.csv",
+            "filesize": 625,
+            "id": "f4061619-d3cc-42f0-9f88-41144259ec31",
+            "links": {
+                "download": "sbapi/files/hash/data.csv",
+                "self": "sbapi/deposit/depositions/1177056/files/f4061619-d3cc-42f0-9f88-41144259ec31"
+            }
+        }
+    ],
+    "id": 1177056,
+    "links": {
+        "bucket": "sbapi/files/2afc0868-3739-4e07-825d-b88b03938d29",
+        "discard": "sbapi/deposit/depositions/1177056/actions/discard",
+        "edit": "sbapi/deposit/depositions/1177056/actions/edit",
+        "files": "sbapi/deposit/depositions/1177056/files",
+        "html": "https://sandbox.zenodo.org/deposit/1177056",
+        "latest_draft": "sbapi/deposit/depositions/1177056",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1177056",
+        "newversion": "sbapi/deposit/depositions/1177056/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1177056/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1177056/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1177056"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "C. Person"
+            }
+        ],
+        "description": "## abstract\n\nThis is the modified abstract\n\n## description\n\nThis is the description",
+        "doi": "",
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1177056",
+            "recid": 1177056
+        },
+        "publication_date": "2022-01-01",
+        "title": "Modified Title",
+        "upload_type": "other",
+        "version": "1.0"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1177056,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "Modified Title"
+}
