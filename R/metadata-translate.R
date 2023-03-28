@@ -180,11 +180,20 @@ separate_multiple_sources <- function (metadata, translations,
     index <- which (duplicated (translations$source))
     multiple_sources <- unique (translations$source [index])
 
+    tr_full <- get_service_translation (service)
+    service_schema <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
+    service_schema <- jsonlite::read_json (service_schema)$properties
+    if (service == "zenodo") {
+        service_schema <- service_schema$metadata$properties
+    }
+
     for (m in multiple_sources) {
         content <- strsplit (metadata [[m]], "\n") [[1]]
         targets <- grep ("^\\#+", content)
         what <- gsub ("^\\#+\\s?", "", content [targets])
-        index <- which (what %in% translations$source)
+        index <- which (what %in% tr_full$target)
         targets <- targets [index]
         what <- what [index]
 
@@ -219,6 +228,29 @@ separate_multiple_sources <- function (metadata, translations,
                 }
                 return (paste0 (i, collapse = "\n"))
             })
+
+            # Get expected schema type, and convert to array if needed:
+            schema_types <- lapply (names (content), function (nm) {
+                itype <- ifelse (
+                    "items" %in% names (service_schema [[nm]]),
+                    service_schema [[nm]]$items$type,
+                    NA_character_
+                )
+                c (service_schema [[nm]]$type, itype)
+            })
+            schema_types <- data.frame (cbind (
+                names (content),
+                do.call (rbind, schema_types)
+            ))
+            names (schema_types) <- c ("name", "type", "item_type")
+
+            for (i in seq_along (content)) {
+                this_type <- schema_types$type [i]
+                if (this_type == "array") {
+                    this_content <- strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
+                    content [[i]] <- as.list (this_content)
+                }
+            }
 
             metadata <- c (metadata [which (!names (metadata) == m)], content)
         }
