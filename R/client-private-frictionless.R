@@ -203,7 +203,7 @@ ensure_latest_local_dpsjon <- function (cli, file_names,
     if (frictionless_json_name %in% file_names &&
         !is_deposits_test_env ()) {
         dp_remote <- cli$deposit_download_file (
-            deposit_id,
+            cli$deposit_id,
             filename = frictionless_json_name,
             path = fs::path_temp ()
         )
