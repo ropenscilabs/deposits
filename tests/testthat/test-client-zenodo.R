@@ -24,10 +24,9 @@ test_that ("zenodo new", {
         title = "New Title",
         abstract = "This is the abstract",
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
-        description = paste0 (
-            "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
     )
 
     cli <- with_mock_dir ("zen_client", {
@@ -39,10 +38,10 @@ test_that ("zenodo new", {
     })
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 4L)
+    expect_length (cli$metadata, 5L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "description", "title")
+        c ("abstract", "creator", "description", "subject", "title")
     )
     expect_type (cli$metadata, "list")
     # expect_type (cli$metadata_service, "list") # now a private field
@@ -68,20 +67,19 @@ test_that ("zenodo default metadata", {
         title = "New Title",
         abstract = "This is the abstract",
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
-        description = paste0 (
-            "This is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
     )
 
-    metadata <- validate_metadata (metadata, service)
+    expect_silent (
+        metadata <- validate_metadata (metadata, service)
+    )
 
     # Expect DCMI metadata to remain the same:
-    # Expect NO markdown header inserted:
-    expect_false (grepl ("^\\#\\#\\sdescription", metadata$dcmi$description))
+    expect_true (grepl ("^\\#\\#\\sdescription", metadata$dcmi$description))
     desc <- strsplit (metadata$dcmi$description, "\n") [[1]]
-    # Actual description remains as first item:
-    expect_equal ("This is the description", desc [1])
+    expect_equal ("## description", desc [1])
 
     # Expect service metadata to have markdown header inserted:
     desc <- metadata$service$metadata$description
@@ -107,10 +105,9 @@ test_that ("zenodo retrieve", {
         title = "New Title",
         abstract = "This is the abstract",
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
-        description = paste0 (
-            "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
     )
 
     # -------- DEPOSIT_RETRIEVE
@@ -134,10 +131,9 @@ test_that ("zenodo retrieve", {
         title = "Modified Title",
         abstract = "This is the modified abstract",
         creator = list (list (name = "C. Person")),
-        description = paste0 (
-            "## description\nThis is the description\n\n",
-            "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
     )
 
     dep <- with_mock_dir ("zen_meta", {
