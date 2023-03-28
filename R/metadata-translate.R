@@ -197,6 +197,25 @@ separate_multiple_sources <- function (metadata, translations,
         targets <- targets [index]
         what <- what [index]
 
+        # Check that translation source is correct:
+        src <- unique (tr_full$source [tr_full$target %in% what])
+        if (length (src) > 0) {
+            if (length (src) > 1L) { # should never happen
+                stop (
+                    "More than one translation source in ",
+                    "'separate_multiple_sources'",
+                    call. = FALSE
+                )
+            }
+            if (src != m) {
+                stop (
+                    "Metadata source for [", what, "] should be [",
+                    src, "] and not [", m, "]",
+                    call. = FALSE
+                )
+            }
+        }
+
         if (length (targets) > 0) {
             index <- rep (0L, length (content))
             index [targets] <- 1L
