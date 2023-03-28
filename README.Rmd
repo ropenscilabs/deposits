@@ -294,3 +294,71 @@ clients, which invisibly return an updated version of the client, the
 Please note that this package is released with a [Contributor Code of
 Conduct](https://ropensci.org/code-of-conduct/). By contributing to this
 project, you agree to abide by its terms.
+
+## Contributors
+
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+
+### Code
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/mpadge">
+<img src="https://avatars.githubusercontent.com/u/6697851?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/commits?author=mpadge">mpadge</a>
+</td>
+</tr>
+
+</table>
+
+
+### Issues
+
+<table>
+
+<tr>
+<td align="center">
+<a href="https://github.com/collinschwantes">
+<img src="https://avatars.githubusercontent.com/u/6107885?u=414bad1b3dd9499b3dc60180fc411f1fb18de24e&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Acollinschwantes">collinschwantes</a>
+</td>
+<td align="center">
+<a href="https://github.com/Bisaloo">
+<img src="https://avatars.githubusercontent.com/u/10783929?u=38e3754466eaa200e20f0609709467b6331cdfbe&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3ABisaloo">Bisaloo</a>
+</td>
+<td align="center">
+<a href="https://github.com/maelle">
+<img src="https://avatars.githubusercontent.com/u/8360597?u=824f03caa87c92420352e3dd9a05470320a67412&v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Amaelle">maelle</a>
+</td>
+<td align="center">
+<a href="https://github.com/joelnitta">
+<img src="https://avatars.githubusercontent.com/u/13459362?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Ajoelnitta">joelnitta</a>
+</td>
+<td align="center">
+<a href="https://github.com/noamross">
+<img src="https://avatars.githubusercontent.com/u/571752?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Anoamross">noamross</a>
+</td>
+</tr>
+
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
