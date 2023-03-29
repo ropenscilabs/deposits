@@ -98,6 +98,7 @@ cli$deposits_methods ()
 #> List of methods for a deposits client:
 #>
 #>    - deposit_delete
+#>    - deposit_delete_file
 #>    - deposit_download_file
 #>    - deposit_fill_metadata
 #>    - deposit_new
