@@ -37,3 +37,21 @@ get_zenodo_bucket_link <- function (deposit_id, url, headers) {
 
     return (resp$links$bucket)
 }
+
+zenodo_delete_file <- function (article_id, service_url, files, headers, path) {
+
+    f <- fs::path_file (path)
+    if (!f %in% files$filename) {
+        stop (
+            "File [", f, "] is not held on deposit#", article_id,
+            call. = FALSE
+        )
+    }
+
+    file_id <- files$id [files$filename == f]
+    del_url <- paste0 (service_url, "/", article_id, "/files/", file_id)
+
+    req <- create_httr2_helper (del_url, headers$Authorization, "DELETE")
+    resp <- httr2::req_perform (req)
+    httr2::resp_check_status (resp)
+}

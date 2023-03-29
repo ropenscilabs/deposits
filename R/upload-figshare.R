@@ -110,6 +110,10 @@ figshare_upload_parts <- function (upload_url, headers, path) {
     fs::dir_ls (tmpdir, regexp = "part\\_[0-9]+$")
 }
 
+#' Current only called from `deposit_delete_file()` method via private
+#' `delete_file` method.
+#' @param path Always just the file name.
+#' @noRd
 figshare_delete_file <- function (article_id, service_url, files, headers, path) {
 
     f <- fs::path_file (path)

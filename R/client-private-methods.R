@@ -225,3 +225,40 @@ depositsClient$set (
         return (files)
     }
 )
+
+#' @description Delete files from remote service.
+#'
+#' This is called from the 'deposit_delete_file' method.
+#' @param filename Name of file to be deleted as recorded on service.
+#' @param deposit_id The 'id' number of deposit from which file is to be
+#' deleted.
+#' @return Updated host data.
+#' @noRd
+
+depositsClient$set ("private", "delete_file", function (filename) {
+
+    if (self$service == "figshare") {
+
+        figshare_delete_file (
+            self$id,
+            get_service_url (self),
+            self$hostdata$files,
+            self$headers,
+            filename
+        )
+
+    } else if (self$service == "zenodo") {
+
+        zenodo_delete_file (
+            self$id,
+            get_service_url (self),
+            self$hostdata$files,
+            self$headers,
+            filename
+        )
+    }
+
+    self$deposit_retrieve (self$id)
+
+    invisible (self)
+})

@@ -107,6 +107,39 @@ cli$deposit_upload_file (path = path)
 cli$hostdata$files
 fs::dir_ls (fs::path_temp (), regexp = "datapackage")
 }
+
+## ------------------------------------------------
+## Method `depositsClient$deposit_delete_file`
+## ------------------------------------------------
+
+\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    Title = "Iris Dataset",
+    Creator = "Edgar Anderson",
+    Publisher = "American Iris Society",
+    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "iris.csv")
+write.csv (datasets::iris, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+
+# Then delete one of those files:
+cli$deposit_delete_file ("datapackage.json")
+}
 }
 \concept{client}
 \section{Public fields}{
@@ -153,6 +186,7 @@ by-passed when this parameter if \code{FALSE}.}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
+\item \href{#method-depositsClient-deposit_delete_file}{\code{depositsClient$deposit_delete_file()}}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_download_file}{\code{depositsClient$deposit_download_file()}}
 \item \href{#method-depositsClient-deposit_update_frictionless}{\code{depositsClient$deposit_update_frictionless()}}
@@ -554,6 +588,68 @@ cli$deposit_upload_file (path = path)
 # created:
 cli$hostdata$files
 fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_delete_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete_file}{}}}
+\subsection{Method \code{deposit_delete_file()}}{
+Delete a single from a deposits service.
+
+This does not modify the "datapackage.json" file, either locally or
+on a service.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete_file(filename)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{filename}}{Name of file to be deleted as recorded on service.}
+
+\item{\code{deposit_id}}{The 'id' number of deposit from which file is to be
+deleted. If not specified, the 'id' value of current deposits client
+is used.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    Title = "Iris Dataset",
+    Creator = "Edgar Anderson",
+    Publisher = "American Iris Society",
+    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "iris.csv")
+write.csv (datasets::iris, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+
+# Then delete one of those files:
+cli$deposit_delete_file ("datapackage.json")
 }
 }
 \if{html}{\out{</div>}}

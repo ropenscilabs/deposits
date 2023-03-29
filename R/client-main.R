@@ -585,8 +585,58 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # if only that exists. Either way, local version is then the most
             # up-to-date version.
             if (fs::path_file (path) != private$frictionless_json_name) {
-                self <- private$update_frictionless (path, overwrite = overwrite)
+                self <-
+                    private$update_frictionless (path, overwrite = overwrite)
             }
+
+            invisible (self)
+        },
+
+        #' @description Delete a single from a deposits service.
+        #'
+        #' This does not modify the "datapackage.json" file, either locally or
+        #' on a service.
+        #'
+        #' @param filename Name of file to be deleted as recorded on service.
+        #' @param deposit_id The 'id' number of deposit from which file is to be
+        #' deleted. If not specified, the 'id' value of current deposits client
+        #' is used.
+        #' @return (Invisibly) Updated 'deposits' client
+        #' @examples
+        #' \dontrun{
+        #' # Initiate deposit and fill with metadata:
+        #' metadata <- list (
+        #'     Title = "Iris Dataset",
+        #'     Creator = "Edgar Anderson",
+        #'     Publisher = "American Iris Society",
+        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #' )
+        #' cli <- depositsClient$new (
+        #'     service = "zenodo",
+        #'     sandbox = TRUE,
+        #'     metadata = metadata
+        #' )
+        #' cli$deposit_new ()
+        #'
+        #' # Create some local data and upload to deposit:
+        #' path <- fs::path (fs::path_temp (), "iris.csv")
+        #' write.csv (datasets::iris, path)
+        #' cli$deposit_upload_file (path = path)
+        #'
+        #' # Confirm that uploaded files include \pkg{frictionless}
+        #' # "datapackage.json" file, and also that local version has been
+        #' # created:
+        #' cli$hostdata$files
+        #'
+        #' # Then delete one of those files:
+        #' cli$deposit_delete_file ("datapackage.json")
+        #' }
+
+        deposit_delete_file = function (filename) {
+
+            checkmate::assert_character (filename, len = 1L)
+
+            self <- private$delete_file (filename)
 
             invisible (self)
         },
