@@ -194,7 +194,11 @@ separate_multiple_sources <- function (metadata, translations,
         content <- strsplit (metadata [[m]], "\n") [[1]]
         targets <- grep ("^\\#+", content)
 
-        if (targets [1] > min (which (nzchar (content)))) {
+        add_target <- length (targets) == 0L
+        if (!add_target) {
+            add_target <- targets [1] > min (which (nzchar (content)))
+        }
+        if (add_target) {
             # First content is default without markdown header
             tr_target <- tr_full$target [tr_full$source == m] [1]
             content <- c (paste0 ("## ", tr_target), content)
