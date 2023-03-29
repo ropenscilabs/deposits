@@ -232,7 +232,7 @@ method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-
 ``` r
 cli$deposit_new ()
 #> ID of new deposit : 1065666
-print (cil)
+print (cli)
 #> <deposits client>
 #>  deposits service : zenodo
 #>            sandbox: TRUE
