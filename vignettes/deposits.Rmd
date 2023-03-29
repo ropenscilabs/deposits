@@ -215,7 +215,7 @@ shouldn't generally need to be manipulated directly by users of this package
 
 Another convenient way to specify metadata is to use [the
 `deposits_metadata_template()`
-funciton](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
+function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
 to write a local [".json" representation](https://www.json.org/json-en.html) of
 metadata. This local file includes all metadata fields recognised by a deposits
 client. The function also accepts an optional `metadata` parameter which

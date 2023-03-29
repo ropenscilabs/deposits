@@ -120,7 +120,7 @@ cli$deposits_methods ()
 All of those methods then work similarly, by calling
 `cli$<method>(<parameters>)`. Note that R6 functions are called directly on the
 client, with the object itself (`cli`) updated by the call. For example, [the
-`deposit_fil_metadata()`
+`deposit_fill_metadata()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
 described below can be used to specify metadata for a deposit. This works by
 simply calling,
