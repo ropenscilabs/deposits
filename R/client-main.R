@@ -520,7 +520,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Upload a local file to an specified deposit.
+        #' @description Upload a local file to an specified deposit, or update
+        #' an existing version of file with new local version.
         #' @param path Path to local file to be uploaded. If the file to be
         #' uploaded is able to be read as a tabular data file, an associated
         #' \pkg{frictionless} "datapackage.json" file will also be uploaded if

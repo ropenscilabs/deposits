@@ -491,7 +491,8 @@ specified, the 'id' value of current deposits client is used.}
 \if{html}{\out{<a id="method-depositsClient-deposit_upload_file"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_upload_file}{}}}
 \subsection{Method \code{deposit_upload_file()}}{
-Upload a local file to an specified deposit.
+Upload a local file to an specified deposit, or update
+an existing version of file with new local version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   path = NULL,
