@@ -123,9 +123,19 @@ depositsClient$set ("private", "upload_local_file", function (path, overwrite) {
             if (!overwrite) {
                 stop (
                     "File [", fs::path_file (path), "] already ",
-                    "exists on deposit [", cli$id,
+                    "exists on deposit [", self$id,
                     "] and overwrite is set to 'FALSE'",
                     call. = FALSE
+                )
+            } else {
+                # Figshare simply duplicates files by default, so have to remove
+                # previous one:
+                figshare_delete_file (
+                    self$id,
+                    get_service_url (self),
+                    self$hostdata$files,
+                    self$headers,
+                    path
                 )
             }
         }

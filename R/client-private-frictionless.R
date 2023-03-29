@@ -71,9 +71,11 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 #' to the remote service, as well as updating any local copy that exists.
 #'
 #' @param path Path to local file that was uploaded.
+#' @param overwrite Inherited from `upload_local_file`
 #' @noRd
 
-depositsClient$set ("private", "update_frictionless", function (path) {
+depositsClient$set ("private", "update_frictionless",
+                    function (path, overwrite = FALSE) {
 
     deposit_id <- self$id
 
@@ -82,7 +84,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     file_names <- files [[private$get_file_name_field ()]]
 
     local_dp_check <- ensure_latest_local_dpsjon (
-        cli,
+        self,
         file_names,
         path,
         private$frictionless_json_name
@@ -178,7 +180,7 @@ depositsClient$set ("private", "update_frictionless", function (path) {
     # httptest2 does not produce mocked download files; only the actual
     # request result. So these files can not be uploaded here.
     if (update_remote && !is_deposits_test_env ()) {
-        self <- private$upload_local_file (local_dp_check$dp)
+        self <- private$upload_local_file (local_dp_check$dp, overwrite = overwrite)
     }
 
     if (identical (local_dp_check$dp, local_dp_check$dp_remote)) {
@@ -200,8 +202,10 @@ ensure_latest_local_dpsjon <- function (cli, file_names,
     mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
     dp_remote <- ""
 
+    # figshare does not allow private downloads, so can only check this on other
+    # services:
     if (frictionless_json_name %in% file_names &&
-        !is_deposits_test_env ()) {
+        cli$service != "figshare" && !is_deposits_test_env ()) {
         dp_remote <- cli$deposit_download_file (
             cli$deposit_id,
             filename = frictionless_json_name,

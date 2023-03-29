@@ -584,7 +584,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # if only that exists. Either way, local version is then the most
             # up-to-date version.
             if (fs::path_file (path) != private$frictionless_json_name) {
-                self <- private$update_frictionless (path)
+                self <- private$update_frictionless (path, overwrite = overwrite)
             }
 
             invisible (self)
