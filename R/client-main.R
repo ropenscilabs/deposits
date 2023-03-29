@@ -530,6 +530,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
+        #' @param overwrite Set to `TRUE` to update existing files by
+        #' overwriting.
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
         #' @return (Invisibly) Updated 'deposits' client
@@ -563,6 +565,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_upload_file = function (path = NULL,
                                         deposit_id = NULL,
+                                        overwrite = FALSE,
                                         quiet = FALSE) {
 
             if (is.null (deposit_id)) {
@@ -575,7 +578,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             path <- fs::path_real (path)
 
-            self <- private$upload_local_file (path)
+            self <- private$upload_local_file (path, overwrite)
 
             # Create "datapackage.json" if it does not exist, or download remote
             # if only that exists. Either way, local version is then the most
@@ -710,7 +713,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$service == "figshare") {
                 if (!self$hostdata$is_public) {
                     stop (
-                        "Figshare only enables automated downloads of public ",
+                        "Figshare does not allow automated downloads of private ",
                         "files.\nYou can manually download at ", download_url
                     )
                 }

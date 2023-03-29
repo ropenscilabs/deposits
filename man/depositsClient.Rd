@@ -496,6 +496,7 @@ Upload a local file to an specified deposit.
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   path = NULL,
   deposit_id = NULL,
+  overwrite = FALSE,
   quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
@@ -513,6 +514,9 @@ will also be used to fill or update any metadata within the
 \item{\code{deposit_id}}{The 'id' number of deposit which file is to be
 uploaded to. If not specified, the 'id' value of current deposits
 client is used.}
+
+\item{\code{overwrite}}{Set to \code{TRUE} to update existing files by
+overwriting.}
 
 \item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
 screen.}

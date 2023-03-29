@@ -112,11 +112,23 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 #' @description Perform actual upload of local file.
 #' @noRd
 
-depositsClient$set ("private", "upload_local_file", function (path) {
+depositsClient$set ("private", "upload_local_file", function (path, overwrite) {
 
     url <- get_service_url (self)
 
     if (self$service == "figshare") {
+
+        current_files <- self$hostdata$files$name
+        if (fs::path_file (path) %in% current_files) {
+            if (!overwrite) {
+                stop (
+                    "File [", fs::path_file (path), "] already ",
+                    "exists on deposit [", cli$id,
+                    "] and overwrite is set to 'FALSE'",
+                    call. = FALSE
+                )
+            }
+        }
 
         # in R/upload-figshare.R, which returns updated hostdata
         self$hostdata <- upload_figshare_file (
