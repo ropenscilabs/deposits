@@ -587,8 +587,8 @@ any issues encountered in retrieving deposit.}
 Download a specified 'filename' from a deposit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_download_file(
-  deposit_id = NULL,
   filename,
+  deposit_id = NULL,
   path = NULL,
   overwrite = FALSE,
   quiet = FALSE
@@ -598,12 +598,12 @@ Download a specified 'filename' from a deposit.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{filename}}{The name of the file to be download as specified in
+the deposit.}
+
 \item{\code{deposit_id}}{The 'id' number of deposit which file is to be
 downloaded from. If not specified, the 'id' value of current deposits
 client is used.}
-
-\item{\code{filename}}{The name of the file to be download as specified in
-the deposit.}
 
 \item{\code{path}}{The local directory where file is to be downloaded.}
 

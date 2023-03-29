@@ -659,19 +659,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Download a specified 'filename' from a deposit.
+        #' @param filename The name of the file to be download as specified in
+        #' the deposit.
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' downloaded from. If not specified, the 'id' value of current deposits
         #' client is used.
-        #' @param filename The name of the file to be download as specified in
-        #' the deposit.
         #' @param path The local directory where file is to be downloaded.
         #' @param overwrite Do not overwrite existing files unless set to
         #' `TRUE`.
         #' @param quiet If `FALSE`, display download progress.
         #' @return The full path of the downloaded file.
 
-        deposit_download_file = function (deposit_id = NULL,
-                                          filename,
+        deposit_download_file = function (filename,
+                                          deposit_id = NULL,
                                           path = NULL,
                                           overwrite = FALSE,
                                           quiet = FALSE) {
