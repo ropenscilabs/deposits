@@ -74,121 +74,123 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 #' @param overwrite Inherited from `upload_local_file`
 #' @noRd
 
-depositsClient$set ("private", "update_frictionless",
-                    function (path, overwrite = FALSE) {
+depositsClient$set (
+    "private", "update_frictionless",
+    function (path, overwrite = FALSE) {
 
-    deposit_id <- self$id
+        deposit_id <- self$id
 
-    # -------- Ensure local "datapackage.json" is up to date
-    files <- self$hostdata$files
-    file_names <- files [[private$get_file_name_field ()]]
+        # -------- Ensure local "datapackage.json" is up to date
+        files <- self$hostdata$files
+        file_names <- files [[private$get_file_name_field ()]]
 
-    local_dp_check <- ensure_latest_local_dpsjon (
-        self,
-        file_names,
-        path,
-        private$frictionless_json_name
-    )
-
-    update_remote <- local_dp_check$update_remote
-    path_dir <- fs::path_dir (path)
-
-    if (fs::file_exists (local_dp_check$dp)) {
-        suppressMessages (
-            dpj <- frictionless::read_package (local_dp_check$dp)
-        )
-        if (!"metadata" %in% names (dpj)) {
-            update_remote <- private$add_meta_to_dp_json (path_dir)
-            # That method always returns 'TRUE'
-        }
-    } else if (self$frictionless) {
-        if (is_file_binary (path)) {
-            warning (
-                "There is no frictionless 'datapackage.json' file either ",
-                "locally or on the '",
-                self$service,
-                "' deposit, nor can one be generated from binary data.\n",
-                "It is recommended to first generate a local ",
-                "'datapackage.json' file for you data. See documentation at ",
-                "https://docs.ropensci.org/frictionless"
-            )
-            update_remote <- FALSE
-
-            self$frictionless <- FALSE
-        } else {
-            p <- private$generate_frictionless (path) # return frictionless data
-            message (
-                "frictionless metadata file has been generated as '",
-                path,
-                "'"
-            )
-            chk <- private$add_meta_to_dp_json (path_dir) # always true
-            # 'p' is then not up-to-date, but not used from here so okay for
-            # now.
-            update_remote <- TRUE
-        }
-    }
-
-    if (!self$frictionless) {
-        invisible (return (self))
-    }
-
-    if (!identical (local_dp_check$dp, local_dp_check$dp_local)) {
-        fs::file_copy (
-            local_dp_check$dp,
-            local_dp_check$dp_local,
-            overwrite = TRUE
-        )
-        message (
-            "frictionless metadata file [",
+        local_dp_check <- ensure_latest_local_dpsjon (
+            self,
+            file_names,
             path,
-            "] has been updated."
+            private$frictionless_json_name
         )
+
+        update_remote <- local_dp_check$update_remote
+        path_dir <- fs::path_dir (path)
+
+        if (fs::file_exists (local_dp_check$dp)) {
+            suppressMessages (
+                dpj <- frictionless::read_package (local_dp_check$dp)
+            )
+            if (!"metadata" %in% names (dpj)) {
+                update_remote <- private$add_meta_to_dp_json (path_dir)
+                # That method always returns 'TRUE'
+            }
+        } else if (self$frictionless) {
+            if (is_file_binary (path)) {
+                warning (
+                    "There is no frictionless 'datapackage.json' file either ",
+                    "locally or on the '",
+                    self$service,
+                    "' deposit, nor can one be generated from binary data.\n",
+                    "It is recommended to first generate a local ",
+                    "'datapackage.json' file for you data. See documentation at ",
+                    "https://docs.ropensci.org/frictionless"
+                )
+                update_remote <- FALSE
+
+                self$frictionless <- FALSE
+            } else {
+                p <- private$generate_frictionless (path) # return frictionless data
+                message (
+                    "frictionless metadata file has been generated as '",
+                    path,
+                    "'"
+                )
+                chk <- private$add_meta_to_dp_json (path_dir) # always true
+                # 'p' is then not up-to-date, but not used from here so okay for
+                # now.
+                update_remote <- TRUE
+            }
+        }
+
+        if (!self$frictionless) {
+            invisible (return (self))
+        }
+
+        if (!identical (local_dp_check$dp, local_dp_check$dp_local)) {
+            fs::file_copy (
+                local_dp_check$dp,
+                local_dp_check$dp_local,
+                overwrite = TRUE
+            )
+            message (
+                "frictionless metadata file [",
+                path,
+                "] has been updated."
+            )
+        }
+
+        # -------- Update local version with new resources
+        dpj <- frictionless::read_package (local_dp_check$dp_local)
+        resource_names <-
+            vapply (dpj$resources, function (i) i$name, character (1L))
+        new_resource_name <- fs::path_ext_remove (fs::path_file (path))
+        dp_file_names <- vapply (dpj$resources, function (i) i$path, character (1L))
+
+        if (!new_resource_name %in% resource_names) {
+
+            p <- create_new_frictionless (new_resource_name, path)
+            dpj$resources <- c (dpj$resources, p$resources)
+
+            # Update local version:
+            path_loc <- fs::path_dir (local_dp_check$dp_local)
+            frictionless::write_package (dpj, path_loc)
+
+            update_remote <- TRUE
+
+        } else if (!all (dp_file_names %in% file_names)) {
+
+            # "datapackage.json" lists resources not yet uploaded.
+            dp_not_uploaded <-
+                dp_file_names [which (!dp_file_names %in% file_names)]
+            message (
+                "Your 'datapackage.json' includes the following resources ",
+                "which have not yet been uploaded: [",
+                paste0 (dp_not_uploaded, collapse = ", "),
+                "]"
+            )
+        }
+
+        # httptest2 does not produce mocked download files; only the actual
+        # request result. So these files can not be uploaded here.
+        if (update_remote && !is_deposits_test_env ()) {
+            self <- private$upload_local_file (local_dp_check$dp, overwrite = overwrite)
+        }
+
+        if (identical (local_dp_check$dp, local_dp_check$dp_remote)) {
+            fs::file_delete (local_dp_check$dp_remote)
+        }
+
+        invisible (self)
     }
-
-    # -------- Update local version with new resources
-    dpj <- frictionless::read_package (local_dp_check$dp_local)
-    resource_names <-
-        vapply (dpj$resources, function (i) i$name, character (1L))
-    new_resource_name <- fs::path_ext_remove (fs::path_file (path))
-    dp_file_names <- vapply (dpj$resources, function (i) i$path, character (1L))
-
-    if (!new_resource_name %in% resource_names) {
-
-        p <- create_new_frictionless (new_resource_name, path)
-        dpj$resources <- c (dpj$resources, p$resources)
-
-        # Update local version:
-        path_loc <- fs::path_dir (local_dp_check$dp_local)
-        frictionless::write_package (dpj, path_loc)
-
-        update_remote <- TRUE
-
-    } else if (!all (dp_file_names %in% file_names)) {
-
-        # "datapackage.json" lists resources not yet uploaded.
-        dp_not_uploaded <-
-            dp_file_names [which (!dp_file_names %in% file_names)]
-        message (
-            "Your 'datapackage.json' includes the following resources ",
-            "which have not yet been uploaded: [",
-            paste0 (dp_not_uploaded, collapse = ", "),
-            "]"
-        )
-    }
-
-    # httptest2 does not produce mocked download files; only the actual
-    # request result. So these files can not be uploaded here.
-    if (update_remote && !is_deposits_test_env ()) {
-        self <- private$upload_local_file (local_dp_check$dp, overwrite = overwrite)
-    }
-
-    if (identical (local_dp_check$dp, local_dp_check$dp_remote)) {
-        fs::file_delete (local_dp_check$dp_remote)
-    }
-
-    invisible (self)
-})
+)
 
 #' Ensure local 'datapacakge.json' is up to date.
 #'
