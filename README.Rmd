@@ -107,6 +107,7 @@ cli$deposits_methods ()
 #>    - deposit_retrieve
 #>    - deposit_service
 #>    - deposit_update
+#>    - deposit_update_frictionless
 #>    - deposit_upload_file
 #>    - deposits_list
 #>    - deposits_methods
@@ -181,7 +182,7 @@ following example:
 metadata <- list (
     title = "New Title",
     abstract = "This is the abstract",
-    creator = list ("A. Person", "B. Person")
+    creator = list (list (name = "A. Person"), list (name = "B. Person"))
 )
 ```
 

@@ -104,6 +104,7 @@ cli$deposits_methods ()
 #>    - deposit_retrieve
 #>    - deposit_service
 #>    - deposit_update
+#>    - deposit_update_frictionless
 #>    - deposit_upload_file
 #>    - deposits_list
 #>    - deposits_methods
@@ -181,7 +182,7 @@ terms like the following example:
 metadata <- list (
     title = "New Title",
     abstract = "This is the abstract",
-    creator = list ("A. Person", "B. Person")
+    creator = list (list (name = "A. Person"), list (name = "B. Person"))
 )
 ```
 
@@ -297,17 +298,19 @@ project, you agree to abide by its terms.
 
 ## Contributors
 
-
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors`
+package](https://github.com/ropenscilabs/allcontributors) following the
+[all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
 ### Code
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -316,14 +319,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropenscilabs/deposits/commits?author=mpadge">mpadge</a>
 </td>
 </tr>
-
 </table>
-
 
 ### Issues
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/collinschwantes">
@@ -356,9 +356,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Anoamross">noamross</a>
 </td>
 </tr>
-
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
