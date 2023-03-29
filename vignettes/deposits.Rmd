@@ -167,7 +167,7 @@ the easiest of which is as a simple list:
 metadata <- list (
     title = "New Title",
     abstract = "This is the abstract",
-    creator = list ("A. Person", "B. Person")
+    creator = list (list (name = "A. Person"), list (name = "B. Person"))
 )
 ```
 
@@ -198,7 +198,7 @@ cli$metadata
 metadata <- list (
     abstract = "This is the abstract",
     created = "2023-01-01",
-    creator = list ("A. Person", "B. Person"),
+    creator = list (list (name = "A. Person"), list (name = "B. Person")),
     title = "New Title"
 )
 print (metadata)

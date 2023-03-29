@@ -54,9 +54,10 @@ dataset](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.htm
 
 ```{r beaver-metadata, eval = FALSE}
 metadata <- list (
-    Creator = "P. S. Reynolds",
-    Created = "1994-01-01",
-    Title = "Time-series analyses of beaver body temperatures"
+    creator = list (list (name = "P. S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures",
+    description = "Original source of 'beaver' dataset."
 )
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = metadata)
 ```
@@ -102,10 +103,15 @@ entered above:
 ```{r frictionless-metadata, eval = FALSE}
 metadata$metadata
 #> $created
-#> [1] "1994-01-01"
+#> [1] "1994-01-01T00:00:00"
 #>
 #> $creator
+#> $creator[[1]]
+#> $creator[[1]]$name
 #> [1] "P. S. Reynolds"
+#>
+#> $description
+#> [1] "Original source of 'beaver' dataset."
 #>
 #> $title
 #> [1] "Time-series analyses of beaver body temperatures"
@@ -134,7 +140,7 @@ it with [the `deposit_upload_file()`
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-):
 
 ```{r upload-datapackage, eval = FALSE}
-cli$deposit_upload_file (path = path)
+cli$deposit_upload_file (path = path, overwrite = TRUE)
 ```
 
 ## Using deposits client to edit frictionless metadata
