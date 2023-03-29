@@ -494,8 +494,8 @@ specified, the 'id' value of current deposits client is used.}
 Upload a local file to an specified deposit.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
-  deposit_id = NULL,
   path = NULL,
+  deposit_id = NULL,
   quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
@@ -503,16 +503,16 @@ Upload a local file to an specified deposit.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
-uploaded to. If not specified, the 'id' value of current deposits
-client is used.}
-
 \item{\code{path}}{Path to local file to be uploaded. If the file to be
 uploaded is able to be read as a tabular data file, an associated
 \pkg{frictionless} "datapackage.json" file will also be uploaded if
 it exists, or created if it does not. The metadata within a client
 will also be used to fill or update any metadata within the
 "datapackage.json" file.}
+
+\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
+uploaded to. If not specified, the 'id' value of current deposits
+client is used.}
 
 \item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
 screen.}

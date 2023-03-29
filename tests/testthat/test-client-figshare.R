@@ -196,7 +196,7 @@ test_that ("figshare upload", {
     write.csv (datasets::Orange, filename)
 
     dep <- with_mock_dir ("fs_up", {
-        cli$deposit_upload_file (deposit_id, filename)
+        cli$deposit_upload_file (filename, deposit_id)
     })
 
     expect_identical (dep, cli)

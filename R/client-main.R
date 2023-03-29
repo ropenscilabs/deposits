@@ -521,15 +521,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Upload a local file to an specified deposit.
-        #' @param deposit_id The 'id' number of deposit which file is to be
-        #' uploaded to. If not specified, the 'id' value of current deposits
-        #' client is used.
         #' @param path Path to local file to be uploaded. If the file to be
         #' uploaded is able to be read as a tabular data file, an associated
         #' \pkg{frictionless} "datapackage.json" file will also be uploaded if
         #' it exists, or created if it does not. The metadata within a client
         #' will also be used to fill or update any metadata within the
         #' "datapackage.json" file.
+        #' @param deposit_id The 'id' number of deposit which file is to be
+        #' uploaded to. If not specified, the 'id' value of current deposits
+        #' client is used.
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
         #' @return (Invisibly) Updated 'deposits' client
@@ -561,8 +561,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' fs::dir_ls (fs::path_temp (), regexp = "datapackage")
         #' }
 
-        deposit_upload_file = function (deposit_id = NULL,
-                                        path = NULL,
+        deposit_upload_file = function (path = NULL,
+                                        deposit_id = NULL,
                                         quiet = FALSE) {
 
             if (is.null (deposit_id)) {
