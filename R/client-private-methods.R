@@ -112,76 +112,78 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 #' @description Perform actual upload of local file.
 #' @noRd
 
-depositsClient$set ("private", "upload_local_file",
-                    function (path, overwrite, compress) {
+depositsClient$set (
+    "private", "upload_local_file",
+    function (path, overwrite, compress) {
 
-    url <- get_service_url (self)
+        url <- get_service_url (self)
 
-    if (compress != "no") {
-        path_old <- path
-        path <- compress_local_file (path, compress)
-    }
+        if (compress != "no") {
+            path_old <- path
+            path <- compress_local_file (path, compress)
+        }
 
-    if (self$service == "figshare") {
+        if (self$service == "figshare") {
 
-        current_files <- self$hostdata$files$name
-        if (fs::path_file (path) %in% current_files) {
-            if (!overwrite) {
-                stop (
-                    "File [", fs::path_file (path), "] already ",
-                    "exists on deposit [", self$id,
-                    "] and overwrite is set to 'FALSE'",
-                    call. = FALSE
-                )
-            } else {
-                # Figshare simply duplicates files by default, so have to remove
-                # previous one:
-                figshare_delete_file (
-                    self$id,
-                    get_service_url (self),
-                    self$hostdata$files,
-                    self$headers,
-                    path
-                )
+            current_files <- self$hostdata$files$name
+            if (fs::path_file (path) %in% current_files) {
+                if (!overwrite) {
+                    stop (
+                        "File [", fs::path_file (path), "] already ",
+                        "exists on deposit [", self$id,
+                        "] and overwrite is set to 'FALSE'",
+                        call. = FALSE
+                    )
+                } else {
+                    # Figshare simply duplicates files by default, so have to
+                    # remove previous one:
+                    figshare_delete_file (
+                        self$id,
+                        get_service_url (self),
+                        self$hostdata$files,
+                        self$headers,
+                        path
+                    )
+                }
+            }
+
+            # in R/upload-figshare.R, which returns updated hostdata
+            self$hostdata <- upload_figshare_file (
+                self$id,
+                url,
+                self$headers,
+                path
+            )
+
+        } else if (self$service == "zenodo") {
+
+            # in R/upload-zenodo.R, which returns data on file upload only
+            res <- upload_zenodo_file (
+                self$id,
+                url,
+                self$headers,
+                path
+            )
+
+            frictionless <- self$frictionless
+
+            self <- self$deposit_retrieve (self$id)
+
+            initial_upload <- all (
+                self$hostdata$file$filename %in% fs::path_file (path)
+            )
+            if (initial_upload && frictionless && !self$frictionless) {
+                self$frictionless <- TRUE
             }
         }
 
-        # in R/upload-figshare.R, which returns updated hostdata
-        self$hostdata <- upload_figshare_file (
-            self$id,
-            url,
-            self$headers,
-            path
-        )
-
-    } else if (self$service == "zenodo") {
-
-        # in R/upload-zenodo.R, which returns data on file upload only
-        res <- upload_zenodo_file (
-            self$id,
-            url,
-            self$headers,
-            path
-        )
-
-        frictionless <- self$frictionless
-
-        self <- self$deposit_retrieve (self$id)
-
-        initial_upload <- all (
-            self$hostdata$file$filename %in% fs::path_file (path)
-        )
-        if (initial_upload && frictionless && !self$frictionless) {
-            self$frictionless <- TRUE
+        if (compress != "no") {
+            fs::file_delete (path)
         }
-    }
 
-    if (compress != "no") {
-        fs::file_delete (path)
+        invisible (self)
     }
-
-    invisible (self)
-})
+)
 
 compress_local_file <- function (path, compress) {
 

@@ -110,14 +110,15 @@ depositsClient$set (
                     self$service,
                     "' deposit, nor can one be generated from binary data.\n",
                     "It is recommended to first generate a local ",
-                    "'datapackage.json' file for you data. See documentation at ",
-                    "https://docs.ropensci.org/frictionless"
+                    "'datapackage.json' file for you data. See documentation ",
+                    "at https://docs.ropensci.org/frictionless"
                 )
                 update_remote <- FALSE
 
                 self$frictionless <- FALSE
             } else {
-                p <- private$generate_frictionless (path) # return frictionless data
+                # return frictionless data:
+                p <- private$generate_frictionless (path)
                 message (
                     "frictionless metadata file has been generated as '",
                     path,
@@ -152,7 +153,11 @@ depositsClient$set (
         resource_names <-
             vapply (dpj$resources, function (i) i$name, character (1L))
         new_resource_name <- fs::path_ext_remove (fs::path_file (path))
-        dp_file_names <- vapply (dpj$resources, function (i) i$path, character (1L))
+        dp_file_names <- vapply (
+            dpj$resources,
+            function (i) i$path,
+            character (1L)
+        )
 
         if (!new_resource_name %in% resource_names) {
 
