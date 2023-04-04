@@ -532,6 +532,7 @@ an existing version of file with new local version.
   path = NULL,
   deposit_id = NULL,
   overwrite = FALSE,
+  compress = c("no", "zip", "tar"),
   quiet = FALSE
 )}\if{html}{\out{</div>}}
 }
@@ -552,6 +553,10 @@ client is used.}
 
 \item{\code{overwrite}}{Set to \code{TRUE} to update existing files by
 overwriting.}
+
+\item{\code{compress}}{One of "no" (default), "zip", or "tar", where the
+latter two will compress data in the chosen binary format prior to
+uploading.}
 
 \item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
 screen.}

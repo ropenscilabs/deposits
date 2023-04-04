@@ -181,7 +181,11 @@ depositsClient$set (
         # httptest2 does not produce mocked download files; only the actual
         # request result. So these files can not be uploaded here.
         if (update_remote && !is_deposits_test_env ()) {
-            self <- private$upload_local_file (local_dp_check$dp, overwrite = overwrite)
+            self <- private$upload_local_file (
+                local_dp_check$dp,
+                overwrite = overwrite,
+                compress = "no"
+            )
         }
 
         if (identical (local_dp_check$dp, local_dp_check$dp_remote)) {

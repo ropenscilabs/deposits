@@ -112,9 +112,15 @@ depositsClient$set ("private", "rm_host_meta_data", function () {
 #' @description Perform actual upload of local file.
 #' @noRd
 
-depositsClient$set ("private", "upload_local_file", function (path, overwrite) {
+depositsClient$set ("private", "upload_local_file",
+                    function (path, overwrite, compress) {
 
     url <- get_service_url (self)
+
+    if (compress != "no") {
+        path_old <- path
+        path <- compress_local_file (path, compress)
+    }
 
     if (self$service == "figshare") {
 
@@ -170,8 +176,36 @@ depositsClient$set ("private", "upload_local_file", function (path, overwrite) {
         }
     }
 
+    if (compress != "no") {
+        fs::file_delete (path)
+    }
+
     invisible (self)
 })
+
+compress_local_file <- function (path, compress) {
+
+    if (compress == "tar") {
+        file_ext <- ".tar.gz"
+        fn <- tar
+    } else if (compress == "zip") {
+        file_ext <- ".zip"
+        fn <- zip
+    }
+
+    binfile <- fs::path_ext_set (path, file_ext)
+    if (fs::file_exists (binfile)) {
+        message (
+            "File [",
+            binfile,
+            "] already exists; will not be re-created."
+        )
+    } else {
+        do.call (fn, list (binfile, files = path))
+    }
+
+    return (binfile)
+}
 
 #' @description Get the name of the "files" part of hostdata which contains the
 #' actual names of the files.

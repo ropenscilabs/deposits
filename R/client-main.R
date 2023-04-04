@@ -533,6 +533,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' client is used.
         #' @param overwrite Set to `TRUE` to update existing files by
         #' overwriting.
+        #' @param compress One of "no" (default), "zip", or "tar", where the
+        #' latter two will compress data in the chosen binary format prior to
+        #' uploading.
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
         #' @return (Invisibly) Updated 'deposits' client
@@ -567,7 +570,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         deposit_upload_file = function (path = NULL,
                                         deposit_id = NULL,
                                         overwrite = FALSE,
+                                        compress = c ("no", "zip", "tar"),
                                         quiet = FALSE) {
+
+            compress <- match.arg (compress)
 
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
@@ -579,7 +585,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             path <- fs::path_real (path)
 
-            self <- private$upload_local_file (path, overwrite)
+            self <- private$upload_local_file (path, overwrite, compress)
 
             # Create "datapackage.json" if it does not exist, or download remote
             # if only that exists. Either way, local version is then the most
@@ -847,7 +853,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # Then finally upload new "datapackage.json":
             if (!is_deposits_test_env ()) {
-                self <- private$upload_local_file (path_json)
+                self <- private$upload_local_file (path_json, compress = "no")
             }
 
             if (!path_is_local) {
