@@ -525,8 +525,8 @@ specified, the 'id' value of current deposits client is used.}
 \if{html}{\out{<a id="method-depositsClient-deposit_upload_file"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_upload_file}{}}}
 \subsection{Method \code{deposit_upload_file()}}{
-Upload a local file to an specified deposit, or update
-an existing version of file with new local version.
+Upload a local file or folder to an specified deposit,
+or update an existing version of file with new local version.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
   path = NULL,
@@ -540,11 +540,11 @@ an existing version of file with new local version.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{Path to local file to be uploaded. If the file to be
-uploaded is able to be read as a tabular data file, an associated
-\pkg{frictionless} "datapackage.json" file will also be uploaded if
-it exists, or created if it does not. The metadata within a client
-will also be used to fill or update any metadata within the
+\item{\code{path}}{Path to local file or folder to be uploaded. If the file
+to be uploaded is able to be read as a tabular data file, an
+associated \pkg{frictionless} "datapackage.json" file will also be
+uploaded if it exists, or created if it does not. The metadata within
+a client will also be used to fill or update any metadata within the
 "datapackage.json" file.}
 
 \item{\code{deposit_id}}{The 'id' number of deposit which file is to be
@@ -556,7 +556,9 @@ overwriting.}
 
 \item{\code{compress}}{One of "no" (default), "zip", or "tar", where the
 latter two will compress data in the chosen binary format prior to
-uploading.}
+uploading. All files are individually compressed; uploading binary
+archives of multiple files is not recommended, as it prevents people
+downloading selections of those files.}
 
 \item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
 screen.}

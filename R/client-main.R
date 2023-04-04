@@ -520,13 +520,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Upload a local file to an specified deposit, or update
-        #' an existing version of file with new local version.
-        #' @param path Path to local file to be uploaded. If the file to be
-        #' uploaded is able to be read as a tabular data file, an associated
-        #' \pkg{frictionless} "datapackage.json" file will also be uploaded if
-        #' it exists, or created if it does not. The metadata within a client
-        #' will also be used to fill or update any metadata within the
+        #' @description Upload a local file or folder to an specified deposit,
+        #' or update an existing version of file with new local version.
+        #'
+        #' @param path Path to local file or folder to be uploaded. If the file
+        #' to be uploaded is able to be read as a tabular data file, an
+        #' associated \pkg{frictionless} "datapackage.json" file will also be
+        #' uploaded if it exists, or created if it does not. The metadata within
+        #' a client will also be used to fill or update any metadata within the
         #' "datapackage.json" file.
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' uploaded to. If not specified, the 'id' value of current deposits
@@ -535,7 +536,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' overwriting.
         #' @param compress One of "no" (default), "zip", or "tar", where the
         #' latter two will compress data in the chosen binary format prior to
-        #' uploading.
+        #' uploading. All files are individually compressed; uploading binary
+        #' archives of multiple files is not recommended, as it prevents people
+        #' downloading selections of those files.
         #' @param quiet If `FALSE` (default), display diagnostic information on
         #' screen.
         #' @return (Invisibly) Updated 'deposits' client
@@ -581,19 +584,33 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (path, len = 1L)
-            checkmate::assert_file_exists (path)
+            if (!fs::is_dir (path)) {
+                checkmate::assert_file_exists (path)
+            }
 
             path <- fs::path_real (path)
 
-            self <- private$upload_local_file (path, overwrite, compress)
+            if (!fs::is_dir (path)) {
 
-            # Create "datapackage.json" if it does not exist, or download remote
-            # if only that exists. Either way, local version is then the most
-            # up-to-date version.
-            if (fs::path_file (path) != private$frictionless_json_name) {
-                self <-
-                    private$update_frictionless (path, overwrite = overwrite)
+                self <- private$upload_local_file (path, overwrite, compress)
+                # Create "datapackage.json" if it does not exist, or download remote
+                # if only that exists. Either way, local version is then the most
+                # up-to-date version.
+                if (fs::path_file (path) != private$frictionless_json_name) {
+                    self <-
+                        private$update_frictionless (path, overwrite = overwrite)
+                }
+
+            } else {
+
+                flist <- fs::dir_ls (path)
+                flist <- flist [which (!grepl ("datapackage\\.json$", flist))]
+                for (f in flist) {
+                    self <- private$upload_local_file (f, overwrite, compress)
+                    self <- private$update_frictionless (f, overwrite = overwrite)
+                }
             }
+
 
             invisible (self)
         },
