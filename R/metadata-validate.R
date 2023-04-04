@@ -81,6 +81,7 @@ validate_dcmi_metadata <- function (metadata) {
     f <- fs::file_temp (ext = ".json")
     jsonlite::write_json (metadata, f, auto_unbox = TRUE)
     v <- jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+    fs::file_delete (f)
 
     if (!v) {
         errs <- attr (v, "error")
@@ -125,6 +126,8 @@ validate_service_metadata <- function (metadata, service) {
     jsonlite::write_json (metadata, f, auto_unbox = TRUE)
     res <-
         jsonvalidate::json_validate (f, schema, engine = "ajv", verbose = TRUE)
+
+    fs::file_delete (f)
 
     return (res)
 }
