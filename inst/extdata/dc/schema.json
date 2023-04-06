@@ -9,7 +9,16 @@
         },
         "accessRights": {
             "description": "Information about who access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'access_right' values",
+                    "type": "string",
+                    "enum": ["open", "embargoed", "restricted", "closed"]
+                }
+            ]
         },
         "accrualMethod": {
             "type": "object",
@@ -55,10 +64,46 @@
         },
         "contributor": {
             "description": "An entity responsible for making contributions to the resource.",
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
+            "anyOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "description": "Zenodo 'contributors' schema",
+                    "type": "array",
+                    "items": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "^type$": {
+                            "type": "string",
+                            "enum": ["ContactPerson", "DataCollector",
+                                "DataCurator", "DataManager", "istributor",
+                                "Editor", "HostingInstitution", "Producer",
+                                "ProjectLeader", "ProjectManager",
+                                "ProjectMember", "RegistrationAgency",
+                                "RegistrationAuthority", "RelatedPerson",
+                                "Researcher", "ResearchGroup", "RightsHolder",
+                                "upervisor", "Sponsor", "WorkPackageLeader",
+                                "Other"]
+                        },
+                        "affiliation": {
+                            "type": "string"
+                        },
+                        "orcid": {
+                            "type": "string"
+                        },
+                        "gnd": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["name", "type"],
+                    "additionalProperties": false
+                }
+            ]
         },
         "coverage": {
             "description": "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant.",
@@ -160,7 +205,23 @@
         },
         "format": {
             "description": "The file format, physical medium, or dimensions of the resource. Recommended practice is to use a controlled vocabulary where available. For example, for file formats one could use the list of Internet Media Types [MIME]. Examples of dimensions include size and duration.",
-            "type": "string"
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'upload_type' values",
+                    "type": "string",
+                    "enum": ["publication", "poster", "presentation", "dataset", "image", "video", "software", "lesson", "physicalobject", "other"]
+                },
+                {
+                    "description": "Figshare 'defined_type' values",
+                    "type": "string",
+                    "enum": ["figure", "online_resource", "preprint", "book",
+                        "conference_contribution", "media", "dataset", "poster",
+                        "journal_contribution", "presentation", "thesis", "software"]
+                }
+            ]
         },
         "hasFormat": {
             "description": "A related resource that is substantially the same as the pre-existing described resource, but in another format. This property is an inverse property of Is Format Of.",
@@ -168,7 +229,31 @@
         },
         "hasPart": {
             "description": "A related resource that is included either physically or logically in the described resource. This property is an inverse property of Is Part Of.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "typpe": "string"
+                },
+                {
+                    "description": "Zenodo 'files' schema",
+                    "type": "array",
+                    "items": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "filename": {
+                            "type": "string"
+                        },
+                        "filesize": {
+                            "type": "integer"
+                        },
+                        "checksum": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["filename"]
+                }
+            ]
         },
         "hasVersion": {
             "description": "A related resource that is a version, edition, or adaptation of the described resource. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Is Version Of.",
@@ -280,7 +365,23 @@
         },
         "subject": {
             "description": "A topic of the resource. Recommended practice is to refer to the subject with a URI. If this is not possible or feasible, a literal value that identifies the subject may be provided. Both should preferably refer to a subject in a controlled vocabulary.",
-            "type": "string"
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Array of keywords",
+                    "type": "object",
+                    "properties": {
+                        "keywords": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         "tableOfContents": {
             "description": "A list of subunits of the resource.",
@@ -307,5 +408,6 @@
             ]
         }
     },
-    "required": []
+    "required": [],
+    "additionalProperties": false
 }
