@@ -72,12 +72,12 @@
             ]
         },
         "creator": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
+            "anyOf": [
+                {
+                    "description": "figshare 'authors' schema",
+                    "type": "array",
+                    "items": {
                         "type": "object",
-                        "description": "figshare 'authors' schema",
                         "properties": {
                             "name": {
                                 "type": "string"
@@ -101,7 +101,12 @@
                         "additionalProperties": false,
                         "required": ["name"]
                     },
-                    {
+                    "minItems": 1
+                },
+                {
+                    "description": "zenodo 'authors' schema",
+                    "type": "array",
+                    "items": {
                         "type": "object",
                         "properties": {
                             "name": {
@@ -119,9 +124,10 @@
                         },
                         "additionalProperties": false,
                         "required": ["name"]
-                    }
-                ]
-            }
+                    },
+                    "minItems": 1
+                }
+            ]
         },
         "date": {
             "description": "A point or period of time associated with an event in the lifecycle of the resource.",
