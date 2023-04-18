@@ -73,3 +73,48 @@ test_that ("metadata validate", {
         "Stopping because the DCMI metadata terms listed above do not conform"
     )
 })
+
+# Test parsing multiple metadata sources in different formats. Here, "keywords"
+# and "subjects" have to be specified in single DCMI "subject" field. This tests
+# that multiple ways of specifying these 2 fields produce same result. See #63.
+test_that ("metadata parsing", {
+
+
+    service <- "zenodo"
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## version\n1.0"
+        ),
+        subject = "## keywords\none\ntwo, three\n\n## subjects\nthis, that"
+    )
+
+    # The 2 validation calls in main client initialization:
+    expect_silent (
+        metadata_dcmi1 <- validate_dcmi_metadata (metadata)
+    )
+    expect_silent (
+        metadata_service1 <- translate_dc_to_service (metadata_dcmi1, service = service)
+    )
+
+    # Alternative specification:
+    metadata$subject <- list (
+        keywords = list ("one", "two", "three"),
+        subjects = list ("this", "that")
+    )
+    expect_silent (
+        metadata_dcmi2 <- validate_dcmi_metadata (metadata)
+    )
+    expect_silent (
+        metadata_service2 <- translate_dc_to_service (metadata_dcmi2, service = service)
+    )
+
+    expect_false (identical (metadata_dcmi1, metadata_dcmi2))
+
+    # timestamps can differ:
+    metadata_service1$created <- metadata_service2$created <- NULL
+    expect_identical (metadata_service1, metadata_service2)
+})
