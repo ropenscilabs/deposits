@@ -191,54 +191,68 @@ separate_multiple_sources <- function (metadata, translations,
 
     for (m in multiple_sources) {
 
-        content <- strsplit (metadata [[m]], "\n") [[1]]
-        targets <- grep ("^\\#+", content)
-
-        add_target <- length (targets) == 0L
-        if (!add_target) {
-            add_target <- targets [1] > min (which (nzchar (content)))
-        }
-        if (add_target) {
-            # First content is default without markdown header
-            tr_target <- tr_full$target [tr_full$source == m] [1]
-            content <- c (paste0 ("## ", tr_target), content)
-            targets <- grep ("^\\#+", content)
-        }
-
-        what <- gsub ("^\\#+\\s?", "", content [targets])
-        index <- which (what %in% tr_full$target)
-        targets <- targets [index]
-        what <- what [index]
-
-        check_translation_source (m, what, tr_full)
-
-        if (length (targets) > 0) {
-            index <- rep (0L, length (content))
-            index [targets] <- 1L
-            index <- cumsum (index)
-            content <- split (content, f = as.factor (index))
-
-            index <- seq_along (content)
-            content [index] <- lapply (content [index], function (i) i [-1])
-            names (content) [index] <- what
-
-            content <- lapply (content, function (i) {
-                while (!nzchar (i [1])) {
-                    i <- i [-1]
-                }
-                while (!nzchar (i [length (i)])) {
-                    i <- i [-length (i)]
-                }
-                return (paste0 (i, collapse = "\n"))
-            })
-
-            content <- convert_target_format (content, service_schema)
-
-            metadata <- c (metadata [which (!names (metadata) == m)], content)
+        if (is.character (metadata [[m]])) {
+            content <- parse_multi_src_string (metadata, m, tr_full)
+            if (length (content) > 0L) {
+                content <- convert_target_format (content, service_schema)
+                metadata <- c (
+                    metadata [which (!names (metadata) == m)],
+                    content
+                )
+            }
         }
     }
 
     return (metadata)
+}
+
+parse_multi_src_string <- function (metadata, m, tr_full) {
+
+    content <- strsplit (metadata [[m]], "\n") [[1]]
+    targets <- grep ("^\\#+", content)
+
+    add_target <- length (targets) == 0L
+    if (!add_target) {
+        add_target <- targets [1] > min (which (nzchar (content)))
+    }
+    if (add_target) {
+        # First content is default without markdown header
+        tr_target <- tr_full$target [tr_full$source == m] [1]
+        content <- c (paste0 ("## ", tr_target), content)
+        targets <- grep ("^\\#+", content)
+    }
+
+    what <- gsub ("^\\#+\\s?", "", content [targets])
+    index <- which (what %in% tr_full$target)
+    targets <- targets [index]
+    what <- what [index]
+
+    check_translation_source (m, what, tr_full)
+
+    if (length (targets) > 0) {
+        index <- rep (0L, length (content))
+        index [targets] <- 1L
+        index <- cumsum (index)
+        content <- split (content, f = as.factor (index))
+
+        index <- seq_along (content)
+        content [index] <- lapply (content [index], function (i) i [-1])
+        names (content) [index] <- what
+
+        content <- lapply (content, function (i) {
+            while (!nzchar (i [1])) {
+                i <- i [-1]
+            }
+            while (!nzchar (i [length (i)])) {
+                i <- i [-length (i)]
+            }
+            return (paste0 (i, collapse = "\n"))
+        })
+    } else {
+        content <- NULL
+    }
+
+    return (content)
 }
 
 #' Check that the source for translation items is correct, and error if not.
@@ -289,7 +303,11 @@ convert_target_format <- function (content, service_schema) {
     schema_types <- lapply (names (content), function (nm) {
         itype <- ifelse (
             "items" %in% names (service_schema [[nm]]),
-            service_schema [[nm]]$items$type,
+            ifelse (
+                "type" %in% names (service_schema [[nm]]$items),
+                service_schema [[nm]]$items$type,
+                unique (unlist (service_schema [[nm]]$items))
+            ),
             NA_character_
         )
         c (service_schema [[nm]]$type, itype)
