@@ -200,6 +200,12 @@ separate_multiple_sources <- function (metadata, translations,
                     content
                 )
             }
+        } else if (is.list (metadata [[m]])) {
+            content <- metadata [[m]]
+            metadata <- c (
+                metadata [which (!names (metadata) == m)],
+                content
+            )
         }
     }
 
