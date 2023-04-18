@@ -205,7 +205,7 @@
         },
         "format": {
             "description": "The file format, physical medium, or dimensions of the resource. Recommended practice is to use a controlled vocabulary where available. For example, for file formats one could use the list of Internet Media Types [MIME]. Examples of dimensions include size and duration.",
-            "oneOf": [
+            "anyOf": [
                 {
                     "type": "string"
                 },
@@ -273,19 +273,139 @@
         },
         "isPartOf": {
             "description": "A related resource in which the described resource is physically or logically included. This property is an inverse property of Has Part.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "isReferencedBy": {
             "description": "A related resource that references, cites, or otherwise points to the described resource. This property is an inverse property of References.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "isReplacedBy": {
             "description": "A related resource that supplants, displaces, or supersedes the described resource. This property is an inverse property of Replaces.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "isRequiredBy": {
             "description": "A related resource that requires the described resource to support its function, delivery, or coherence. This property is an inverse property of Requires.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "issued": {
             "description": "Date of formal issuance of the resource.",
@@ -297,7 +417,37 @@
         },
         "isVersionOf": {
             "description": "A related resource of which the described resource is a version, edition, or adaptation. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Has Version.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "language": {
             "description": "A language of the resource. Recommended practice is to use either a non-literal value representing a language from a controlled vocabulary such as ISO 639-2 or ISO 639-3, or a literal value consisting of an IETF Best Current Practice 47 [IETF-BCP47] language tag.",
@@ -305,7 +455,16 @@
         },
         "license": {
             "description": "A legal document giving official permission to do something with the resource. Recommended practice is to identify the license document with a URI. If this is not possible or feasible, a literal value that identifies the license may be provided.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "description": "Generic or Zenodo entry",
+                    "type": "string"
+                },
+                {
+                    "description": "Figshare licenses",
+                    "type": "integer"
+                }
+            ]
         },
         "mediator": {
             "description": "An entity that mediates access to the resource. In an educational context, a mediator might be a parent, teacher, teaching assistant, or care-giver.",
@@ -337,15 +496,105 @@
         },
         "relation": {
             "description": "A related resource. Recommended practice is to identify the related resource by means of a URI. If this is not possible or feasible, a string conforming to a formal identification system may be provided.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "replaces": {
             "description": "A related resource that is supplanted, displaced, or superseded by the described resource. This property is an inverse property of Is Replaced By.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "requires": {
             "description": "A related resource that is required by the described resource to support its function, delivery, or coherence. This property is an inverse property of Is Required By.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string"
+                    }
+                }
+            ]
         },
         "rights": {
             "description": "Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights. Recommended practice is to refer to a rights statement with a URI. If this is not possible or feasible, a literal value (name, label, or short text) may be provided.",
@@ -370,7 +619,7 @@
                     "type": "string"
                 },
                 {
-                    "description": "Array of keywords",
+                    "description": "Zenodo array of keywords",
                     "type": "object",
                     "properties": {
                         "keywords": {
@@ -378,7 +627,8 @@
                             "items": {
                                 "type": "string"
                             }
-                        }
+                        },
+                        "additionalProperties": true
                     }
                 }
             ]

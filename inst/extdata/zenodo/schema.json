@@ -237,7 +237,7 @@
                 },
                 "subjects": {
                     "type": "array",
-                    "tiems": {
+                    "items": {
                         "term": "string",
                         "identifier": "string",
                         "scheme": "string"
