@@ -43,3 +43,6 @@ knitr: $(README).Rmd
 
 install: clean
 	R CMD INSTALL .
+
+project:
+	xdg-open https://github.com/orgs/ropenscilabs/projects/2
