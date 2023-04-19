@@ -238,9 +238,14 @@
                 "subjects": {
                     "type": "array",
                     "items": {
-                        "term": "string",
-                        "identifier": "string",
-                        "scheme": "string"
+                        "type": "object",
+                        "items": {
+                            "term": "string",
+                            "identifier": "string",
+                            "scheme": "string"
+                        },
+                        "required": ["term", "identifier"],
+                        "additionalItems": false
                     }
                 },
                 "version": {
