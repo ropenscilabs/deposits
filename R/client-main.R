@@ -361,6 +361,50 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             return (destfile)
         },
 
+        #' @description Embargo a deposit prior to publication.
+        #' @param embargo_date Date of expiry of embargo. If the
+        #' `deposit_publish()` method has been called, deposit will
+        #' automatically be published after this date, and will not be
+        #' published, nor publically accessible, prior to this date.
+        #' @return (Invisibly) Updated deposits client with additional embargo
+        #' information.
+
+        deposit_embargo = function (embargo_date = NULL) {
+
+            if (is.null (self$id)) {
+                stop (
+                    "Client not associated with any deposit which can ",
+                    "be embargoed. Please first use `deposit_new()` ",
+                    "or `deposit_retrieve()` methods.",
+                    call. = FALSE
+                )
+            }
+
+            # Re-generate service metadata from DCMI:
+            metadata <- validate_metadata (
+                self$metadata,
+                gsub ("\\-sandbox$", "", self$service)
+            )
+            metadata <- httptest2_created_timestamp (metadata)
+            self$metadata <- metadata$dcmi
+            private$metadata_service <- metadata$service
+
+            checkmate::assert_character (embargo_date, len = 1L)
+            embargo_date <- strftime (embargo_date, "%Y-%m-%d")
+
+            if (self$service == "zenodo") {
+                self <- private$embargo_zenodo (embargo_date)
+            }
+
+            # if (self$service == "figshare") {
+            #    self$deposit_retrieve (hostdata$entity_id)
+            # } else if (self$service == "zenodo") {
+            #    self$hostdata <- hostdata
+            # }
+
+            invisible (self)
+        },
+
         #' @description Fill deposits client with metadata.
         #' @param metadata Either one of two possible ways of defining
         #' metadata:
