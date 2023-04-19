@@ -89,7 +89,7 @@ test_that ("metadata parsing", {
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none\ntwo, three\n\n## subjects\nthis, that"
+        subject = "## keywords\none\ntwo, three"
     )
 
     # The 2 validation calls in main client initialization:
@@ -102,8 +102,7 @@ test_that ("metadata parsing", {
 
     # Alternative specification:
     metadata$subject <- list (
-        keywords = list ("one", "two", "three"),
-        subjects = list ("this", "that")
+        keywords = list ("one", "two", "three")
     )
     expect_silent (
         metadata_dcmi2 <- validate_dcmi_metadata (metadata)
