@@ -366,10 +366,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' `deposit_publish()` method has been called, deposit will
         #' automatically be published after this date, and will not be
         #' published, nor publically accessible, prior to this date.
+        #' @param embargo_type For Figshare service only, which allows embargoes
+        #' for entire deposits or single files. Ignored for other services.
+        #' @param embargo_reason For Figshare service only, an optional text
+        #' string describing reasons for embargo.
         #' @return (Invisibly) Updated deposits client with additional embargo
         #' information.
 
-        deposit_embargo = function (embargo_date = NULL) {
+        deposit_embargo = function (embargo_date = NULL,
+                                    embargo_type = c ("deposit", "file"),
+                                    embargo_reason = NULL) {
 
             if (is.null (self$id)) {
                 stop (
@@ -393,14 +399,22 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             embargo_date <- strftime (embargo_date, "%Y-%m-%d")
 
             if (self$service == "zenodo") {
-                self <- private$embargo_zenodo (embargo_date)
-            }
 
-            # if (self$service == "figshare") {
-            #    self$deposit_retrieve (hostdata$entity_id)
-            # } else if (self$service == "zenodo") {
-            #    self$hostdata <- hostdata
-            # }
+                self <- private$embargo_zenodo (embargo_date)
+
+            } else if (self$service == "figshare") {
+
+                embargo_type <- match.arg (embargo_type)
+                if (embargo_type == "deposit") {
+                    embargo_type <- "article"
+                }
+                if (!is.null (embargo_reason)) {
+                    checkmate::assert_character (embargo_reason, len = 1L)
+                }
+                self <- private$embargo_figshare (
+                    embargo_date, embargo_type, embargo_reason
+                )
+            }
 
             invisible (self)
         },
