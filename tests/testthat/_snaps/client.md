@@ -21,6 +21,7 @@
          - deposit_delete
          - deposit_delete_file
          - deposit_download_file
+         - deposit_embargo
          - deposit_fill_metadata
          - deposit_new
          - deposit_retrieve
@@ -73,6 +74,7 @@
          - deposit_delete
          - deposit_delete_file
          - deposit_download_file
+         - deposit_embargo
          - deposit_fill_metadata
          - deposit_new
          - deposit_retrieve
