@@ -276,6 +276,55 @@ test_that ("figshare upload binary", {
     # )
 })
 
+test_that ("figshare embargo", {
+
+    service <- "figshare"
+    cli <- new_mock_deposit (service = service)
+    deposit_id <- cli$id
+
+    nms <- c (
+        "is_embargoed", "embargo_date", "embargo_type",
+        "embargo_title", "embargo_reason", "embargo_options"
+    )
+    expect_true (all (nms %in% names (cli$hostdata)))
+
+    expect_false (cli$hostdata$is_embargoed)
+    expect_null (cli$hostdata$embargo_date)
+    expect_null (cli$hostdata$embargo_type)
+    expect_true (!nzchar (cli$hostdata$embargo_title))
+    expect_true (!nzchar (cli$hostdata$embargo_reason))
+    expect_type (cli$hostdata$embargo_options, "list")
+    expect_length (cli$hostdata$embargo_options, 0L)
+
+    expect_error (
+        cli$deposit_embargo (embargo_date = 1),
+        "Assertion on 'embargo_date' failed: Must be of type 'character'"
+    )
+
+    # None of this can actually be tested because Figshare's embargo method
+    # returns an empty body, so httptest2 has nothing to mock.
+    # embargo_date <- "2040-01-01"
+    # cli <- httptest2::with_mock_dir ("fs_embargo", {
+    #    cli$deposit_embargo (
+    #        embargo_date = embargo_date,
+    #        embargo_reason = "because"
+    #    )
+    # })
+
+    # expect_true (all (nms %in% names (cli$hostdata)))
+    # expect_true (cli$hostdata$is_embargoed)
+    # expect_false (is.null (cli$hostdata$embargo_date))
+    # expect_equal (cli$hostdata$embargo_date, embargo_date)
+    # expect_false (is.null (cli$hostdata$embargo_type))
+    # expect_equal (cli$hostdata$embargo_type, "article")
+    # expect_true (nzchar (cli$hostdata$embargo_title))
+    # expect_equal (cli$hostdata$embargo_title, "article under embargo")
+    # expect_true (nzchar (cli$hostdata$embargo_reason))
+    # expect_equal (cli$hostdata$embargo_reason, "because")
+    # expect_type (cli$hostdata$embargo_options, "list")
+    # expect_length (cli$hostdata$embargo_options, 0L)
+})
+
 test_that ("figshare list", {
 
     service <- "figshare"
