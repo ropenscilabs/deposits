@@ -46,19 +46,15 @@
             "self": "sbapi/deposit/depositions/1077312"
         },
         "metadata": {
-            "access_right": "closed",
-            "communities": [
-                {
-                    "identifier": "zenodo"
-                }
-            ],
+            "access_right": "open",
             "creators": [
                 {
                     "name": "A. Person,B. Person"
                 }
             ],
-            "description": "<p>This is the abstract<\/p>",
+            "description": "This is the abstract",
             "doi": "10.5072/zenodo.1077312",
+            "license": "CC-BY-4.0",
             "prereserve_doi": {
                 "doi": "10.5072/zenodo.1077312",
                 "recid": 1077312
@@ -70,7 +66,7 @@
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
         "record_id": 1077312,
-        "state": "inprogress",
+        "state": "done",
         "submitted": true,
         "title": "New Title"
     }

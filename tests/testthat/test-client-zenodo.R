@@ -159,6 +159,25 @@ test_that ("zenodo retrieve", {
     )
 })
 
+test_that ("zenodo embargo", {
+
+    service <- "zenodo"
+    cli <- new_mock_deposit (service = service)
+    deposit_id <- cli$id
+
+    expect_equal (cli$hostdata$metadata$access_right, "closed")
+
+    expect_error (
+        cli$deposit_embargo (embargo_date = 1),
+        "Assertion on 'embargo_date' failed: Must be of type 'character'"
+    )
+
+    embargo_date <- "2040-01-01"
+    cli <- httptest2::with_mock_dir ("zen_embargo", {
+        cli$deposit_embargo (embargo_date = embargo_date)
+    })
+})
+
 test_that ("zenodo deposits_list", {
 
     service <- "zenodo"
