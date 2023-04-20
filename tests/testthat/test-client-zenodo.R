@@ -117,6 +117,13 @@ test_that ("zenodo retrieve", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
+    expect_true (length (dep$hostdata) > 0L)
+    # metadata is filled on retreive (#65):
+    expect_true (length (dep$metadata) > 0L)
+    expect_identical (
+        metadata [order (names (metadata))],
+        dep$metadata [order (names (dep$metadata))]
+    )
 
     # -------- DEPOSIT_UPDATE
     expect_equal (
