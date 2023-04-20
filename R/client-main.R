@@ -473,6 +473,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 httptest2_hostdata_timestamps (metadata$service, self$service)
             private$metadata_service <- metadata$service
 
+            # Insert 'self$metadata' into host parameter (#65):
+            private$dcmi2host ()
+
             url <- get_service_url (self)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
@@ -578,6 +581,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
+
+            private$host2dcmi ()
 
             if (self$service == "figshare" && !self$hostdata$is_public) {
                 if (!quiet) {
