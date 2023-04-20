@@ -1,0 +1,64 @@
+{
+    "conceptrecid": "1185052",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data.csv",
+            "filesize": 625,
+            "id": "4d138de1-c298-4c08-90b8-7238d47126ee",
+            "links": {
+                "download": "sbapi/files/hash/data.csv",
+                "self": "sbapi/deposit/depositions/1185053/files/4d138de1-c298-4c08-90b8-7238d47126ee"
+            }
+        }
+    ],
+    "id": 1185053,
+    "links": {
+        "bucket": "sbapi/files/f53376d3-1743-497c-915f-adb6934e5457",
+        "discard": "sbapi/deposit/depositions/1185053/actions/discard",
+        "edit": "sbapi/deposit/depositions/1185053/actions/edit",
+        "files": "sbapi/deposit/depositions/1185053/files",
+        "html": "https://sandbox.zenodo.org/deposit/1185053",
+        "latest_draft": "sbapi/deposit/depositions/1185053",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1185053",
+        "newversion": "sbapi/deposit/depositions/1185053/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1185053/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1185053/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1185053"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "A. Person"
+            },
+            {
+                "name": "B. Person"
+            }
+        ],
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+        "doi": "",
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1185053",
+            "recid": 1185053
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other",
+        "version": "1.0"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1185053,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}
