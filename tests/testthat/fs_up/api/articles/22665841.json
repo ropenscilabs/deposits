@@ -1,34 +1,19 @@
 {
     "files": [
         {
-            "upload_token": "c16b6ffc-eab3-4232-8cfa-1987bad49a2f",
+            "upload_token": "c740aceb-f89e-4d32-bed6-ce1eeb0b793e",
             "upload_url": "",
-            "status": "ic_checking",
-            "preview_state": "preview_available",
-            "viewer_type": "dataset",
-            "is_attached_to_public_version": false,
-            "id": 39762790,
-            "name": "data.csv",
-            "size": 625,
-            "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39762790",
-            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
-            "computed_md5": ""
-        },
-        {
-            "upload_token": "9941a525-f90c-4919-9ad0-0afaf91c0448",
-            "upload_url": "",
-            "status": "ic_checking",
+            "status": "moving_to_final",
             "preview_state": "preview_in_progress",
             "viewer_type": "",
             "is_attached_to_public_version": false,
-            "id": 39762793,
-            "name": "data2.csv",
+            "id": 40232800,
+            "name": "data.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/39762793",
+            "download_url": "https://ndownloader.figshare.com/files/40232800",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
-            "computed_md5": ""
+            "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         }
     ],
     "resource_title": null,
@@ -47,15 +32,15 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22348423",
-    "description": "## abstract\n\nThis is the modified abstract\n\n## description\n\nThis is the description\n\n## version\n1.0",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22665841",
+    "description": "## abstract\\n\\nThis is the modified abstract\\n\\n## description\\n\\nThis is the description\\n\\n## version\\n1.0",
     "funding": null,
     "funding_list": [
 
     ],
     "version": 0,
     "status": "draft",
-    "size": 1250,
+    "size": 625,
     "created_date": "2022-01-01T00:00:00Z",
     "modified_date": "2022-01-01T00:00:00Z",
     "is_public": false,
@@ -70,8 +55,7 @@
     },
     "tags": [
         "one",
-        "two",
-        "three"
+        "two\\nthree"
     ],
     "categories": [
 
@@ -80,7 +64,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Person, C. (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22348423",
+    "citation": "Person, C. (2023): Modified Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22665841",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -89,20 +73,20 @@
     "embargo_options": [
 
     ],
-    "id": 22348423,
+    "id": 22665841,
     "title": "Modified Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22348423",
+    "url": "api/articles/22665841",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22348423",
-    "url_public_api": "api/articles/22348423",
-    "url_private_html": "https://figshare.com/account/articles/22348423",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22348423",
+    "url_private_api": "api/articles/22665841",
+    "url_public_api": "api/articles/22665841",
+    "url_private_html": "https://figshare.com/account/articles/22665841",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22665841",
     "timeline": {
 
     }

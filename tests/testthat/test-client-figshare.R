@@ -46,7 +46,7 @@ test_that ("figshare new", {
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
 
-    dep <- with_mock_dir ("fs_new", {
+    dep <- with_mock_dir ("fs_new2", {
         cli$deposit_new ()
     })
 
@@ -95,6 +95,7 @@ test_that ("figshare default metadata", {
 
     # Expect service metadata to have markdown header inserted:
     desc <- metadata$service$description
+    desc <- gsub ("\\\\n", "\n", desc)
     expect_true (grepl ("\\#\\#\\sdescription", desc))
     desc <- strsplit (desc, "\n") [[1]]
     # Expect abstract is now first:

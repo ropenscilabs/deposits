@@ -1,19 +1,19 @@
 [
     {
-        "id": 22348423,
+        "id": 22665841,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/22348423",
+        "url": "api/articles/22665841",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/22348423",
-        "url_public_api": "api/articles/22348423",
-        "url_private_html": "https://figshare.com/account/articles/22348423",
-        "url_public_html": "https://figshare.com/articles/dataset/_/22348423",
+        "url_private_api": "api/articles/22665841",
+        "url_public_api": "api/articles/22665841",
+        "url_private_html": "https://figshare.com/account/articles/22665841",
+        "url_public_html": "https://figshare.com/articles/dataset/_/22665841",
         "timeline": {
 
         },
@@ -21,41 +21,20 @@
         "resource_doi": null
     },
     {
-        "id": 22348414,
+        "id": 22665835,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/22348414",
+        "url": "api/articles/22665835",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/22348414",
-        "url_public_api": "api/articles/22348414",
-        "url_private_html": "https://figshare.com/account/articles/22348414",
-        "url_public_html": "https://figshare.com/articles/dataset/_/22348414",
-        "timeline": {
-
-        },
-        "resource_title": null,
-        "resource_doi": null
-    },
-    {
-        "id": 22348267,
-        "title": "New Title",
-        "doi": "",
-        "handle": "",
-        "url": "api/articles/22348267",
-        "published_date": null,
-        "thumb": "",
-        "defined_type": 3,
-        "defined_type_name": "dataset",
-        "group_id": null,
-        "url_private_api": "api/articles/22348267",
-        "url_public_api": "api/articles/22348267",
-        "url_private_html": "https://figshare.com/account/articles/22348267",
-        "url_public_html": "https://figshare.com/articles/dataset/_/22348267",
+        "url_private_api": "api/articles/22665835",
+        "url_public_api": "api/articles/22665835",
+        "url_private_html": "https://figshare.com/account/articles/22665835",
+        "url_public_html": "https://figshare.com/articles/dataset/_/22665835",
         "timeline": {
 
         },

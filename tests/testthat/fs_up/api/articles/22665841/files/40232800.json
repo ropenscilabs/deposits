@@ -1,15 +1,15 @@
 {
-    "upload_token": "c16b6ffc-eab3-4232-8cfa-1987bad49a2f",
-    "upload_url": "https://fup-eu-west-1.up/c16b6ffc-eab3-4232-8cfa-1987bad49a2f",
+    "upload_token": "c740aceb-f89e-4d32-bed6-ce1eeb0b793e",
+    "upload_url": "https://fup-eu-west-1.up/c740aceb-f89e-4d32-bed6-ce1eeb0b793e",
     "status": "created",
     "preview_state": "preview_not_available",
     "viewer_type": "",
     "is_attached_to_public_version": false,
-    "id": 39762790,
+    "id": 40232800,
     "name": "data.csv",
     "size": 625,
     "is_link_only": false,
-    "download_url": "https://ndownloader.figshare.com/files/39762790",
+    "download_url": "https://ndownloader.figshare.com/files/40232800",
     "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
     "computed_md5": ""
 }

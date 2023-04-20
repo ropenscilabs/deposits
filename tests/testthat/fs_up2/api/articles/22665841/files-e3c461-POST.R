@@ -1,9 +1,9 @@
-structure(list(method = "POST", url = "api/articles/22348423/files", 
-    status_code = 201L, headers = structure(list(date = "Tue, 28 Mar 2023 13:34:20 GMT", 
+structure(list(method = "POST", url = "api/articles/22665841/files", 
+    status_code = 201L, headers = structure(list(date = "Thu, 20 Apr 2023 14:49:27 GMT", 
         `content-type` = "application/json", `content-length` = "84", 
-        location = "api/articles/22348423/files/39762790", server = "nginx", 
+        location = "api/articles/22665841/files/40232803", server = "nginx", 
         `access-control-allow-origin` = "https://api.figshare.com", 
         `access-control-allow-methods` = "GET, POST, PUT, DELETE, OPTIONS", 
         `access-control-allow-headers` = "Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization", 
         `access-control-max-age` = "3600"), class = "httr2_headers"), 
-    body = charToRaw("{\"location\": \"api/articles/22348423/files/39762790\"}")), class = "httr2_response")
+    body = charToRaw("{\"location\": \"api/articles/22665841/files/40232803\"}")), class = "httr2_response")
