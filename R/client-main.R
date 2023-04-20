@@ -498,6 +498,65 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Publish a deposit
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_publish = function () {
+
+            if (is.null (self$id)) {
+                stop (
+                    "Client not associated with any deposit which can ",
+                    "be embargoed. Please first use `deposit_new()` ",
+                    "or `deposit_retrieve()` methods.",
+                    call. = FALSE
+                )
+            }
+            self$deposit_retrieve (self$id)
+
+            if (self$service == "zenodo") {
+                is_embargoed <-
+                    identical (self$hostdata$metadata$access_right, "embargoed")
+            } else if (self$service == "figshare") {
+                is_embargoed <- self$hostdata$is_embargoed
+            }
+
+            proceed <- TRUE
+            if (!is_embargoed && interactive ()) {
+                ans <- readline (paste0 (
+                    "Do you wish to place an embargo date ",
+                    "prior to publication (y/n)? "
+                ))
+                # do not proceed if "y":
+                proceed <- !identical (tolower (substring (ans, 1L, 1L)), "y")
+                if (!proceed) {
+                    message (paste0 (
+                        "First call the 'deposit_embargo()' ",
+                        "method prior to publication."
+                    ))
+                }
+            }
+
+            if (proceed && interactive ()) {
+                ans <- readline (paste0 (
+                    "This action can not be undone. ",
+                    "Are you sure you want to publish deposit#",
+                    cli$id,
+                    " (y/n) ? "
+                ))
+                proceed <- identical (tolower (substring (ans, 1L, 1L)), "y")
+            }
+
+            if (proceed) {
+                if (self$service == "zenodo") {
+                    private$publish_zenodo ()
+                } else if (self$service == "figshare") {
+                    private$publish_figshare ()
+                }
+            }
+
+            invisible (self)
+        },
+
         #' @description Retrieve information on specified deposit.
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
