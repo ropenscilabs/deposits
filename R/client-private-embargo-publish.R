@@ -17,7 +17,7 @@ depositsClient$set ("private", "embargo_zenodo", function (embargo_date) {
 
     s_meta <- private$metadata_service$metadata
 
-    if (!"access_right" %in% names (private$metadata_service)) {
+    if (!"access_right" %in% names (s_meta)) {
 
         s_meta$access_right <- "embargoed"
         s_meta$embargo_date <- embargo_date
