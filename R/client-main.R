@@ -872,6 +872,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
+            # client metadata is then stored in "datapackage.json", so no longer
+            # need to store in host metadata fields:
+            private$remove_dcmi2host ()
 
             invisible (self)
         },

@@ -71,3 +71,12 @@ depositsClient$set ("private", "host2dcmi", function () {
 
     invisible (self)
 })
+
+#' Remove the metadata produced in 'dcmi2host'.
+#'
+#' This is called as soon as a 'datapackage.json' file is uploaded. From that
+#' point on, metadata are stored and read from there, so no longer need to be
+#' stored in the host metadata field.
+#' @noRd
+depositsClient$set ("private", "remove_dcmi2host", function () {
+})
