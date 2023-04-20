@@ -32,8 +32,8 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22666045",
-    "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description\\n\\n## version\\n1.0\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22666432",
+    "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description\\n\\n## version\\n1.0\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\\n\\n\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
     "funding": null,
     "funding_list": [
 
@@ -65,7 +65,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark; Person, A.; Person, B. (2023): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22666045",
+    "citation": "Padgham, Mark; Person, A.; Person, B. (2023): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22666432",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -74,20 +74,20 @@
     "embargo_options": [
 
     ],
-    "id": 22666045,
+    "id": 22666432,
     "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22666045",
+    "url": "api/articles/22666432",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22666045",
-    "url_public_api": "api/articles/22666045",
-    "url_private_html": "https://figshare.com/account/articles/22666045",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22666045",
+    "url_private_api": "api/articles/22666432",
+    "url_public_api": "api/articles/22666432",
+    "url_private_html": "https://figshare.com/account/articles/22666432",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22666432",
     "timeline": {
 
     }

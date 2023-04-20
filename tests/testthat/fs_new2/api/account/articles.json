@@ -1,19 +1,19 @@
 [
     {
-        "id": 22666042,
+        "id": 22666432,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/22666042",
+        "url": "api/articles/22666432",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/22666042",
-        "url_public_api": "api/articles/22666042",
-        "url_private_html": "https://figshare.com/account/articles/22666042",
-        "url_public_html": "https://figshare.com/articles/dataset/_/22666042",
+        "url_private_api": "api/articles/22666432",
+        "url_public_api": "api/articles/22666432",
+        "url_private_html": "https://figshare.com/account/articles/22666432",
+        "url_public_html": "https://figshare.com/articles/dataset/_/22666432",
         "timeline": {
 
         },
