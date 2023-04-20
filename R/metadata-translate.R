@@ -214,7 +214,7 @@ separate_multiple_sources <- function (metadata, translations,
 
 parse_multi_src_string <- function (metadata, m, tr_full) {
 
-    content <- strsplit (metadata [[m]], "\n") [[1]]
+    content <- strsplit (condense_linebreaks (metadata [[m]]), "\n") [[1]]
     targets <- grep ("^\\#+", content)
 
     add_target <- length (targets) == 0L
@@ -329,8 +329,10 @@ convert_target_format <- function (content, service_schema) {
 
         this_type <- schema_types$type [i]
         if (this_type == "array") {
-            this_content <-
-                strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
+            this_content <- strsplit (
+                condense_linebreaks (content [[i]]),
+                split = "\\,\\s?|\n"
+            ) [[1]]
             content [[i]] <- as.list (this_content)
         }
     }
