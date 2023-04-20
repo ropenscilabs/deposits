@@ -252,7 +252,7 @@ parse_multi_src_string <- function (metadata, m, tr_full) {
             while (!nzchar (i [length (i)])) {
                 i <- i [-length (i)]
             }
-            return (paste0 (i, collapse = "\n"))
+            return (paste0 (i, collapse = "\\n"))
         })
     } else {
         content <- NULL
@@ -354,8 +354,8 @@ concatenate_multiple_targets <- function (metadata, translations) {
         content <- cbind (sources, unlist (metadata [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
         content <-
-            apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
-        content <- paste0 (content, collapse = "\n\n")
+            apply (content, 1, function (i) paste0 (i, collapse = "\\n\\n"))
+        content <- paste0 (content, collapse = "\\n\\n")
 
         metadata <- metadata [which (!names (metadata) %in% sources)]
         metadata [m] <- content

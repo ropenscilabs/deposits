@@ -1,5 +1,5 @@
 # Functions to insert deposits "metadata" field in DCMI-compliant form into host
-# metadata fields, including private client methods.
+# metadata fields, including private client methods. See #65.
 
 #' Method to convert client "metadata" (DCMI) field into one metadata parameter
 #' on host service.
@@ -9,16 +9,29 @@
 depositsClient$set ("private", "dcmi2host", function () {
 
     meta_json <- jsonlite::toJSON (self$metadata, auto_unbox = TRUE)
+    meta_json <- paste0 (
+        "\\n---start-deposits-meta---\\n",
+        paste0 (meta_json),
+        "\\n---end-deposits-meta---\\n"
+    )
 
     if (self$service == "zenodo") {
 
-        notes <- paste0 (
+        private$metadata_service$metadata$notes <- paste0 (
             private$metadata_service$metadata$notes,
-            "\n---start-deposits-meta---\n",
-            paste0 (meta_json),
-            "\n---end-deposits-meta---\n"
+            meta_json
         )
-        private$metadata_service$metadata$notes <- notes
+
+    } else if (self$service == "figshare") {
+
+        # Figshare should ideally go into "custom_fields", or
+        # "custom_fields_list", but submitting data with those fields does not
+        # work at all, so they can't (currently) be used.
+
+        private$metadata_service$description <- paste0 (
+            private$metadata_service$description,
+            meta_json
+        )
     }
 
     invisible (self)
@@ -37,16 +50,26 @@ depositsClient$set ("private", "host2dcmi", function () {
     }
 
     if (self$service == "zenodo") {
+        field <- self$hostdata$metadata$notes
+    } else if (self$service == "figshare") {
+        field <- self$hostdata$description
+    }
 
-        notes <- strsplit (self$hostdata$metadata$notes, "\\n") [[1]]
-        ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
-        i <- grep (ptn, notes)
-        j <- grep (gsub ("start", "end", ptn), notes)
-        if (length (i) == 1L && length (j) == 1L) {
-            index <- seq (i + 1, j - 1)
-            self$metadata <-
-                jsonlite::fromJSON (notes [index], simplifyVector = FALSE)
-        }
+    field <- cli$hostdata$description
+    # Figshare does not render "\n", only "\\n", and some of these double
+    # backslashes end up repeated and need to be reduced here for JSON parsing.
+    field <- gsub ("\\\\\\\\n", "\n", field)
+    field <- gsub ("\\\\\\n", "\n", field)
+    field <- gsub ("\\\\n", "\n", field)
+    field <- strsplit (field, "\n") [[1]]
+    ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
+    i <- grep (ptn, field)
+    j <- grep (gsub ("start", "end", ptn), field)
+
+    if (length (i) == 1L && length (j) == 1L) {
+        index <- seq (i + 1, j - 1)
+        metadata <- paste0 (field [index], collapse = "")
+        self$metadata <- jsonlite::fromJSON (metadata, simplifyVector = FALSE)
     }
 
     invisible (self)
