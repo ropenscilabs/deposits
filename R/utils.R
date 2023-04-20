@@ -42,3 +42,12 @@ deposit_timestamp <- function (datetime) {
 
     return (datetime)
 }
+
+condense_linebreaks <- function (txt) {
+    for (n in 4:1) {
+        bs <- rep ("\\", n)
+        ptn <- paste0 (paste0 (bs, collapse = ""), "n")
+        txt <- gsub (ptn, "\n", txt)
+    }
+    return (txt)
+}

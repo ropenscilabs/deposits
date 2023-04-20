@@ -83,6 +83,7 @@ test_that ("zenodo default metadata", {
 
     # Expect service metadata to have markdown header inserted:
     desc <- metadata$service$metadata$description
+    desc <- gsub ("\\\\n", "\n", desc)
     expect_true (grepl ("\\#\\#\\sdescription", desc))
     desc <- strsplit (desc, "\n") [[1]]
     # Expect abstract is now first:
@@ -116,6 +117,13 @@ test_that ("zenodo retrieve", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
+    expect_true (length (dep$hostdata) > 0L)
+    # metadata is filled on retreive (#65):
+    expect_true (length (dep$metadata) > 0L)
+    expect_identical (
+        metadata [order (names (metadata))],
+        dep$metadata [order (names (dep$metadata))]
+    )
 
     # -------- DEPOSIT_UPDATE
     expect_equal (

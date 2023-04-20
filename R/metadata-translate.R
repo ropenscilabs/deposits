@@ -214,7 +214,7 @@ separate_multiple_sources <- function (metadata, translations,
 
 parse_multi_src_string <- function (metadata, m, tr_full) {
 
-    content <- strsplit (metadata [[m]], "\n") [[1]]
+    content <- strsplit (condense_linebreaks (metadata [[m]]), "\n") [[1]]
     targets <- grep ("^\\#+", content)
 
     add_target <- length (targets) == 0L
@@ -252,7 +252,7 @@ parse_multi_src_string <- function (metadata, m, tr_full) {
             while (!nzchar (i [length (i)])) {
                 i <- i [-length (i)]
             }
-            return (paste0 (i, collapse = "\n"))
+            return (paste0 (i, collapse = "\\n"))
         })
     } else {
         content <- NULL
@@ -329,8 +329,10 @@ convert_target_format <- function (content, service_schema) {
 
         this_type <- schema_types$type [i]
         if (this_type == "array") {
-            this_content <-
-                strsplit (content [[i]], split = "\\,\\s?|\\n") [[1]]
+            this_content <- strsplit (
+                condense_linebreaks (content [[i]]),
+                split = "\\,\\s?|\n"
+            ) [[1]]
             content [[i]] <- as.list (this_content)
         }
     }
@@ -354,8 +356,8 @@ concatenate_multiple_targets <- function (metadata, translations) {
         content <- cbind (sources, unlist (metadata [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
         content <-
-            apply (content, 1, function (i) paste0 (i, collapse = "\n\n"))
-        content <- paste0 (content, collapse = "\n\n")
+            apply (content, 1, function (i) paste0 (i, collapse = "\\n\\n"))
+        content <- paste0 (content, collapse = "\\n\\n")
 
         metadata <- metadata [which (!names (metadata) %in% sources)]
         metadata [m] <- content

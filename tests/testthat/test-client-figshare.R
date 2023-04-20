@@ -46,7 +46,7 @@ test_that ("figshare new", {
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
 
-    dep <- with_mock_dir ("fs_new", {
+    dep <- with_mock_dir ("fs_new2", {
         cli$deposit_new ()
     })
 
@@ -95,6 +95,7 @@ test_that ("figshare default metadata", {
 
     # Expect service metadata to have markdown header inserted:
     desc <- metadata$service$description
+    desc <- gsub ("\\\\n", "\n", desc)
     expect_true (grepl ("\\#\\#\\sdescription", desc))
     desc <- strsplit (desc, "\n") [[1]]
     # Expect abstract is now first:
@@ -115,18 +116,25 @@ test_that ("figshare retrieve", {
     metadata <- list (
         title = "New Title",
         abstract = "This is the abstract",
-        creator = list ("A. Person", "B. Person"),
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
         description = paste0 (
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none, two\nthree\n\n"
+        subject = "## keywords\none, two\nthree"
     )
 
     dep <- with_mock_dir ("fs_retr", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
+    expect_true (length (dep$hostdata) > 0L)
+    # metadata is filled on retreive (#65):
+    expect_true (length (dep$metadata) > 0L)
+    expect_identical (
+        metadata [order (names (metadata))],
+        dep$metadata [order (names (dep$metadata))]
+    )
 
     expect_equal (
         cli$hostdata$title,

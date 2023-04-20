@@ -1,0 +1,76 @@
+{
+    "conceptrecid": "1185016",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data2.csv",
+            "filesize": 625,
+            "id": "cbb6f094-def6-43f2-82be-712aff451c8a",
+            "links": {
+                "download": "sbapi/files/hash/data2.csv",
+                "self": "sbapi/deposit/depositions/1185017/files/cbb6f094-def6-43f2-82be-712aff451c8a"
+            }
+        },
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data.csv",
+            "filesize": 625,
+            "id": "aad143ae-67cc-4bf9-ae80-9db21acf0e0b",
+            "links": {
+                "download": "sbapi/files/hash/data.csv",
+                "self": "sbapi/deposit/depositions/1185017/files/aad143ae-67cc-4bf9-ae80-9db21acf0e0b"
+            }
+        }
+    ],
+    "id": 1185017,
+    "links": {
+        "bucket": "sbapi/files/4849283f-0f57-4c70-be10-d05a149e6657",
+        "discard": "sbapi/deposit/depositions/1185017/actions/discard",
+        "edit": "sbapi/deposit/depositions/1185017/actions/edit",
+        "files": "sbapi/deposit/depositions/1185017/files",
+        "html": "https://sandbox.zenodo.org/deposit/1185017",
+        "latest_draft": "sbapi/deposit/depositions/1185017",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1185017",
+        "newversion": "sbapi/deposit/depositions/1185017/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1185017/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1185017/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1185017"
+    },
+    "metadata": {
+        "access_right": "embargoed",
+        "creators": [
+            {
+                "name": "A. Person"
+            },
+            {
+                "name": "B. Person"
+            }
+        ],
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+        "doi": "",
+        "embargo_date": "2022-01-01",
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "license": "CC-BY-4.0",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1185017",
+            "recid": 1185017
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other",
+        "version": "1.0"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1185017,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}

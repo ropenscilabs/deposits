@@ -81,9 +81,13 @@
             "additionalProperties": { "type": "string" }
         },
         "custom_fields_list": {
-            "name": "string",
-            "value": "string",
-            "description": "Supersedes 'custom_fields'"
+            "description": "Supersedes 'custom_fields'",
+            "type": "array",
+            "items": {
+                "name": "string",
+                "value": "string"
+            },
+            "additionalItems": false
         },
         "defined_type": {
             "type": "string",
