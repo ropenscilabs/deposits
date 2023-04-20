@@ -624,8 +624,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                             fs::file_delete (dp_path)
                         }
                     }
+                } else if (length (self$hostdata$files) > 0L) {
+                    self$frictionless <- nrow (self$hostdata$files) == 1L
                 } else {
-                    self$frictionless <- FALSE
+                    self$frictionless <- length (self$hostdata$files) == 0L
                 }
             }
 
