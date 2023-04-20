@@ -408,7 +408,7 @@ Embargo a deposit prior to publication.
 \item{\code{embargo_date}}{Date of expiry of embargo. If the
 \code{deposit_publish()} method has been called, deposit will
 automatically be published after this date, and will not be
-published, nor publically accessible, prior to this date.}
+published, nor publicly accessible, prior to this date.}
 
 \item{\code{embargo_type}}{For Figshare service only, which allows embargoes
 for entire deposits or single files. Ignored for other services.}

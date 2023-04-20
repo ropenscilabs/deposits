@@ -366,7 +366,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param embargo_date Date of expiry of embargo. If the
         #' `deposit_publish()` method has been called, deposit will
         #' automatically be published after this date, and will not be
-        #' published, nor publically accessible, prior to this date.
+        #' published, nor publicly accessible, prior to this date.
         #' @param embargo_type For Figshare service only, which allows embargoes
         #' for entire deposits or single files. Ignored for other services.
         #' @param embargo_reason For Figshare service only, an optional text
