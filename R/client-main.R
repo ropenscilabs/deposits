@@ -798,10 +798,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \dontrun{
         #' # Initiate deposit and fill with metadata:
         #' metadata <- list (
-        #'     Title = "Iris Dataset",
-        #'     Creator = "Edgar Anderson",
-        #'     Publisher = "American Iris Society",
-        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #'     creator = list (list (name = "P. S. Reynolds")),
+        #'     created = "1994-01-01T00:00:00",
+        #'     title = "Time-series analyses of beaver body temperatures",
+        #'     description = "Original source of 'beaver' dataset."
         #' )
         #' cli <- depositsClient$new (
         #'     service = "zenodo",
@@ -811,8 +811,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposit_new ()
         #'
         #' # Create some local data and upload to deposit:
-        #' path <- fs::path (fs::path_temp (), "iris.csv")
-        #' write.csv (datasets::iris, path)
+        #' path <- fs::path (fs::path_temp (), "beaver.csv")
+        #' write.csv (datasets::beaver2, path)
         #' cli$deposit_upload_file (path = path)
         #'
         #' # Confirm that uploaded files include \pkg{frictionless}
