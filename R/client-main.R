@@ -197,145 +197,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
         },
 
-        #' @description List public methods of a 'deposits' client.
-        #' @return Nothing; methods are listed on screen.
-
-        deposits_methods = function () {
-
-            m <- sort (grep ("^deposit", ls (self), value = TRUE))
-            fns <- vapply (m, function (i) {
-                class (self [[i]]) [1] == "function"
-            }, logical (1L))
-            m <- m [which (fns)]
-            cat (
-                "List of methods for a deposits client:\n\n",
-                paste0 ("  - ", m, "\n"),
-                "\n",
-                "see `?depositsClient` for full details of all methods.\n"
-            )
-
-            invisible (self)
-        },
-
-
-        #' @description Update 'deposits' item of current deposits for given
-        #' service. The list of deposits contained within the "deposits" item of
-        #' a client may not be up-to-date; this method can be used for force
-        #' synchronisation with the external service, so that "deposits" lists
-        #' all current deposits.
-        #' @return (Invisibly) Updated 'deposits' client
-        #' @examples
-        #' \dontrun{
-        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
-        #' print (cli)
-        #' # ... then if "Current deposits" does not seem up-to-date:
-        #' cli$deposits_list ()
-        #' # That will ensure that all external deposits are then listed,
-        #' # and can be viewed with:
-        #' cli$deposits
-        #' }
-
-        deposits_list = function () {
-
-            self <- private$deposits_list_extract ()
-
-            invisible (self)
-        },
-
-        #' @description Search all public deposits.
-        #' @param search_string Single string to search for
-        #' @param page_size Number of records to return in one page
-        #' @param page_number Starting page for return results; used in
-        #' combination with 'page_size' for pagination.
-        #' @param ... Named pairs of query parameters.
-        #' Zenodo parameters are described at
-        #' \url{https://developers.zenodo.org/#list36}, and currently include:
-        #' \itemize{
-        #' \item status: either "draft" or "published"
-        #' \item sort: either "bestmatch" (the default) or "mostrecent"
-        #' \item all_versions: Either "true" or "false"
-        #' \item communities: Search for deposits only within specified
-        #' communities
-        #' \item type: Return deposits only of specified type
-        #' \item subtype: Return deposits only of specified subtype
-        #' \item bound: A geolocation bounding box
-        #' \item custom: Custom keywords
-        #' }
-        #'
-        #' Figshare parameters are described at
-        #' \url{https://docs.figshare.com/#articles_search}, and currently
-        #' include:
-        #' \itemize{
-        #' \item resource_doi: Only return deposits matching this 'resource_doi'
-        #' \item item_type: Return deopsits of specified type (as integer).
-        #' \item doi: Only return deposits matching this DOI
-        #' \item handle: Only return deposits matching this handle
-        #' \item project_id: Only return deposits from within specified project
-        #' \item order: Order for sorting results; one of "published_date",
-        #' "modified_date", "views", "shares", "downloads", or "cites"
-        #' \item search_for: Search term.
-        #' \item order_direction: "asc" or "desc"
-        #' \item institution: Only return deposits from specified institution
-        #' (as integer)
-        #' \item group: Only return deposits from specified group (as integer)
-        #' \item published_since: Only return deposits published since specified
-        #' date (as YYYY-MM-DD)
-        #' \item modified_since: Only return deposits modified since specified
-        #' date (as YYYY-MM-DD)
-        #' }
-        #' @return A `data.frame` of data on deposits matching search parameters
-        #' (with format depending on the deposits service.)
-        #' @examples
-        #' \dontrun{
-        #' cli <- depositsClient$new (service = "figshare")
-        #' search_results <- cli$deposits_search (
-        #'     search_string = "Text string query",
-        #'     page_size = 5L
-        #' )
-        #' # The 'search_string' can be used to specify precise searches:
-        #' cli <- depositsClient$new (service = "zenodo")
-        #' search_results <-
-        #'    cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
-        #' }
-
-        deposits_search = function (search_string = NULL,
-                                    page_size = 10L,
-                                    page_number = 1L,
-                                    ...) {
-
-            arglist <- process_search_params (
-                self$service,
-                search_string = search_string,
-                page_size = page_size,
-                page_number = page_number,
-                ...
-            )
-
-            url <- paste0 (
-                self$url_base,
-                ifelse (self$service == "figshare",
-                    "articles/search",
-                    "records"
-                )
-            )
-
-            method <- ifelse (self$service == "figshare", "POST", "GET")
-            req <- create_httr2_helper (url, self$headers$Authorization, method)
-
-            if (self$service == "figshare") {
-                req <- httr2::req_body_json (req, arglist)
-            } else {
-                req <- do.call (
-                    httr2::req_url_query,
-                    c (.req = list (req), arglist)
-                )
-            }
-
-            resp <- httr2::req_perform (req)
-            httr2::resp_check_status (resp)
-
-            return (httr2::resp_body_json (resp, simplifyVector = TRUE))
-        },
+        # -----------
+        # From here on, all methods are defined ain alphabetical order
+        # ---------
 
         #' @description Deleted a specified deposit from the remote service.
         #' This removes the deposits from the associated service, along with all
@@ -366,6 +230,191 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # Then return client with that deposit removed from list:
             self <- self$deposits_list ()
+
+            invisible (self)
+        },
+
+        #' @description Delete a single from a deposits service.
+        #'
+        #' This does not modify the "datapackage.json" file, either locally or
+        #' on a service.
+        #'
+        #' @param filename Name of file to be deleted as recorded on service.
+        #' @param deposit_id The 'id' number of deposit from which file is to be
+        #' deleted. If not specified, the 'id' value of current deposits client
+        #' is used.
+        #' @return (Invisibly) Updated 'deposits' client
+        #' @examples
+        #' \dontrun{
+        #' # Initiate deposit and fill with metadata:
+        #' metadata <- list (
+        #'     Title = "Iris Dataset",
+        #'     Creator = "Edgar Anderson",
+        #'     Publisher = "American Iris Society",
+        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #' )
+        #' cli <- depositsClient$new (
+        #'     service = "zenodo",
+        #'     sandbox = TRUE,
+        #'     metadata = metadata
+        #' )
+        #' cli$deposit_new ()
+        #'
+        #' # Create some local data and upload to deposit:
+        #' path <- fs::path (fs::path_temp (), "iris.csv")
+        #' write.csv (datasets::iris, path)
+        #' cli$deposit_upload_file (path = path)
+        #'
+        #' # Confirm that uploaded files include \pkg{frictionless}
+        #' # "datapackage.json" file, and also that local version has been
+        #' # created:
+        #' cli$hostdata$files
+        #'
+        #' # Then delete one of those files:
+        #' cli$deposit_delete_file ("datapackage.json")
+        #' }
+
+        deposit_delete_file = function (filename) {
+
+            checkmate::assert_character (filename, len = 1L)
+
+            self <- private$delete_file (filename)
+
+            invisible (self)
+        },
+
+        #' @description Download a specified 'filename' from a deposit.
+        #' @param filename The name of the file to be download as specified in
+        #' the deposit.
+        #' @param deposit_id The 'id' number of deposit which file is to be
+        #' downloaded from. If not specified, the 'id' value of current deposits
+        #' client is used.
+        #' @param path The local directory where file is to be downloaded.
+        #' @param overwrite Do not overwrite existing files unless set to
+        #' `TRUE`.
+        #' @param quiet If `FALSE`, display download progress.
+        #' @return The full path of the downloaded file.
+
+        deposit_download_file = function (filename,
+                                          deposit_id = NULL,
+                                          path = NULL,
+                                          overwrite = FALSE,
+                                          quiet = FALSE) {
+
+            if (is.null (deposit_id)) {
+                deposit_id <- self$id
+            }
+
+            checkmate::assert_int (deposit_id)
+            checkmate::assert_character (filename, len = 1L)
+            if (is.null (path)) {
+                path <- fs::path (here::here ())
+            } else {
+                checkmate::assert_character (path, len = 1L)
+                checkmate::assert_directory_exists (path)
+                path <- fs::path_real (path)
+            }
+            checkmate::assert_logical (quiet, len = 1L)
+
+            # repeat retrieve_deposit method to get download_url:
+            name_field <- private$get_file_name_field ()
+
+            files <- private$get_hostdata_files (deposit_id, filename)
+
+            if (!filename %in% files [[name_field]]) {
+                stop ("That deposit does not contain the specified file.")
+            }
+
+            if (self$service == "figshare") {
+                download_url <- files$download_url [files$name == filename]
+            } else if (self$service == "zenodo") {
+                download_url <-
+                    files$links$download [files$filename == filename]
+            }
+
+            if (self$service == "figshare") {
+                if (!self$hostdata$is_public) {
+                    stop (
+                        "Figshare does not allow automated downloads of private ",
+                        "files.\nYou can manually download at ", download_url
+                    )
+                }
+            }
+
+            destfile <- fs::path (path, filename)
+            if (fs::file_exists (destfile) & !overwrite) {
+                stop (
+                    "File [", destfile, "] exists; either remove ",
+                    "or pass `overwrite = TRUE`."
+                )
+            }
+
+            req <- create_httr2_helper (
+                download_url,
+                self$headers$Authorization,
+                "GET"
+            )
+
+            resp <- httr2::req_perform (req, path = destfile)
+            httr2::resp_check_status (resp)
+
+            return (destfile)
+        },
+
+        #' @description Embargo a deposit prior to publication.
+        #' @param embargo_date Date of expiry of embargo. If the
+        #' `deposit_publish()` method has been called, deposit will
+        #' automatically be published after this date, and will not be
+        #' published, nor publically accessible, prior to this date.
+        #' @param embargo_type For Figshare service only, which allows embargoes
+        #' for entire deposits or single files. Ignored for other services.
+        #' @param embargo_reason For Figshare service only, an optional text
+        #' string describing reasons for embargo.
+        #' @return (Invisibly) Updated deposits client with additional embargo
+        #' information.
+
+        deposit_embargo = function (embargo_date = NULL,
+                                    embargo_type = c ("deposit", "file"),
+                                    embargo_reason = NULL) {
+
+            if (is.null (self$id)) {
+                stop (
+                    "Client not associated with any deposit which can ",
+                    "be embargoed. Please first use `deposit_new()` ",
+                    "or `deposit_retrieve()` methods.",
+                    call. = FALSE
+                )
+            }
+
+            # Re-generate service metadata from DCMI:
+            metadata <- validate_metadata (
+                self$metadata,
+                gsub ("\\-sandbox$", "", self$service)
+            )
+            metadata <- httptest2_created_timestamp (metadata)
+            self$metadata <- metadata$dcmi
+            private$metadata_service <- metadata$service
+
+            checkmate::assert_character (embargo_date, len = 1L)
+            embargo_date <- strftime (embargo_date, "%Y-%m-%d")
+
+            if (self$service == "zenodo") {
+
+                self <- private$embargo_zenodo (embargo_date)
+
+            } else if (self$service == "figshare") {
+
+                embargo_type <- match.arg (embargo_type)
+                if (embargo_type == "deposit") {
+                    embargo_type <- "article"
+                }
+                if (!is.null (embargo_reason)) {
+                    checkmate::assert_character (embargo_reason, len = 1L)
+                }
+                self <- private$embargo_figshare (
+                    embargo_date, embargo_type, embargo_reason
+                )
+            }
 
             invisible (self)
         },
@@ -449,6 +498,77 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Retrieve information on specified deposit.
+        #' @param deposit_id The 'id' number of deposit for which information is
+        #' to be retrieved.
+        #' @param quiet If `FALSE` (default), display information on screen on
+        #' any issues encountered in retrieving deposit.
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_retrieve = function (deposit_id, quiet = FALSE) {
+
+            checkmate::assert_int (deposit_id)
+
+            url <- get_service_url (self, deposit_id = deposit_id)
+
+            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+            resp <- httr2::req_perform (req)
+            httr2::resp_check_status (resp)
+
+            hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
+            hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
+            self$hostdata <- hostdata
+
+            if (self$service == "figshare" && !self$hostdata$is_public) {
+                if (!quiet) {
+                    message (
+                        "Files for private Figshare deposits can only be ",
+                        "downloaded manually; no metadata can be retrieved ",
+                        "for this deposit."
+                    )
+                }
+            } else {
+                files <- private$get_hostdata_files (
+                    deposit_id,
+                    private$frictionless_json_name
+                )
+                name_field <- private$get_file_name_field ()
+                if (private$frictionless_json_name %in% files [[name_field]]) {
+                    # Rm any 'datapackage.json' that is in temp dir:
+                    dp_path <- fs::path (
+                        fs::path_temp (),
+                        private$frictionless_json_name
+                    )
+                    dp_exists <- fs::file_exists (dp_path)
+                    if (dp_exists) {
+                        fs::file_delete (dp_path)
+                    }
+                    dp_path <- self$deposit_download_file (
+                        deposit_id,
+                        filename = private$frictionless_json_name,
+                        path = fs::path_temp ()
+                    )
+                    if (fs::file_exists (dp_path)) {
+                        suppressMessages (
+                            self$metadata <- frictionless::read_package (
+                                dp_path
+                            )$metadata
+                        )
+                        # only delete if 'datapackage.json' created here:
+                        if (!dp_exists) {
+                            fs::file_delete (dp_path)
+                        }
+                    }
+                } else {
+                    self$frictionless <- FALSE
+                }
+            }
+
+            self <- private$fill_service_id_url ()
+
+            invisible (self)
+        },
+
         #' @description Switch external services associated with a
         #' `depositsClient` object.
         #' @param service (character) Name of a deposits service (see
@@ -516,6 +636,73 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             httr2::resp_check_status (resp)
 
             self <- self$deposit_retrieve (deposit_id)
+
+            invisible (self)
+        },
+
+        #' @description Update both local and remote "datapackage.json" files
+        #' with contents of client metadata. This function is intended to be
+        #' used when client itself is used to update metadata, in order for any
+        #' local changes to be propagated through to the \pkg{frictionless}
+        #' "datapackage.json" file(s).
+        #' @param deposit_id The 'id' number of deposit to update. If not
+        #' specified, the 'id' value of current deposits client is used.
+        #' @param path (Optional) path to local directory containing deposit
+        #' data and a \pkg{frictionless} "datapackage.json" file. If specified,
+        #' that local "datapackage.json" will be updated, and the updated
+        #' version then uploaded to the deposits service.
+        #' @return (Invisibly) Updated deposits client.
+
+        deposit_update_frictionless = function (deposit_id = NULL,
+                                                path = NULL) {
+
+            if (!is.null (path)) {
+                checkmate::assert_directory_exists (path)
+            }
+
+            path_is_local <- !is.null (path)
+
+            if (!path_is_local) {
+
+                name_field <- private$get_file_name_field ()
+                if (!private$frictionless_json_name %in%
+                    self$hostdata$files [[name_field]]) {
+                    stop (
+                        self$service, " deposit#", self$id, " has no '",
+                        private$frictionless_json_name, "' file",
+                        call. = FALSE
+                    )
+                }
+                path <- fs::path_temp ()
+                self$deposit_download_file (
+                    filename = private$frictionless_json_name,
+                    path = path
+                )
+            }
+
+            path_json <- fs::path (path, private$frictionless_json_name)
+            p <- frictionless::read_package (path_json)
+            p$metadata <- self$metadata
+            if (path_is_local) {
+                op <- options (
+                    readr.show_progress = FALSE,
+                    readr.show_col_types = FALSE
+                )
+                frictionless::write_package (p, path)
+                options (op)
+            } else {
+                p$directory <- NULL
+                jsonlite::write_json (p, path_json, pretty = TRUE)
+            }
+
+            # Then finally upload new "datapackage.json":
+            if (!is_deposits_test_env ()) {
+                self <- private$upload_local_file (path_json, compress = "no")
+            }
+
+            if (!path_is_local) {
+                fs::file_delete (path_json)
+            }
 
             invisible (self)
         },
@@ -615,269 +802,143 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Delete a single from a deposits service.
-        #'
-        #' This does not modify the "datapackage.json" file, either locally or
-        #' on a service.
-        #'
-        #' @param filename Name of file to be deleted as recorded on service.
-        #' @param deposit_id The 'id' number of deposit from which file is to be
-        #' deleted. If not specified, the 'id' value of current deposits client
-        #' is used.
+        #' @description Update 'deposits' item of current deposits for given
+        #' service. The list of deposits contained within the "deposits" item of
+        #' a client may not be up-to-date; this method can be used for force
+        #' synchronisation with the external service, so that "deposits" lists
+        #' all current deposits.
         #' @return (Invisibly) Updated 'deposits' client
         #' @examples
         #' \dontrun{
-        #' # Initiate deposit and fill with metadata:
-        #' metadata <- list (
-        #'     Title = "Iris Dataset",
-        #'     Creator = "Edgar Anderson",
-        #'     Publisher = "American Iris Society",
-        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
-        #' )
-        #' cli <- depositsClient$new (
-        #'     service = "zenodo",
-        #'     sandbox = TRUE,
-        #'     metadata = metadata
-        #' )
-        #' cli$deposit_new ()
-        #'
-        #' # Create some local data and upload to deposit:
-        #' path <- fs::path (fs::path_temp (), "iris.csv")
-        #' write.csv (datasets::iris, path)
-        #' cli$deposit_upload_file (path = path)
-        #'
-        #' # Confirm that uploaded files include \pkg{frictionless}
-        #' # "datapackage.json" file, and also that local version has been
-        #' # created:
-        #' cli$hostdata$files
-        #'
-        #' # Then delete one of those files:
-        #' cli$deposit_delete_file ("datapackage.json")
+        #' cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+        #' print (cli)
+        #' # ... then if "Current deposits" does not seem up-to-date:
+        #' cli$deposits_list ()
+        #' # That will ensure that all external deposits are then listed,
+        #' # and can be viewed with:
+        #' cli$deposits
         #' }
 
-        deposit_delete_file = function (filename) {
+        deposits_list = function () {
 
-            checkmate::assert_character (filename, len = 1L)
-
-            self <- private$delete_file (filename)
+            self <- private$deposits_list_extract ()
 
             invisible (self)
         },
 
-        #' @description Retrieve information on specified deposit.
-        #' @param deposit_id The 'id' number of deposit for which information is
-        #' to be retrieved.
-        #' @param quiet If `FALSE` (default), display information on screen on
-        #' any issues encountered in retrieving deposit.
-        #' @return (Invisibly) Updated 'deposits' client
+        #' @description List public methods of a 'deposits' client.
+        #' @return Nothing; methods are listed on screen.
 
-        deposit_retrieve = function (deposit_id, quiet = FALSE) {
+        deposits_methods = function () {
 
-            checkmate::assert_int (deposit_id)
+            m <- sort (grep ("^deposit", ls (self), value = TRUE))
+            fns <- vapply (m, function (i) {
+                class (self [[i]]) [1] == "function"
+            }, logical (1L))
+            m <- m [which (fns)]
+            cat (
+                "List of methods for a deposits client:\n\n",
+                paste0 ("  - ", m, "\n"),
+                "\n",
+                "see `?depositsClient` for full details of all methods.\n"
+            )
 
-            url <- get_service_url (self, deposit_id = deposit_id)
+            invisible (self)
+        },
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "GET")
+        #' @description Search all public deposits.
+        #' @param search_string Single string to search for
+        #' @param page_size Number of records to return in one page
+        #' @param page_number Starting page for return results; used in
+        #' combination with 'page_size' for pagination.
+        #' @param ... Named pairs of query parameters.
+        #' Zenodo parameters are described at
+        #' \url{https://developers.zenodo.org/#list36}, and currently include:
+        #' \itemize{
+        #' \item status: either "draft" or "published"
+        #' \item sort: either "bestmatch" (the default) or "mostrecent"
+        #' \item all_versions: Either "true" or "false"
+        #' \item communities: Search for deposits only within specified
+        #' communities
+        #' \item type: Return deposits only of specified type
+        #' \item subtype: Return deposits only of specified subtype
+        #' \item bound: A geolocation bounding box
+        #' \item custom: Custom keywords
+        #' }
+        #'
+        #' Figshare parameters are described at
+        #' \url{https://docs.figshare.com/#articles_search}, and currently
+        #' include:
+        #' \itemize{
+        #' \item resource_doi: Only return deposits matching this 'resource_doi'
+        #' \item item_type: Return deopsits of specified type (as integer).
+        #' \item doi: Only return deposits matching this DOI
+        #' \item handle: Only return deposits matching this handle
+        #' \item project_id: Only return deposits from within specified project
+        #' \item order: Order for sorting results; one of "published_date",
+        #' "modified_date", "views", "shares", "downloads", or "cites"
+        #' \item search_for: Search term.
+        #' \item order_direction: "asc" or "desc"
+        #' \item institution: Only return deposits from specified institution
+        #' (as integer)
+        #' \item group: Only return deposits from specified group (as integer)
+        #' \item published_since: Only return deposits published since specified
+        #' date (as YYYY-MM-DD)
+        #' \item modified_since: Only return deposits modified since specified
+        #' date (as YYYY-MM-DD)
+        #' }
+        #' @return A `data.frame` of data on deposits matching search parameters
+        #' (with format depending on the deposits service.)
+        #' @examples
+        #' \dontrun{
+        #' cli <- depositsClient$new (service = "figshare")
+        #' search_results <- cli$deposits_search (
+        #'     search_string = "Text string query",
+        #'     page_size = 5L
+        #' )
+        #' # The 'search_string' can be used to specify precise searches:
+        #' cli <- depositsClient$new (service = "zenodo")
+        #' search_results <-
+        #'    cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
+        #' }
+
+        deposits_search = function (search_string = NULL,
+                                    page_size = 10L,
+                                    page_number = 1L,
+                                    ...) {
+
+            arglist <- process_search_params (
+                self$service,
+                search_string = search_string,
+                page_size = page_size,
+                page_number = page_number,
+                ...
+            )
+
+            url <- paste0 (
+                self$url_base,
+                ifelse (self$service == "figshare",
+                    "articles/search",
+                    "records"
+                )
+            )
+
+            method <- ifelse (self$service == "figshare", "POST", "GET")
+            req <- create_httr2_helper (url, self$headers$Authorization, method)
+
+            if (self$service == "figshare") {
+                req <- httr2::req_body_json (req, arglist)
+            } else {
+                req <- do.call (
+                    httr2::req_url_query,
+                    c (.req = list (req), arglist)
+                )
+            }
+
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
-            hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
-            hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
-            self$hostdata <- hostdata
-
-            if (self$service == "figshare" && !self$hostdata$is_public) {
-                if (!quiet) {
-                    message (
-                        "Files for private Figshare deposits can only be ",
-                        "downloaded manually; no metadata can be retrieved ",
-                        "for this deposit."
-                    )
-                }
-            } else {
-                files <- private$get_hostdata_files (
-                    deposit_id,
-                    private$frictionless_json_name
-                )
-                name_field <- private$get_file_name_field ()
-                if (private$frictionless_json_name %in% files [[name_field]]) {
-                    # Rm any 'datapackage.json' that is in temp dir:
-                    dp_path <- fs::path (
-                        fs::path_temp (),
-                        private$frictionless_json_name
-                    )
-                    dp_exists <- fs::file_exists (dp_path)
-                    if (dp_exists) {
-                        fs::file_delete (dp_path)
-                    }
-                    dp_path <- self$deposit_download_file (
-                        deposit_id,
-                        filename = private$frictionless_json_name,
-                        path = fs::path_temp ()
-                    )
-                    if (fs::file_exists (dp_path)) {
-                        suppressMessages (
-                            self$metadata <- frictionless::read_package (
-                                dp_path
-                            )$metadata
-                        )
-                        # only delete if 'datapackage.json' created here:
-                        if (!dp_exists) {
-                            fs::file_delete (dp_path)
-                        }
-                    }
-                } else {
-                    self$frictionless <- FALSE
-                }
-            }
-
-            self <- private$fill_service_id_url ()
-
-            invisible (self)
-        },
-
-        #' @description Download a specified 'filename' from a deposit.
-        #' @param filename The name of the file to be download as specified in
-        #' the deposit.
-        #' @param deposit_id The 'id' number of deposit which file is to be
-        #' downloaded from. If not specified, the 'id' value of current deposits
-        #' client is used.
-        #' @param path The local directory where file is to be downloaded.
-        #' @param overwrite Do not overwrite existing files unless set to
-        #' `TRUE`.
-        #' @param quiet If `FALSE`, display download progress.
-        #' @return The full path of the downloaded file.
-
-        deposit_download_file = function (filename,
-                                          deposit_id = NULL,
-                                          path = NULL,
-                                          overwrite = FALSE,
-                                          quiet = FALSE) {
-
-            if (is.null (deposit_id)) {
-                deposit_id <- self$id
-            }
-
-            checkmate::assert_int (deposit_id)
-            checkmate::assert_character (filename, len = 1L)
-            if (is.null (path)) {
-                path <- fs::path (here::here ())
-            } else {
-                checkmate::assert_character (path, len = 1L)
-                checkmate::assert_directory_exists (path)
-                path <- fs::path_real (path)
-            }
-            checkmate::assert_logical (quiet, len = 1L)
-
-            # repeat retrieve_deposit method to get download_url:
-            name_field <- private$get_file_name_field ()
-
-            files <- private$get_hostdata_files (deposit_id, filename)
-
-            if (!filename %in% files [[name_field]]) {
-                stop ("That deposit does not contain the specified file.")
-            }
-
-            if (self$service == "figshare") {
-                download_url <- files$download_url [files$name == filename]
-            } else if (self$service == "zenodo") {
-                download_url <-
-                    files$links$download [files$filename == filename]
-            }
-
-            if (self$service == "figshare") {
-                if (!self$hostdata$is_public) {
-                    stop (
-                        "Figshare does not allow automated downloads of private ",
-                        "files.\nYou can manually download at ", download_url
-                    )
-                }
-            }
-
-            destfile <- fs::path (path, filename)
-            if (fs::file_exists (destfile) & !overwrite) {
-                stop (
-                    "File [", destfile, "] exists; either remove ",
-                    "or pass `overwrite = TRUE`."
-                )
-            }
-
-            req <- create_httr2_helper (
-                download_url,
-                self$headers$Authorization,
-                "GET"
-            )
-
-            resp <- httr2::req_perform (req, path = destfile)
-            httr2::resp_check_status (resp)
-
-            return (destfile)
-        },
-
-        #' @description Update both local and remote "datapackage.json" files
-        #' with contents of client metadata. This function is intended to be
-        #' used when client itself is used to update metadata, in order for any
-        #' local changes to be propagated through to the \pkg{frictionless}
-        #' "datapackage.json" file(s).
-        #' @param deposit_id The 'id' number of deposit to update. If not
-        #' specified, the 'id' value of current deposits client is used.
-        #' @param path (Optional) path to local directory containing deposit
-        #' data and a \pkg{frictionless} "datapackage.json" file. If specified,
-        #' that local "datapackage.json" will be updated, and the updated
-        #' version then uploaded to the deposits service.
-        #' @return (Invisibly) Updated deposits client.
-
-        deposit_update_frictionless = function (deposit_id = NULL,
-                                                path = NULL) {
-
-            if (!is.null (path)) {
-                checkmate::assert_directory_exists (path)
-            }
-
-            path_is_local <- !is.null (path)
-
-            if (!path_is_local) {
-
-                name_field <- private$get_file_name_field ()
-                if (!private$frictionless_json_name %in%
-                    self$hostdata$files [[name_field]]) {
-                    stop (
-                        self$service, " deposit#", self$id, " has no '",
-                        private$frictionless_json_name, "' file",
-                        call. = FALSE
-                    )
-                }
-                path <- fs::path_temp ()
-                self$deposit_download_file (
-                    filename = private$frictionless_json_name,
-                    path = path
-                )
-            }
-
-            path_json <- fs::path (path, private$frictionless_json_name)
-            p <- frictionless::read_package (path_json)
-            p$metadata <- self$metadata
-            if (path_is_local) {
-                op <- options (
-                    readr.show_progress = FALSE,
-                    readr.show_col_types = FALSE
-                )
-                frictionless::write_package (p, path)
-                options (op)
-            } else {
-                p$directory <- NULL
-                jsonlite::write_json (p, path_json, pretty = TRUE)
-            }
-
-            # Then finally upload new "datapackage.json":
-            if (!is_deposits_test_env ()) {
-                self <- private$upload_local_file (path_json, compress = "no")
-            }
-
-            if (!path_is_local) {
-                fs::file_delete (path_json)
-            }
-
-            invisible (self)
+            return (httr2::resp_body_json (resp, simplifyVector = TRUE))
         }
     ) # end public list
 )
