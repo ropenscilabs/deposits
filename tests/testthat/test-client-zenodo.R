@@ -176,6 +176,9 @@ test_that ("zenodo embargo", {
     cli <- httptest2::with_mock_dir ("zen_embargo", {
         cli$deposit_embargo (embargo_date = embargo_date)
     })
+
+    expect_equal (cli$hostdata$metadata$access_right, "embargoed")
+    # embargo date is redacted by httptest2 to "2022-01-01"
 })
 
 test_that ("zenodo deposits_list", {
