@@ -55,7 +55,6 @@ depositsClient$set ("private", "host2dcmi", function () {
         field <- self$hostdata$description
     }
 
-    field <- cli$hostdata$description
     # Figshare does not render "\n", only "\\n", and some of these double
     # backslashes end up repeated and need to be reduced here for JSON parsing.
     field <- condense_linebreaks (field)
