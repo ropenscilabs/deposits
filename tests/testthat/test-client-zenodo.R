@@ -83,6 +83,7 @@ test_that ("zenodo default metadata", {
 
     # Expect service metadata to have markdown header inserted:
     desc <- metadata$service$metadata$description
+    desc <- gsub ("\\\\n", "\n", desc)
     expect_true (grepl ("\\#\\#\\sdescription", desc))
     desc <- strsplit (desc, "\n") [[1]]
     # Expect abstract is now first:
