@@ -24,6 +24,7 @@
          - deposit_embargo
          - deposit_fill_metadata
          - deposit_new
+         - deposit_publish
          - deposit_retrieve
          - deposit_service
          - deposit_update
@@ -77,6 +78,7 @@
          - deposit_embargo
          - deposit_fill_metadata
          - deposit_new
+         - deposit_publish
          - deposit_retrieve
          - deposit_service
          - deposit_update

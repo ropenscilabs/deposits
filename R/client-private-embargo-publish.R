@@ -1,6 +1,6 @@
-# --------------------------------------------------
-# Private methods dedicated for embargo methods
-# --------------------------------------------------
+# ---------------------------------------------------
+# Private methods for embargo and publish API methods
+# ---------------------------------------------------
 
 
 #' @description Embargo method for Zenodo service
@@ -50,6 +50,21 @@ depositsClient$set ("private", "embargo_zenodo", function (embargo_date) {
     invisible (self)
 })
 
+#' @description Publish method for Zenodo service
+#'
+#' @return Updated client
+#' @noRd
+
+depositsClient$set ("private", "publish_zenodo", function () {
+
+    url <- paste0 (get_service_url (self), "/", self$id, "/publish")
+    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+    resp <- httr2::req_perform (req)
+
+    self$hostdata <- httr2::resp_body_json (resp)
+
+    invisible (self)
+})
 
 #' @description Embargo method for Figshare service
 #'
@@ -87,3 +102,19 @@ depositsClient$set (
         invisible (self)
     }
 )
+
+#' @description Publish method for Figshare service
+#'
+#' @return Updated client
+#' @noRd
+
+depositsClient$set ("private", "publish_figshare", function () {
+
+    url <- paste0 (get_service_url (self), "/", self$id, "/publish")
+    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+    resp <- httr2::req_perform (req)
+
+    self$deposit_retrieve (self$id)
+
+    invisible (self)
+})

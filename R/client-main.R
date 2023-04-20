@@ -335,8 +335,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (self$service == "figshare") {
                 if (!self$hostdata$is_public) {
                     stop (
-                        "Figshare does not allow automated downloads of private ",
-                        "files.\nYou can manually download at ", download_url
+                        "Figshare does not allow automated downloads of ",
+                        "private files.\nYou can manually download at ",
+                        download_url
                     )
                 }
             }
@@ -493,6 +494,65 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!quiet) {
                 cat ("ID of new deposit :", self$id, "\n")
+            }
+
+            invisible (self)
+        },
+
+        #' @description Publish a deposit
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_publish = function () {
+
+            if (is.null (self$id)) {
+                stop (
+                    "Client not associated with any deposit which can ",
+                    "be embargoed. Please first use `deposit_new()` ",
+                    "or `deposit_retrieve()` methods.",
+                    call. = FALSE
+                )
+            }
+            self$deposit_retrieve (self$id)
+
+            if (self$service == "zenodo") {
+                is_embargoed <-
+                    identical (self$hostdata$metadata$access_right, "embargoed")
+            } else if (self$service == "figshare") {
+                is_embargoed <- self$hostdata$is_embargoed
+            }
+
+            proceed <- TRUE
+            if (!is_embargoed && interactive ()) {
+                ans <- readline (paste0 (
+                    "Do you wish to place an embargo date ",
+                    "prior to publication (y/n)? "
+                ))
+                # do not proceed if "y":
+                proceed <- !identical (tolower (substring (ans, 1L, 1L)), "y")
+                if (!proceed) {
+                    message (paste0 (
+                        "First call the 'deposit_embargo()' ",
+                        "method prior to publication."
+                    ))
+                }
+            }
+
+            if (proceed && interactive ()) {
+                ans <- readline (paste0 (
+                    "This action can not be undone. ",
+                    "Are you sure you want to publish deposit#",
+                    cli$id,
+                    " (y/n) ? "
+                ))
+                proceed <- identical (tolower (substring (ans, 1L, 1L)), "y")
+            }
+
+            if (proceed) {
+                if (self$service == "zenodo") {
+                    private$publish_zenodo ()
+                } else if (self$service == "figshare") {
+                    private$publish_figshare ()
+                }
             }
 
             invisible (self)
@@ -780,12 +840,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!fs::is_dir (path)) {
 
                 self <- private$upload_local_file (path, overwrite, compress)
-                # Create "datapackage.json" if it does not exist, or download remote
-                # if only that exists. Either way, local version is then the most
-                # up-to-date version.
+                # Create "datapackage.json" if it does not exist, or download
+                # remote if only that exists. Either way, local version is then
+                # the most up-to-date version.
                 if (fs::path_file (path) != private$frictionless_json_name) {
-                    self <-
-                        private$update_frictionless (path, overwrite = overwrite)
+                    self <- private$update_frictionless (
+                        path,
+                        overwrite = overwrite
+                    )
                 }
 
             } else {
@@ -793,8 +855,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 flist <- fs::dir_ls (path)
                 flist <- flist [which (!grepl ("datapackage\\.json$", flist))]
                 for (f in flist) {
-                    self <- private$upload_local_file (f, overwrite, compress)
-                    self <- private$update_frictionless (f, overwrite = overwrite)
+                    self <- private$upload_local_file (
+                        f,
+                        overwrite,
+                        compress
+                    )
+                    self <- private$update_frictionless (
+                        f,
+                        overwrite = overwrite
+                    )
                 }
             }
 
