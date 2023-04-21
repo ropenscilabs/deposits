@@ -1,0 +1,83 @@
+{
+    "_note": "Fields like this starting with underscores are comments. Please delete this field, and all fields in this template except for those you wish to use for your deposit.",
+    "abstract": "Abstract text",
+    "accessRights": "Access rights, which for Zenodo must be one of 'open', 'embargoed', 'restricted', or 'closed'.",
+    "accrualMethod": "See https://www.dublincore.org/specifications/dublin-core/collection-description/accrual-method/; must be one of 'deposit', 'donation', 'purchase', 'loan', 'license', or 'item_creation'",
+    "accrualPeriodicity": "Recommended vocabulary at https://www.dublincore.org/specifications/dublin-core/collection-description/frequency/",
+    "accrualPolicy": "See https://www.dublincore.org/specifications/dublin-core/collection-description/accrual-policy/. Must be one of 'closed', 'passive', 'active', 'partial'.",
+    "alternative": "Alternative name or title for the resource",
+    "audience": "A class of agents for whom the resource is intended or useful. Recommended practice is to use this property with non-literal values from a vocabulary of audience types.",
+    "available": "Date from which resource will be available.",
+    "bibliographicCitation": "A bibliographic reference for the resource.",
+    "conformsTo": "An established standard to which the described resource conforms.",
+    "contributor": [
+        {
+            "name": "Name of first contributor. (Note that authors are specified in the 'creator' field, and a 'contributor' is not a 'creator'.)",
+            "type": "(Optional) For Zenodo; one of 'ContactPerson', 'DataCollector', 'DataCurator', 'DataManager', 'istributor', 'Editor', 'HostingInstitution', 'Producer', 'ProjectLeader', 'ProjectManager', 'ProjectMember', 'RegistrationAgency', 'RegistrationAuthority', 'RelatedPerson', 'Researcher', 'ResearchGroup', 'RightsHolder', 'upervisor', 'Sponsor', 'WorkPackageLeader', 'Other'.",
+            "affiliantion": "(Optional) Affiliation of contributor",
+            "orcid": "(Optional) ORCID ID of contributor.",
+            "gnd": "(Optional) GND number of contributor"
+        },
+        {
+            "name": "Name of second contributor"
+        }
+    ],
+    "coverage": "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant.",
+    "created": "A date or date-time string specifying when the resource was created.",
+    "creator": [
+        {
+            "name": "Name of first creator.",
+            "affliantion": "(Optional, Zenodo only)",
+            "id": "(Optional, figshare only) Integer 'id' on Figshare of creator.",
+            "first_name": "(Optional, figshare only)",
+            "last_name": "(Optional, figshare only)",
+            "email": "(Optional, figshare only)",
+            "orcid": "(Optional)",
+            "gnd": "(Optional, Zenodo only)"
+        },
+        {
+            "name": "Name of second creator."
+        }
+    ],
+    "date": "A point or period of time associated with an event in the lifecycle of the resource.",
+    "dateAccepted": "Date of acceptance of resource",
+    "dateCopyrighted": "Date of copyright of resource",
+    "dateSubmitted": "Date of submission of resource",
+    "description": "Description of resource.",
+    "educationLevel": "A class of agents, defined in terms of progression through an educational or training context, for which the described resource is intended.",
+    "extent": "The size or duration of the resource. Recommended practice is to specify the file size in megabytes and duration in ISO 8601 format.",
+    "format": "The file format, physical medium, or dimensions of the resource. For Zenodo, one of 'publication', 'poster', 'presentation', 'dataset', 'image', 'video', 'software', 'lesson', 'physicalobject', 'other'.  For Figshare, one of ['figure', 'online_resource', 'preprint', 'book', 'conference_contribution', 'media', 'dataset', 'poster', 'journal_contribution', 'presentation', 'thesis', 'software'",
+    "hasFormat": "A related resource that is substantially the same as the pre-existing described resource, but in another format. This property is an inverse property of Is Format Of.",
+    "hasPart": "A related resource that is included either physically or logically in the described resource. This property is an inverse property of Is Part Of.",
+    "hasVersion": "A related resource that is a version, edition, or adaptation of the described resource. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Is Version Of.",
+    "identifier": "An unambiguous reference to the resource within a given context. Recommended practice is to identify the resource by means of a string conforming to an identification system. Examples include International Standard Book Number (ISBN), Digital Object Identifier (DOI), and Uniform Resource Name (URN). Persistent identifiers should be provided as HTTP URIs.",
+    "instructionalMethod": "A process, used to engender knowledge, attitudes and skills, that the described resource is designed to support. Instructional Method typically includes ways of presenting instructional materials or conducting instructional activities, patterns of learner-to-learner and learner-to-instructor interactions, and mechanisms by which group and individual levels of learning are measured. Instructional methods include all aspects of the instruction and learning processes from planning and implementation through evaluation and feedback.",
+    "isFormatOf": "A pre-existing related resource that is substantially the same as the described resource, but in another format. This property is an inverse property of Has Format.",
+    "isPartOf": "A related resource in which the described resource is physically or logically included. This property is an inverse property of Has Part.",
+    "isReferencedBy": "A related resource that references, cites, or otherwise points to the described resource. This property is an inverse property of References. For Zenodo, this must be an array of items, each of which specifies a 'name' and 'relation', where 'relation' follows a fixed vocabulary.",
+    "isReplacedBy": "A related resource that supplants, displaces, or supersedes the described resource. This property is an inverse property of Replaces. For Zenodo, this must be an array of items, each of which specifies a 'name' and 'relation', where 'relation' follows a fixed vocabulary.",
+    "isRequiredBy": "A related resource that requires the described resource to support its function, delivery, or coherence. This property is an inverse property of Requires. For Zenodo, this must be an array of items, each of which specifies a 'name' and 'relation', where 'relation' follows a fixed vocabulary.",
+    "issued": "Date or date-time of formal issuance of the resource.",
+    "isVersionOf": "A related resource of which the described resource is a version, edition, or adaptation. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Has Version. For Zenodo, this must be an array of items, each of which specifies an 'idenifier', 'relation', and 'resource_type', where 'relation' follows a fixed vocabulary.",
+    "language": "A language of the resource. Recommended practice is to use either a non-literal value representing a language from a controlled vocabulary such as ISO 639-2 or ISO 639-3, or a literal value consisting of an IETF Best Current Practice 47 [IETF-BCP47] language tag.",
+    "license": "A single string for Zenodo. An integer for Figshare, corresponding to their enumeration of possible licenses.",
+    "mediator": "An entity that mediates access to the resource. In an educational context, a mediator might be a parent, teacher, teaching assistant, or care-giver.",
+    "medium": "The material or physical carrier of the resource.",
+    "modified": "Date or date-time on which the resource was changed.",
+    "provenance": "A statement of any changes in ownership and custody of the resource since its creation that are significant for its authenticity, integrity, and interpretation. The statement may include a description of any changes successive custodians made to the resource.",
+    "publisher": "An entity responsible for making the resource available.",
+    "references": "A related resource that is referenced, cited, or otherwise pointed to by the described resource. This property is an inverse property of Is Referenced By.",
+    "relation": "A related resource. Recommended practice is to identify the related resource by means of a URI. If this is not possible or feasible, a string conforming to a formal identification system may be provided. For Zenodo, this must be an array of 'related_identifiers', each item of which has an 'identifier', a 'relation' adhering to a fixed vocabulary, and a 'resource_type'.",
+    "replaces": "A related resource that is supplanted, displaced, or superseded by the described resource. This property is an inverse property of Is Replaced By. For Zenodo, this must be an array of 'related_identifiers', each item of which has an 'identifier', a 'relation' adhering to a fixed vocabulary, and a 'resource_type'.",
+    "requires": "A related resource that is required by the described resource to support its function, delivery, or coherence. This property is an inverse property of Is Required By. For Zenodo, this must be an array of 'related_identifiers', each item of which has an 'identifier', a 'relation' adhering to a fixed vocabulary, and a 'resource_type'.",
+    "rights": "Information about rights held in and over the resource. Typically, rights information includes a statement about various property rights associated with the resource, including intellectual property rights. Recommended practice is to refer to a rights statement with a URI. If this is not possible or feasible, a literal value (name, label, or short text) may be provided.",
+    "rightsHolder": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.",
+    "source": "A related resource from which the described resource is derived. The described resource may be derived from the related resource in whole or in part. Best practice is to identify the related resource by means of a URI or a string conforming to a formal identification system.",
+    "spatial": "Spatial characteristics of the resource.",
+    "subject": "A topic of the resource. Recommended practice is to refer to the subject with a URI. If this is not possible or feasible, a literal value that identifies the subject may be provided. Both should preferably refer to a subject in a controlled vocabulary. For Zenodo, this can include an array of keywords.",
+    "tableOfContents": "A list of subunits of the resource.",
+    "temporal": "Temporal characteristics of the resource.",
+    "title": "A name given to the resource.",
+    "type": "The nature or genre of the resource. Recommended practice is to use a controlled vocabulary such as the DCMI Type Vocabulary [DCMI-TYPE]. To describe the file format, physical medium, or dimensions of the resource, use the property Format.",
+    "valid": "Date or date-time (often a range) of validity of a resource. Recommended practice is to describe the date, date/time, or period of time as recommended for the property Date, of which this is a subproperty."
+}

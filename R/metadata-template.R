@@ -1,4 +1,3 @@
-
 #' Write an empty metadata template to local file
 #'
 #' The fields are those defined by the Dublin Core Metadata Initiative (DCMI),
@@ -9,12 +8,8 @@
 #'
 #' @param filename Name or full path to local file where template is to be
 #' written. This file will be created. If a file of that name already exists, it
-#' must first be deleted.
-#' @param metadata A named list of DCMI metadata, where names should match
-#' \link{dcmi_terms}, and entries should generally be single character values.
-#' Multiple entries are generally permitted, so for example multiple authors can
-#' be specified with multiple list items named "Creator", each of which
-#' specifies one author.
+#' must first be deleted. The file extension '.json' will be automatically
+#' appended.
 #'
 #' @return (Invisibly) `TRUE` if local file successfully created; otherwise
 #' `FALSE`.
@@ -25,11 +20,12 @@
 #' # then edit that file to complete metadata
 #' @family meta
 #' @export
-deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
+deposits_metadata_template <- function (filename = NULL) {
 
     checkmate::assert_character (filename, len = 1L)
     filepath <- fs::path_dir (filename)
     checkmate::assert_directory_exists (filepath)
+    fs::path_ext (filename) <- ".json"
     if (fs::file_exists (filename)) {
         stop (
             "filename [", filename, "] already exists; please delete before ",
@@ -37,39 +33,10 @@ deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
         )
     }
 
-    meta_terms <- dcmi_terms ()
-    template <- as.list (rep ("", length (meta_terms)))
-    names (template) <- meta_terms
-
-    # add non-DCMI comment, tags and keywords fields
-    template$`_comment` <- paste0 (
-        "Fields starting with underscores will be ",
-        "ignored (and can safely be deleted)"
+    dc <- system.file (fs::path ("extdata", "dc", "schema-template.json"),
+        package = "deposits"
     )
-    template$Tags <- list ("tag1", "tag2")
-    template$Keywords <- list ("keyword1", "keyword2")
-    template <- template [order (names (template))]
-    # insert comments before Keywords and Tags
-    for (what in c ("Keywords", "Tags")) {
-        i <- which (names (template) == what)
-        template <- c (
-            template [seq (i - 1)],
-            "_comment" = paste0 (
-                "These ",
-                tolower (what),
-                " demonstrate the required list structure, and can be deleted"
-            ),
-            template [seq (i, length (template))]
-        )
-    }
-
-    # json field names must be unique
-    i <- grep ("^\\_comment", names (template))
-    names (template) [i] <- paste0 ("_comment", seq (i))
-
-    if (!is.null (metadata)) {
-        template <- fill_metadata_template (template, metadata)
-    }
+    template <- jsonlite::read_json (dc, simplifyVector = FALSE)
 
     res <- tryCatch (
         suppressWarnings (
@@ -89,47 +56,7 @@ deposits_metadata_template <- function (filename = NULL, metadata = NULL) {
     invisible (!methods::is (res, "error"))
 }
 
-#' Fill entries in a blank metadata template with values specified in 'metadata'
-#' parameter.
-#' @noRd
-fill_metadata_template <- function (template, metadata) {
-
-    checkmate::assert_list (metadata)
-    checkmate::assert_named (metadata)
-    if (!all (tolower (names (metadata)) %in% tolower (dcmi_terms ()))) {
-        stop ("metadata can only contain items listed in 'dcmi_terms()'.",
-            call. = FALSE
-        )
-    }
-
-    for (i in seq (metadata)) {
-
-        j <- match (
-            tolower (names (metadata [i])),
-            tolower (names (template))
-        )
-        if (!nzchar (template [[j]])) {
-            template [[j]] <- metadata [[i]]
-        } else {
-            index_top <- seq (j)
-            index_bot <- NULL
-            if (j < length (template)) {
-                index_bot <- seq (j + 1, length (template))
-            }
-            template <- c (
-                template [index_top],
-                metadata [[i]],
-                template [index_bot]
-            )
-            names (template) [j + 1] <- names (template) [j]
-        }
-    }
-
-    return (template)
-}
-
-
-#' Read a metadata `yaml` file and convert to a metadata object.
+#' Read a metadata `JSON` file and convert to a metadata object.
 #'
 #' Metadata templates can be generated with \link{deposits_metadata_template},
 #' and values manually entered. This functions loads the completed template and

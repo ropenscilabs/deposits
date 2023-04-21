@@ -49,7 +49,9 @@ test_that ("client with metadata", {
     if (file.exists (filename)) {
         file.remove (filename)
     }
-    deposits_metadata_template (filename, metadata)
+
+    filename <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata, filename, auto_unbox = TRUE)
     cli2 <- with_mock_dir ("meta-new2", {
         depositsClient$new (service, sandbox = TRUE, metadata = filename)
     })
@@ -80,13 +82,9 @@ test_that ("client with invalid metadata", {
         abstract = "This is the abstract",
         creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
-    filename <- tempfile (pattern = "meta_", fileext = ".json")
-    if (file.exists (filename)) {
-        file.remove (filename)
-    }
-    deposits_metadata_template (filename, metadata)
-    meta <- deposits_meta_from_file (filename)
-    meta$creator <- c (meta$creator, "wrong") # must be a 'DCCreator' object
+    filename <- fs::file_temp (ext = ".json")
+    jsonlite::write_json (metadata, filename, auto_unbox = TRUE)
+    # meta$creator <- c (meta$creator, "wrong") # must be a 'DCCreator' object
 
     # expect_error (
     #     cli <- with_mock_dir ("meta-new-error", {
