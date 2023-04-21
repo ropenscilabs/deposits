@@ -60,6 +60,7 @@ httptest2_created_timestamp <- function (metadata) {
 
     if (Sys.getenv ("DEPOSITS_TEST_ENV") == "true") {
         mockdate <- "2022-01-01T00:00:00+00:00"
+        mockdate_short <- strftime (mockdate, "%Y-%m-%d")
         if ("created" %in% names (metadata)) {
             metadata [["created"]] <- mockdate
         }
@@ -68,6 +69,10 @@ httptest2_created_timestamp <- function (metadata) {
         }
         if ("created" %in% names (metadata$service)) {
             metadata$service [["created"]] <- mockdate
+        }
+        # publication_date inserted in zenodo embargo test:
+        if ("publication_date" %in% names (metadata$service$metadata)) {
+            metadata$service$metadata [["publication_date"]] <- mockdate_short
         }
     }
 
