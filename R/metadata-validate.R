@@ -39,9 +39,12 @@ validate_dcmi_metadata <- function (metadata) {
 
     # Align all metadata term names with DCMI names:
     nms <- vapply (
-        names (metadata),
-        function (n) dcmi_terms (term = n),
-        character (1L)
+        names (metadata), function (n) {
+            dc <- dcmi_terms (n)
+            dc <- dc [which (dc == n)]
+            dc <- ifelse (length (dc) == 0L, NA_character_, dc)
+            return (dc)
+        }, character (1L)
     )
 
     index <- which (!nzchar (nms)) # invalid term names
