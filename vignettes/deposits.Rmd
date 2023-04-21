@@ -181,13 +181,11 @@ Another convenient way to specify metadata is to use [the
 function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
 to write a local [".json" representation](https://www.json.org/json-en.html) of
 metadata. This local file includes all metadata fields recognised by a deposits
-client. The function also accepts an optional `metadata` parameter which
-accepts a named list of values used to pre-populate entries in the resultant
-file.
+client.
 
 ```{r}
-meta_file <- tempfile (pattern = "meta-", fileext = ".yaml")
-deposits_metadata_template (filename = meta_file, metadata = metadata)
+meta_file <- tempfile (pattern = "meta-", fileext = ".json")
+deposits_metadata_template (filename = meta_file)
 head (readLines (meta_file))
 ```
 
