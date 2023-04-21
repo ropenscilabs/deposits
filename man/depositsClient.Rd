@@ -48,67 +48,6 @@ cli$deposits_list ()
 }
 
 ## ------------------------------------------------
-## Method `depositsClient$deposits_list`
-## ------------------------------------------------
-
-\dontrun{
-cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
-print (cli)
-# ... then if "Current deposits" does not seem up-to-date:
-cli$deposits_list ()
-# That will ensure that all external deposits are then listed,
-# and can be viewed with:
-cli$deposits
-}
-
-## ------------------------------------------------
-## Method `depositsClient$deposits_search`
-## ------------------------------------------------
-
-\dontrun{
-cli <- depositsClient$new (service = "figshare")
-search_results <- cli$deposits_search (
-    search_string = "Text string query",
-    page_size = 5L
-)
-# The 'search_string' can be used to specify precise searches:
-cli <- depositsClient$new (service = "zenodo")
-search_results <-
-   cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
-}
-
-## ------------------------------------------------
-## Method `depositsClient$deposit_upload_file`
-## ------------------------------------------------
-
-\dontrun{
-# Initiate deposit and fill with metadata:
-metadata <- list (
-    Title = "Iris Dataset",
-    Creator = "Edgar Anderson",
-    Publisher = "American Iris Society",
-    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
-)
-cli <- depositsClient$new (
-    service = "zenodo",
-    sandbox = TRUE,
-    metadata = metadata
-)
-cli$deposit_new ()
-
-# Create some local data and upload to deposit:
-path <- fs::path (fs::path_temp (), "iris.csv")
-write.csv (datasets::iris, path)
-cli$deposit_upload_file (path = path)
-
-# Confirm that uploaded files include \pkg{frictionless}
-# "datapackage.json" file, and also that local version has been
-# created:
-cli$hostdata$files
-fs::dir_ls (fs::path_temp (), regexp = "datapackage")
-}
-
-## ------------------------------------------------
 ## Method `depositsClient$deposit_delete_file`
 ## ------------------------------------------------
 
@@ -139,6 +78,67 @@ cli$hostdata$files
 
 # Then delete one of those files:
 cli$deposit_delete_file ("datapackage.json")
+}
+
+## ------------------------------------------------
+## Method `depositsClient$deposit_upload_file`
+## ------------------------------------------------
+
+\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    creator = list (list (name = "P. S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures",
+    description = "Original source of 'beaver' dataset."
+)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "beaver.csv")
+write.csv (datasets::beaver2, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+}
+
+## ------------------------------------------------
+## Method `depositsClient$deposits_list`
+## ------------------------------------------------
+
+\dontrun{
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+print (cli)
+# ... then if "Current deposits" does not seem up-to-date:
+cli$deposits_list ()
+# That will ensure that all external deposits are then listed,
+# and can be viewed with:
+cli$deposits
+}
+
+## ------------------------------------------------
+## Method `depositsClient$deposits_search`
+## ------------------------------------------------
+
+\dontrun{
+cli <- depositsClient$new (service = "figshare")
+search_results <- cli$deposits_search (
+    search_string = "Text string query",
+    page_size = 5L
+)
+# The 'search_string' can be used to specify precise searches:
+cli <- depositsClient$new (service = "zenodo")
+search_results <-
+   cli$deposits_search ("keywords='frictionlessdata'&type='dataset'")
 }
 }
 \concept{client}
@@ -177,19 +177,21 @@ by-passed when this parameter if \code{FALSE}.}
 \itemize{
 \item \href{#method-depositsClient-new}{\code{depositsClient$new()}}
 \item \href{#method-depositsClient-print}{\code{depositsClient$print()}}
-\item \href{#method-depositsClient-deposits_methods}{\code{depositsClient$deposits_methods()}}
-\item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
-\item \href{#method-depositsClient-deposits_search}{\code{depositsClient$deposits_search()}}
 \item \href{#method-depositsClient-deposit_delete}{\code{depositsClient$deposit_delete()}}
+\item \href{#method-depositsClient-deposit_delete_file}{\code{depositsClient$deposit_delete_file()}}
+\item \href{#method-depositsClient-deposit_download_file}{\code{depositsClient$deposit_download_file()}}
+\item \href{#method-depositsClient-deposit_embargo}{\code{depositsClient$deposit_embargo()}}
 \item \href{#method-depositsClient-deposit_fill_metadata}{\code{depositsClient$deposit_fill_metadata()}}
 \item \href{#method-depositsClient-deposit_new}{\code{depositsClient$deposit_new()}}
+\item \href{#method-depositsClient-deposit_publish}{\code{depositsClient$deposit_publish()}}
+\item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
-\item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
-\item \href{#method-depositsClient-deposit_delete_file}{\code{depositsClient$deposit_delete_file()}}
-\item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
-\item \href{#method-depositsClient-deposit_download_file}{\code{depositsClient$deposit_download_file()}}
 \item \href{#method-depositsClient-deposit_update_frictionless}{\code{depositsClient$deposit_update_frictionless()}}
+\item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
+\item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
+\item \href{#method-depositsClient-deposits_methods}{\code{depositsClient$deposits_methods()}}
+\item \href{#method-depositsClient-deposits_search}{\code{depositsClient$deposits_search()}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -265,17 +267,411 @@ an on-screen overview of current contents and structure of client.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposits_methods"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposits_methods}{}}}
-\subsection{Method \code{deposits_methods()}}{
-List public methods of a 'deposits' client.
+\if{html}{\out{<a id="method-depositsClient-deposit_delete"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete}{}}}
+\subsection{Method \code{deposit_delete()}}{
+Deleted a specified deposit from the remote service.
+This removes the deposits from the associated service, along with all
+corresponding 'hostdata' in the local client.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_methods()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete(deposit_id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{Integer identifier of deposit (generally obtained
+from \code{list_deposits} method).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_delete_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete_file}{}}}
+\subsection{Method \code{deposit_delete_file()}}{
+Delete a single from a deposits service.
+
+This does not modify the "datapackage.json" file, either locally or
+on a service.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete_file(filename)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{filename}}{Name of file to be deleted as recorded on service.}
+
+\item{\code{deposit_id}}{The 'id' number of deposit from which file is to be
+deleted. If not specified, the 'id' value of current deposits client
+is used.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    Title = "Iris Dataset",
+    Creator = "Edgar Anderson",
+    Publisher = "American Iris Society",
+    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "iris.csv")
+write.csv (datasets::iris, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+
+# Then delete one of those files:
+cli$deposit_delete_file ("datapackage.json")
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_download_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_download_file}{}}}
+\subsection{Method \code{deposit_download_file()}}{
+Download a specified 'filename' from a deposit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_download_file(
+  filename,
+  deposit_id = NULL,
+  path = NULL,
+  overwrite = FALSE,
+  quiet = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{filename}}{The name of the file to be download as specified in
+the deposit.}
+
+\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
+downloaded from. If not specified, the 'id' value of current deposits
+client is used.}
+
+\item{\code{path}}{The local directory where file is to be downloaded.}
+
+\item{\code{overwrite}}{Do not overwrite existing files unless set to
+\code{TRUE}.}
+
+\item{\code{quiet}}{If \code{FALSE}, display download progress.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The full path of the downloaded file.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_embargo"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_embargo}{}}}
+\subsection{Method \code{deposit_embargo()}}{
+Embargo a deposit prior to publication.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_embargo(
+  embargo_date = NULL,
+  embargo_type = c("deposit", "file"),
+  embargo_reason = NULL
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{embargo_date}}{Date of expiry of embargo. If the
+\code{deposit_publish()} method has been called, deposit will
+automatically be published after this date, and will not be
+published, nor publicly accessible, prior to this date.}
+
+\item{\code{embargo_type}}{For Figshare service only, which allows embargoes
+for entire deposits or single files. Ignored for other services.}
+
+\item{\code{embargo_reason}}{For Figshare service only, an optional text
+string describing reasons for embargo.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client with additional embargo
+information.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_fill_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_fill_metadata}{}}}
+\subsection{Method \code{deposit_fill_metadata()}}{
+Fill deposits client with metadata.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_fill_metadata(metadata = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{metadata}}{Either one of two possible ways of defining
+metadata:
+\itemize{
+\item The name (or full path) or a local file containing
+metadata constructed with \link{deposits_metadata_template};
+\item A names list of metadata with names matching values given by
+\link{dcmi_terms}, and values specified as individual character
+strings or lists for multiple entries.
+}}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client with metadata inserted.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_new"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_new}{}}}
+\subsection{Method \code{deposit_new()}}{
+Initiate a new deposit on the external deposits service.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_new(quiet = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{quiet}}{If \code{FALSE} (default), print integer identifier of newly
+created deposit.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client which includes data on
+new deposit
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_publish"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_publish}{}}}
+\subsection{Method \code{deposit_publish()}}{
+Publish a deposit
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_publish()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-Nothing; methods are listed on screen.
+(Invisibly) Updated 'deposits' client
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_retrieve"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_retrieve}{}}}
+\subsection{Method \code{deposit_retrieve()}}{
+Retrieve information on specified deposit.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id, quiet = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit for which information is
+to be retrieved.}
+
+\item{\code{quiet}}{If \code{FALSE} (default), display information on screen on
+any issues encountered in retrieving deposit.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_service"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_service}{}}}
+\subsection{Method \code{deposit_service()}}{
+Switch external services associated with a
+\code{depositsClient} object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service(service = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{service}}{(character) Name of a deposits service (see
+\link{deposits_services}).}
+
+\item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
+actual API endpoint (for "zenodo" only).}
+
+\item{\code{headers}}{Any acceptable headers. See examples in \pkg{httr2}
+package.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_update"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_update}{}}}
+\subsection{Method \code{deposit_update()}}{
+Update local metadata by downloading from specified
+deposit. This can be used, for example, to synchronise local client
+metadata after they have been modified through other methods, such as
+online through the service's web interface.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
+specified, the 'id' value of current deposits client is used.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_update_frictionless"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_update_frictionless}{}}}
+\subsection{Method \code{deposit_update_frictionless()}}{
+Update both local and remote "datapackage.json" files
+with contents of client metadata. This function is intended to be
+used when client itself is used to update metadata, in order for any
+local changes to be propagated through to the \pkg{frictionless}
+"datapackage.json" file(s).
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update_frictionless(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
+specified, the 'id' value of current deposits client is used.}
+
+\item{\code{path}}{(Optional) path to local directory containing deposit
+data and a \pkg{frictionless} "datapackage.json" file. If specified,
+that local "datapackage.json" will be updated, and the updated
+version then uploaded to the deposits service.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_upload_file"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_upload_file}{}}}
+\subsection{Method \code{deposit_upload_file()}}{
+Upload a local file or folder to an specified deposit,
+or update an existing version of file with new local version.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
+  path = NULL,
+  deposit_id = NULL,
+  overwrite = FALSE,
+  compress = c("no", "zip", "tar"),
+  quiet = FALSE
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{Path to local file or folder to be uploaded. If the file
+to be uploaded is able to be read as a tabular data file, an
+associated \pkg{frictionless} "datapackage.json" file will also be
+uploaded if it exists, or created if it does not. The metadata within
+a client will also be used to fill or update any metadata within the
+"datapackage.json" file.}
+
+\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
+uploaded to. If not specified, the 'id' value of current deposits
+client is used.}
+
+\item{\code{overwrite}}{Set to \code{TRUE} to update existing files by
+overwriting.}
+
+\item{\code{compress}}{One of "no" (default), "zip", or "tar", where the
+latter two will compress data in the chosen binary format prior to
+uploading. All files are individually compressed; uploading binary
+archives of multiple files is not recommended, as it prevents people
+downloading selections of those files.}
+
+\item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
+screen.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+# Initiate deposit and fill with metadata:
+metadata <- list (
+    creator = list (list (name = "P. S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures",
+    description = "Original source of 'beaver' dataset."
+)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+cli$deposit_new ()
+
+# Create some local data and upload to deposit:
+path <- fs::path (fs::path_temp (), "beaver.csv")
+write.csv (datasets::beaver2, path)
+cli$deposit_upload_file (path = path)
+
+# Confirm that uploaded files include \pkg{frictionless}
+# "datapackage.json" file, and also that local version has been
+# created:
+cli$hostdata$files
+fs::dir_ls (fs::path_temp (), regexp = "datapackage")
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposits_list"></a>}}
@@ -309,6 +705,19 @@ cli$deposits
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposits_methods"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposits_methods}{}}}
+\subsection{Method \code{deposits_methods()}}{
+List public methods of a 'deposits' client.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposits_methods()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Nothing; methods are listed on screen.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposits_search"></a>}}
@@ -395,365 +804,5 @@ search_results <-
 
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_delete"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete}{}}}
-\subsection{Method \code{deposit_delete()}}{
-Deleted a specified deposit from the remote service.
-This removes the deposits from the associated service, along with all
-corresponding 'hostdata' in the local client.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete(deposit_id = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deposit_id}}{Integer identifier of deposit (generally obtained
-from \code{list_deposits} method).}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated 'deposits' client
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_fill_metadata"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_fill_metadata}{}}}
-\subsection{Method \code{deposit_fill_metadata()}}{
-Fill deposits client with metadata.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_fill_metadata(metadata = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{metadata}}{Either one of two possible ways of defining
-metadata:
-\itemize{
-\item The name (or full path) or a local file containing
-metadata constructed with \link{deposits_metadata_template};
-\item A names list of metadata with names matching values given by
-\link{dcmi_terms}, and values specified as individual character
-strings or lists for multiple entries.
-}}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client with metadata inserted.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_new"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_new}{}}}
-\subsection{Method \code{deposit_new()}}{
-Initiate a new deposit on the external deposits service.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_new(quiet = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{quiet}}{If \code{FALSE} (default), print integer identifier of newly
-created deposit.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client which includes data on
-new deposit
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_service"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_service}{}}}
-\subsection{Method \code{deposit_service()}}{
-Switch external services associated with a
-\code{depositsClient} object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service(service = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{service}}{(character) Name of a deposits service (see
-\link{deposits_services}).}
-
-\item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
-actual API endpoint (for "zenodo" only).}
-
-\item{\code{headers}}{Any acceptable headers. See examples in \pkg{httr2}
-package.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_update"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_update}{}}}
-\subsection{Method \code{deposit_update()}}{
-Update local metadata by downloading from specified
-deposit. This can be used, for example, to synchronise local client
-metadata after they have been modified through other methods, such as
-online through the service's web interface.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
-specified, the 'id' value of current deposits client is used.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_upload_file"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_upload_file}{}}}
-\subsection{Method \code{deposit_upload_file()}}{
-Upload a local file or folder to an specified deposit,
-or update an existing version of file with new local version.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_upload_file(
-  path = NULL,
-  deposit_id = NULL,
-  overwrite = FALSE,
-  compress = c("no", "zip", "tar"),
-  quiet = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{path}}{Path to local file or folder to be uploaded. If the file
-to be uploaded is able to be read as a tabular data file, an
-associated \pkg{frictionless} "datapackage.json" file will also be
-uploaded if it exists, or created if it does not. The metadata within
-a client will also be used to fill or update any metadata within the
-"datapackage.json" file.}
-
-\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
-uploaded to. If not specified, the 'id' value of current deposits
-client is used.}
-
-\item{\code{overwrite}}{Set to \code{TRUE} to update existing files by
-overwriting.}
-
-\item{\code{compress}}{One of "no" (default), "zip", or "tar", where the
-latter two will compress data in the chosen binary format prior to
-uploading. All files are individually compressed; uploading binary
-archives of multiple files is not recommended, as it prevents people
-downloading selections of those files.}
-
-\item{\code{quiet}}{If \code{FALSE} (default), display diagnostic information on
-screen.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated 'deposits' client
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{\dontrun{
-# Initiate deposit and fill with metadata:
-metadata <- list (
-    Title = "Iris Dataset",
-    Creator = "Edgar Anderson",
-    Publisher = "American Iris Society",
-    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
-)
-cli <- depositsClient$new (
-    service = "zenodo",
-    sandbox = TRUE,
-    metadata = metadata
-)
-cli$deposit_new ()
-
-# Create some local data and upload to deposit:
-path <- fs::path (fs::path_temp (), "iris.csv")
-write.csv (datasets::iris, path)
-cli$deposit_upload_file (path = path)
-
-# Confirm that uploaded files include \pkg{frictionless}
-# "datapackage.json" file, and also that local version has been
-# created:
-cli$hostdata$files
-fs::dir_ls (fs::path_temp (), regexp = "datapackage")
-}
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_delete_file"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_delete_file}{}}}
-\subsection{Method \code{deposit_delete_file()}}{
-Delete a single from a deposits service.
-
-This does not modify the "datapackage.json" file, either locally or
-on a service.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_delete_file(filename)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filename}}{Name of file to be deleted as recorded on service.}
-
-\item{\code{deposit_id}}{The 'id' number of deposit from which file is to be
-deleted. If not specified, the 'id' value of current deposits client
-is used.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated 'deposits' client
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{\dontrun{
-# Initiate deposit and fill with metadata:
-metadata <- list (
-    Title = "Iris Dataset",
-    Creator = "Edgar Anderson",
-    Publisher = "American Iris Society",
-    Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
-)
-cli <- depositsClient$new (
-    service = "zenodo",
-    sandbox = TRUE,
-    metadata = metadata
-)
-cli$deposit_new ()
-
-# Create some local data and upload to deposit:
-path <- fs::path (fs::path_temp (), "iris.csv")
-write.csv (datasets::iris, path)
-cli$deposit_upload_file (path = path)
-
-# Confirm that uploaded files include \pkg{frictionless}
-# "datapackage.json" file, and also that local version has been
-# created:
-cli$hostdata$files
-
-# Then delete one of those files:
-cli$deposit_delete_file ("datapackage.json")
-}
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_retrieve"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_retrieve}{}}}
-\subsection{Method \code{deposit_retrieve()}}{
-Retrieve information on specified deposit.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id, quiet = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deposit_id}}{The 'id' number of deposit for which information is
-to be retrieved.}
-
-\item{\code{quiet}}{If \code{FALSE} (default), display information on screen on
-any issues encountered in retrieving deposit.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated 'deposits' client
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_download_file"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_download_file}{}}}
-\subsection{Method \code{deposit_download_file()}}{
-Download a specified 'filename' from a deposit.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_download_file(
-  filename,
-  deposit_id = NULL,
-  path = NULL,
-  overwrite = FALSE,
-  quiet = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{filename}}{The name of the file to be download as specified in
-the deposit.}
-
-\item{\code{deposit_id}}{The 'id' number of deposit which file is to be
-downloaded from. If not specified, the 'id' value of current deposits
-client is used.}
-
-\item{\code{path}}{The local directory where file is to be downloaded.}
-
-\item{\code{overwrite}}{Do not overwrite existing files unless set to
-\code{TRUE}.}
-
-\item{\code{quiet}}{If \code{FALSE}, display download progress.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-The full path of the downloaded file.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_update_frictionless"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_update_frictionless}{}}}
-\subsection{Method \code{deposit_update_frictionless()}}{
-Update both local and remote "datapackage.json" files
-with contents of client metadata. This function is intended to be
-used when client itself is used to update metadata, in order for any
-local changes to be propagated through to the \pkg{frictionless}
-"datapackage.json" file(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update_frictionless(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
-specified, the 'id' value of current deposits client is used.}
-
-\item{\code{path}}{(Optional) path to local directory containing deposit
-data and a \pkg{frictionless} "datapackage.json" file. If specified,
-that local "datapackage.json" will be updated, and the updated
-version then uploaded to the deposits service.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client.
-}
 }
 }

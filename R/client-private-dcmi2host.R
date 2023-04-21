@@ -43,7 +43,7 @@ depositsClient$set ("private", "dcmi2host", function () {
 #' This is called on incoming method of deposit retrieval, and only actually
 #' executed if the client has no local metadata.
 #' @noRd
-depositsClient$set ("private", "host2dcmi", function () {
+depositsClient$set ("private", "host2dcmi_internal", function () {
 
     if (!is.null (self$metadata)) {
         return (invisible (self))
@@ -55,12 +55,19 @@ depositsClient$set ("private", "host2dcmi", function () {
         field <- self$hostdata$description
     }
 
-    field <- cli$hostdata$description
+    if (length (field) == 0L) {
+        return (invisible (self))
+    }
+
+    ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
+    if (!grepl (ptn, field)) {
+        return (invisible (self))
+    }
+
     # Figshare does not render "\n", only "\\n", and some of these double
     # backslashes end up repeated and need to be reduced here for JSON parsing.
     field <- condense_linebreaks (field)
     field <- strsplit (field, "\n") [[1]]
-    ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
     i <- grep (ptn, field)
     j <- grep (gsub ("start", "end", ptn), field)
 
@@ -69,6 +76,29 @@ depositsClient$set ("private", "host2dcmi", function () {
         metadata <- paste0 (field [index], collapse = "")
         self$metadata <- jsonlite::fromJSON (metadata, simplifyVector = FALSE)
     }
+
+    invisible (self)
+})
+
+#' Remove the metadata produced in 'dcmi2host'.
+#'
+#' This is called as soon as a 'datapackage.json' file is uploaded. From that
+#' point on, metadata are stored and read from there, so no longer need to be
+#' stored in the host metadata field.
+#' @noRd
+depositsClient$set ("private", "remove_dcmi2host", function () {
+
+    metadata <- validate_metadata (
+        self$metadata,
+        gsub ("\\-sandbox$", "", self$service)
+    )
+    metadata <- httptest2_created_timestamp (metadata)
+    self$metadata <- metadata$dcmi
+    private$metadata_service <- metadata$service
+
+    # That service data will then *not* have the 'dcmi2host' field inserted, so
+    # can be used to update directly.
+    self$deposit_update ()
 
     invisible (self)
 })

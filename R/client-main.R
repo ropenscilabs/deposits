@@ -366,7 +366,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @param embargo_date Date of expiry of embargo. If the
         #' `deposit_publish()` method has been called, deposit will
         #' automatically be published after this date, and will not be
-        #' published, nor publically accessible, prior to this date.
+        #' published, nor publicly accessible, prior to this date.
         #' @param embargo_type For Figshare service only, which allows embargoes
         #' for entire deposits or single files. Ignored for other services.
         #' @param embargo_reason For Figshare service only, an optional text
@@ -582,9 +582,17 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            private$host2dcmi ()
+            has_frictionless <- host_has_frictionless (
+                self$service,
+                self$hostdata,
+                private$frictionless_json_name,
+                private$get_file_name_field ()
+            )
 
-            if (self$service == "figshare" && !self$hostdata$is_public) {
+            if (!has_frictionless) {
+                private$host2dcmi_internal ()
+                self$frictionless <- length (self$metadata) > 0L
+            } else if (self$service == "figshare" && !self$hostdata$is_public) {
                 if (!quiet) {
                     message (
                         "Files for private Figshare deposits can only be ",
@@ -593,39 +601,30 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                 }
             } else {
-                files <- private$get_hostdata_files (
-                    deposit_id,
+                # Rm any 'datapackage.json' that is in temp dir:
+                dp_path <- fs::path (
+                    fs::path_temp (),
                     private$frictionless_json_name
                 )
-                name_field <- private$get_file_name_field ()
-                if (private$frictionless_json_name %in% files [[name_field]]) {
-                    # Rm any 'datapackage.json' that is in temp dir:
-                    dp_path <- fs::path (
-                        fs::path_temp (),
-                        private$frictionless_json_name
+                dp_exists <- fs::file_exists (dp_path)
+                if (dp_exists) {
+                    fs::file_delete (dp_path)
+                }
+                dp_path <- self$deposit_download_file (
+                    deposit_id,
+                    filename = private$frictionless_json_name,
+                    path = fs::path_temp ()
+                )
+                if (fs::file_exists (dp_path)) {
+                    suppressMessages (
+                        self$metadata <- frictionless::read_package (
+                            dp_path
+                        )$metadata
                     )
-                    dp_exists <- fs::file_exists (dp_path)
-                    if (dp_exists) {
+                    # only delete if 'datapackage.json' created here:
+                    if (!dp_exists) {
                         fs::file_delete (dp_path)
                     }
-                    dp_path <- self$deposit_download_file (
-                        deposit_id,
-                        filename = private$frictionless_json_name,
-                        path = fs::path_temp ()
-                    )
-                    if (fs::file_exists (dp_path)) {
-                        suppressMessages (
-                            self$metadata <- frictionless::read_package (
-                                dp_path
-                            )$metadata
-                        )
-                        # only delete if 'datapackage.json' created here:
-                        if (!dp_exists) {
-                            fs::file_delete (dp_path)
-                        }
-                    }
-                } else {
-                    self$frictionless <- FALSE
                 }
             }
 
@@ -798,10 +797,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \dontrun{
         #' # Initiate deposit and fill with metadata:
         #' metadata <- list (
-        #'     Title = "Iris Dataset",
-        #'     Creator = "Edgar Anderson",
-        #'     Publisher = "American Iris Society",
-        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #'     creator = list (list (name = "P. S. Reynolds")),
+        #'     created = "1994-01-01T00:00:00",
+        #'     title = "Time-series analyses of beaver body temperatures",
+        #'     description = "Original source of 'beaver' dataset."
         #' )
         #' cli <- depositsClient$new (
         #'     service = "zenodo",
@@ -811,8 +810,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposit_new ()
         #'
         #' # Create some local data and upload to deposit:
-        #' path <- fs::path (fs::path_temp (), "iris.csv")
-        #' write.csv (datasets::iris, path)
+        #' path <- fs::path (fs::path_temp (), "beaver.csv")
+        #' write.csv (datasets::beaver2, path)
         #' cli$deposit_upload_file (path = path)
         #'
         #' # Confirm that uploaded files include \pkg{frictionless}
@@ -872,6 +871,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
+            # client metadata is then stored in "datapackage.json", so no longer
+            # need to store in host metadata fields:
+            private$remove_dcmi2host ()
 
             invisible (self)
         },
