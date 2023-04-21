@@ -582,9 +582,17 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            private$host2dcmi_internal ()
+            has_frictionless <- host_has_frictionless (
+                self$service,
+                self$hostdata,
+                private$frictionless_json_name,
+                private$get_file_name_field ()
+            )
 
-            if (self$service == "figshare" && !self$hostdata$is_public) {
+            if (!has_frictionless) {
+                private$host2dcmi_internal ()
+                self$frictionless <- length (self$metadata) > 0L
+            } else if (self$service == "figshare" && !self$hostdata$is_public) {
                 if (!quiet) {
                     message (
                         "Files for private Figshare deposits can only be ",
@@ -593,41 +601,30 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                 }
             } else {
-                files <- private$get_hostdata_files (
-                    deposit_id,
+                # Rm any 'datapackage.json' that is in temp dir:
+                dp_path <- fs::path (
+                    fs::path_temp (),
                     private$frictionless_json_name
                 )
-                name_field <- private$get_file_name_field ()
-                if (private$frictionless_json_name %in% files [[name_field]]) {
-                    # Rm any 'datapackage.json' that is in temp dir:
-                    dp_path <- fs::path (
-                        fs::path_temp (),
-                        private$frictionless_json_name
+                dp_exists <- fs::file_exists (dp_path)
+                if (dp_exists) {
+                    fs::file_delete (dp_path)
+                }
+                dp_path <- self$deposit_download_file (
+                    deposit_id,
+                    filename = private$frictionless_json_name,
+                    path = fs::path_temp ()
+                )
+                if (fs::file_exists (dp_path)) {
+                    suppressMessages (
+                        self$metadata <- frictionless::read_package (
+                            dp_path
+                        )$metadata
                     )
-                    dp_exists <- fs::file_exists (dp_path)
-                    if (dp_exists) {
+                    # only delete if 'datapackage.json' created here:
+                    if (!dp_exists) {
                         fs::file_delete (dp_path)
                     }
-                    dp_path <- self$deposit_download_file (
-                        deposit_id,
-                        filename = private$frictionless_json_name,
-                        path = fs::path_temp ()
-                    )
-                    if (fs::file_exists (dp_path)) {
-                        suppressMessages (
-                            self$metadata <- frictionless::read_package (
-                                dp_path
-                            )$metadata
-                        )
-                        # only delete if 'datapackage.json' created here:
-                        if (!dp_exists) {
-                            fs::file_delete (dp_path)
-                        }
-                    }
-                } else if (length (self$hostdata$files) > 0L) {
-                    self$frictionless <- nrow (self$hostdata$files) == 1L
-                } else {
-                    self$frictionless <- length (self$hostdata$files) == 0L
                 }
             }
 

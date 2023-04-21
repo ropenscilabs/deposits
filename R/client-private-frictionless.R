@@ -266,3 +266,17 @@ create_new_frictionless <- function (new_resource_name, path) {
 
     return (p)
 }
+
+host_has_frictionless <- function (service, hostdata,
+                                   frictionless_json_name, name_field) {
+
+    no <- length (hostdata$files) == 0L
+    if (!no) {
+        no <- nrow (hostdata$files) == 1L
+    }
+    if (!no) {
+        no <- !frictionless_json_name %in% hostdata$files [[name_field]]
+    }
+
+    return (!no)
+}
