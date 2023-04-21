@@ -43,7 +43,7 @@ depositsClient$set ("private", "dcmi2host", function () {
 #' This is called on incoming method of deposit retrieval, and only actually
 #' executed if the client has no local metadata.
 #' @noRd
-depositsClient$set ("private", "host2dcmi", function () {
+depositsClient$set ("private", "host2dcmi_internal", function () {
 
     if (!is.null (self$metadata)) {
         return (invisible (self))
@@ -55,11 +55,19 @@ depositsClient$set ("private", "host2dcmi", function () {
         field <- self$hostdata$description
     }
 
+    if (length (field) == 0L) {
+        return (invisible (self))
+    }
+
+    ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
+    if (!grepl (ptn, field)) {
+        return (invisible (self))
+    }
+
     # Figshare does not render "\n", only "\\n", and some of these double
     # backslashes end up repeated and need to be reduced here for JSON parsing.
     field <- condense_linebreaks (field)
     field <- strsplit (field, "\n") [[1]]
-    ptn <- "^\\-{3}start\\-deposits\\-meta\\-{3}$"
     i <- grep (ptn, field)
     j <- grep (gsub ("start", "end", ptn), field)
 

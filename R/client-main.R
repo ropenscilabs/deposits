@@ -582,7 +582,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
             self$hostdata <- hostdata
 
-            private$host2dcmi ()
+            private$host2dcmi_internal ()
 
             if (self$service == "figshare" && !self$hostdata$is_public) {
                 if (!quiet) {
