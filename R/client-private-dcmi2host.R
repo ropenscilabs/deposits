@@ -79,4 +79,18 @@ depositsClient$set ("private", "host2dcmi", function () {
 #' stored in the host metadata field.
 #' @noRd
 depositsClient$set ("private", "remove_dcmi2host", function () {
+
+    metadata <- validate_metadata (
+        self$metadata,
+        gsub ("\\-sandbox$", "", self$service)
+    )
+    metadata <- httptest2_created_timestamp (metadata)
+    self$metadata <- metadata$dcmi
+    private$metadata_service <- metadata$service
+
+    # That service data will then *not* have the 'dcmi2host' field inserted, so
+    # can be used to update directly.
+    self$deposit_update ()
+
+    invisible (self)
 })
