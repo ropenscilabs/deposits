@@ -37,6 +37,15 @@ deposits_services <- function () {
     return (out)
 }
 
+add_service_sandbox <- function (service, sandbox) {
+
+    if (service == "zenodo" && sandbox) {
+        service <- "zenodo-sandbox"
+    }
+
+    return (service)
+}
+
 service_download_url <- function (service, files, filename) {
 
     if (service == "figshare") {

@@ -115,10 +115,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$define_service (service, sandbox)
 
             if (is.null (headers)) {
-                service <- self$service
-                if (service == "zenodo" & self$sandbox) {
-                    service <- "zenodo-sandbox"
-                }
+                service <- add_service_sandbox (self$service, self$sandbox)
                 token <- get_deposits_token (service = service)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
@@ -641,10 +638,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- private$define_service (service, sandbox)
 
             if (is.null (headers)) {
-                service <- self$service
-                if (service == "zenodo" & self$sandbox) {
-                    service <- "zenodo-sandbox"
-                }
+                service <- add_service_sandbox (self$service, sellf$sandbox)
                 token <- get_deposits_token (service = service)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }

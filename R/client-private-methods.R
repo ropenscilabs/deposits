@@ -12,9 +12,7 @@ depositsClient$set (
         service <- match.arg (tolower (service), c ("zenodo", "figshare"))
         checkmate::assert_logical (sandbox, len = 1L)
 
-        if (sandbox && service == "zenodo") {
-            service <- "zenodo-sandbox"
-        }
+        service <- add_service_sandbox (service, sandbox)
         self$sandbox <- sandbox
 
         s <- deposits_services ()
