@@ -30,8 +30,8 @@ indeed all deposition services has traditionally been enabled through
 individual software clients. The `deposits` package aims to be a
 universal client offering access to a variety of deposition services, without
 users having to know any specific details of the APIs for each service. This
-vignette provides a demonstration of the primary functionality of the
-`deposits` package.
+vignette demonstrates how the `deposits` package can be used to manage the
+processes of upload and publishing research data.
 
 ```{r lib, echo = FALSE}
 library (deposits)
@@ -41,46 +41,9 @@ library (deposits)
 ## The deposits client
 
 The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
-interface with the individual deposition services. The following sub-section explains the properties of a `deposits` client for those unfamiliar with `R6` objects.
-
-### R6 methods
-
-The `R6` package used to construct `deposits` clients here allows for
-structured class objects in R. The objects include elements (such as variables)
-and methods, which for R are generally functions. A new client can be
-constructed with the `new` operator, which for `deposits` requires specifying
-the service for which the client is to be constructed:
-
-```{r new-cli, eval = FALSE}
-cli <- depositsClient$new (service = "figshare")
-```
-
-Additional functions are called in a similar way, using the notation,
-`cli$deposit_function()`. The `deposits` package is constructed so that
-function calls constructed is this way will "automatically" update the object
-itself, and so generally do not need to be assigned to a return value.
-For example, the function `deposits_list()` updates the list of deposits on the
-associated service. In conventional R packages, calling this function would
-require assigning a return value like this:
-
-```{r cli-list-deps, eval = FALSE}
-cli_updated <- cli$deposits_list ()
-```
-
-`R6` objects are, however, always updated internally, so the client itself,
-`cli`, will already include the updated list of deposits without any need for
-assigning the return value to `cli_updated`. That is, rather than the above
-line, all deposits functions may be called simply as,
-
-```{r cli-list-deps2, eval = FALSE}
-cli$deposits_list ()
-```
-
-(The single exception to this is the `deposit_download_file()` function, which
-returns the path to the locally downloaded file, and so should always be
-assigned to a return value.)
-
-
+interface with the individual deposition services. A [separate
+vignette](https://docs.ropensci.org/deposits/articles/deposits-R6.html)
+describes the `R6` system for those unfamiliar with it.
 
 ### Initialising a deposits client
 
