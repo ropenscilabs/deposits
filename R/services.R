@@ -1,3 +1,5 @@
+# Single file for all service-specific functions. This is inteded to be the only
+# file in the R/ directory which needs to be modified to add new services.
 
 #' List all deposits services and associated URLs
 #'
@@ -33,4 +35,26 @@ deposits_services <- function () {
     names (out) <- c ("name", "docs", "api_base_url")
 
     return (out)
+}
+
+service_download_url <- function (service, files, filename) {
+
+    if (service == "figshare") {
+        download_url <- files$download_url [files$name == filename]
+    } else if (service == "zenodo") {
+        download_url <- files$links$download [files$filename == filename]
+    }
+
+    return (download_url)
+}
+
+service_is_deposit_embargboed <- function (hostdata, service) {
+
+    if (service == "zenodo") {
+        is_embargoed <- identical (hostdata$metadata$access_right, "embargoed")
+    } else if (service == "figshare") {
+        is_embargoed <- hostdata$is_embargoed
+    }
+
+    return (is_embargoed)
 }

@@ -325,12 +325,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 stop ("That deposit does not contain the specified file.")
             }
 
-            if (self$service == "figshare") {
-                download_url <- files$download_url [files$name == filename]
-            } else if (self$service == "zenodo") {
-                download_url <-
-                    files$links$download [files$filename == filename]
-            }
+            download_url <- service_download_url (self$service, files, filename)
 
             if (self$service == "figshare") {
                 if (!self$hostdata$is_public) {
@@ -517,12 +512,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             self$deposit_retrieve (self$id)
 
-            if (self$service == "zenodo") {
-                is_embargoed <-
-                    identical (self$hostdata$metadata$access_right, "embargoed")
-            } else if (self$service == "figshare") {
-                is_embargoed <- self$hostdata$is_embargoed
-            }
+            is_embargoed <-
+                service_is_deposit_embargboed (self$hostdata, self$service)
 
             proceed <- TRUE
             if (!is_embargoed && interactive ()) {
