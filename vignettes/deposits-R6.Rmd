@@ -35,6 +35,7 @@ constructed with the `new` operator, which for `deposits` requires specifying
 the service for which the client is to be constructed:
 
 ```{r new-cli, eval = FALSE}
+library (deposits)
 cli <- depositsClient$new (service = "figshare")
 ```
 
@@ -97,8 +98,24 @@ particularly helpful here, and the deposits client has it's own
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposits-methods-)
 intended to provide an overview all all implemented methods:
 
-```{r methods}
+```{r methods, eval = FALSE}
 cli$deposits_methods ()
+#> List of methods for a deposits client:
+#>
+#>    - deposit_delete
+#>    - deposit_delete_file
+#>    - deposit_download_file
+#>    - deposit_fill_metadata
+#>    - deposit_new
+#>    - deposit_retrieve
+#>    - deposit_service
+#>    - deposit_update
+#>    - deposit_upload_file
+#>    - deposits_list
+#>    - deposits_methods
+#>    - deposits_search
+#>
+#>  see `?depositsClient` for full details of all methods.
 ```
 
 As described in the final line of that output, the documentation contains full
