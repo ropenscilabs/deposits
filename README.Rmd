@@ -61,7 +61,10 @@ without frictionless metadata.
 
 ## The deposits workflow
 
-The `deposits` package uses [the `R6` package](https://github.com/r-lib/R6) to
+This section gives a brief overview of the deposits workflow. A more complete
+description is given in the [main package
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html). The
+`deposits` package uses [the `R6` package](https://github.com/r-lib/R6) to
 create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
 used to perform all functions. All `deposits` operations start with a client

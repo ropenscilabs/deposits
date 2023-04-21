@@ -57,6 +57,9 @@ use the `deposits` package without frictionless metadata.
 
 ## The deposits workflow
 
+This section gives a brief overview of the deposits workflow. A more
+complete description is given in the [main package
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
 The `deposits` package uses [the `R6`
 package](https://github.com/r-lib/R6) to create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
@@ -301,17 +304,19 @@ project, you agree to abide by its terms.
 
 ## Contributors
 
-
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the
+[`allcontributors`
+package](https://github.com/ropenscilabs/allcontributors) following the
+[all-contributors](https://allcontributors.org) specification.
+Contributions of any kind are welcome!
 
 ### Code
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -320,14 +325,11 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropenscilabs/deposits/commits?author=mpadge">mpadge</a>
 </td>
 </tr>
-
 </table>
-
 
 ### Issues
 
 <table>
-
 <tr>
 <td align="center">
 <a href="https://github.com/collinschwantes">
@@ -366,9 +368,7 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Apeterdesmet">peterdesmet</a>
 </td>
 </tr>
-
 </table>
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
