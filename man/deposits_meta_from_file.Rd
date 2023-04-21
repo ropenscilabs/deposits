@@ -2,7 +2,7 @@
 % Please edit documentation in R/metadata-template.R
 \name{deposits_meta_from_file}
 \alias{deposits_meta_from_file}
-\title{Read a metadata \code{yaml} file and convert to a metadata object.}
+\title{Read a metadata \code{JSON} file and convert to a metadata object.}
 \usage{
 deposits_meta_from_file(filename = NULL, id = "my-id")
 }

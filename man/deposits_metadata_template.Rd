@@ -4,18 +4,13 @@
 \alias{deposits_metadata_template}
 \title{Write an empty metadata template to local file}
 \usage{
-deposits_metadata_template(filename = NULL, metadata = NULL)
+deposits_metadata_template(filename = NULL)
 }
 \arguments{
 \item{filename}{Name or full path to local file where template is to be
 written. This file will be created. If a file of that name already exists, it
-must first be deleted.}
-
-\item{metadata}{A named list of DCMI metadata, where names should match
-\link{dcmi_terms}, and entries should generally be single character values.
-Multiple entries are generally permitted, so for example multiple authors can
-be specified with multiple list items named "Creator", each of which
-specifies one author.}
+must first be deleted. The file extension '.json' will be automatically
+appended.}
 }
 \value{
 (Invisibly) \code{TRUE} if local file successfully created; otherwise
