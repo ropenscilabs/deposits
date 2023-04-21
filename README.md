@@ -100,8 +100,10 @@ cli$deposits_methods ()
 #>    - deposit_delete
 #>    - deposit_delete_file
 #>    - deposit_download_file
+#>    - deposit_embargo
 #>    - deposit_fill_metadata
 #>    - deposit_new
+#>    - deposit_publish
 #>    - deposit_retrieve
 #>    - deposit_service
 #>    - deposit_update
@@ -204,12 +206,12 @@ print (cli)
 #>  Current deposits : <none>
 #>
 #>    hostdata : <none>
-#>    metadata : 4 terms (see 'metadata' element for details)
+#>    metadata : 3 terms (see 'metadata' element for details)
 ```
 
-The “metadata” component of the client now holds 4 terms (including an
-additional “created” datestamp). Equivalently, metadata can be added to
-an existing client with [the `deposit_fill_metadata()`
+The “metadata” component of the client now holds 3 terms. Equivalently,
+metadata can be added to an existing client with [the
+`deposit_fill_metadata()`
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_fill_metadata):
 
 ``` r
@@ -243,7 +245,7 @@ print (cli)
 #>  url_service : https://sandbox.zenodo.org/deposit/1065666
 #>   deposit id : 1065666
 #>     hostdata : list with 14  elements
-#>     metadata : 4 terms (see 'metadata' element for details)
+#>     metadata : 3 terms (see 'metadata' element for details)
 ```
 
 The client now includes several additional elements, notably a “deposit
