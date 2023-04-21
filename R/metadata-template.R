@@ -53,6 +53,14 @@ deposits_metadata_template <- function (filename = NULL) {
         stop ("Error with metadata: ", res$message)
     }
 
+    message (
+        "Edit the file [",
+        filename,
+        "] and remove everything except the metadata fields you require.\n",
+        "The filename may be then passed as the 'metadata' argument to a ",
+        "'deposits' client."
+    )
+
     invisible (!methods::is (res, "error"))
 }
 
