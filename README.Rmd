@@ -301,6 +301,7 @@ project, you agree to abide by its terms.
 ## Contributors
 
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -357,6 +358,12 @@ All contributions to this project are gratefully acknowledged using the [`allcon
 <img src="https://avatars.githubusercontent.com/u/571752?v=4" width="100px;" alt=""/>
 </a><br>
 <a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Anoamross">noamross</a>
+</td>
+<td align="center">
+<a href="https://github.com/peterdesmet">
+<img src="https://avatars.githubusercontent.com/u/600993?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Apeterdesmet">peterdesmet</a>
 </td>
 </tr>
 

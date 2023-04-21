@@ -301,19 +301,17 @@ project, you agree to abide by its terms.
 
 ## Contributors
 
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-All contributions to this project are gratefully acknowledged using the
-[`allcontributors`
-package](https://github.com/ropenscilabs/allcontributors) following the
-[all-contributors](https://allcontributors.org) specification.
-Contributions of any kind are welcome!
+All contributions to this project are gratefully acknowledged using the [`allcontributors` package](https://github.com/ropenscilabs/allcontributors) following the [all-contributors](https://allcontributors.org) specification. Contributions of any kind are welcome!
 
 ### Code
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/mpadge">
@@ -322,11 +320,14 @@ Contributions of any kind are welcome!
 <a href="https://github.com/ropenscilabs/deposits/commits?author=mpadge">mpadge</a>
 </td>
 </tr>
+
 </table>
+
 
 ### Issues
 
 <table>
+
 <tr>
 <td align="center">
 <a href="https://github.com/collinschwantes">
@@ -358,8 +359,16 @@ Contributions of any kind are welcome!
 </a><br>
 <a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Anoamross">noamross</a>
 </td>
+<td align="center">
+<a href="https://github.com/peterdesmet">
+<img src="https://avatars.githubusercontent.com/u/600993?v=4" width="100px;" alt=""/>
+</a><br>
+<a href="https://github.com/ropenscilabs/deposits/issues?q=is%3Aissue+author%3Apeterdesmet">peterdesmet</a>
+</td>
 </tr>
+
 </table>
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
