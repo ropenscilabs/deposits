@@ -377,17 +377,8 @@ test_that ("figshare metadata", {
         Language = "eng"
     )
 
-    cli <- with_mock_dir ("fs_meta_unrecognised", {
-        depositsClient$new (
-            service = "figshare",
-            metadata = metadata
-        )
-    })
-
-    # expect_null (cli$metadata$language)
-    # expect_null (cli$metadata$publisher)
-    expect_true (length (cli$metadata$source) > 0L)
-    expect_true (length (cli$metadata$title) > 0L)
-    expect_true (length (cli$metadata$abstract) > 0L)
-    expect_true (length (cli$metadata$creator) > 0L)
+    expect_error (
+        depositsClient$new (service = "figshare", metadata = metadata),
+        "Stopping because the DCMI metadata terms listed above do not conform"
+    )
 })
