@@ -46,6 +46,15 @@ add_service_sandbox <- function (service, sandbox) {
     return (service)
 }
 
+rm_service_sandbox <- function (service) {
+
+    if (service == "zenodo-sandbox") {
+        service <- "zenodo"
+    }
+
+    return (service)
+}
+
 service_download_url <- function (service, files, filename) {
 
     if (service == "figshare") {

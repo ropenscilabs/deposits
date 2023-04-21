@@ -18,10 +18,8 @@ depositsClient$set (
         s <- deposits_services ()
         self$service <- service
         self$url_base <- s$api_base_url [s$name == service]
+        self$service <- rm_service_sandbox (service)
 
-        if (self$service == "zenodo-sandbox") {
-            self$service <- "zenodo"
-        }
         private$term_map <- get_dcmi_term_map (self$service)
 
         invisible (self)
