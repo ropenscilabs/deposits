@@ -81,6 +81,19 @@ cli$deposit_delete_file ("datapackage.json")
 }
 
 ## ------------------------------------------------
+## Method `depositsClient$deposit_service_parameters`
+## ------------------------------------------------
+
+\dontrun{
+cli <- depositsClient$new (service = "zenodo")
+# fill metadata either on `new` or via `deposit_fill_metadata()`
+# method. Then:
+cli$deposit_service_parameters (list (prereserve_doi = TRUE))
+cli$deposit_new ()
+# Client will then contain pre-reserved DOI in `cli$hostdata`.
+}
+
+## ------------------------------------------------
 ## Method `depositsClient$deposit_upload_file`
 ## ------------------------------------------------
 
@@ -169,6 +182,9 @@ by-passed when this parameter if \code{FALSE}.}
 \item{\code{hostdata}}{(list) Data as stored by host platform}
 
 \item{\code{metadata}}{holds list of DCMI-compliant metadata.}
+
+\item{\code{service_parameters}}{holds list of service-specific parameters
+passed to API}
 }
 \if{html}{\out{</div>}}
 }
@@ -186,6 +202,7 @@ by-passed when this parameter if \code{FALSE}.}
 \item \href{#method-depositsClient-deposit_publish}{\code{depositsClient$deposit_publish()}}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
+\item \href{#method-depositsClient-deposit_service_parameters}{\code{depositsClient$deposit_service_parameters()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
 \item \href{#method-depositsClient-deposit_update_frictionless}{\code{depositsClient$deposit_update_frictionless()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
@@ -201,7 +218,13 @@ by-passed when this parameter if \code{FALSE}.}
 Create a new \code{depositsClient} object, as an \pkg{R6}
 client with methods listed via \code{deposits_emthods()}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(service, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(
+  service,
+  metadata = NULL,
+  service_parameters = NULL,
+  sandbox = FALSE,
+  headers = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -219,6 +242,11 @@ metadata constructed with \link{deposits_metadata_template};
 \link{dcmi_terms}, and values specified as individual character
 strings or lists for multiple entries.
 }}
+
+\item{\code{service_parameters}}{Optional list of service-specific
+parameters. Currently only permits 'prereseve_doi' which can be set
+to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+services.}
 
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
 actual API endpoint (for "zenodo" only).}
@@ -477,7 +505,10 @@ new deposit
 \if{html}{\out{<a id="method-depositsClient-deposit_publish"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_publish}{}}}
 \subsection{Method \code{deposit_publish()}}{
-Publish a deposit
+Publish a deposit. This is an irreversible action which
+should only be called if you are really sure that you want to publish
+the deposit. Some aspects of published deposits can be subsequently
+edited, but they can never be deleted.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_publish()}\if{html}{\out{</div>}}
 }
@@ -490,7 +521,8 @@ Publish a deposit
 \if{html}{\out{<a id="method-depositsClient-deposit_retrieve"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_retrieve}{}}}
 \subsection{Method \code{deposit_retrieve()}}{
-Retrieve information on specified deposit.
+Retrieve a specified deposit and store information in
+local client.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_retrieve(deposit_id, quiet = FALSE)}\if{html}{\out{</div>}}
 }
@@ -537,6 +569,47 @@ package.}
 \subsection{Returns}{
 (Invisibly) Updated deposits client.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_service_parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_service_parameters}{}}}
+\subsection{Method \code{deposit_service_parameters()}}{
+Specify service parameters for a given deposit.
+
+This is currently restricted to only the 'prereserve_doi' parameter
+of Zenodo.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service_parameters(service_parameters = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{service_parameters}}{Optional list of service-specific
+parameters. Currently only permits 'prereseve_doi' which can be set
+to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+services.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\dontrun{
+cli <- depositsClient$new (service = "zenodo")
+# fill metadata either on `new` or via `deposit_fill_metadata()`
+# method. Then:
+cli$deposit_service_parameters (list (prereserve_doi = TRUE))
+cli$deposit_new ()
+# Client will then contain pre-reserved DOI in `cli$hostdata`.
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposit_update"></a>}}
