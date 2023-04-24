@@ -234,30 +234,70 @@
                     "typpe": "string"
                 },
                 {
-                    "description": "Zenodo 'files' schema",
+                    "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "id": {
+                        "identifier": {
                             "type": "string"
                         },
-                        "filename": {
-                            "type": "string"
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
                         },
-                        "filesize": {
-                            "type": "integer"
-                        },
-                        "checksum": {
-                            "type": "string"
-                        }
-                    },
-                    "additionalProperties": false,
-                    "required": ["filename"]
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
+                    }
                 }
             ]
         },
         "hasVersion": {
             "description": "A related resource that is a version, edition, or adaptation of the described resource. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Is Version Of.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "typpe": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
+                    }
+                }
+            ]
         },
         "identifier": {
             "description": "An unambiguous reference to the resource within a given context. Recommended practice is to identify the resource by means of a string conforming to an identification system. Examples include International Standard Book Number (ISBN), Digital Object Identifier (DOI), and Uniform Resource Name (URN). Persistent identifiers should be provided as HTTP URIs.",
@@ -269,7 +309,39 @@
         },
         "isFormatOf": {
             "description": "A pre-existing related resource that is substantially the same as the described resource, but in another format. This property is an inverse property of Has Format.",
-            "type": "string"
+            "anyOf": [
+                {
+                    "typpe": "string"
+                },
+                {
+                    "description": "Zenodo 'related_identifiers' field",
+                    "type": "array",
+                    "items": {
+                        "identifier": {
+                            "type": "string"
+                        },
+                        "relation": {
+                            "type": "string",
+                            "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                "isSupplementedBy", "isContinuedBy",
+                                "continues", "isDescribedBy", "describes",
+                                "hasMetadata", "isMetadataFor",
+                                "isNewVersionOf", "isPreviousVersionOf",
+                                "isPartOf", "hasPart", "isReferencedBy",
+                                "references", "isDocumentedBy", "documents",
+                                "isCompiledBy", "compiles", "isVariantFormOf",
+                                "isOriginalFormof", "isIdenticalTo",
+                                "isAlternateIdentifier", "isReviewedBy",
+                                "reviews", "isDerivedFrom", "isSourceOf",
+                                "requires", "isRequiredBy", "isObsoletedBy",
+                                "obsoletes"]
+                        },
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
+                    }
+                }
+            ]
         },
         "isPartOf": {
             "description": "A related resource in which the described resource is physically or logically included. This property is an inverse property of Has Part.",
@@ -300,7 +372,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -334,7 +408,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -368,7 +444,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -402,7 +480,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -444,7 +524,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -523,7 +605,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -557,7 +641,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
@@ -591,7 +677,9 @@
                                 "requires", "isRequiredBy", "isObsoletedBy",
                                 "obsoletes"]
                         },
-                        "resource_type": "string"
+                        "resource_type": "string",
+                        "required": ["identifier", "relation"],
+                        "additionalProperties": false
                     }
                 }
             ]
