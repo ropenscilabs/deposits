@@ -23,7 +23,7 @@
 #' metadata <- list (
 #'     title = "New Title",
 #'     abstract = "This is the abstract",
-#'     creator = list ("A. Person", "B. Person")
+#'     creator = list (list (name = "A. Person"), list (name = "B. Person"))
 #' )
 #' cli$deposit_fill_metadata (metadata)
 #' print (cli)
@@ -258,10 +258,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \dontrun{
         #' # Initiate deposit and fill with metadata:
         #' metadata <- list (
-        #'     Title = "Iris Dataset",
-        #'     Creator = "Edgar Anderson",
-        #'     Publisher = "American Iris Society",
-        #'     Source = "https://doi.org/10.1111/j.1469-1809.1936.tb02137.x"
+        #'     title = "Time-series analyses of beaver body temperatures",
+        #'     description = "Original source of 'beaver2' data",
+        #'     creator = list (list (name = "P.S. Reynolds")),
+        #'     created = "1994-01-01T00:00:00",
+        #'     publisher = "Case Studies in Biometry"
         #' )
         #' cli <- depositsClient$new (
         #'     service = "zenodo",
@@ -271,8 +272,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposit_new ()
         #'
         #' # Create some local data and upload to deposit:
-        #' path <- fs::path (fs::path_temp (), "iris.csv")
-        #' write.csv (datasets::iris, path)
+        #' path <- fs::path (fs::path_temp (), "beaver.csv")
+        #' write.csv (datasets::beaver2, path)
         #' cli$deposit_upload_file (path = path)
         #'
         #' # Confirm that uploaded files include \pkg{frictionless}
@@ -830,10 +831,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \dontrun{
         #' # Initiate deposit and fill with metadata:
         #' metadata <- list (
-        #'     creator = list (list (name = "P. S. Reynolds")),
-        #'     created = "1994-01-01T00:00:00",
         #'     title = "Time-series analyses of beaver body temperatures",
-        #'     description = "Original source of 'beaver' dataset."
+        #'     description = "Original source of 'beaver2' data",
+        #'     creator = list (list (name = "P.S. Reynolds")),
+        #'     created = "1994-01-01T00:00:00",
+        #'     publisher = "Case Studies in Biometry"
         #' )
         #' cli <- depositsClient$new (
         #'     service = "zenodo",
