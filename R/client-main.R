@@ -507,7 +507,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Publish a deposit
+        #' @description Publish a deposit. This is an irreversible action which
+        #' should only be called if you are really sure that you want to publish
+        #' the deposit. Some aspects of published deposits can be subsequently
+        #' edited, but they can never be deleted.
         #' @return (Invisibly) Updated 'deposits' client
 
         deposit_publish = function () {
@@ -562,7 +565,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Retrieve information on specified deposit.
+        #' @description Retrieve a specified deposit and store information in
+        #' local client.
         #' @param deposit_id The 'id' number of deposit for which information is
         #' to be retrieved.
         #' @param quiet If `FALSE` (default), display information on screen on
@@ -663,11 +667,25 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Specify service parameters for a given deposit.
+        #'
+        #' This is currently restricted to only the 'prereserve_doi' parameter
+        #' of Zenodo.
         #' @param service_parameters Optional list of service-specific
         #' parameters. Currently only permits 'prereseve_doi' which can be set
         #' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
         #' services.
         #' @return (Invisibly) Updated deposits client.
+        #'
+        #' @examples
+        #' \dontrun{
+        #' cli <- depositsClient$new (service = "zenodo")
+        #' # fill metadata either on `new` or via `deposit_fill_metadata()`
+        #' # method. Then:
+        #' cli$deposit_service_parameters (list (prereserve_doi = TRUE))
+        #' cli$deposit_new ()
+        #' # Client will then contain pre-reserved DOI in `cli$hostdata`.
+        #' }
 
         deposit_service_parameters = function (service_parameters = NULL) {
 
