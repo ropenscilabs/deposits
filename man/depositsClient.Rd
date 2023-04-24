@@ -169,6 +169,9 @@ by-passed when this parameter if \code{FALSE}.}
 \item{\code{hostdata}}{(list) Data as stored by host platform}
 
 \item{\code{metadata}}{holds list of DCMI-compliant metadata.}
+
+\item{\code{service_parameters}}{holds list of service-specific parameters
+passed to API}
 }
 \if{html}{\out{</div>}}
 }
@@ -201,7 +204,13 @@ by-passed when this parameter if \code{FALSE}.}
 Create a new \code{depositsClient} object, as an \pkg{R6}
 client with methods listed via \code{deposits_emthods()}.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(service, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(
+  service,
+  metadata = NULL,
+  service_parameters = NULL,
+  sandbox = FALSE,
+  headers = NULL
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -219,6 +228,11 @@ metadata constructed with \link{deposits_metadata_template};
 \link{dcmi_terms}, and values specified as individual character
 strings or lists for multiple entries.
 }}
+
+\item{\code{service_parameters}}{Optional list of service-specific
+parameters. Currently only permits 'prereseve_doi' which can be set
+to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+services.}
 
 \item{\code{sandbox}}{If \code{TRUE}, connect client to sandbox, rather than
 actual API endpoint (for "zenodo" only).}

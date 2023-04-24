@@ -78,6 +78,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         hostdata = NULL,
         #' @field metadata holds list of DCMI-compliant metadata.
         metadata = NULL,
+        #' @field service_parameters holds list of service-specific parameters
+        #' passed to API
+        service_parameters = NULL,
 
         #' @description Create a new `depositsClient` object, as an \pkg{R6}
         #' client with methods listed via `deposits_emthods()`.
@@ -93,6 +96,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
         #' }
+        #' @param service_parameters Optional list of service-specific
+        #' parameters. Currently only permits 'prereseve_doi' which can be set
+        #' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+        #' services.
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
@@ -109,6 +116,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         initialize = function (service,
                                metadata = NULL,
+                               service_parameters = NULL,
                                sandbox = FALSE,
                                headers = NULL) {
 
@@ -131,6 +139,19 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
+            }
+
+            if (!is.null (service_parameters)) {
+
+                sp <- validate_service_params (service_parameters)
+                self$service_parameters <- sp
+                # Currently only recognised for Zenodo (#72):
+                if (service == "zenodo" && !is.null (metadata)) {
+                    for (i in seq_along (sp)) {
+                        private$metadata_service$metadata [[names (sp) [i]]] <-
+                            sp [[i]]
+                    }
+                }
             }
 
             return (self)
