@@ -23,4 +23,11 @@ test_that ("service parameters", {
         sp2 <- validate_service_params (sp),
         "Stopping because the \'service\\_parameters\\' terms"
     )
+
+    # Currently only accepts 'prereserve_doi':
+    sp <- list (prereserve_doi = TRUE, nope = FALSE)
+    expect_error (
+        sp2 <- validate_service_params (sp),
+        "Stopping because the \'service\\_parameters\\' terms"
+    )
 })
