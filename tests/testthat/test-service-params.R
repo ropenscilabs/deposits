@@ -1,4 +1,4 @@
-test_that ("service parameters", {
+test_that ("service parameters internal", {
 
     sp <- list (prereserve_doi = TRUE)
     expect_silent (
@@ -30,4 +30,38 @@ test_that ("service parameters", {
         sp2 <- validate_service_params (sp),
         "Stopping because the \'service\\_parameters\\' terms"
     )
+})
+
+test_that ("service parameters client", {
+
+    service <- "zenodo"
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
+    )
+    sp <- list (prereserve_doi = TRUE)
+    cli <- with_mock_dir ("zen_servpars", {
+        depositsClient$new (
+            service = service,
+            sandbox = TRUE,
+            metadata = metadata,
+            service_parameters = sp
+        )
+    })
+    cli <- with_mock_dir ("zen_servpars_new", {
+        cli$deposit_new ()
+    })
+
+    expect_true ("prereserve_doi" %in% names (cli$hostdata$metadata))
+    pr <- cli$hostdata$metadata$prereserve_doi
+    expect_type (pr, "list")
+    expect_length (pr, 2L)
+    expect_equal (names (pr), c ("doi", "recid"))
+    expect_type (pr$doi, "character")
+    expect_type (pr$recid, "integer")
 })
