@@ -314,7 +314,7 @@ depositsClient$set (
 
         self$service_parameters <- sp
 
-        if (service == "zenodo" && !is.null (metadata)) {
+        if (self$service == "zenodo" && !is.null (self$metadata)) {
             for (i in seq_along (sp)) {
                 private$metadata_service$metadata [[names (sp) [i]]] <-
                     sp [[i]]
