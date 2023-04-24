@@ -189,6 +189,7 @@ passed to API}
 \item \href{#method-depositsClient-deposit_publish}{\code{depositsClient$deposit_publish()}}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
+\item \href{#method-depositsClient-deposit_service_parameters}{\code{depositsClient$deposit_service_parameters()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
 \item \href{#method-depositsClient-deposit_update_frictionless}{\code{depositsClient$deposit_update_frictionless()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
@@ -545,6 +546,28 @@ actual API endpoint (for "zenodo" only).}
 
 \item{\code{headers}}{Any acceptable headers. See examples in \pkg{httr2}
 package.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated deposits client.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_service_parameters"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_service_parameters}{}}}
+\subsection{Method \code{deposit_service_parameters()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_service_parameters(service_parameters = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{service_parameters}}{Optional list of service-specific
+parameters. Currently only permits 'prereseve_doi' which can be set
+to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+services.}
 }
 \if{html}{\out{</div>}}
 }

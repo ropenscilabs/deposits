@@ -143,15 +143,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (service_parameters)) {
 
-                sp <- validate_service_params (service_parameters)
-                self$service_parameters <- sp
-                # Currently only recognised for Zenodo (#72):
-                if (service == "zenodo" && !is.null (metadata)) {
-                    for (i in seq_along (sp)) {
-                        private$metadata_service$metadata [[names (sp) [i]]] <-
-                            sp [[i]]
-                    }
-                }
+                private$fill_service_params (service_parameters)
             }
 
             return (self)
@@ -667,6 +659,23 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             private$deposits_list_extract ()
 
             self$hostdata <- NULL
+
+            invisible (self)
+        },
+
+        #' @param service_parameters Optional list of service-specific
+        #' parameters. Currently only permits 'prereseve_doi' which can be set
+        #' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
+        #' services.
+        #' @return (Invisibly) Updated deposits client.
+
+        deposit_service_parameters = function (service_parameters = NULL) {
+
+            if (is.null (service_parameters)) {
+                return (invisible (self))
+            }
+
+            private$fill_service_params (service_parameters)
 
             invisible (self)
         },
