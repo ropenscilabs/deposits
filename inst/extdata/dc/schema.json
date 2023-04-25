@@ -237,28 +237,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -273,28 +276,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -317,28 +323,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -353,28 +362,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -389,28 +401,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -425,28 +440,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -461,28 +479,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -505,28 +526,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -586,28 +610,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -622,28 +649,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
@@ -658,28 +688,31 @@
                     "description": "Zenodo 'related_identifiers' field",
                     "type": "array",
                     "items": {
-                        "identifier": {
-                            "type": "string"
-                        },
-                        "relation": {
-                            "type": "string",
-                            "enum": ["isCitedBy", "cites", "isSupplementTo",
-                                "isSupplementedBy", "isContinuedBy",
-                                "continues", "isDescribedBy", "describes",
-                                "hasMetadata", "isMetadataFor",
-                                "isNewVersionOf", "isPreviousVersionOf",
-                                "isPartOf", "hasPart", "isReferencedBy",
-                                "references", "isDocumentedBy", "documents",
-                                "isCompiledBy", "compiles", "isVariantFormOf",
-                                "isOriginalFormof", "isIdenticalTo",
-                                "isAlternateIdentifier", "isReviewedBy",
-                                "reviews", "isDerivedFrom", "isSourceOf",
-                                "requires", "isRequiredBy", "isObsoletedBy",
-                                "obsoletes"]
-                        },
-                        "resource_type": "string",
-                        "required": ["identifier", "relation"],
-                        "additionalProperties": false
+                        "type": "object",
+                        "items": {
+                            "identifier": {
+                                "type": "string"
+                            },
+                            "relation": {
+                                "type": "string",
+                                "enum": ["isCitedBy", "cites", "isSupplementTo",
+                                    "isSupplementedBy", "isContinuedBy",
+                                    "continues", "isDescribedBy", "describes",
+                                    "hasMetadata", "isMetadataFor",
+                                    "isNewVersionOf", "isPreviousVersionOf",
+                                    "isPartOf", "hasPart", "isReferencedBy",
+                                    "references", "isDocumentedBy", "documents",
+                                    "isCompiledBy", "compiles", "isVariantFormOf",
+                                    "isOriginalFormof", "isIdenticalTo",
+                                    "isAlternateIdentifier", "isReviewedBy",
+                                    "reviews", "isDerivedFrom", "isSourceOf",
+                                    "requires", "isRequiredBy", "isObsoletedBy",
+                                    "obsoletes"]
+                            },
+                            "resource_type": "string",
+                            "required": ["identifier", "relation"],
+                            "additionalProperties": false
+                        }
                     }
                 }
             ]
