@@ -240,7 +240,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -258,7 +259,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -279,7 +283,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -297,7 +302,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -326,7 +334,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -344,7 +353,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -365,7 +377,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -383,8 +396,11 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
-                            "required": ["identifier"],
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
+                            "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
                     }
@@ -404,7 +420,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -422,7 +439,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -443,7 +463,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -461,7 +482,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -482,7 +506,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -500,7 +525,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -529,7 +557,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -547,7 +576,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -613,7 +645,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -631,7 +664,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -652,7 +688,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -670,7 +707,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
@@ -691,7 +731,8 @@
                         "type": "object",
                         "items": {
                             "identifier": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
                             },
                             "relation": {
                                 "type": "string",
@@ -709,7 +750,10 @@
                                     "requires", "isRequiredBy", "isObsoletedBy",
                                     "obsoletes"]
                             },
-                            "resource_type": "string",
+                            "resource_type": {
+                                "type": "string",
+                                "description": "One of 'upload-', 'publication-' or 'image-', followed by one of the allowed types for one of those. See https://developers.zenodo.org/#representation"
+                            },
                             "required": ["identifier", "relation"],
                             "additionalProperties": false
                         }
