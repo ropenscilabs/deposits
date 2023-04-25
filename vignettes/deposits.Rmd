@@ -82,11 +82,15 @@ cli$deposits_methods ()
 #>    - deposit_delete
 #>    - deposit_delete_file
 #>    - deposit_download_file
+#>    - deposit_embargo
 #>    - deposit_fill_metadata
 #>    - deposit_new
+#>    - deposit_publish
 #>    - deposit_retrieve
 #>    - deposit_service
+#>    - deposit_service_parameters
 #>    - deposit_update
+#>    - deposit_update_frictionless
 #>    - deposit_upload_file
 #>    - deposits_list
 #>    - deposits_methods
@@ -132,6 +136,20 @@ metadata <- list (
     title = "New Title",
     abstract = "This is the abstract",
     creator = list (list (name = "A. Person"), list (name = "B. Person"))
+)
+```
+
+Note that the "creator" item has to be a list-of-lists, because aspects other
+than name may also be included, and the second list is required to distinguish
+different creators. For example,
+
+```{r creator-example}
+metadata <- list (
+    # ... metadata plus ...
+    creator = list (
+        list (name = "A. Person", orcid = "0000-0001-0002-0003"),
+        list (name = "B. Person", orcid = "0000-0004-0005-0006", email = "b.person@email.com")
+    )
 )
 ```
 
@@ -183,7 +201,7 @@ to write a local [".json" representation](https://www.json.org/json-en.html) of
 metadata. This local file includes all metadata fields recognised by a deposits
 client.
 
-```{r}
+```{r metatemplate}
 meta_file <- tempfile (pattern = "meta-", fileext = ".json")
 deposits_metadata_template (filename = meta_file)
 head (readLines (meta_file))
@@ -191,10 +209,39 @@ head (readLines (meta_file))
 
 Those metadata can then be directly edited using any text file editor. The name
 of the file can then also be passed as the `metadata` parameter of a new
-`deposits` client. The following code thus produces the same results as above:
+`deposits` client. A local file edited to hold identical metadata to that
+entered above would look like this:
+```{r metafile, echo = FALSE}
+x <- '{
+  "abstract": "This is the abstract",
+  "created": "2023-01-01",
+  "creator": [
+    {
+      "name": "A. Person"
+    },
+    {
+      "name": "B. Person"
+    }
+  ],
+  "title": "New Title"
+}'
+writeLines (x, meta_file)
+```
+```{r metafile-lines}
+readLines (meta_file)
+```
+
+The name of that file can then also be passed as the `metadata` parameter, so
+that the following client will produce identical results to the previous
+construction with metadata passed as an explicit list:
+
 
 ```{r new-cli-with-meta-file, eval = FALSE}
-cli <- depositsClient$new (service = "zenodo", sandbox = TRUE, metadata = meta_file)
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = meta_file
+)
 ```
 
 ## Creating a new deposit
