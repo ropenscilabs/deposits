@@ -1,3 +1,6 @@
+test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
+    identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
 test_that ("service parameters internal", {
 
     sp <- list (prereserve_doi = TRUE)
@@ -31,6 +34,8 @@ test_that ("service parameters internal", {
         "Stopping because the \'service\\_parameters\\' terms"
     )
 })
+
+testthat::skip_if (!test_all)
 
 test_that ("service parameters client", {
 
