@@ -1,0 +1,304 @@
+---
+title: "deposits metadata"
+author: 
+  - "Mark Padgham"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{deposits metadata}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set (
+    collapse = TRUE,
+    error = TRUE,
+    warning = TRUE,
+    message = TRUE,
+    width = 120,
+    comment = "#>",
+    fig.retina = 2,
+    fig.path = "README-"
+)
+```
+
+This vignette demonstrates procedures for specifying and validate metadata for
+the `deposits` package. This vignette will use metadata for the two "beaver"
+datasets provided with R's ["datasets"
+package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html).
+Relevant metadata for these datasets are given in the "Source" listed on that
+page (or `?beaver1` to see a local version):
+
+P. S. Reynolds (1994) *Time-series analyses of beaver body temperatures.*
+Chapter 11 of Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L.
+and Greenhouse, J. eds (1994) Case Studies in Biometry. New York: John Wiley
+and Sons. 
+
+```{r lib, echo = FALSE}
+library (deposits)
+```
+
+## Metadata Validation
+
+Metadata in `deposits` are validated against [JSON
+schemas](https://json-schema.org), with the schema for the main "metadata"
+field described in [the package's "dc/schema.json"
+file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
+This validation procedure is intended to issue instructive errors throughout
+when metadata do not conform to the expected format, with this vignette
+demonstrating several such error messages.
+
+Let's start with a minimal version of the metadata list shown above, and try to
+validate that using [the `deposit_fill_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
+
+```{r meta-validation1}
+metadata <- list (
+    author = "P.S. Reynolds",
+    title = "Time-series analyses of beaver body temperatures."
+)
+cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
+cli$deposit_fill_metadata (metadata)
+```
+
+That error tells us that "author" is an additional property, and that the
+metadata "must NOT have additional properties."  These "additional properties"
+refer to any beyond those specified in the schema. The schema used to validate
+`deposits` metadata is contained in [the package's `dc/schema.json`
+file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
+A copy of that file is included with each installation of this package in the
+location given by,
+
+```{r schema-location}
+system.file (fs::path ("extdata", "dc", "schema.json"), package = "deposits")
+```
+
+Searching for "author" either on the GitHub version or a local file will
+quickly reveal that author information belongs in a field called "creator".
+Renaming that metadata item then gives,
+
+```{r meta-validation2}
+metadata <- list (
+    creator = "P.S. Reynolds",
+    title = "Time-series analyses of beaver body temperatures."
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+The first messages say that the "creator" property "must be array". Arrays in
+JSON are `list` objects in R, so this indicates the first required
+modification:
+
+```{r meta-validation3}
+metadata <- list (
+    creator = list ("P.S. Reynolds"),
+    title = "Time-series analyses of beaver body temperatures."
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+The "creator" field must now an "object." R being the relatively simply
+language that it is, "objects" are also `list`s, leading us to:
+
+```{r meta-validation4}
+metadata <- list (
+    creator = list (list ("P.S. Reynolds")),
+    title = "Time-series analyses of beaver body temperatures."
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+And that generates the same error. For any instances in which the error
+messages themselves are not helpful, it is useful to refer to the [actual JSON
+schema](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json)
+(or a local version). The "creator" field expected for the Zenodo service can
+then be seen to accept the properties, "name", "affiliation", "orcid", and
+"gnd". Let's try "name":
+
+```{r meta-validation5}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    title = "Time-series analyses of beaver body temperatures."
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+That error seems to indicate that our "creator" field is then valid, yet
+triggers a further error that that metadata "must have required property
+'description'". Let's add that:
+
+```{r meta-validation6}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry."
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+That now works, although that does not capture the full metadata shown above
+from `?beaver1`. We still need information on the publisher. Examining the JSON
+schema shows that it includes a "publisher" field which is expected to be a
+string.
+
+```{r meta-validation7}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons"
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+We may then wish to specify a date on which the resource was created. Searching
+for "date" in the schema itself reveals that there is a "date" field, but it is
+intended to describe, "A point or period of time associated with an event in
+the lifecycle of the resource." There are various other "date" fields, but the
+one we want is pretty clearly the "created" field, which is expected to be a
+string in either "date" or "date-time" format. Let's try a simple "date":
+
+
+```{r meta-validation8}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons"
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+That then fails because "created" must match the format "date-time", even
+though the main JSON schema clearly indicates that either date or date-time
+strings are acceptable. This error reflects the fact that validation of
+`deposits` metadata is a two-stage process. The metadata are first validated
+against the general JSON schema described above, then converted to formats
+expected for the nominated deposits service, and the result is then validated
+again against a service-specific JSON schema. In this case, the Zenodo service
+itself requires "created" fields to have "date-time", and not "date", format.
+
+
+```{r meta-validation9}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons"
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+
+### Metadata to specify connections between deposits
+
+The schema permits many other fields, importantly including fields intended to
+be used by the `deposits` package to document and identify connections between
+different data resources. These include "hasPart", "hasVersion", "isPartOf",
+"isReferencedBy", "isReplacedBy", "isRequiredBy", and "isVersionOf". Specifying
+these allows one deposit to be connected to others. One of the aims of the
+`deposits` package is to facilitate specification of these kinds of metadata,
+and so to enhance an ability to inter-connect and inter-relate different data
+depositions, providing insight into a growing ecosystem of inter-connected
+deposits.
+
+These "is" and "has" metadata fields have complex structures, but again the
+JSON schemas can and should be used to understand the expected format. The
+`isPartOf` field for Zenodo is expected to by an array (in R terms, a `list`)
+of objects, each of which must have an "identifier" and "relation", and may
+also have a "resource_type".
+
+```{r metadata-isPartOf1}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons",
+    isPartOf = list (list (
+        identifier = "Case Studies in Biometry",
+        relation = "isPartOf"
+    ))
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+While those metadata are successfully validated, attempting to create that
+deposit on Zenodo would trigger and error, because the "identifier" must
+conform to an expected type. The JSON schema should as always be considered the
+definitive reference, and that states for "identifier" that:
+
+> "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
+
+The "Case Studies in Biometry" book has an "ARK" identifier which can be used
+here, 
+
+```{r metadata-isPartOf2}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons",
+    isPartOf = list (list (
+        identifier = "ark:/13960/t0mt2n370",
+        relation = "isPartOf"
+    ))
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+Examining the JSON schema also reveals that "isPartOf" allows one additional
+field of "resource_type", which has to be an upload, publication, or image type
+followed by a type specification. These type specifications are included in the
+second JSON schema used to validate Zenodo-specific metadata. The [GitHub
+version can be seen
+here](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/zenodo/schema.json),
+or the location of the locally-installed version found with,
+
+```{r sysfile2}
+system.file (fs::path ("extdata", "zenodo", "schema.json"), package = "deposits")
+```
+
+This schema then reveals the accepted types for "publication" include "book",
+so the "resource_type" becomes "publication-book":
+
+```{r metadata-isPartOf3}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons",
+    isPartOf = list (list (
+        identifier = "ark:/13960/t0mt2n370",
+        relation = "isPartOf",
+        resource_type = "publication-book"
+    ))
+)
+cli$deposit_fill_metadata (metadata)
+```
+
+Finally we can confirm that those metadata are in a format which will be
+accepted on our specific Zenodo service by creating a new deposit:
+
+```{r create-deposit}
+cli$deposit_new ()
+#> ID of new deposit : 1186243
+print (cli)
+#> <deposits client>
+#>  deposits service : zenodo
+#>            sandbox: TRUE
+#>          url_base : https://sandbox.zenodo.org/api/
+#>  Current deposits : 1 (see 'deposits' element for details)
+#>
+#>  url_service : https://sandbox.zenodo.org/deposit/1186243
+#>   deposit id : 1186243
+#>     hostdata : list with 14  elements
+#>     metadata : 6 terms (see 'metadata' element for details)
+```
+
+And that deposit has been successfully created, with the Zenodo record
+populated with appropriately-translated versions of the metadata.
