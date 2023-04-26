@@ -102,7 +102,8 @@ validate_dcmi_metadata <- function (metadata) {
         print (errs)
         stop (
             "Stopping because the DCMI metadata terms listed above ",
-            "do not conform with the expected schema."
+            "do not conform with the expected schema.",
+            call. = FALSE
         )
     }
 

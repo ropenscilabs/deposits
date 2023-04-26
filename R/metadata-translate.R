@@ -56,7 +56,8 @@ translate_dc_to_service <- function (metadata, service) {
             "Stopping because the metadata terms listed above ",
             "do not conform with the expected schema for the ",
             service,
-            " service."
+            " service.",
+            call. = FALSE
         )
     }
 
