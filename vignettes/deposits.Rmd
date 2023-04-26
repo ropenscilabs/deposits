@@ -67,12 +67,14 @@ cli
 
 Client construction requires personal access or authentication tokens for
 deposits services to be stored as local environment variables, as described in
-the [main `README` document](https://docs.ropensci.org/deposits/#api-keys).
+the [installation and setup
+document](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens).
 Authentication tokens are checked when new clients are constructed, so the
 `$new()` function will only succeed with valid tokens.
 
-As also described in that `README`, all methods of a `deposits` client
-can be seen with [the `deposits_methods()`
+As also described [in that
+`README`](https://docs.ropensci.org/deposits/index.html#the-deposits-workflow),
+all methods of a `deposits` client can be seen with [the `deposits_methods()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposits-methods-):
 
 ```{r ls-cli, eval = FALSE}
@@ -99,37 +101,57 @@ cli$deposits_methods ()
 #>  see `?depositsClient` for full details of all methods.
 ```
 
-The client constructed above is mostly empty, but nevertheless demonstrates the
-two primary fields or elements of a deposits client:
-
-1. `hostdata` holding all metadata from a "host" or external deposits service
-   for a particular deposit; and 
-2. `metadata` holding a consistently structured representation of the key
-   components of the `hostdata`.
-
-The `hostdata` structures are generally lists, but differ for different
-services, whereas the `metadata` structures remain consistent between services,
-and allow data to be transformed from one format to another, and, in future
-functionality, will allow data to be transferred between different services.
-
-Both of these elements represent the "metadata" of a deposit, with the data
-itself referred to as "files", which can be uploaded and downloaded. Thus all
-deposits begin with metadata, with the actual data upload only possible once
-the initial metadata has been specified and uploaded.
-
+Each of these methods is described in detail in the [documentation entry for
+the deposits
+client](https://docs.ropensci.org/deposits/reference/depositsClient.html#methods).
 
 ## Metadata
 
+The client constructed above is mostly empty, but nevertheless demonstrates the
+two primary fields or elements of a deposits client, the *"hostdata"* and
+*"metadata"*. Both of these elements represent the "metadata" of a deposit,
+with the data itself referred to as "files", which can be uploaded and
+downloaded. All deposits begin with metadata, with the actual data upload only
+possible once the initial metadata has been specified and uploaded.
+Understanding these metadata structures is thus the essential first step to
+using `deposits`.
+
+As indicated in [the main
+README](https://docs.ropensci.org/deposits/reference/depositsClient.html#methods),
+the `deposits` workflow includes three types of metadata:
+
+1. *"metadata"* which describe a deposit and associated properties, such as author
+   names and affiliations, deposit titles and descriptions, dates, keywords, 
+   links to other deposits or publications, and many other terms. These kinds
+   of metadata are described in [the metadata
+   vignette](https://docs.ropensci.org/deposits/articles/metadata.html).
+2. *"frictionless metadata"* which describe the actual contents of the data to
+   be deposited. These kinds of metadata are (optionally) generated and
+   (always) handled here by [the `frictionless`
+   package](https://docs.ropensci.org/frictionless). These kind of metadata are
+   described in [the frictionless
+   vignette](https://docs.ropensci.org/deposits/articles/frictionless.html).
+3. *"hostdata"* which are provided in different formats by the various
+   `deposits` services, and are intended as *read-only* data used to examine
+   the remote records of a deposit.
+
+The `hostdata` structures are directly provided by the `deposits` host
+services, generally as lists, although with different structures for different
+services. These structures are read-only fields which are automatically filled
+by the `deposits` client, and are intended to provide insight into metadata
+records stored on host sites. In contrast, the `metadata` structures remain
+consistent between services, and allow data to be transformed from one format
+to another, and potentially to allow data to be transferred between different
+services.
+
+
+### Passing metadata to a deposits client
+
 A new deposit is initially constructed by filling the `metadata` field with a
-local representation of metadata. The `hostdata` field is filled only after
-this initial deposit metadata has been uploaded to the external service. The
-best way to understand the distinction between `metadata` and `hostdata` is
-through a practical demonstration.
-
-### Metadata as a list
-
-There are several ways of defining metadata for a `deposits` entity, perhaps
-the easiest of which is as a simple list:
+local representation of metadata. There are several ways of doing this, as
+described in [the separate metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html). One of
+the easiest approaches is to define metadata as a simple list:
 
 ```{r metadata-example-1, eval = TRUE}
 metadata <- list (
@@ -141,19 +163,9 @@ metadata <- list (
 
 Note that the "creator" item has to be a list-of-lists, because aspects other
 than name may also be included, and the second list is required to distinguish
-different creators. For example,
-
-```{r creator-example}
-metadata <- list (
-    # ... metadata plus ...
-    creator = list (
-        list (name = "A. Person", orcid = "0000-0001-0002-0003"),
-        list (name = "B. Person", orcid = "0000-0004-0005-0006", email = "b.person@email.com")
-    )
-)
-```
-
-A new deposits client can be filled with this metadata by passing it as the
+different creators, as described in detail in [the metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html). A new
+deposits client can be filled with this metadata by passing it as the
 `metadata` parameter:
 
 ```{r new-cli-with-meta-1, eval = FALSE}
@@ -166,12 +178,13 @@ print (cli)
 #>  Current deposits : <none>
 #>
 #>     hostdata : <none>
-#>     metadata : 4 terms (see 'metadata' element for details)
+#>     metadata : 3 terms (see 'metadata' element for details)
 ```
 
 The summary produced by calling `print()` (or, equivalently, just typing `cli`
-in the console) says that the object now includes four metadata terms. They
-can be seen by viewing `cli$metadata`:
+in the console) says that the object now includes three metadata terms. They
+can be seen by viewing `cli$metadata`, confirming that the client metadata are
+precisely what we specified:
 
 ```{r cli-dcmi-metadata, eval = FALSE}
 cli$metadata
@@ -179,80 +192,31 @@ cli$metadata
 ```{r cli-metadata-fakey, echo = FALSE}
 metadata <- list (
     abstract = "This is the abstract",
-    created = "2023-01-01",
     creator = list (list (name = "A. Person"), list (name = "B. Person")),
     title = "New Title"
 )
 print (metadata)
 ```
 
+Alternative ways of specifying and entering metadata are described in [the
+metadata vignette](https://docs.ropensci.org/deposits/articles/metadata.html),
+along with detailed descriptions of the kind of metadata accepted by a
+`deposits` client.
 
-Metadata in `deposits` objects are stored as named lists. These metadata are
-primarily intended for internal use within the `deposits` package, and
-shouldn't generally need to be manipulated directly by users of this package
-(although they certainly can be, as illustrated below).
-
-### Metadata from a local file
-
-Another convenient way to specify metadata is to use [the
-`deposits_metadata_template()`
-function](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
-to write a local [".json" representation](https://www.json.org/json-en.html) of
-metadata. This local file includes all metadata fields recognised by a deposits
-client.
-
-```{r metatemplate}
-meta_file <- tempfile (pattern = "meta-", fileext = ".json")
-deposits_metadata_template (filename = meta_file)
-head (readLines (meta_file))
-```
-
-Those metadata can then be directly edited using any text file editor. The name
-of the file can then also be passed as the `metadata` parameter of a new
-`deposits` client. A local file edited to hold identical metadata to that
-entered above would look like this:
-```{r metafile, echo = FALSE}
-x <- '{
-  "abstract": "This is the abstract",
-  "created": "2023-01-01",
-  "creator": [
-    {
-      "name": "A. Person"
-    },
-    {
-      "name": "B. Person"
-    }
-  ],
-  "title": "New Title"
-}'
-writeLines (x, meta_file)
-```
-```{r metafile-lines}
-readLines (meta_file)
-```
-
-The name of that file can then also be passed as the `metadata` parameter, so
-that the following client will produce identical results to the previous
-construction with metadata passed as an explicit list:
-
-
-```{r new-cli-with-meta-file, eval = FALSE}
-cli <- depositsClient$new (
-    service = "zenodo",
-    sandbox = TRUE,
-    metadata = meta_file
-)
-```
 
 ## Creating a new deposit
 
 
 Once filled with metadata, a `deposits` client can be used to initiate a new
-deposit on the associated external service with the `$deposit_new()` function.
-This is not to be confused with the `$new()` function which creates a new
-client. The `$deposit_new()` function uses an existing client to create a new
-deposit on the external service. Using the client constructed above with our
-sample metadata gives the following result:
+deposit on the associated external service with [the `$deposit_new()`
+function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-).
+This is not to be confused with [the `$new()`
+function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-new-)
+which creates a new client. The [`$deposit_new()`
+function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-)
+uses an existing client to create a new deposit on the external service. Using
+the client constructed above with our sample metadata gives the following
+result:
 
 ```{r deposit_new, eval = FALSE}
 cli$deposit_new ()
@@ -267,7 +231,7 @@ print (cli)
 #>  url_deposit : https://sandbox.zenodo.org/deposit/1064327
 #>   deposit id : 1064327
 #>     hostdata : list with 14  elements
-#>     metadata : 4 terms (see 'metadata' element for details)
+#>     metadata : 3 terms (see 'metadata' element for details)
 ```
 
 The client now lists one current deposit, additional fields for the URL and
@@ -314,7 +278,7 @@ deposit.
 
 ## Uploading files to deposits
 
-The deposits clients thus far have only been used to construct and upload
+The deposits client to that point has only been used to construct and upload
 metadata. The main point of a deposit is of course to store actual data in any
 arbitrary format alongside these structured metadata. This is achieved with
 [the `deposit_upload_file()`
@@ -331,7 +295,7 @@ cli$deposit_upload_file (path = path)
 
 Although the `print` output of our `cli` object does not change after
 uploading, the details of the files are contained in the `hostdata$files`
-element:
+element (which was previously empty):
 
 ```{r cli-hostdata-files, eval = FALSE}
 cli$hostdata$files
@@ -347,10 +311,16 @@ cli$hostdata$files
 ```
 
 The list of files includes a "datapackage.json" file generated by [the
-`frictionless` package](https://docs.ropensci.org/frictionless), as described
-in [the main README](https://docs.ropensci.org/deposits/index.html). Files can
-be downloaded with the converse `download_file` function, demonstrated here by
-first removing the local copy, and then downloading it
+`frictionless` package](https://docs.ropensci.org/frictionless). As described
+in [the main README](https://docs.ropensci.org/deposits/index.html), and at
+length in [the separate "frictionless"
+vignette](https://docs.ropensci.org/deposits/articles/frictionless.html), these
+files contain both the metadata entered in to the `deposits` client, as well as
+"frictionless metadata" describing the internal properties of the dataset
+itself.
+
+Files can be downloaded with the converse `download_file` function,
+demonstrated here by first removing the local copy, and then downloading it
 from the deposits service:
 
 ```{r dl_file, eval = FALSE}
