@@ -2,7 +2,6 @@
 
 export(dcmi_terms)
 export(depositsClient)
-export(deposits_meta_from_file)
 export(deposits_metadata_template)
 export(deposits_services)
 export(get_deposits_token)

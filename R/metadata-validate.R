@@ -135,3 +135,20 @@ validate_service_metadata <- function (metadata, service) {
 
     return (res)
 }
+
+deposits_meta_from_file <- function (filename = NULL) {
+
+    checkmate::assert_character (filename, len = 1L)
+    checkmate::assert_file_exists (filename)
+
+    meta <- readLines (filename)
+    check <- jsonlite::validate (meta)
+    if (!check) {
+        stop ("json is not valid.")
+    }
+
+    meta <- jsonlite::read_json (filename)
+    meta <- meta [which (lapply (meta, length) > 0L)]
+
+    return (meta)
+}
