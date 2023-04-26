@@ -29,10 +29,10 @@ package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.htm
 Relevant metadata for these datasets are given in the "Source" listed on that
 page (or `?beaver1` to see a local version):
 
-P. S. Reynolds (1994) *Time-series analyses of beaver body temperatures.*
-Chapter 11 of Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L.
-and Greenhouse, J. eds (1994) Case Studies in Biometry. New York: John Wiley
-and Sons. 
+> P. S. Reynolds (1994) *Time-series analyses of beaver body temperatures.*
+> Chapter 11 of Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L.
+> and Greenhouse, J. eds (1994) Case Studies in Biometry. New York: John Wiley
+> and Sons. 
 
 ```{r lib, echo = FALSE}
 library (deposits)
@@ -52,13 +52,28 @@ Let's start with a minimal version of the metadata list shown above, and try to
 validate that using [the `deposit_fill_metadata()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
 
-```{r meta-validation1}
+```{r meta-validation1, eval = FALSE}
 metadata <- list (
     author = "P.S. Reynolds",
     title = "Time-series analyses of beaver body temperatures."
 )
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposit_fill_metadata (metadata)
+```
+```{r meta-validation1-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = "",
+    schemaPath = "#/additionalProperties",
+    keyword = "additionalProperties",
+    additionalProperty = "author",
+    message = "must NOT have additional properties"
+)
+print (res)
+stop (
+    "Stopping because the DCMI metadata terms listed ",
+    "above do not conform with the expected schema.",
+    call. = FALSE
+)
 ```
 
 That error tells us that "author" is an additional property, and that the
@@ -77,35 +92,104 @@ Searching for "author" either on the GitHub version or a local file will
 quickly reveal that author information belongs in a field called "creator".
 Renaming that metadata item then gives,
 
-```{r meta-validation2}
+```{r meta-validation2, eval = FALSE}
 metadata <- list (
     creator = "P.S. Reynolds",
     title = "Time-series analyses of beaver body temperatures."
 )
 cli$deposit_fill_metadata (metadata)
 ```
+```{r meta-validation2-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = rep ("/creator", 3L),
+    schemaPath = c (
+        "#/properties/creator/anyOf/0/type",
+        "#/properties/creator/anyOf/1/type",
+        "#/properties/creator/anyOf"
+    ),
+    keyword = c ("type", "type", "anyOf"),
+    type = c ("array", "array", NA_character_),
+    message = c (
+        rep ("must be array", 2L),
+        "must match a schema in anyOf"
+    ),
+    required = c ("name", "name", NA_character_)
+)
+print (res)
+stop (
+    "Stopping because the DCMI metadata terms listed ",
+    "above do not conform with the expected schema.",
+    call. = FALSE
+)
+```
 
 The first messages say that the "creator" property "must be array". Arrays in
 JSON are `list` objects in R, so this indicates the first required
 modification:
 
-```{r meta-validation3}
+```{r meta-validation3, eval = FALSE}
 metadata <- list (
     creator = list ("P.S. Reynolds"),
     title = "Time-series analyses of beaver body temperatures."
 )
 cli$deposit_fill_metadata (metadata)
 ```
+```{r meta-validation3-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = c (rep ("/creator/0", 2L), "/creator"),
+    schemaPath = c (
+        "#/properties/creator/anyOf/0/items/type",
+        "#/properties/creator/anyOf/1/items/type",
+        "#/properties/creator/anyOf"
+    ),
+    keyword = c ("type", "type", "anyOf"),
+    type = c ("object", "object", NA_character_),
+    message = c (
+        rep ("must be object", 2L),
+        "must match a schema in anyOf"
+    ),
+    required = c ("name", "name", NA_character_)
+)
+print (res)
+stop (
+    "Stopping because the DCMI metadata terms listed ",
+    "above do not conform with the expected schema.",
+    call. = FALSE
+)
+```
 
 The "creator" field must now an "object." R being the relatively simply
 language that it is, "objects" are also `list`s, leading us to:
 
-```{r meta-validation4}
+```{r meta-validation4, eval = FALSE}
 metadata <- list (
     creator = list (list ("P.S. Reynolds")),
     title = "Time-series analyses of beaver body temperatures."
 )
 cli$deposit_fill_metadata (metadata)
+```
+```{r meta-validation4-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = c (rep ("/creator/0", 2L), "/creator"),
+    schemaPath = c (
+        "#/properties/creator/anyOf/0/items/type",
+        "#/properties/creator/anyOf/1/items/type",
+        "#/properties/creator/anyOf"
+    ),
+    keyword = c ("type", "type", "anyOf"),
+    type = c ("object", "object", NA_character_),
+    message = c (
+        rep ("must be object", 2L),
+        "must match a schema in anyOf"
+    ),
+    required = c ("name", "name", NA_character_)
+)
+print (res)
+stop (
+    "Stopping because the DCMI metadata terms listed ",
+    "above do not conform with the expected schema.",
+    call. = FALSE
+)
 ```
 
 And that generates the same error. For any instances in which the error
@@ -113,21 +197,38 @@ messages themselves are not helpful, it is useful to refer to the [actual JSON
 schema](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json)
 (or a local version). The "creator" field expected for the Zenodo service can
 then be seen to accept the properties, "name", "affiliation", "orcid", and
-"gnd". Let's try "name":
+"gnd". This is also indicated in the error message, which lists "name" in the
+"required" field.
 
-```{r meta-validation5}
+```{r meta-validation5, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     title = "Time-series analyses of beaver body temperatures."
 )
 cli$deposit_fill_metadata (metadata)
 ```
+```{r meta-validation5-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = "/metadata",
+    schemaPath = "#/properties/metadata/required",
+    keyword = "required",
+    missingProperty = "description",
+    message = "must have required property 'description'"
+)
+print (res)
+stop (
+    "Stopping because the metadata terms listed above ",
+    "do not conform with the expected schema for the ",
+    "zenodo service.",
+    call. = FALSE
+)
+```
 
 That error seems to indicate that our "creator" field is then valid, yet
 triggers a further error that that metadata "must have required property
 'description'". Let's add that:
 
-```{r meta-validation6}
+```{r meta-validation6, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     title = "Time-series analyses of beaver body temperatures.",
@@ -141,7 +242,7 @@ from `?beaver1`. We still need information on the publisher. Examining the JSON
 schema shows that it includes a "publisher" field which is expected to be a
 string.
 
-```{r meta-validation7}
+```{r meta-validation7, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     title = "Time-series analyses of beaver body temperatures.",
@@ -159,7 +260,7 @@ one we want is pretty clearly the "created" field, which is expected to be a
 string in either "date" or "date-time" format. Let's try a simple "date":
 
 
-```{r meta-validation8}
+```{r meta-validation8, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     created = "1994-01-01",
@@ -168,6 +269,22 @@ metadata <- list (
     publisher = "John Wiley and Sons"
 )
 cli$deposit_fill_metadata (metadata)
+```
+```{r meta-validation8-error, echo = FALSE, eval = TRUE}
+res <- data.frame (
+    instancePath = "/created",
+    schemaPath = "#/properties/created/format",
+    keyword = "format",
+    format = "date-time",
+    message = 'must match format "date-time"'
+)
+print (res)
+stop (
+    "Stopping because the metadata terms listed above ",
+    "do not conform with the expected schema for the ",
+    "zenodo service.",
+    call. = FALSE
+)
 ```
 
 That then fails because "created" must match the format "date-time", even
@@ -180,7 +297,7 @@ again against a service-specific JSON schema. In this case, the Zenodo service
 itself requires "created" fields to have "date-time", and not "date", format.
 
 
-```{r meta-validation9}
+```{r meta-validation9, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     created = "1994-01-01T00:00:00",
@@ -210,7 +327,7 @@ JSON schemas can and should be used to understand the expected format. The
 of objects, each of which must have an "identifier" and "relation", and may
 also have a "resource_type".
 
-```{r metadata-isPartOf1}
+```{r metadata-isPartOf1, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     created = "1994-01-01T00:00:00",
@@ -235,7 +352,7 @@ definitive reference, and that states for "identifier" that:
 The "Case Studies in Biometry" book has an "ARK" identifier which can be used
 here, 
 
-```{r metadata-isPartOf2}
+```{r metadata-isPartOf2, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     created = "1994-01-01T00:00:00",
@@ -265,7 +382,7 @@ system.file (fs::path ("extdata", "zenodo", "schema.json"), package = "deposits"
 This schema then reveals the accepted types for "publication" include "book",
 so the "resource_type" becomes "publication-book":
 
-```{r metadata-isPartOf3}
+```{r metadata-isPartOf3, eval = FALSE}
 metadata <- list (
     creator = list (list (name = "P.S. Reynolds")),
     created = "1994-01-01T00:00:00",
@@ -284,7 +401,7 @@ cli$deposit_fill_metadata (metadata)
 Finally we can confirm that those metadata are in a format which will be
 accepted on our specific Zenodo service by creating a new deposit:
 
-```{r create-deposit}
+```{r create-deposit, eval = FALSE}
 cli$deposit_new ()
 #> ID of new deposit : 1186243
 print (cli)
