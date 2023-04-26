@@ -44,8 +44,12 @@ Metadata in `deposits` are validated against [JSON
 schemas](https://json-schema.org), with the schema for the main "metadata"
 field described in [the package's "dc/schema.json"
 file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
-This validation procedure is intended to issue instructive errors throughout
-when metadata do not conform to the expected format, with this vignette
+This schema file includes detailed specifications for every metadata term used
+in `deposits`. The list of terms can also be viewed directly with [the
+`dcmi_terms()`
+function](https://docs.ropensci.org/deposits/reference/dcmi_terms.html). This
+validation procedure is intended to issue instructive errors throughout when
+metadata do not conform to the expected format, with this vignette
 demonstrating several such error messages.
 
 Let's start with a minimal version of the metadata list shown above, and try to
