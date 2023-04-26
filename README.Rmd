@@ -173,17 +173,16 @@ As explained at the outset, the `deposits` package can be used without knowing
 or understanding anything about [the `frictionless`
 package](https://docs.ropensci.org/frictionless) or [frictionless
 workflows](https://frictionlessdata.io). Most of this present section therefore
-concerns the first of these two kinds of metadata, with brief demonstrations of
-the second kind used to illustrate how the frictionless workflow integrates
-with the general `deposits` workflow. The term "metadata" throughout the
-following should be understood to refer to the first of the above kinds of
-metadata; the second kind is always referred to here as "frictionless
-metadata."
+concerns the first of these two kinds of metadata, referred to throughout all
+package documentation as "metadata". Brief demonstrations are also given of the
+second kind, to illustrate how the frictionless workflow integrates with the
+general `deposits` workflow. These kinds of metadata are always referred to as
+"frictionless metadata."
 
-Metadata can be included in a deposits client in two main ways, either on
-initial construction, or through attaching metadata to an existing client. One
-of the easiest of specifying metadata is as a list of named terms like the
-following example:
+A separate vignette describes in detail [how to specify and include metadata in
+a `deposits`
+client](https://docs.ropensci.org/deposits/articles/metadata.html). This
+section briefly demonstrates the process. An example of `deposits` metadata is:
 
 ```{r metadata}
 metadata <- list (
@@ -222,9 +221,6 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposit_fill_metadata (metadata)
 ```
 
-Other ways of specifying and entering metadata are described in [the
-introductory
-vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
 At that stage, the metadata are only associated with the local client. The
 following section describes how to use those metadata to initiate a deposit on
 an external service.
