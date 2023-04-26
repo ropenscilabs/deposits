@@ -419,3 +419,144 @@ print (cli)
 
 And that deposit has been successfully created, with the Zenodo record
 populated with appropriately-translated versions of the metadata.
+
+## Metadata templates
+
+An alternative way to enter metadata into a `deposits` client is via a local
+JSON metadata file. `depostis` includes the function,
+[`deposits_metadata_template()`](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html),
+which generates a local version of a complete template for all allowed metadata
+fields.
+
+```{r}
+f <- fs::file_temp (ext = ".json")
+deposits_metadata_template (filename = f)
+```
+
+That command issues an important note, given in even more detail in the first
+line of the resultant template:
+
+```{r}
+head (readLines (f), 2L) [2]
+```
+
+A version of that template modified to reflect the metadata defined above would
+then look like this:
+
+```{r meta-template, echo = FALSE}
+j <- '{
+  "created": "1994-01-01T00:00:00",
+  "creator": [
+    {
+      "name": "P.S. Reynolds"
+    }
+  ],
+  "description": "Original source of \'beaver\' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+  "isPartOf": [
+      {
+        "identifier": "ark:/13960/t0mt2n370",
+        "relation": "isPartOf",
+        "resource_type": "publication-book"
+      }
+  ],
+  "publisher": "John Wiley and Sons",
+  "title": "Time-series analyses of beaver body temperatures."
+}'
+writeLines (j, f)
+j <- jsonlite::read_json (f)
+jsonlite::toJSON (j, pretty = TRUE, auto_unbox = TRUE)
+```
+
+The format of each item within this JSON object then then matches the
+specifications of the [main `dc/schema.json`
+file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
+Note that that schema expects both the "creator" and "isPartOf" fields for
+Zenodo to be of type "array". Arrays in JSON are defined by square brackets, `[
+... array contents ...]`. Both of these arrays are then expected to have items
+of type "object", which in JSON are defined by curly brackets, `{ ... object
+contents ...}`.
+
+Those are the only two key aspects of JSON specification required to understand
+and use metadata templates in `deposits`:
+
+- A JSON "array" is defined within square brackets, and may contain any number
+  of items: `[ ... array ...]`.
+- A JSON "object" is defined within curly brackets, and must generally follow a
+  defined structure: `{ ... object ...}`.
+
+Both "array" and "object" items in JSON are represented in R terms as `list`s,
+so an array of objects simply becomes `list(list(...))`, as demonstrated in the
+first second of this vignette. (While this means that objects composed of
+arrays could cause confusion, these are relatively uncommon, and are not used
+in any of the JSON schemas within the `deposits`
+package.)
+
+### Valid JSON Files
+
+The schema for the "creator" field shown above requires (for Zenodo) an "array"
+of items, each of which is an "object" which must include a "name" field, and
+may include additional fields for "affiliation", "orcid", and "gnd". An example
+JSON specification for "creator" would thus be:
+
+```{}
+{
+  "creator": [
+    {
+      "name": "A. Person",
+      "orcid": "0000-0001-0002-0003"
+    },
+    {
+      "name": "B. Person"
+    }
+  ]
+}
+```
+
+Because "creator" is an "array", it may contain multiple unnamed items. In
+contrast, items within an "object" must generally be named, and schemas will
+generally expect single instances only of each item within an "object."
+Switching the square and curly brackets in that definition would invalidate the
+JSON file, and would trigger an error in `deposits`. 
+
+Errors in the validation of JSON files themselves are, however, nowhere near as
+informative as errors arising through comparing JSON files with schemas. If a
+JSON file is itself invalid, the errors shown by `deposits` will generally be
+uninformative. It is therefore very important to ensure that JSON metadata
+files are formatted  in a valid way. The easiest way to check validity before
+passing a metadata file to a `deposits` client is to use [the `validate()`
+function of the `jsonlite`
+package](https://cran.r-project.org/package=jsonlite). This function requires a
+string input, so should be called as
+`jsonlite::validate(readLines("metadata.json"))`.
+
+This example demonstrates one important aspect of hand-writing JSON files,
+which is commas. Commas **must** be used to separate any sequential fields, and
+**must not** be placed at the end of any individual or sequence of fields. The
+first statement means that valid JSON requires commas like this:
+
+```{}
+{
+  "field1": "value1",
+  "field2": "value2"
+}
+```
+
+That specification without the comma would not be valid. The second statement
+means that placing a comma after the second `"value2"` statement would also
+render that JSON invalid. Note that these commas are equally important in
+separating JSON objects:
+
+```{}
+{
+  "object1": {
+    "field": "value"
+  },
+  "object2": {
+    "field": "value"
+  }
+}
+```
+
+That specification requires the single comma separating the two objects.
+Placing commas anywhere else, such as after the values, or at the end of
+"object2", would then invalidate the JSON.
