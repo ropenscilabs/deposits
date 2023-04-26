@@ -1,4 +1,3 @@
-
 test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
     identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
 
@@ -48,6 +47,8 @@ test_that ("tokens", {
         "No unambiguous token found for \\[junk\\] service."
     )
 })
+
+testthat::skip_if (!test_all)
 
 test_that ("deposit_service function", {
 
