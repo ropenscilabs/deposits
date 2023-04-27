@@ -193,6 +193,66 @@ test_that ("figshare update", {
     # )
 })
 
+test_that ("figshare add_resource", {
+
+    service <- "figshare"
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = paste0 (
+            "## description\nThis is the description\n\n",
+            "## version\n1.0"
+        ),
+        subject = "## keywords\none, two\nthree\n\n"
+    )
+
+    cli <- with_mock_dir ("fs_client", {
+        depositsClient$new (
+            service = service,
+            metadata = metadata
+        )
+    })
+
+    path <- fs::path (fs::path_temp (), "data")
+    if (!fs::dir_exists (path)) {
+        fs::dir_create (path)
+    }
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename, row.names = FALSE)
+
+    dp <- fs::path (path, "datapackage.json")
+    if (fs::file_exists (dp)) {
+        fs::file_delete (dp)
+    }
+
+    requireNamespace ("frictionless")
+    expect_silent (
+        cli$deposit_add_resource (filename)
+    )
+    files <- fs::path_file (fs::dir_ls (path))
+    expect_true ("datapackage.json" %in% files)
+
+    cli <- with_mock_dir ("fs_create", {
+        depositsClient$new (service = service)
+    })
+    expect_null (cli$metadata)
+    expect_null (cli$hostdata)
+    expect_message (
+        cli$deposit_add_resource (path),
+        "Please make sure you have the right"
+    )
+    expect_null (cli$hostdata)
+    expect_false (is.null (cli$metadata))
+    expect_type (cli$metadata, "list")
+    expect_length (cli$metadata, 5L)
+
+    expect_identical (
+        cli$metadata [order (names (cli$metadata))],
+        metadata [order (names (metadata))]
+    )
+})
 
 test_that ("figshare upload", {
 
