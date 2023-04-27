@@ -181,7 +181,7 @@ test_that ("zenodo embargo", {
     )
 
     embargo_date <- "2040-01-01"
-    cli <- httptest2::with_mock_dir ("zen_embargo", {
+    cli <- with_mock_dir ("zen_embargo", {
         cli$deposit_embargo (embargo_date = embargo_date)
     })
 
@@ -200,6 +200,64 @@ test_that ("zenodo deposits_list", {
 
     expect_s3_class (dep, "depositsClient")
     expect_identical (dep, cli)
+})
+
+test_that ("zenodo add_resource", {
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description =
+            "## description\nThis is the description\n\n## version\n1.0",
+        subject = "## keywords\none, two\nthree"
+    )
+
+    cli <- with_mock_dir ("zen_client", {
+        depositsClient$new (
+            service = "zenodo",
+            sandbox = TRUE,
+            metadata = metadata
+        )
+    })
+
+    path <- fs::path (fs::path_temp (), "data")
+    if (!fs::dir_exists (path)) {
+        fs::dir_create (path)
+    }
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename, row.names = FALSE)
+
+    dp <- fs::path (path, "datapackage.json")
+    if (fs::file_exists (dp)) {
+        fs::file_delete (dp)
+    }
+
+    requireNamespace ("frictionless")
+    expect_silent (
+        cli$deposit_add_resource (filename)
+    )
+    files <- fs::path_file (fs::dir_ls (path))
+    expect_true ("datapackage.json" %in% files)
+
+    cli <- with_mock_dir ("zen_create", {
+        depositsClient$new (service = "zenodo", sandbox = TRUE)
+    })
+    expect_null (cli$metadata)
+    expect_null (cli$hostdata)
+    expect_message (
+        cli$deposit_add_resource (path),
+        "Please make sure you have the right"
+    )
+    expect_null (cli$hostdata)
+    expect_false (is.null (cli$metadata))
+    expect_type (cli$metadata, "list")
+    expect_length (cli$metadata, 5L)
+
+    expect_identical (
+        cli$metadata [order (names (cli$metadata))],
+        metadata [order (names (metadata))]
+    )
 })
 
 
