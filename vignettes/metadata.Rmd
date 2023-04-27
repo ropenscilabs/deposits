@@ -564,3 +564,26 @@ separating JSON objects:
 That specification requires the single comma separating the two objects.
 Placing commas anywhere else, such as after the values, or at the end of
 "object2", would then invalidate the JSON.
+
+## Metadata and the deposits frictionless workflow
+
+As described in detail in [the "frictionless"
+vignette](https://docs.ropensci.org/deposits/articles/frictionless.html),
+`deposits` is designed to work seamlessly with [the "frictionless"
+workflow](https://frictionlessdata.io/), via rOpenSci's ["frictionless" R
+package](https://docs.ropensci.org/frictionless). For metadata, this means that
+as soon as a data resource is uploaded to a service (with [the
+`deposit_upload_file()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-),
+a "datapackage.json" file is automatically created and filled with both
+descriptions of the uploaded file, or "resource" in frictionless terms, as well
+as the metadata described in this vignette. From that point onward, metadata
+can be edited directly in the "datapackage.json" file, and both the local
+client and external deposit will always be updated any time those local data
+are modified.
+
+In conclusion: from the moment your deposit has its own "datapackage.json"
+file, that should be considered the definitive record of all metadata. Any
+changes you may wish to make to those metadata should be made by directly
+editing that file, and `deposits` will update all corresponding local and
+remote records.
