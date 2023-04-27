@@ -27,14 +27,17 @@ the `deposits` package is designed to work with [rOpenSci's `frictionless`
 package](https://docs.ropensci.org/frictionless) for documentation of datasets.
 The [`frictionless` package](https://docs.ropensci.org/frictionless) is an R
 implementation of [the general "frictionless"
-workflow](https://frictionlessdata.io). To take advantage of the frictionless
-workflow in `deposits`, it is only necessary to know that the workflow involves
-documenting datasets in a file called
+workflow](https://frictionlessdata.io). All `deposits` metadata, both for a
+deposit in general as described in the accompanying [metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html), and for
+the internal structure of datasets, are stored in "frictionless" metadata files
+called
 ["datapackage.json"](https://frictionlessdata.io/blog/2016/07/21/publish-any/#_2-add-a-datapackage-json-file).
 
 ## Generating "datapackage.json" files
 
-The [`frictionless` package](https://docs.ropensci.org/frictionless) can
+The `deposits` package uses the [`frictionless`
+R package](https://docs.ropensci.org/frictionless) to
 automatically generate "datapackage.json" files for any tabular input data.
 This functionality is included within the `deposits` package to enable the
 workflow demonstrated in [the main
