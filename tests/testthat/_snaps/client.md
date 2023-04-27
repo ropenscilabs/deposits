@@ -18,6 +18,7 @@
     Output
       List of methods for a deposits client:
       
+         - deposit_add_resource
          - deposit_delete
          - deposit_delete_file
          - deposit_download_file
@@ -73,6 +74,7 @@
     Output
       List of methods for a deposits client:
       
+         - deposit_add_resource
          - deposit_delete
          - deposit_delete_file
          - deposit_download_file

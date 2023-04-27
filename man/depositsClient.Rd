@@ -195,6 +195,7 @@ passed to API}
 \itemize{
 \item \href{#method-depositsClient-new}{\code{depositsClient$new()}}
 \item \href{#method-depositsClient-print}{\code{depositsClient$print()}}
+\item \href{#method-depositsClient-deposit_add_resource}{\code{depositsClient$deposit_add_resource()}}
 \item \href{#method-depositsClient-deposit_delete}{\code{depositsClient$deposit_delete()}}
 \item \href{#method-depositsClient-deposit_delete_file}{\code{depositsClient$deposit_delete_file()}}
 \item \href{#method-depositsClient-deposit_download_file}{\code{depositsClient$deposit_download_file()}}
@@ -294,6 +295,28 @@ an on-screen overview of current contents and structure of client.
 \item{\code{...}}{ignored}
 }
 \if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_add_resource"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_add_resource}{}}}
+\subsection{Method \code{deposit_add_resource()}}{
+Generate a local "datapackage.json" file, and/or add
+metadata from client.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_add_resource(path)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{Path to local resource to be added to client. May name an
+individual file or a directory.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}

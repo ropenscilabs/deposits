@@ -211,6 +211,46 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         # From here on, all methods are defined ain alphabetical order
         # ---------
 
+        #' @description Generate a local "datapackage.json" file, and/or add
+        #' metadata from client.
+        #' @param path Path to local resource to be added to client. May name an
+        #' individual file or a directory.
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_add_resource = function (path) {
+
+            checkmate::assert_character (path, len = 1L)
+            if (fs::is_dir (path)) {
+                path_resource <- fs::dir_ls (path)
+            } else {
+                checkmate::assert_file_exists (path)
+                path_resource <- path
+                path <- fs::path_dir (path)
+            }
+            path <- fs::path_real (path)
+            path_dp <- fs::path (path, private$frictionless_json_name)
+            path_resource <- path_resource [which (!path_resource == path_dp)]
+
+            if (!fs::file_exists (path_dp)) {
+                private$generate_frictionless (path_resource [1])
+                private$add_meta_to_dp_json (path)
+            } else {
+                for (f in path_resource) {
+                    private$update_frictionless (f)
+                }
+            }
+
+            # Then update metadata from dp_json:
+            op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
+            suppressMessages (
+                p <- frictionless::read_package (path_dp)
+            )
+            options (op)
+            self$deposit_fill_metadata (p$metadata)
+
+            invisible (self)
+        },
+
         #' @description Deleted a specified deposit from the remote service.
         #' This removes the deposits from the associated service, along with all
         #' corresponding 'hostdata' in the local client.
