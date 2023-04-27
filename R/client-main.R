@@ -227,7 +227,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 path_resource <- path
                 path <- fs::path_dir (path)
             }
+
             path <- fs::path_real (path)
+            path_resource <- fs::path_real (path_resource)
+
             path_dp <- fs::path (path, private$frictionless_json_name)
             path_resource <- path_resource [which (!path_resource == path_dp)]
 
@@ -235,13 +238,18 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 private$generate_frictionless (path_resource [1])
                 private$add_meta_to_dp_json (path)
             } else {
+                quiet <- FALSE
                 for (f in path_resource) {
-                    private$update_frictionless (f)
+                    private$update_frictionless (f, quiet = quiet)
+                    quiet <- TRUE # Only issue message once
                 }
             }
 
             # Then update metadata from dp_json:
-            op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
+            op <- options (
+                readr.show_progress = FALSE,
+                readr.show_col_types = FALSE
+            )
             suppressMessages (
                 p <- frictionless::read_package (path_dp)
             )

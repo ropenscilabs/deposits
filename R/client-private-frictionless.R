@@ -76,7 +76,7 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 
 depositsClient$set (
     "private", "update_frictionless",
-    function (path, overwrite = FALSE) {
+    function (path, overwrite = FALSE, quiet = FALSE) {
 
         deposit_id <- self$id
 
@@ -170,7 +170,7 @@ depositsClient$set (
 
             update_remote <- TRUE
 
-        } else if (!all (dp_file_names %in% file_names)) {
+        } else if (!all (dp_file_names %in% file_names) && !quiet) {
 
             # "datapackage.json" lists resources not yet uploaded.
             dp_not_uploaded <-
