@@ -136,9 +136,13 @@ validate_service_metadata <- function (metadata, service) {
     return (res)
 }
 
-deposits_meta_from_file <- function (filename = NULL) {
+deposits_meta_from_file <- function (filename = NULL, frictionless_json_name) {
 
     checkmate::assert_character (filename, len = 1L)
+    if (fs::is_dir (filename)) {
+        # Only place where 'datapackage.json' is hard-coded:
+        filename <- fs::path (filename, "datapackage.json")
+    }
     checkmate::assert_file_exists (filename)
 
     meta <- readLines (filename)
@@ -148,6 +152,10 @@ deposits_meta_from_file <- function (filename = NULL) {
     }
 
     meta <- jsonlite::read_json (filename)
+    if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
+        # datapackage.json:
+        meta <- meta$metadata
+    }
     meta <- meta [which (lapply (meta, length) > 0L)]
 
     return (meta)
