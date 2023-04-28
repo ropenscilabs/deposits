@@ -55,6 +55,12 @@ test_that ("figshare new", {
     expect_false (is.null (cli$hostdata))
     expect_type (cli$hostdata, "list")
     expect_true (length (cli$hostdata) > 1L)
+
+    # Should also have prereserved DOI in both meta and hostdata:
+    expect_true (nzchar (cli$hostdata$doi))
+    expect_true (length (cli$metadata) > length (metadata))
+    expect_true (nzchar (cli$metadata$identifier))
+    expect_equal (cli$hostdata$doi, cli$metadata$identifier)
 })
 
 test_that ("figshare default metadata", {

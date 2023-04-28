@@ -56,6 +56,15 @@ test_that ("zenodo new", {
     expect_false (is.null (cli$hostdata))
     expect_type (cli$hostdata, "list")
     expect_true (length (cli$hostdata) > 1L)
+
+    # Should also have prereserved DOI in both meta and hostdata:
+    expect_true (nzchar (cli$hostdata$metadata$prereserve_doi$doi))
+    expect_true (length (cli$metadata) > length (metadata))
+    expect_true (nzchar (cli$metadata$identifier))
+    expect_equal (
+        cli$hostdata$metadata$prereserve_doi$doi,
+        cli$metadata$identifier
+    )
 })
 
 test_that ("zenodo default metadata", {
@@ -295,7 +304,9 @@ test_that ("zenodo upload", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
     expect_true (nrow (cli$hostdata$files) > n_files)
-    expect_true (all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$filename))
+    expect_true (
+        all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$filename)
+    )
 })
 
 test_that ("zenodo upload binary", {
@@ -379,7 +390,8 @@ test_that ("zenodo update frictionless", {
     metadata <- cli$metadata
     metadata$title <- "Modified Title"
     metadata$abstract <- "This is the modified abstract"
-    metadata$creator <- c (cli$metadata$creator, list (list (name = "C. Person")))
+    metadata$creator <-
+        c (cli$metadata$creator, list (list (name = "C. Person")))
     cli <- cli$deposit_fill_metadata (metadata)
 
     cli$deposit_update_frictionless (path = path)
