@@ -120,10 +120,9 @@ test_that ("zenodo retrieve", {
     expect_true (length (dep$hostdata) > 0L)
     # metadata is filled on retreive (#65):
     expect_true (length (dep$metadata) > 0L)
-    expect_identical (
-        metadata [order (names (metadata))],
-        dep$metadata [order (names (dep$metadata))]
-    )
+    # And it has an additional 'identifier' field with prereserved DOI:
+    expect_true (length (dep$metadata) > length (metadata))
+    expect_true ("identifier" %in% names (dep$metadata))
 
     # -------- DEPOSIT_UPDATE
     expect_equal (
