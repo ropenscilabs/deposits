@@ -490,12 +490,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Initiate a new deposit on the external deposits service.
+        #' @param prereserve_doi If `TRUE`, a Digital Object Identifier (DOI) is
+        #' prereserved on the nominated service, and returned in the "hostdata".
+        #' This DOI will also be inserted in the "identifier" field of the
+        #' client metadata.
         #' @param quiet If `FALSE` (default), print integer identifier of newly
         #' created deposit.
         #' @return (Invisibly) Updated deposits client which includes data on
         #' new deposit
 
-        deposit_new = function (quiet = FALSE) {
+        deposit_new = function (prereserve_doi = TRUE, quiet = FALSE) {
 
             if (length (self$metadata) == 0L) {
                 stop ("No metadata present; use 'fill_metadata()' first.")
@@ -513,6 +517,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             metadata$service <-
                 httptest2_hostdata_timestamps (metadata$service, self$service)
             private$metadata_service <- metadata$service
+            if (gsub ("\\-sandbox$", "", self$service) == "zenodo") {
+                private$metadata_service$metadata$prereserve_doi <- prereserve_doi
+            }
 
             # Insert 'self$metadata' into host parameter (#65):
             private$dcmi2host ()

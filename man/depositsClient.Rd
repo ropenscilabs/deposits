@@ -483,12 +483,17 @@ strings or lists for multiple entries.
 \subsection{Method \code{deposit_new()}}{
 Initiate a new deposit on the external deposits service.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_new(quiet = FALSE)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_new(prereserve_doi = TRUE, quiet = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{prereserve_doi}}{If \code{TRUE}, a Digital Object Identifier (DOI) is
+prereserved on the nominated service, and returned in the "hostdata".
+This DOI will also be inserted in the "identifier" field of the
+client metadata.}
+
 \item{\code{quiet}}{If \code{FALSE} (default), print integer identifier of newly
 created deposit.}
 }
