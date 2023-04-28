@@ -350,7 +350,7 @@ depositsClient$set ("private", "add_doi_to_metadata", function () {
 #' @return (Invisibly) Updated version of self.
 #' @noRd
 
-depositsClient$set ("private", "retrieve_hostdata_from_dp", function () {
+depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
 
     if ("identifier" %in% names (self$metadata) && is.null (self$hostdata)) {
 
@@ -362,9 +362,45 @@ depositsClient$set ("private", "retrieve_hostdata_from_dp", function () {
             id <- NULL
         }
 
+        metadata <- self$metadata
+
         if (!is.null (id)) {
             self$deposit_retrieve (id)
         }
+
+        if (!identical (self$metadata, metadata)) {
+            # Local metadata has been updated; push to host
+            metadata <- validate_metadata (
+                metadata,
+                gsub ("\\-sandbox$", "", self$service)
+            )
+            metadata <- httptest2_created_timestamp (metadata)
+            self$metadata <- metadata$dcmi
+
+            metadata$service <-
+                httptest2_hostdata_timestamps (metadata$service, self$service)
+            private$metadata_service <- metadata$service
+
+            files <- self$hostdata$files
+            file_names <- files [[private$get_file_name_field ()]]
+
+            if (private$frictionless_json_name %in% file_names &&
+                fs::file_exists (meta_source) || fs::dir_exists (meta_source)) {
+
+                meta_source <- fs::path_abs (meta_source)
+
+                meta_dir <- ifelse (
+                    fs::is_dir (meta_source),
+                    meta_source,
+                    fs::path_dir (meta_source)
+                )
+                meta_path <- fs::path (
+                    meta_dir,
+                    private$frictionless_json_name
+                )
+                self$deposit_upload_file (meta_path)
+            } # end if upload "datapackage.json"
+        } # end if local metadata updated
     }
 
     return (invisible (self))

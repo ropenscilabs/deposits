@@ -594,10 +594,7 @@ package.}
 \if{html}{\out{<a id="method-depositsClient-deposit_update"></a>}}
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_update}{}}}
 \subsection{Method \code{deposit_update()}}{
-Update local metadata by downloading from specified
-deposit. This can be used, for example, to synchronise local client
-metadata after they have been modified through other methods, such as
-online through the service's web interface.
+Update a remote (online) deposit with local metadata.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
 }

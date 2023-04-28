@@ -124,6 +124,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (metadata)) {
 
+                meta_source <- metadata
                 metadata <- validate_metadata (
                     metadata,
                     gsub ("\\-sandbox$", "", self$service)
@@ -132,7 +133,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
 
-                private$retrieve_hostdata_from_dp ()
+                private$servicedata_from_dp (meta_source)
             }
 
             return (self)
@@ -477,6 +478,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_fill_metadata = function (metadata = NULL) {
 
+            meta_source <- metadata
+
             metadata <- validate_metadata (
                 metadata,
                 gsub ("\\-sandbox$", "", self$service)
@@ -484,11 +487,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
 
-            metadata$service <-
-                httptest2_hostdata_timestamps (metadata$service, self$service)
-            private$metadata_service <- metadata$service
-
-            private$retrieve_hostdata_from_dp ()
+            private$servicedata_from_dp (meta_source)
 
             invisible (self)
         },
@@ -746,10 +745,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
-        #' @description Update local metadata by downloading from specified
-        #' deposit. This can be used, for example, to synchronise local client
-        #' metadata after they have been modified through other methods, such as
-        #' online through the service's web interface.
+        #' @description Update a remote (online) deposit with local metadata.
         #' @param deposit_id The 'id' number of deposit to update. If not
         #' specified, the 'id' value of current deposits client is used.
         #' @return (Invisibly) Updated deposits client.
@@ -767,10 +763,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             req$headers <- c (req$headers, "Content-Type" = "application/json")
 
             # Re-generate service metadata:
-            metadata_service <- translate_dc_to_service (
+            metadata_service <- validate_metadata (
                 self$metadata,
                 service = gsub ("\\-sandbox$", "", self$service)
             )
+            metadata_service <- metadata_service$service
             metadata_service <- httptest2_created_timestamp (metadata_service)
             metadata_service <-
                 httptest2_hostdata_timestamps (metadata_service, self$service)
