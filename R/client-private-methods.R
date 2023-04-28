@@ -74,6 +74,27 @@ depositsClient$set ("private", "deposits_list_extract", function () {
     invisible (self)
 })
 
+#' @description Extract integer IDs of all current deposits.
+#' @return Vector of integer IDs (if any; otherwise NULL).
+#' @noRd
+
+depositsClient$set ("private", "get_deposits_ids", function () {
+
+    deps <- self$deposits
+    if (length (deps) == 0L) {
+        return (NULL)
+    }
+
+    ids <- NULL
+    if (self$service == "figshare") {
+        ids <- deps$id
+    } else if (self$service == "zenodo") {
+        ids <- deps$conceptrecid
+    }
+
+    return (ids)
+})
+
 #' @description Remove 'hostdata' and 'metadata' items after call to
 #' `deposit_delete()` method (if they correspond to `self$id`).
 #' @noRd
@@ -362,19 +383,20 @@ depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
             id <- NULL
         }
 
-        metadata <- self$metadata
+        metadata <- validate_metadata (
+            meta_source,
+            gsub ("\\-sandbox$", "", self$service)
+        )
+        metadata <- httptest2_created_timestamp (metadata)
 
         if (!is.null (id)) {
-            self$deposit_retrieve (id)
+            if (id %in% private$get_deposits_ids ()) {
+                self$deposit_retrieve (id)
+            }
         }
 
-        if (!identical (self$metadata, metadata)) {
+        if (!identical (self$metadata, metadata$dcmi)) {
             # Local metadata has been updated; push to host
-            metadata <- validate_metadata (
-                metadata,
-                gsub ("\\-sandbox$", "", self$service)
-            )
-            metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
 
             metadata$service <-

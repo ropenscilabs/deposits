@@ -279,6 +279,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # Then return client with that deposit removed from list:
             self <- self$deposits_list ()
 
+            # Finally remove 'id' if that's been set
+            if (self$id == deposit_id) {
+                self$id <- self$hostdata <- NULL
+            }
+
             invisible (self)
         },
 
