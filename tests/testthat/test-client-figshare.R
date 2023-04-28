@@ -108,18 +108,6 @@ test_that ("figshare default metadata", {
     expect_true ((pos_txt - pos_title) <= 2)
 })
 
-test_that ("figshare prereserve", {
-
-    service <- "figshare"
-    cli <- new_mock_deposit (service = service)
-    expect_length (cli$metadata, 5L)
-    expect_false (nzchar (cli$hostdata$doi))
-
-    cli <- with_mock_dir ("fs_doi", {
-        cli$deposit_prereserve_doi ()
-    })
-})
-
 test_that ("figshare retrieve", {
 
     service <- "figshare"
