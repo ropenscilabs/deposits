@@ -186,6 +186,7 @@ by-passed when this parameter if \code{FALSE}.}
 \item \href{#method-depositsClient-deposit_embargo}{\code{depositsClient$deposit_embargo()}}
 \item \href{#method-depositsClient-deposit_fill_metadata}{\code{depositsClient$deposit_fill_metadata()}}
 \item \href{#method-depositsClient-deposit_new}{\code{depositsClient$deposit_new()}}
+\item \href{#method-depositsClient-deposit_prereserve_doi}{\code{depositsClient$deposit_prereserve_doi()}}
 \item \href{#method-depositsClient-deposit_publish}{\code{depositsClient$deposit_publish()}}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
@@ -502,6 +503,22 @@ created deposit.}
 \subsection{Returns}{
 (Invisibly) Updated deposits client which includes data on
 new deposit
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_prereserve_doi"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_prereserve_doi}{}}}
+\subsection{Method \code{deposit_prereserve_doi()}}{
+Prereserve a DOI. This is generally done when a deposit
+is first initialised, via the \code{prereserve_doi} parameter. This method
+exists only to subsequently prereserve a DOI for deposits initiated
+with \code{prereserve_doi = FALSE}.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_prereserve_doi()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
 }
 }
 \if{html}{\out{<hr>}}

@@ -555,6 +555,31 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Prereserve a DOI. This is generally done when a deposit
+        #' is first initialised, via the `prereserve_doi` parameter. This method
+        #' exists only to subsequently prereserve a DOI for deposits initiated
+        #' with `prereserve_doi = FALSE`.
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_prereserve_doi = function () {
+
+            if (!self$service == "figshare") {
+                message ("This method only has effect for Figshare")
+                return (invisible (self))
+            }
+
+            if ("doi" %in% names (self$hostdata)) {
+                message ("This deposit already has a DOI")
+                return (invisible (self))
+            }
+
+            private$prereserve_doi ()
+            private$deposit_retrieve (self$id)
+
+            invisible (self)
+        },
+
+
         #' @description Publish a deposit. This is an irreversible action which
         #' should only be called if you are really sure that you want to publish
         #' the deposit. Some aspects of published deposits can be subsequently
