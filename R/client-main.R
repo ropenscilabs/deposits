@@ -533,15 +533,17 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             hostdata <- httr2::resp_body_json (resp)
 
-            if (prereserve_doi) {
-                # Only calls method for Figshare
-                doi <- private$prereserve_doi ()
-            }
-
             if (self$service == "figshare") {
+                if (prereserve_doi) {
+                    doi <- private$prereserve_doi (hostdata$entity_id)
+                }
                 self$deposit_retrieve (hostdata$entity_id)
             } else if (self$service == "zenodo") {
                 self$hostdata <- hostdata
+            }
+
+            if (prereserve_doi) {
+                private$add_doi_to_metadata ()
             }
 
             self <- private$fill_service_id_url ()

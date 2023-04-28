@@ -298,20 +298,48 @@ depositsClient$set ("private", "delete_file", function (filename) {
 #' @description Call API methods to pre-reserve DOI
 #'
 #' Currently only needed for Figshare.
+#' @param id ID of deposit. Needed because this is not necessarily part of
+#' 'self' when this method is called on deposit_new().
 #' @return The pre-reserved DOI
 #' @noRd
 
-depositsClient$set ("private", "prereserve_doi", function () {
+depositsClient$set ("private", "prereserve_doi", function (id) {
 
     if (self$service != "figshare" || is_deposits_test_env ()) {
         return (NULL)
     }
 
-    url <- paste0 (get_service_url (self), "/", self$id, "/reserve_doi")
+    url <- paste0 (get_service_url (self), "/", id, "/reserve_doi")
     req <- create_httr2_helper (url, self$headers$Authorization, "POST")
 
     resp <- httr2::req_perform (req)
     doi <- httr2::resp_body_json (resp)
 
     return (doi)
+})
+
+#' @description Add prereserved DOI to metadata in "identifier" field.
+#'
+#' @return Updated metadata
+#' @noRd
+
+depositsClient$set ("private", "add_doi_to_metadata", function () {
+
+    doi <- ""
+
+    if (self$service == "figshare") {
+        doi <- self$hostdata$doi
+    } else if (self$service == "zenodo") {
+        doi <- self$hostdata$metadata$prereserve_doi$doi
+    }
+
+    if (!nzchar (doi)) {
+        return (invisible (self))
+    }
+
+    if (!"identifier" %in% names (self$metadata)) {
+        self$metadata$identifier <- doi
+    }
+
+    return (invisible (self))
 })
