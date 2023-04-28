@@ -1,21 +1,21 @@
 [
     {
-        "conceptrecid": "1187971",
+        "conceptrecid": "1188001",
         "created": "2022-01-01T00:00:00",
-        "doi": "10.5072/zenodo.1187972",
-        "doi_url": "https://doi.org/10.5072/zenodo.1187972",
-        "id": 1187972,
+        "doi": "10.5072/zenodo.1188002",
+        "doi_url": "https://doi.org/10.5072/zenodo.1188002",
+        "id": 1188002,
         "links": {
-            "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1187972.svg",
-            "discard": "sbapi/deposit/depositions/1187972/actions/discard",
-            "doi": "https://doi.org/10.5072/zenodo.1187972",
-            "edit": "sbapi/deposit/depositions/1187972/actions/edit",
-            "files": "sbapi/deposit/depositions/1187972/files",
-            "html": "https://sandbox.zenodo.org/deposit/1187972",
-            "latest_draft": "sbapi/deposit/depositions/1187972",
-            "latest_draft_html": "https://sandbox.zenodo.org/deposit/1187972",
-            "publish": "sbapi/deposit/depositions/1187972/actions/publish",
-            "self": "sbapi/deposit/depositions/1187972"
+            "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1188002.svg",
+            "discard": "sbapi/deposit/depositions/1188002/actions/discard",
+            "doi": "https://doi.org/10.5072/zenodo.1188002",
+            "edit": "sbapi/deposit/depositions/1188002/actions/edit",
+            "files": "sbapi/deposit/depositions/1188002/files",
+            "html": "https://sandbox.zenodo.org/deposit/1188002",
+            "latest_draft": "sbapi/deposit/depositions/1188002",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/1188002",
+            "publish": "sbapi/deposit/depositions/1188002/actions/publish",
+            "self": "sbapi/deposit/depositions/1188002"
         },
         "metadata": {
             "access_right": "embargoed",
@@ -28,7 +28,7 @@
                 }
             ],
             "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
-            "doi": "10.5072/zenodo.1187972",
+            "doi": "10.5072/zenodo.1188002",
             "embargo_date": "2022-01-01",
             "keywords": [
                 "one",
@@ -37,8 +37,8 @@
             ],
             "license": "CC-BY-4.0",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1187972",
-                "recid": 1187972
+                "doi": "10.5072/zenodo.1188002",
+                "recid": 1188002
             },
             "publication_date": "2022-01-01",
             "title": "New Title",
@@ -47,88 +47,106 @@
         },
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
-        "record_id": 1187972,
+        "record_id": 1188002,
         "state": "unsubmitted",
         "submitted": false,
         "title": "New Title"
     },
     {
-        "conceptrecid": "1187967",
+        "conceptrecid": "1187997",
         "created": "2022-01-01T00:00:00",
         "doi": "",
         "doi_url": "https://doi.org/",
-        "id": 1187968,
+        "id": 1187998,
         "links": {
-            "discard": "sbapi/deposit/depositions/1187968/actions/discard",
-            "edit": "sbapi/deposit/depositions/1187968/actions/edit",
-            "files": "sbapi/deposit/depositions/1187968/files",
-            "html": "https://sandbox.zenodo.org/deposit/1187968",
-            "publish": "sbapi/deposit/depositions/1187968/actions/publish",
-            "self": "sbapi/deposit/depositions/1187968"
+            "discard": "sbapi/deposit/depositions/1187998/actions/discard",
+            "edit": "sbapi/deposit/depositions/1187998/actions/edit",
+            "files": "sbapi/deposit/depositions/1187998/files",
+            "html": "https://sandbox.zenodo.org/deposit/1187998",
+            "publish": "sbapi/deposit/depositions/1187998/actions/publish",
+            "self": "sbapi/deposit/depositions/1187998"
         },
         "metadata": {
             "access_right": "closed",
             "creators": [
                 {
-                    "name": "P. S. Reynolds"
+                    "name": "A. Person"
+                },
+                {
+                    "name": "B. Person"
                 }
             ],
-            "description": "Original source of 'beaver' dataset.",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
             "doi": "",
-            "notes": "\\n---start-deposits-meta---\\n{\"created\":\"2022-01-01T00:00:00\",\"creator\":[{\"name\":\"P. S. Reynolds\"}],\"description\":\"Original source of 'beaver' dataset.\",\"title\":\"Time-series analyses of beaver body temperatures\"}\\n---end-deposits-meta---\\n",
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "notes": "\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1187968",
-                "recid": 1187968
+                "doi": "10.5072/zenodo.1187998",
+                "recid": 1187998
             },
             "publication_date": "2022-01-01",
-            "title": "Time-series analyses of beaver body temperatures",
-            "upload_type": "other"
+            "title": "New Title",
+            "upload_type": "other",
+            "version": "1.0"
         },
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
-        "record_id": 1187968,
+        "record_id": 1187998,
         "state": "unsubmitted",
         "submitted": false,
-        "title": "Time-series analyses of beaver body temperatures"
+        "title": "New Title"
     },
     {
-        "conceptrecid": "1187965",
+        "conceptrecid": "1187995",
         "created": "2022-01-01T00:00:00",
         "doi": "",
         "doi_url": "https://doi.org/",
-        "id": 1187966,
+        "id": 1187996,
         "links": {
-            "discard": "sbapi/deposit/depositions/1187966/actions/discard",
-            "edit": "sbapi/deposit/depositions/1187966/actions/edit",
-            "files": "sbapi/deposit/depositions/1187966/files",
-            "html": "https://sandbox.zenodo.org/deposit/1187966",
-            "publish": "sbapi/deposit/depositions/1187966/actions/publish",
-            "self": "sbapi/deposit/depositions/1187966"
+            "discard": "sbapi/deposit/depositions/1187996/actions/discard",
+            "edit": "sbapi/deposit/depositions/1187996/actions/edit",
+            "files": "sbapi/deposit/depositions/1187996/files",
+            "html": "https://sandbox.zenodo.org/deposit/1187996",
+            "publish": "sbapi/deposit/depositions/1187996/actions/publish",
+            "self": "sbapi/deposit/depositions/1187996"
         },
         "metadata": {
             "access_right": "closed",
             "creators": [
                 {
-                    "name": "P. S. Reynolds"
+                    "name": "A. Person"
+                },
+                {
+                    "name": "B. Person"
                 }
             ],
-            "description": "Original source of 'beaver' dataset.",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
             "doi": "",
-            "notes": "\\n---start-deposits-meta---\\n{\"created\":\"2022-01-01T00:00:00\",\"creator\":[{\"name\":\"P. S. Reynolds\"}],\"description\":\"Original source of 'beaver' dataset.\",\"title\":\"Time-series analyses of beaver body temperatures\"}\\n---end-deposits-meta---\\n",
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "notes": "\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
             "prereserve_doi": {
-                "doi": "10.5072/zenodo.1187966",
-                "recid": 1187966
+                "doi": "10.5072/zenodo.1187996",
+                "recid": 1187996
             },
             "publication_date": "2022-01-01",
-            "title": "Time-series analyses of beaver body temperatures",
-            "upload_type": "other"
+            "title": "New Title",
+            "upload_type": "other",
+            "version": "1.0"
         },
         "modified": "2022-01-01T00:00:00",
         "owner": 115518,
-        "record_id": 1187966,
+        "record_id": 1187996,
         "state": "unsubmitted",
         "submitted": false,
-        "title": "Time-series analyses of beaver body temperatures"
+        "title": "New Title"
     },
     {
         "conceptdoi": "10.5072/zenodo.1077311",

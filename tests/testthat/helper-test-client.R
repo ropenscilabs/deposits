@@ -20,7 +20,7 @@ new_mock_deposit <- function (service = "zenodo") {
         )
     })
     cli <- httptest2::with_mock_dir (paste0 (prfx, "_new"), {
-        cli$deposit_new (prereserve_doi = FALSE)
+        cli$deposit_new (prereserve_doi = TRUE)
     })
 
     return (cli)

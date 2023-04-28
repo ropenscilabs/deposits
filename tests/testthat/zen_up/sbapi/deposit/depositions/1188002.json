@@ -1,0 +1,66 @@
+{
+    "conceptrecid": "1188001",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "10.5072/zenodo.1188002",
+    "doi_url": "https://doi.org/10.5072/zenodo.1188002",
+    "files": [
+        {
+            "checksum": "cc624d72ede85ef061afa494d9951f6f",
+            "filename": "data.csv",
+            "filesize": 625,
+            "id": "8c0a8312-8495-42fa-8a7d-bf223ce9a239",
+            "links": {
+                "download": "sbapi/files/hash/data.csv",
+                "self": "sbapi/deposit/depositions/1188002/files/8c0a8312-8495-42fa-8a7d-bf223ce9a239"
+            }
+        }
+    ],
+    "id": 1188002,
+    "links": {
+        "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1188002.svg",
+        "bucket": "sbapi/files/2c015e50-6ca5-45ef-8aa3-1ad9ee6ad92c",
+        "discard": "sbapi/deposit/depositions/1188002/actions/discard",
+        "doi": "https://doi.org/10.5072/zenodo.1188002",
+        "edit": "sbapi/deposit/depositions/1188002/actions/edit",
+        "files": "sbapi/deposit/depositions/1188002/files",
+        "html": "https://sandbox.zenodo.org/deposit/1188002",
+        "latest_draft": "sbapi/deposit/depositions/1188002",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1188002",
+        "newversion": "sbapi/deposit/depositions/1188002/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1188002/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1188002/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1188002"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "A. Person"
+            },
+            {
+                "name": "B. Person"
+            }
+        ],
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+        "doi": "10.5072/zenodo.1188002",
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1188002",
+            "recid": 1188002
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other",
+        "version": "1.0"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1188002,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}
