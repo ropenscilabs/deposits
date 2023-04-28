@@ -303,7 +303,7 @@ depositsClient$set ("private", "delete_file", function (filename) {
 
 depositsClient$set ("private", "prereserve_doi", function () {
 
-    if (self$service != "figshare") {
+    if (self$service != "figshare" || is_deposits_test_env ()) {
         return (NULL)
     }
 
