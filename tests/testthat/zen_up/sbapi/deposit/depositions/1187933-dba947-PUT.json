@@ -1,5 +1,5 @@
 {
-    "conceptrecid": "1185153",
+    "conceptrecid": "1187932",
     "created": "2022-01-01T00:00:00+00:00",
     "doi": "",
     "doi_url": "https://doi.org/",
@@ -8,26 +8,26 @@
             "checksum": "cc624d72ede85ef061afa494d9951f6f",
             "filename": "data.csv",
             "filesize": 625,
-            "id": "8b96ec55-2a29-49c6-8c9c-dcdad71e798e",
+            "id": "f6ceb9e0-c272-433e-8dbe-696ba58deecb",
             "links": {
                 "download": "sbapi/files/hash/data.csv",
-                "self": "sbapi/deposit/depositions/1185154/files/8b96ec55-2a29-49c6-8c9c-dcdad71e798e"
+                "self": "sbapi/deposit/depositions/1187933/files/f6ceb9e0-c272-433e-8dbe-696ba58deecb"
             }
         }
     ],
-    "id": 1185154,
+    "id": 1187933,
     "links": {
-        "bucket": "sbapi/files/b993f907-5892-4e75-bb50-eb85265ef4b7",
-        "discard": "sbapi/deposit/depositions/1185154/actions/discard",
-        "edit": "sbapi/deposit/depositions/1185154/actions/edit",
-        "files": "sbapi/deposit/depositions/1185154/files",
-        "html": "https://sandbox.zenodo.org/deposit/1185154",
-        "latest_draft": "sbapi/deposit/depositions/1185154",
-        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1185154",
-        "newversion": "sbapi/deposit/depositions/1185154/actions/newversion",
-        "publish": "sbapi/deposit/depositions/1185154/actions/publish",
-        "registerconceptdoi": "sbapi/deposit/depositions/1185154/actions/registerconceptdoi",
-        "self": "sbapi/deposit/depositions/1185154"
+        "bucket": "sbapi/files/92be84b4-b5ff-4d34-af2a-24eba5e0cfd6",
+        "discard": "sbapi/deposit/depositions/1187933/actions/discard",
+        "edit": "sbapi/deposit/depositions/1187933/actions/edit",
+        "files": "sbapi/deposit/depositions/1187933/files",
+        "html": "https://sandbox.zenodo.org/deposit/1187933",
+        "latest_draft": "sbapi/deposit/depositions/1187933",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1187933",
+        "newversion": "sbapi/deposit/depositions/1187933/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1187933/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1187933/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1187933"
     },
     "metadata": {
         "access_right": "closed",
@@ -47,8 +47,8 @@
             "three"
         ],
         "prereserve_doi": {
-            "doi": "10.5072/zenodo.1185154",
-            "recid": 1185154
+            "doi": "10.5072/zenodo.1187933",
+            "recid": 1187933
         },
         "publication_date": "2022-01-01",
         "title": "New Title",
@@ -57,7 +57,7 @@
     },
     "modified": "2022-01-01T00:00:00+00:00",
     "owner": 115518,
-    "record_id": 1185154,
+    "record_id": 1187933,
     "state": "unsubmitted",
     "submitted": false,
     "title": "New Title"
