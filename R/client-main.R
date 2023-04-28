@@ -131,6 +131,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
+
+                private$retrieve_hostdata_from_dp ()
             }
 
             return (self)
@@ -486,19 +488,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 httptest2_hostdata_timestamps (metadata$service, self$service)
             private$metadata_service <- metadata$service
 
-            # Retrieve deposit if metadata has service DOI:
-            if ("identifier" %in% names (self$metadata)) {
-                ptn <- paste0 ("^.*", self$service, "\\.")
-                id <- gsub (ptn, "", self$metadata$identifier)
-                if (nzchar (id)) {
-                    id <- tryCatch (as.integer (id), error = function (e) NULL)
-                } else {
-                    id <- NULL
-                }
-                if (!is.null (id)) {
-                    self$deposit_retrieve (id)
-                }
-            }
+            private$retrieve_hostdata_from_dp ()
 
             invisible (self)
         },

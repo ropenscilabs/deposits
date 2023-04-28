@@ -343,3 +343,29 @@ depositsClient$set ("private", "add_doi_to_metadata", function () {
 
     return (invisible (self))
 })
+
+#' @description Obtain deposit 'id' from local "datapackage.json", and use it to
+#' retrieve full "hostdata".
+#'
+#' @return (Invisibly) Updated version of self.
+#' @noRd
+
+depositsClient$set ("private", "retrieve_hostdata_from_dp", function () {
+
+    if ("identifier" %in% names (self$metadata) && is.null (self$hostdata)) {
+
+        ptn <- paste0 ("^.*", self$service, "\\.")
+        id <- gsub (ptn, "", self$metadata$identifier)
+        if (nzchar (id)) {
+            id <- tryCatch (as.integer (id), error = function (e) NULL)
+        } else {
+            id <- NULL
+        }
+
+        if (!is.null (id)) {
+            self$deposit_retrieve (id)
+        }
+    }
+
+    return (invisible (self))
+})
