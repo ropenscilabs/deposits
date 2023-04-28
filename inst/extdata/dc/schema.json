@@ -110,10 +110,34 @@
             "type": "string"
         },
         "created": {
-            "type": "string",
             "anyOf": [
-                { "format": "date" },
-                { "format": "date-time" }
+                {
+                    "description": "Generic entry, including 'zenodo'",
+                    "type": "string",
+                    "anyOf": [
+                        { "format": "date" },
+                        { "format": "date-time" }
+                    ]
+                },
+                {
+                    "description": "figshare 'timeline' object",
+                    "type": "object",
+                    "items": {
+                        "firstOnline": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "publisherPublication": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "publisherAcceptance": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "additionalItems": false
+                    }
+                }
             ]
         },
         "creator": {

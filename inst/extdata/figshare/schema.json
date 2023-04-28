@@ -124,17 +124,21 @@
             "description": "Not applicable for regular users."
         },
         "timeline": {
-            "firstOnline": {
-                "type": "string",
-                "format": "date"
-            },
-            "publisherPublication": {
-                "type": "string",
-                "format": "date"
-            },
-            "publisherAcceptance": {
-                "type": "string",
-                "format": "date"
+            "type": "object",
+            "items": {
+                "firstOnline": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "publisherPublication": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "publisherAcceptance": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "additionalItems": false
             }
         },
         "group_id": {
