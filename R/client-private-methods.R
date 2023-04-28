@@ -294,3 +294,24 @@ depositsClient$set ("private", "delete_file", function (filename) {
 
     invisible (self)
 })
+
+#' @description Call API methods to pre-reserve DOI
+#'
+#' Currently only needed for Figshare.
+#' @return The pre-reserved DOI
+#' @noRd
+
+depositsClient$set ("private", "prereserve_doi", function () {
+
+    if (self$service != "figshare") {
+        return (NULL)
+    }
+
+    url <- paste0 (get_service_url (self), "/", self$id, "/reserve_doi")
+    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+
+    resp <- httr2::req_perform (req)
+    doi <- httr2::resp_body_json (resp)
+
+    return (doi)
+})
