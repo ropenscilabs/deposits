@@ -294,33 +294,3 @@ depositsClient$set ("private", "delete_file", function (filename) {
 
     invisible (self)
 })
-
-#' @description Fill 'service_parameters' of client.
-#'
-#' 'service_parameters' are currently only recognised for Zenodo (#72), and only
-#' the 'prereserve_doi' parameter.
-#'
-#' @param service_parameters Optional list of service-specific
-#' parameters. Currently only permits 'prereseve_doi' which can be set
-#' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
-#' services.
-#' @noRd
-
-depositsClient$set (
-    "private", "fill_service_params",
-    function (service_parameters) {
-
-        sp <- validate_service_params (service_parameters)
-
-        self$service_parameters <- sp
-
-        if (self$service == "zenodo" && !is.null (self$metadata)) {
-            for (i in seq_along (sp)) {
-                private$metadata_service$metadata [[names (sp) [i]]] <-
-                    sp [[i]]
-            }
-        }
-
-        invisible (self)
-    }
-)

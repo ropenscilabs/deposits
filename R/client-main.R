@@ -78,9 +78,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         hostdata = NULL,
         #' @field metadata holds list of DCMI-compliant metadata.
         metadata = NULL,
-        #' @field service_parameters holds list of service-specific parameters
-        #' passed to API
-        service_parameters = NULL,
 
         #' @description Create a new `depositsClient` object, as an \pkg{R6}
         #' client with methods listed via `deposits_emthods()`.
@@ -96,10 +93,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' \link{dcmi_terms}, and values specified as individual character
         #' strings or lists for multiple entries.
         #' }
-        #' @param service_parameters Optional list of service-specific
-        #' parameters. Currently only permits 'prereseve_doi' which can be set
-        #' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
-        #' services.
         #' @param sandbox If `TRUE`, connect client to sandbox, rather than
         #' actual API endpoint (for "zenodo" only).
         #' @param headers Any acceptable headers. See examples in \pkg{httr2}
@@ -116,7 +109,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         initialize = function (service,
                                metadata = NULL,
-                               service_parameters = NULL,
                                sandbox = FALSE,
                                headers = NULL) {
 
@@ -139,11 +131,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
-            }
-
-            if (!is.null (service_parameters)) {
-
-                private$fill_service_params (service_parameters)
             }
 
             return (self)
@@ -712,37 +699,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             private$deposits_list_extract ()
 
             self$hostdata <- NULL
-
-            invisible (self)
-        },
-
-        #' @description Specify service parameters for a given deposit.
-        #'
-        #' This is currently restricted to only the 'prereserve_doi' parameter
-        #' of Zenodo.
-        #' @param service_parameters Optional list of service-specific
-        #' parameters. Currently only permits 'prereseve_doi' which can be set
-        #' to 'TRUE' to pre-reserve a DOI on Zenodo, and is ignored on other
-        #' services.
-        #' @return (Invisibly) Updated deposits client.
-        #'
-        #' @examples
-        #' \dontrun{
-        #' cli <- depositsClient$new (service = "zenodo")
-        #' # fill metadata either on `new` or via `deposit_fill_metadata()`
-        #' # method. Then:
-        #' cli$deposit_service_parameters (list (prereserve_doi = TRUE))
-        #' cli$deposit_new ()
-        #' # Client will then contain pre-reserved DOI in `cli$hostdata`.
-        #' }
-
-        deposit_service_parameters = function (service_parameters = NULL) {
-
-            if (is.null (service_parameters)) {
-                return (invisible (self))
-            }
-
-            private$fill_service_params (service_parameters)
 
             invisible (self)
         },
