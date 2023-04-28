@@ -28,7 +28,6 @@
          - deposit_publish
          - deposit_retrieve
          - deposit_service
-         - deposit_service_parameters
          - deposit_update
          - deposit_update_frictionless
          - deposit_upload_file
@@ -84,7 +83,6 @@
          - deposit_publish
          - deposit_retrieve
          - deposit_service
-         - deposit_service_parameters
          - deposit_update
          - deposit_update_frictionless
          - deposit_upload_file
