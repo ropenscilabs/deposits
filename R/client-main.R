@@ -570,13 +570,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 return (invisible (self))
             }
 
-            if ("doi" %in% names (self$hostdata)) {
+            if (nzchar (self$hostdata$doi)) {
                 message ("This deposit already has a DOI")
                 return (invisible (self))
             }
 
-            private$prereserve_doi ()
-            private$deposit_retrieve (self$id)
+            private$prereserve_doi (self$id)
+            self$deposit_retrieve (self$id)
 
             invisible (self)
         },
