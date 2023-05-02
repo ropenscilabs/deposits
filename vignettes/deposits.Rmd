@@ -394,8 +394,9 @@ cli$deposit_fill_metadata (metadata = path)
 ```
 
 Alternatively, the `metadata` parameter can be passed directly to the `new()`
-method to initiate a new client. An example full workflow to that point would
-look something like the following four main steps:
+method to initiate a new client, as demonstrated immediately below. An example
+full workflow for creating and editing a deposits client and associated
+metadata would look something like the following five main steps:
 
 1. Initiate local deposits client with metadata:
 
@@ -413,16 +414,20 @@ look something like the following four main steps:
     cli$deposit_new ()
     #> ID of new deposit: 1064327
     ```
-2. Upload local data:
-
-    ```{r local-data-upload, eval = FALSE}
+2. Upload local data, which the following code simulates by creating a "dummy"
+   dataset in the temporary directory of the current R session:
+    ```{r local-data-create, eval = FALSE}
     data_dir <- file.path (tempdir (), "data")
     dir.create (data_dir)
     path <- file.path (data_dir, "data.csv")
     write.csv (datasets::Orange, path, row.names = FALSE)
     cli$deposit_upload_file (path = path)
     ```
-    That upload also creates local and remove versions of a frictionless
+    The following call then uploads that dataset to the newly-created deposit:
+    ```{r local-data-upload, eval = FALSE}
+    cli$deposit_upload_file (path = path)
+    ```
+    That upload also creates local and remote versions of a frictionless
     "datapackage.json" file, holding all metadata, and the DOI of the new
     deposit.
 3. Modify metadata. The following code provides a proof-of-principle
@@ -450,3 +455,33 @@ look something like the following four main steps:
     ```
     And local modificaitons are reflected in both updated "metadata" with the
     deposits client, as well as in "hostdata" stored on the Zenodo service.
+5. Versions of data files stored on remote hosts can be updated by uploading
+   updated versions of any files:
+    ```{r update-data, eval = FALSE
+    cli$deposit_upload_file (path = path)
+    ```
+
+## Publishing a deposit
+
+Once all metadata and data have been satisfactorily edited, updated, and
+uploaded, a deposit can be made publicly visible and permanently associated a
+Digital Object Identifier (DOI) by publishing it. Prior to publishing, it is
+often desired to apply an "embargo" to the deposit, in the form of a date after
+which the deposit will become publicly visible. The two steps to publication
+are thus generally:
+
+```{r publish, eval = FALSE}
+cli$deposit_embargo (embargo_date = "2030-03-30")
+cli$deposit_publish ()
+```
+
+Calling [the `deposit_publish()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-publish-)
+is irreversible, and can never be undone. The published deposit will be
+permanently associated with the account of the user who published it, as
+identified by [the API token used to initiate the deposits
+client](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens).
+Publication will also change many items of the client's "hostdata", notably
+involving a change of status or visibility from "private" to "public". Once a
+deposit has been published, the associated DOI, or equivalent the URL given in
+the deposits client, may be shared as a permanent link to the deposit.
