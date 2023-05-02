@@ -280,8 +280,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- self$deposits_list ()
 
             # Finally remove 'id' if that's been set
-            if (self$id == deposit_id) {
-                self$id <- self$hostdata <- NULL
+            if (!is.null (self$id)) {
+                if (self$id == deposit_id) {
+                    self$id <- self$hostdata <- NULL
+                }
             }
 
             invisible (self)
