@@ -368,3 +368,85 @@ When ready, a single call to [the `deposit_upload_file()`
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_upload_file)
 will upload one or more specified files, along with the frictionless
 "datapackage.json" metadata file.
+
+## Editing and updating deposits
+
+All deposits are initiated on the nominated services as "private" deposits, meaning:
+
+1. They can only be viewed by the deposit owner; and
+2. They can be freely edited, including complete deletion.
+
+A deposit can only be publicly viewed once it has been published, as described
+in the final section of this vignette. The process of using `deposits` to
+prepare one or more datasets for publication will generally involve multiple
+stages of editing and updating. As described in the final section of [the
+metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html#metadata-and-the-deposits-frictionless-workflow),
+the local frictionless metadata file can be edited as desired, and the
+corresponding deposit updated both locally and on the remote deposits service
+with [the `deposit_fill_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
+
+```{r metadata-fill-update, eval = FALSE}
+cli <- depositsClient$new (service = "<service>")
+path <- "/<local>/<directory>/<or>/<frictionless_file>"
+cli$deposit_fill_metadata (metadata = path)
+```
+
+Alternatively, the `metadata` parameter can be passed directly to the `new()`
+method to initiate a new client. An example full workflow to that point would
+look something like the following four main steps:
+
+1. Initiate local deposits client with metadata:
+
+    ```{r workflow-example-1, eval = FALSE}
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person"))
+    )
+    cli <- depositsClient$new (
+        service = "zenodo",
+        sandbox = TRUE,
+        metadata = metadata
+    )
+    cli$deposit_new ()
+    #> ID of new deposit: 1064327
+    ```
+2. Upload local data:
+
+    ```{r local-data-upload, eval = FALSE}
+    data_dir <- file.path (tempdir (), "data")
+    dir.create (data_dir)
+    path <- file.path (data_dir, "data.csv")
+    write.csv (datasets::Orange, path, row.names = FALSE)
+    cli$deposit_upload_file (path = path)
+    ```
+    That upload also creates local and remove versions of a frictionless
+    "datapackage.json" file, holding all metadata, and the DOI of the new
+    deposit.
+3. Modify metadata. The following code provides a proof-of-principle
+   modification of metadata, by changing "New Title" to "Updated Title":
+
+    ```{r metadata-modify, eval = FALSE}
+    fr <- file.path (data_dir, "datapackage.json")
+    dp <- frictionless::read_package (fr)
+    dp$metadata$title
+    #> [1] "New Title"
+    dp$metadata$title <- "Updated Title"
+    frictionless::write_package (dp, data_dir)
+    ```
+4. Re-initiate deposits client to update local and remote deposits:
+    ```{r update-metadata, eval = FALSE}
+    cli <- depositsClient$new (
+        service = "zenodo",
+        sandbox = TRUE,
+        metadata = data_dir
+    )
+    cli$metadata$title
+    #> [1] "Updated Title"
+    cli$hostdata$title
+    #> [1] "Updated Title"
+    ```
+    And local modificaitons are reflected in both updated "metadata" with the
+    deposits client, as well as in "hostdata" stored on the Zenodo service.
