@@ -89,7 +89,7 @@ depositsClient$set ("private", "get_deposits_ids", function () {
     if (self$service == "figshare") {
         ids <- deps$id
     } else if (self$service == "zenodo") {
-        ids <- deps$conceptrecid
+        ids <- deps$id
     }
 
     return (ids)
