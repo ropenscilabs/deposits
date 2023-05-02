@@ -611,6 +611,6 @@ cli$deposit_fill_metadata (metadata = path)
 ```
 
 The resultant client will fill the "metadata" field with the contents of the
-"datapackage.json" file. If the deposit also exists only, any local changes to
-"datapackage.json" will be reflected in changes on the remote deposits service,
-including changes within the copy of "datapackage.json" held there.
+"datapackage.json" file. If the deposit also exists remotely, any local changes
+to "datapackage.json" will be reflected in changes on the remote deposits
+service, including changes within the copy of "datapackage.json" held there.
