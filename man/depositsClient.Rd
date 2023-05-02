@@ -45,6 +45,26 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposits_methods ()
 # List all current deposits associated with user token:
 cli$deposits_list ()
+
+# Once a deposit has locally-stored metadata associated with it, only
+# that parameter is needed.
+path <- tempfile (pattern = "data") # A directory for data storage
+dir.create (path)
+f <- file.path (path, "beaver1.csv")
+write.csv (datasets::beaver1, f, row.names = FALSE)
+metadata <- list (
+    creator = list (list (name = "P. S. Reynolds")),
+    created = list (publisherPublication = "1994-01-01"),
+    title = "Time-series analyses of beaver body temperatures",
+    description = "Original source of 'beaver' dataset."
+)
+cli <- depositsClient$new (service = "figshare", metadata = metadata)
+cli$deposit_new ()
+cli$deposit_upload_file (f)
+
+# A new deposits client may then be constructed by passing the data
+# directory as the 'metadata' parameter:
+cli <- depositsClient$new (metadata = path)
 }
 
 ## ------------------------------------------------
@@ -243,6 +263,26 @@ cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
 cli$deposits_methods ()
 # List all current deposits associated with user token:
 cli$deposits_list ()
+
+# Once a deposit has locally-stored metadata associated with it, only
+# that parameter is needed.
+path <- tempfile (pattern = "data") # A directory for data storage
+dir.create (path)
+f <- file.path (path, "beaver1.csv")
+write.csv (datasets::beaver1, f, row.names = FALSE)
+metadata <- list (
+    creator = list (list (name = "P. S. Reynolds")),
+    created = list (publisherPublication = "1994-01-01"),
+    title = "Time-series analyses of beaver body temperatures",
+    description = "Original source of 'beaver' dataset."
+)
+cli <- depositsClient$new (service = "figshare", metadata = metadata)
+cli$deposit_new ()
+cli$deposit_upload_file (f)
+
+# A new deposits client may then be constructed by passing the data
+# directory as the 'metadata' parameter:
+cli <- depositsClient$new (metadata = path)
 }
 }
 \if{html}{\out{</div>}}

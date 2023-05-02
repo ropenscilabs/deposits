@@ -51,3 +51,25 @@ condense_linebreaks <- function (txt) {
     }
     return (txt)
 }
+
+#' Extract 'service' parameter from metadata if not otherwise specified.
+#' @noRd
+service_from_metadata <- function (metadata, service = NULL) {
+
+    if (!"identifier" %in% names (metadata)) {
+        return (NULL)
+    }
+
+    id <- metadata$identifier
+    srv <- regmatches (
+        id,
+        regexpr ("(\\.|\\/)[a-zA-z]+\\.[0-9]+$", id)
+    )
+    srv <- gsub ("^\\.|\\/|\\.[0-9]+$", "", srv)
+
+    if (!is.null (srv)) {
+        service <- srv
+    }
+
+    return (service)
+}

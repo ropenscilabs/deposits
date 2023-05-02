@@ -105,12 +105,52 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' cli$deposits_methods ()
         #' # List all current deposits associated with user token:
         #' cli$deposits_list ()
+        #'
+        #' # Once a deposit has locally-stored metadata associated with it, only
+        #' # that parameter is needed.
+        #' path <- tempfile (pattern = "data") # A directory for data storage
+        #' dir.create (path)
+        #' f <- file.path (path, "beaver1.csv")
+        #' write.csv (datasets::beaver1, f, row.names = FALSE)
+        #' metadata <- list (
+        #'     creator = list (list (name = "P. S. Reynolds")),
+        #'     created = list (publisherPublication = "1994-01-01"),
+        #'     title = "Time-series analyses of beaver body temperatures",
+        #'     description = "Original source of 'beaver' dataset."
+        #' )
+        #' cli <- depositsClient$new (service = "figshare", metadata = metadata)
+        #' cli$deposit_new ()
+        #' cli$deposit_upload_file (f)
+        #'
+        #' # A new deposits client may then be constructed by passing the data
+        #' # directory as the 'metadata' parameter:
+        #' cli <- depositsClient$new (metadata = path)
         #' }
 
         initialize = function (service,
                                metadata = NULL,
                                sandbox = FALSE,
                                headers = NULL) {
+
+            # If no 'service' specified, see if it is in 'metadata':
+            if (!is.null (metadata)) {
+                metadata_dcmi <- validate_dcmi_metadata (metadata)
+                service_tmp <- service_from_metadata (metadata_dcmi, service)
+                if (missing (service)) {
+                    service <- service_tmp
+                } else if (!is.null (service_tmp)) {
+                    if (service != service_tmp) {
+                        stop (
+                            "Metadata are for a '",
+                            service_tmp,
+                            "' service, not for '",
+                            service,
+                            "'",
+                            call. = FALSE
+                        )
+                    }
+                }
+            }
 
             self <- private$define_service (service, sandbox)
 
