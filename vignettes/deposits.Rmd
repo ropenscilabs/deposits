@@ -38,8 +38,7 @@ summarised in Figure 1.
 library (deposits)
 ```
 
-![Figure 1: Schematic diagram of 'deposits' methods, each of which is explained below. All methods have prefixes of "deposit_", which are not shown in the diagram. The methods connecting the client to "Local Storage" only have an effect the first time they are called, when they create a local version of a frictionless "datapackage.json" file, if one did not previously exist.](fig1.png)
-
+![Figure 1: Schematic diagram of 'deposits' methods, each of which is explained below. All methods have prefixes of "deposit_", which are not shown in the diagram. Methods connecting to the central "deposits Client" all modify its internal properties, whereas the "upload_file" and "download_file" methods copy files between local storage and remote services without modifying the deposits client itself. The methods connecting the client to "Local Storage" only have an effect the first time they are called, when they create a local version of a frictionless "datapackage.json" file, if one did not previously exist.](fig1.png)
 
 ## The deposits client
 
@@ -105,9 +104,21 @@ cli$deposits_methods ()
 #>  see `?depositsClient` for full details of all methods.
 ```
 
+```{r count-methods, echo = FALSE}
+# x <- capture.output (cli$deposits_methods ())
+# num_methods <- length (grep ("\\-\\sdeposits\\_", x))
+num_methods <- 3L
+```
+
+
 Each of these methods is described in detail in the [documentation entry for
 the deposits
 client](https://docs.ropensci.org/deposits/reference/depositsClient.html#methods).
+The final `r num_methods` methods starting with "deposits_" are general methods
+applied to services in general ("list" and "search"), or to a deposits client
+in general ("methods"). All other methods start with the singular "deposit_"
+prefix, and operate on individual deposits. The main methods, and relationships
+between them, are also illustrated in Figure 1.
 
 ## Metadata
 
