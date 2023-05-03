@@ -27,6 +27,9 @@ site: clean doc readme
 	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
 	Rscript -e "pkgdown::build_reference()"
 
+articles:
+	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
+
 docall: readme doc site
 
 open:

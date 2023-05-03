@@ -31,11 +31,14 @@ individual software clients. The `deposits` package aims to be a
 universal client offering access to a variety of deposition services, without
 users having to know any specific details of the APIs for each service. This
 vignette demonstrates how the `deposits` package can be used to manage the
-processes of upload and publishing research data.
+processes of uploading and publishing research data, using the methods
+summarised in Figure 1.
 
 ```{r lib, echo = FALSE}
 library (deposits)
 ```
+
+![Figure 1: Schematic diagram of 'deposits' methods, each of which is explained below. All methods have prefixes of "deposit_", which are not shown in the diagram. The methods connecting the client to "Local Storage" only have an effect the first time they are called, when they create a local version of a frictionless "datapackage.json" file, if one did not previously exist.](fig1.png)
 
 
 ## The deposits client
