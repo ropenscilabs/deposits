@@ -46,7 +46,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         metadata_service = NULL,
         # @field term_map (data.frame) Map between DCMI and deposit terms for
         # specified host service.
-        term_map = NULL
+        term_map = NULL,
+        #' @field dl_frictionless (logical) Used to control whether remote
+        #' ":datapackage.json" should be downloaded and used to update client
+        #' metadata.
+        dl_frictionless = TRUE
 
         # ... other private methods in R/client-private-methods.R
     ), # end private list
@@ -742,7 +746,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         "for this deposit."
                     )
                 }
-            } else {
+            } else if (private$dl_frictionless) {
                 # Rm any 'datapackage.json' that is in temp dir:
                 dp_path <- fs::path (
                     fs::path_temp (),
@@ -836,7 +840,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
 
+            # This prevents retrieval from updating client metadata with
+            # contents of remote "datapackage.json":
+            private$dl_frictionless <- FALSE
             self <- self$deposit_retrieve (deposit_id)
+            private$dl_frictionless <- TRUE # default
 
             invisible (self)
         },
