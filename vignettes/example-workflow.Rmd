@@ -1,0 +1,199 @@
+---
+title: "Example deposits workflow"
+author: 
+  - "Mark Padgham"
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Example deposits workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set (
+    collapse = TRUE,
+    warning = TRUE,
+    message = TRUE,
+    width = 120,
+    comment = "#>",
+    fig.retina = 2,
+    fig.path = "README-"
+)
+```
+
+This vignette provides an example of a complete deposits workflow, from
+initiation of a deposits client through to data publication.
+
+## Initial Metadata
+
+As described in [the metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html), deposits
+start with metadata describing general aspects of the data being deposited,
+such as descriptions, identification of creators, and any other aspects
+specified in [the deposits metadata JSON
+schema](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
+
+This workflow will use the same "beaver" datasets as [the metadata
+vignette](https://docs.ropensci.org/deposits/articles/metadata.html), from [R's
+"datasets"
+package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html).
+That vignette demonstrated how to use the error messages triggered by
+incorrectly specified metadata to work towards the following specification:
+
+```{r}
+metadata <- list (
+    creator = list (list (name = "P.S. Reynolds")),
+    created = "1994-01-01T00:00:00",
+    title = "Time-series analyses of beaver body temperatures.",
+    description = "Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.",
+    publisher = "John Wiley and Sons",
+    isPartOf = list (list (
+        identifier = "ark:/13960/t0mt2n370",
+        relation = "isPartOf"
+    ))
+)
+```
+
+The "isPartOf" element is a key part of "deposits" metadata, enabling
+individual data sources to be systematically related to other resources, in
+this case to the book first describing these data which has an associated "ark"
+identifier.
+
+Those metadata can then be used to initiate a deposits client with [the `new()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-new),
+demonstrated here with `sandbox = TRUE` to use the Zenodo "sandbox" environment.
+
+```{r client-init, eval = FALSE}
+cli <- depositsClient$new (
+    service = "zenodo",
+    sandbox = TRUE,
+    metadata = metadata
+)
+print (cli)
+#> <deposits client>
+#> deposits service : zenodo
+#>           sandbox: TRUE
+#>         url_base : https://sandbox.zenodo.org/api/
+#> Current deposits : <none>
+#>
+#>   hostdata : <none>
+#>   metadata : 6 terms (see 'metadata' element for details)
+```
+
+The metadata can be edited and extended as desired. The metadata recorded in
+the deposits client can then updated with [the `deposit_fill_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
+
+```{r fill-meta, eval = FALSE}
+cli$deposit_fill_metadata (metadata)
+```
+
+An alternative procedure for updating metadata is described in the following
+section.
+
+## Preparing data sources
+
+The ["beaver"
+data](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html)
+actually comprises two datasets, "beaver1" and "beaver2", each of which is a
+time series of body temperature measurements from an individual beaver. For
+data sources to be uploaded by deposits, they must first exist on a local
+computer, meaning that copies of these beaver datasets must be written to local
+files.
+
+The deposits package presumes that a single deposits lives within a dedicated
+local directory which includes all associated files. Let's start by making a
+temporary directory and storing the "beaver" data there:
+
+```{r make-tempdir}
+beaver_dir <- file.path (tempdir (), "beaver")
+if (!dir.exists (beaver_dir)) {
+    dir.create (beaver_dir)
+}
+bv1 <- file.path (beaver_dir, "beaver1.csv")
+write.csv (datasets::beaver1, bv1, row.names = FALSE)
+bv2 <- file.path (beaver_dir, "beaver2.csv")
+write.csv (datasets::beaver1, bv2, row.names = FALSE)
+```
+
+We can then connect the deposits client with that local directory with [the
+`deposit_add_resource()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-add-resource-):
+
+```{r add_resource, eval = FALSE}
+cli$deposit_add_resource (beaver_dir)
+```
+
+Calling that method also writes a "frictionless" metadata file to the directory:
+
+```{r fake-dp, echo = FALSE}
+write.csv (beaver1, file.path (beaver_dir, "datapackage.json"), row.names = FALSE)
+```
+```{r}
+list.files (beaver_dir)
+```
+
+The "datapackage.json" file 
+
+```{r dp-contents, eval = FALSE}
+dp <- list.files (beaver_dir, pattern = "datapackage", full.names = TRUE)
+readLines (dp) [1:25]
+#>  [1] "{"
+#>  [2] "  \"profile\": \"tabular-data-package\","
+#>  [3] "  \"metadata\": {"
+#>  [4] "    \"created\": \"1994-01-01T00:00:00\","
+#>  [5] "    \"creator\": ["
+#>  [6] "      {"
+#>  [7] "        \"name\": \"P.S. Reynolds\""
+#>  [8] "      }"
+#>  [9] "    ],"
+#> [10] "    \"description\": \"Original source of 'beaver' data, in Chapter 11 of  Lange, N., Ryan, L., Billard, L., Brillinger, D., Conquest, L. and Greenhouse, J. eds (1994) Case Studies in Biometry.\","
+#> [11] "    \"isPartOf\": ["
+#> [12] "      {"
+#> [13] "        \"identifier\": \"ark:/13960/t0mt2n370\","
+#> [14] "        \"relation\": \"isPartOf\""
+#> [15] "      }"
+#> [16] "    ],"
+#> [17] "    \"publisher\": \"John Wiley and Sons\","
+#> [18] "    \"title\": \"Time-series analyses of beaver body temperatures.\""
+#> [19] "  },"
+#> [20] "  \"resources\": ["
+#> [21] "    {"
+#> [22] "      \"name\": \"beaver1\","
+#> [23] "      \"path\": \"beaver1.csv\","
+#> [24] "      \"profile\": \"tabular-data-resource\","
+#> [25] "      \"format\": \"csv\","
+```
+
+And that file contains all of the metadata in JSON format, along with
+"frictionless" metadata describing the structures of the two datasets
+themselves. The deposits metadata are contained within the "metadata" item,
+which frictionless metadata are within the "resources" item. Once a
+frictionless "datapackage.json" file has been generated, any subsequent editing
+of metadata should be done by directly editing that file. Once edited, the
+metadata in the client can then be updated like this:
+
+```{r cli-update-meta, eval = FALSE}
+cli$deposit_fill_metadata (beaver_dir)
+```
+
+The following code demonstrates by first modifying the "description" of that
+file, and then showing that those changes are reflected in the client itself:
+
+```{r metadata-change, eval = FALSE}
+m <- readLines (dp)
+i <- grep ("\"title\"", m)
+m [i] <- gsub ("Time", "Modified time", m [i])
+writeLines (m, dp)
+
+cli$metadata$title # original title
+#> [1] "Time-series analyses of beaver body temperatures."
+cli$deposit_fill_metadata (beaver_dir)
+cli$metadata$title
+#> [1] "Modified time-series analyses of beaver body temperatures."
+```
+
+So local modifications to the metadata in the frictionless "datapackage.json"
+file can be incorporated within the deposits client by calling [the
+`deposit_fill_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-).
