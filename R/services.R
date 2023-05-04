@@ -76,3 +76,14 @@ service_is_deposit_embargboed <- function (hostdata, service) {
 
     return (is_embargoed)
 }
+
+service_md5_field <- function (service) {
+
+    if (service == "zenodo") {
+        ret <- "checksum"
+    } else if (service == "figshare") {
+        ret <- "supplied_md5"
+    }
+
+    return (ret)
+}

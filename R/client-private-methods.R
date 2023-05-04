@@ -134,7 +134,14 @@ depositsClient$set (
     function (path, overwrite, compress) {
 
         name_field <- private$get_file_name_field ()
-        if (md5sums_are_same (path, self$hostdata, name_field, quiet = FALSE)) {
+        chk <- md5sums_are_same (
+            path,
+            self$hostdata,
+            name_field,
+            self$service,
+            quiet = FALSE
+        )
+        if (chk) {
             return (invisible (self))
         }
 

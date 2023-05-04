@@ -76,7 +76,7 @@ service_from_metadata <- function (metadata, service = NULL) {
 
 #' Compare local and remote md5sums to determine whether files differ
 #' @noRd
-md5sums_are_same <- function (path, hostdata, name_field, quiet = FALSE) {
+md5sums_are_same <- function (path, hostdata, name_field, service, quiet = FALSE) {
 
     md5_local <- unname (tools::md5sum (path))
 
@@ -85,7 +85,8 @@ md5sums_are_same <- function (path, hostdata, name_field, quiet = FALSE) {
     host_files <- hostdata$files
     i <- match (path_file, host_files [[name_field]])
     if (length (i) > 0L) {
-        md5_remote <- host_files$checksum [i]
+        md5_field <- service_md5_field (service)
+        md5_remote <- host_files [[md5_field]] [i]
     }
 
     res <- identical (md5_local, md5_remote)
