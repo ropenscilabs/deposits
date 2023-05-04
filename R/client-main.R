@@ -265,6 +265,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             path_resource <- path_resource [which (!path_resource == path_dp)]
 
             if (!fs::file_exists (path_dp)) {
+                if (length (path_resource) == 0L) {
+                    stop (
+                        "'path' must contain at least one resource or file",
+                        call. = FALSE
+                    )
+                }
                 private$generate_frictionless (path_resource [1])
                 private$add_meta_to_dp_json (path)
             } else {

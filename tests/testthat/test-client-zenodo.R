@@ -230,9 +230,16 @@ test_that ("zenodo add_resource", {
     })
 
     path <- fs::path (fs::path_temp (), "data")
-    if (!fs::dir_exists (path)) {
-        fs::dir_create (path)
+    if (fs::dir_exists (path)) {
+        fs::dir_delete (path)
     }
+    fs::dir_create (path)
+
+    expect_error (
+        cli$deposit_add_resource (path),
+        "'path' must contain at least one resource"
+    )
+
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename, row.names = FALSE)
 
