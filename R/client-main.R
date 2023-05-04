@@ -273,6 +273,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
                 private$generate_frictionless (path_resource [1])
                 private$add_meta_to_dp_json (path)
+                path_resource <- path_resource [-1]
+                if (length (path_resource) > 0L) {
+                    for (f in path_resource) {
+                        private$update_frictionless (f, quiet = TRUE)
+                    }
+                }
             } else {
                 quiet <- FALSE
                 for (f in path_resource) {
