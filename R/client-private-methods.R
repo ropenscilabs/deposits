@@ -133,7 +133,7 @@ depositsClient$set (
     "private", "upload_local_file",
     function (path, overwrite, compress) {
 
-        name_field <- private$get_file_name_field ()
+        name_field <- service_filename_field (self$service)
         chk <- md5sums_are_same (
             path,
             self$hostdata,
@@ -238,20 +238,6 @@ compress_local_file <- function (path, compress) {
     return (binfile)
 }
 
-#' @description Get the name of the "files" part of hostdata which contains the
-#' actual names of the files.
-#' @noRd
-depositsClient$set ("private", "get_file_name_field", function () {
-
-    if (self$service == "figshare") {
-        ret <- "name"
-    } else if (self$service == "zenodo") {
-        ret <- "filename"
-    }
-
-    return (ret)
-})
-
 #' @description Get list of files from local or remote hostdata
 #'
 #' @param filename Name of file to be extracted. This is only used to check
@@ -267,7 +253,7 @@ depositsClient$set (
 
         url <- get_service_url (self, deposit_id = deposit_id)
 
-        name_field <- private$get_file_name_field ()
+        name_field <- service_filename_field (self$service)
 
         if (filename %in% self$hostdata$files [[name_field]]) {
 
@@ -416,7 +402,7 @@ depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
             private$metadata_service <- metadata$service
 
             files <- self$hostdata$files
-            file_names <- files [[private$get_file_name_field ()]]
+            file_names <- files [[service_filename_field (self$service)]]
 
             if (private$frictionless_json_name %in% file_names &&
                 fs::file_exists (meta_source) || fs::dir_exists (meta_source)) {

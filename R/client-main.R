@@ -429,7 +429,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
-            name_field <- private$get_file_name_field ()
+            name_field <- service_filename_field (self$service)
 
             files <- private$get_hostdata_files (deposit_id, filename)
 
@@ -732,7 +732,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$service,
                 self$hostdata,
                 private$frictionless_json_name,
-                private$get_file_name_field ()
+                service_filename_field (self$service)
             )
 
             if (!has_frictionless) {
@@ -873,7 +873,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!path_is_local) {
 
-                name_field <- private$get_file_name_field ()
+                name_field <- service_filename_field (self$service)
                 if (!private$frictionless_json_name %in%
                     self$hostdata$files [[name_field]]) {
                     stop (

@@ -82,7 +82,7 @@ depositsClient$set (
 
         # -------- Ensure local "datapackage.json" is up to date
         files <- self$hostdata$files
-        file_names <- files [[private$get_file_name_field ()]]
+        file_names <- files [[service_filename_field (self$service)]]
 
         local_dp_check <- ensure_latest_local_dpsjon (
             self,
