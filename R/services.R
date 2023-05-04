@@ -87,3 +87,17 @@ service_md5_field <- function (service) {
 
     return (ret)
 }
+
+#' @description Get the name of the "files" part of hostdata which contains the
+#' actual names of the files.
+#' @noRd
+service_filename_field <- function (service) {
+
+    if (service == "figshare") {
+        ret <- "name"
+    } else if (service == "zenodo") {
+        ret <- "filename"
+    }
+
+    return (ret)
+}

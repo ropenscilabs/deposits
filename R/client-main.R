@@ -1012,7 +1012,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                     self <- private$update_frictionless (
                         f,
-                        overwrite = overwrite
+                        overwrite = TRUE # To force updates after new resources added.
                     )
                 }
             }

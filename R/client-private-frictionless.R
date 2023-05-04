@@ -214,18 +214,6 @@ ensure_latest_local_dpsjon <- function (cli, file_names,
     mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
     dp_remote <- ""
 
-    # figshare does not allow private downloads, so can only check this on other
-    # services:
-    if (frictionless_json_name %in% file_names &&
-        cli$service != "figshare" && !is_deposits_test_env ()) {
-        dp_remote <- cli$deposit_download_file (
-            cli$deposit_id,
-            filename = frictionless_json_name,
-            path = fs::path_temp ()
-        )
-        mtime_remote <- fs::file_info (dp_remote)$modification_time
-    }
-
     path_dir <- fs::path_dir (path)
     dp_local <- fs::path (path_dir, frictionless_json_name)
     has_dpj <- fs::file_exists (dp_local)
@@ -233,11 +221,33 @@ ensure_latest_local_dpsjon <- function (cli, file_names,
         mtime_local <- fs::file_info (dp_local)$modification_time
     }
 
+    if (frictionless_json_name %in% file_names && !is_deposits_test_env ()) {
+
+        name_field <- service_filename_field (cli$service)
+        same_md5 <- md5sums_are_same (dp_local, cli$hostdata, name_field, cli$service, quiet = TRUE)
+
+        if (same_md5) {
+
+            mtime_remote <- mtime_local
+
+        } else if (cli$service != "figshare") {
+
+            # figshare does not allow private downloads, so can only check this
+            # on other services:
+            dp_remote <- cli$deposit_download_file (
+                cli$deposit_id,
+                filename = frictionless_json_name,
+                path = fs::path_temp ()
+            )
+            mtime_remote <- fs::file_info (dp_remote)$modification_time
+        }
+    }
+
     update_remote <- FALSE
     if (mtime_remote > mtime_local) {
         dp <- dp_remote
     } else {
-        update_remote <- TRUE
+        update_remote <- mtime_local > mtime_remote
         dp <- dp_local
     }
 
