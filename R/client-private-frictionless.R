@@ -70,7 +70,7 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
 #' version with the latest mtime, and if updated at all, uploads it once again
 #' to the remote service, as well as updating any local copy that exists.
 #'
-#' @param path Path to local file that was uploaded.
+#' @param path Full path to local "datapackage.json" file.
 #' @param overwrite Inherited from `upload_local_file`
 #' @noRd
 

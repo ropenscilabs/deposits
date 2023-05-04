@@ -133,23 +133,8 @@ depositsClient$set (
     "private", "upload_local_file",
     function (path, overwrite, compress) {
 
-        md5_local <- unname (tools::md5sum (path))
-
-        md5_remote <- path
-        path_file <- fs::path_file (path)
         name_field <- private$get_file_name_field ()
-        host_files <- self$hostdata$files
-        i <- match (path_file, host_files [[private$get_file_name_field ()]])
-        if (length (i) > 0L) {
-            md5_remote <- host_files$checksum [i]
-        }
-
-        if (identical (md5_local, md5_remote)) {
-            message (
-                "File at [",
-                path,
-                "] is identical on host and will not be uploaded."
-            )
+        if (md5sums_are_same (path, self$hostdata, name_field, quiet = FALSE)) {
             return (invisible (self))
         }
 

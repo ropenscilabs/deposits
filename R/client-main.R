@@ -1010,11 +1010,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                         overwrite,
                         compress
                     )
+                    self <- private$update_frictionless (
+                        f,
+                        overwrite = overwrite
+                    )
                 }
-                self <- private$update_frictionless (
-                    f,
-                    overwrite = overwrite
-                )
             }
 
             # client metadata is then stored in "datapackage.json", so no longer
