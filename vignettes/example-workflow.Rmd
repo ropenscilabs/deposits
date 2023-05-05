@@ -326,3 +326,44 @@ print (hf)
 compression often offers little advantage for small files. The advantages for
 large files can nevertheless be considerable, and compression is generally
 recommended.)
+
+### Editing and updating files
+
+The [`deposit_upload_file()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
+can also be used to update files if they have been locally modified. This
+requires setting an additional parameter of `overwrite = TRUE`, to force the
+versions stored on the host service to be overwritten. Attempting to update
+files by passing the `path` parameter only will pass the default `overwrite =
+FALSE`, and will generate an error that the file already exists and will not be
+overwritten.
+
+## Publishing a deposit
+
+The final steps of publishing a deposit, potentially along with an embargo
+date, are described in [the main
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html), but
+copied here for completeness.
+
+Once all metadata and data have been satisfactorily edited, updated, and
+uploaded, a deposit can be made publicly visible and permanently associated a
+Digital Object Identifier (DOI) by publishing it. Prior to publishing, it is
+often desired to apply an "embargo" to the deposit, in the form of a date after
+which the deposit will become publicly visible. The two steps to publication
+are thus generally:
+
+```{r publish, eval = FALSE}
+cli$deposit_embargo (embargo_date = "2030-03-30")
+cli$deposit_publish ()
+```
+
+Calling [the `deposit_publish()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-publish-)
+is irreversible, and can never be undone. The published deposit will be
+permanently associated with the account of the user who published it, as
+identified by [the API token used to initiate the deposits
+client](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens).
+Publication will also change many items of the client's "hostdata", notably
+involving a change of status or visibility from "private" to "public". Once a
+deposit has been published, the associated DOI, or equivalent the URL given in
+the deposits client, may be shared as a permanent link to the deposit.
