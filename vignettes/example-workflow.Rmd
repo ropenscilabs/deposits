@@ -309,7 +309,7 @@ cli$deposit_upload_file (beaver_dir, compress = "tar")
 #> Follow applicable norms or requirements to credit the dataset and its authors.
 cli$hostdata$files [, 1:3]
 ```
-```{r hostfiles, echo = FALSE}
+```{r hostfiles-compressed, echo = FALSE}
 hf <- data.frame (
     checksum = c (
         "03dd72dacab515750494745e17e4f37c",
