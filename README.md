@@ -19,6 +19,11 @@ vignette](https://docs.ropensci.org/deposits/articles/install-setup.html).
 This README gives a brief overview of package usage, with more detail in
 [the introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
+For those who prefer to jump straight in to a workflow, there is also [a
+deposits
+workflow](https://docs.ropensci.org/deposits/articles/example-workflow.html)
+vignette demonstrating a full workflow from data generation and
+documentation to publication.
 
 ## Data Repositories
 
@@ -59,7 +64,9 @@ use the `deposits` package without frictionless metadata.
 
 This section gives a brief overview of the deposits workflow. A more
 complete description is given in the [main package
-vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html),
+and demonstrated step-by-step in [the workflow
+vignette](https://docs.ropensci.org/deposits/articles/example-workflow.html).
 The `deposits` package uses [the `R6`
 package](https://github.com/r-lib/R6) to create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
@@ -80,8 +87,8 @@ print (cli)
 ```
 
 The upper section of information shown by printing the client describes
-information on the client in general, and aspects of the nominated
-service associated with the user (identified through the token, as
+general information, and aspects of the specified service, and the
+profile of the user (identified through the locally-stored token, as
 described in [the “Installation and Setup”
 vignette](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens)).
 The lower section contains information on the current deposit held
@@ -194,8 +201,9 @@ metadata <- list (
 )
 ```
 
-These data can be used in construction of a new client by passing a
-`metadata` argument:
+The “creator” field is a list-of-lists, to allow individual creator
+entries to have multiple fields in addition to “name”. These data can be
+used in construction of a new client by passing a `metadata` argument:
 
 ``` r
 cli <- depositsClient$new (
