@@ -38,11 +38,24 @@ page (or `?beaver1` to see a local version):
 library (deposits)
 ```
 
+## Dublin Core Metadata
+
+The metadata structure used by deposits follows the specifications of the
+[Dublin Core Metadata
+Initiative](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
+Users do not need to understand or read any documents on the DCMI structure, as
+the implementation is explicitly contained within [the package's
+"dc/schema.json"
+file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json),
+which should be the only document needed to understand metadata compliance. The
+above link to the DCMI specifications may nevertheless be useful for anyone
+wishing to understand individual terms in a broader context.
+
 ## Metadata Validation
 
 Metadata in `deposits` are validated against [JSON
 schemas](https://json-schema.org), with the schema for the main "metadata"
-field described in [the package's "dc/schema.json"
+field contained in [the package's "dc/schema.json"
 file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
 This schema file includes detailed specifications for every metadata term used
 in `deposits`. The list of terms can also be viewed directly with [the
@@ -128,8 +141,7 @@ stop (
 ```
 
 The first messages say that the "creator" property "must be array". Arrays in
-JSON are `list` objects in R, so this indicates the first required
-modification:
+JSON are `list` objects in R, so this suggests the next required modification:
 
 ```{r meta-validation3, eval = FALSE}
 metadata <- list (
@@ -162,8 +174,9 @@ stop (
 )
 ```
 
-The "creator" field must now an "object." R being the relatively simply
-language that it is, "objects" are also `list`s, leading us to:
+The items within the "creator" field must now be of type "object." R being the
+relatively simply language that it is, "objects" are also `list`s, leading us
+to:
 
 ```{r meta-validation4, eval = FALSE}
 metadata <- list (
@@ -196,13 +209,15 @@ stop (
 )
 ```
 
-And that generates the same error. For any instances in which the error
-messages themselves are not helpful, it is useful to refer to the [actual JSON
+And that generates the same error. Looking a bit further in the error output
+reveals that the object has a "required" property of "name". More generally,
+for any instances in which the error messages themselves are not helpful, it is
+useful to refer to the [actual JSON
 schema](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json)
 (or a local version). The "creator" field expected for the Zenodo service can
 then be seen to accept the properties, "name", "affiliation", "orcid", and
-"gnd". This is also indicated in the error message, which lists "name" in the
-"required" field.
+"gnd", with the "name" property being required, as indicated by the error
+message.
 
 ```{r meta-validation5, eval = FALSE}
 metadata <- list (
@@ -312,6 +327,11 @@ metadata <- list (
 cli$deposit_fill_metadata (metadata)
 ```
 
+That metadata is then finally in a valid format for the Zenodo service. An
+instructive exercise is to change the service to "figshare", and use the
+resultant error messages to tweak the metadata to the expected format for a
+Figshare deposit.
+
 
 ### Metadata to specify connections between deposits
 
@@ -347,8 +367,8 @@ cli$deposit_fill_metadata (metadata)
 ```
 
 While those metadata are successfully validated, attempting to create that
-deposit on Zenodo would trigger and error, because the "identifier" must
-conform to an expected type. The JSON schema should as always be considered the
+deposit on Zenodo would trigger an error, because the "identifier" must conform
+to an expected type. The JSON schema should as always be considered the
 definitive reference, and that states for "identifier" that:
 
 > "Supported identifiers include: DOI, Handle, ARK, PURL, ISSN, ISBN, PubMed ID, PubMed Central ID, ADS Bibliographic Code, arXiv, Life Science Identifiers (LSID), EAN-13, ISTC, URNs and URLs."
@@ -430,7 +450,15 @@ An alternative way to enter metadata into a `deposits` client is via a local
 JSON metadata file. `depostis` includes the function,
 [`deposits_metadata_template()`](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html),
 which generates a local version of a complete template for all allowed metadata
-fields.
+fields. Note that deposits workflows are generally expected to use metadata
+templates defined as part of [a "frictionless"
+workflow](https://frictionlessdata.io), as described in detail in the
+accompanying [frictionless
+vignette](https://docs.ropensci.org/deposits/articles/frictionless.html). The 
+[`deposits_metadata_template()`](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html)
+is intended more for demonstration purposes, while a full frictionless template
+is generally preferred. The format of deposits metadata nevertheless remains
+the same in both.
 
 ```{r}
 f <- fs::file_temp (ext = ".json")
@@ -589,9 +617,9 @@ changes you may wish to make to those metadata should be made by directly
 editing that file, and `deposits` will update all corresponding local and
 remote records.
 
-To restart an R session and connect to a local deposit, simply pass the path to
-the local directory containing deposit data and a "datapackage.json" file to
-the `new()` method:
+After restarting an R session, a deposits client can be connected to  a local
+deposit by passing the path to the local directory containing deposit data and
+a "datapackage.json" file as the "metadata" parameter of the `new()` method:
 
 ```{r frictionless-start1, eval = FALSE}
 cli <- depositsClient$new (
