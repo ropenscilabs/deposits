@@ -392,6 +392,18 @@ test_that ("zenodo update", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 
+    # Modify local metadata:
+    cli$metadata$title <- "Modified Title"
+    # This should generate a warning that metadata differs, but error comes
+    # first. Warning can't be generated in test env because of reasons explained
+    # below.
+    expect_error (
+        with_mock_dir ("zen_update_dp", {
+            cli$deposit_update (path = path)
+        }),
+        "Local file \\[datapackage\\.json\\] does not exist on remote"
+    )
+
     # Modify local "datapackage.json":
     f <- fs::path (path, "datapackage.json")
     x <- readLines (f)
