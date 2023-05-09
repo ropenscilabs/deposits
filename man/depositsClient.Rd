@@ -642,8 +642,8 @@ Update a remote (online) deposit with local metadata.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
-specified, the 'id' value of current deposits client is used.}
+\item{\code{deposit_id}}{(Optional) The 'id' number of deposit to update. If
+not specified, the 'id' value of current deposits client is used.}
 }
 \if{html}{\out{</div>}}
 }

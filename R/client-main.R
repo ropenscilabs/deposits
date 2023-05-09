@@ -47,9 +47,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         # @field term_map (data.frame) Map between DCMI and deposit terms for
         # specified host service.
         term_map = NULL,
-        #' @field dl_frictionless (logical) Used to control whether remote
-        #' ":datapackage.json" should be downloaded and used to update client
-        #' metadata.
+        # @field dl_frictionless (logical) Used to control whether remote
+        # ":datapackage.json" should be downloaded and used to update client
+        # metadata.
         dl_frictionless = TRUE
 
         # ... other private methods in R/client-private-methods.R
@@ -584,7 +584,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 httptest2_hostdata_timestamps (metadata$service, self$service)
             private$metadata_service <- metadata$service
             if (gsub ("\\-sandbox$", "", self$service) == "zenodo") {
-                private$metadata_service$metadata$prereserve_doi <- prereserve_doi
+                private$metadata_service$metadata$prereserve_doi <-
+                    prereserve_doi
             }
 
             # Insert 'self$metadata' into host parameter (#65):
@@ -809,8 +810,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Update a remote (online) deposit with local metadata.
-        #' @param deposit_id The 'id' number of deposit to update. If not
-        #' specified, the 'id' value of current deposits client is used.
+        #' @param deposit_id (Optional) The 'id' number of deposit to update. If
+        #' not specified, the 'id' value of current deposits client is used.
         #' @return (Invisibly) Updated deposits client.
 
         deposit_update = function (deposit_id = NULL) {
@@ -1012,7 +1013,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                     self <- private$update_frictionless (
                         f,
-                        overwrite = TRUE # To force updates after new resources added.
+                        overwrite = TRUE
+                        # force updates after new resources added.
                     )
                 }
             }
