@@ -309,9 +309,21 @@ test_that ("figshare update datapackage", {
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
 
-    dep <- with_mock_dir ("fs_up", {
+    cli <- with_mock_dir ("fs_up", {
         cli$deposit_upload_file (filename, deposit_id)
     })
+
+    # Modify local metadata:
+    cli$metadata$title <- "Modified Title"
+    # This should generate a warning that metadata differs, but error comes
+    # first. Warning can't be generated in test env because of reasons explained
+    # below.
+    expect_error (
+        with_mock_dir ("fs_update_dp1", {
+            cli$deposit_update (path = path)
+        }),
+        "Local file \\[datapackage\\.json\\] does not exist on remote"
+    )
 
     # Modify local "datapackage.json":
     f <- fs::path (path, "datapackage.json")
@@ -332,7 +344,7 @@ test_that ("figshare update datapackage", {
     #     cli$deposit_update (path = path)
     # })
     expect_error (
-        with_mock_dir ("fs_update2", {
+        with_mock_dir ("fs_update_dp2", {
             cli$deposit_update (path = path)
         }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"

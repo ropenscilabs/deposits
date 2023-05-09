@@ -1,32 +1,32 @@
 {
     "files": [
         {
-            "upload_token": "92c7f90e-f13a-41ef-83cc-b45b2c631dba",
+            "upload_token": "8818fc26-1573-4b40-8436-6da03d710ea5",
             "upload_url": "",
             "status": "available",
-            "preview_state": "preview_in_progress",
-            "viewer_type": "",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
             "is_attached_to_public_version": false,
-            "id": 40497149,
+            "id": 40497509,
             "name": "data.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/40497149",
+            "download_url": "https://ndownloader.figshare.com/files/40497509",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         },
         {
-            "upload_token": "cfd77fd7-7062-4673-9733-aa5a24c8a302",
+            "upload_token": "dea7fdfd-4b68-47ef-a25b-0de40b7b677c",
             "upload_url": "",
             "status": "available",
-            "preview_state": "preview_in_progress",
-            "viewer_type": "",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
             "is_attached_to_public_version": false,
-            "id": 40497155,
+            "id": 40497512,
             "name": "data2.csv",
             "size": 625,
             "is_link_only": false,
-            "download_url": "https://ndownloader.figshare.com/files/40497155",
+            "download_url": "https://ndownloader.figshare.com/files/40497512",
             "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
             "computed_md5": "cc624d72ede85ef061afa494d9951f6f"
         }
@@ -54,7 +54,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/22788494",
+    "figshare_url": "https://figshare.com/articles/dataset/_/22788767",
     "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description\\n\\n## version\\n1.0",
     "funding": null,
     "funding_list": [
@@ -87,7 +87,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Person, A.; Person, B. (2023): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22788494",
+    "citation": "Person, A.; Person, B. (2023): New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/22788767",
     "is_embargoed": false,
     "embargo_date": null,
     "embargo_type": null,
@@ -96,20 +96,20 @@
     "embargo_options": [
 
     ],
-    "id": 22788494,
+    "id": 22788767,
     "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/22788494",
+    "url": "api/articles/22788767",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/22788494",
-    "url_public_api": "api/articles/22788494",
-    "url_private_html": "https://figshare.com/account/articles/22788494",
-    "url_public_html": "https://figshare.com/articles/dataset/_/22788494",
+    "url_private_api": "api/articles/22788767",
+    "url_public_api": "api/articles/22788767",
+    "url_private_html": "https://figshare.com/account/articles/22788767",
+    "url_public_html": "https://figshare.com/articles/dataset/_/22788767",
     "timeline": {
 
     }
