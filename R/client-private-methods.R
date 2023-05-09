@@ -133,12 +133,21 @@ depositsClient$set (
     "private", "upload_local_file",
     function (path, overwrite, compress) {
 
+        if (compress != "no") {
+            path_old <- path
+            path <- compress_local_file (path, compress)
+        }
+
         name_field <- service_filename_field (self$service)
+        current_files <- self$hostdata$files [[name_field]]
+        file_exists <- fs::path_file (path) %in% current_files
+
         chk <- md5sums_are_same (
             path,
             self$hostdata,
             name_field,
             self$service,
+            file_exists = file_exists,
             quiet = FALSE
         )
         if (chk) {
@@ -146,11 +155,6 @@ depositsClient$set (
         }
 
         url <- get_service_url (self)
-
-        if (compress != "no") {
-            path_old <- path
-            path <- compress_local_file (path, compress)
-        }
 
         if (self$service == "figshare") {
 
@@ -211,6 +215,53 @@ depositsClient$set (
         }
 
         invisible (self)
+    }
+)
+
+#' @description Update remote files with modified versions of local files.
+#' @noRd
+
+depositsClient$set (
+    "private", "update_files",
+    function (path) {
+
+        name_field <- service_filename_field (self$service)
+        files <- self$hostdata$files [[name_field]]
+        files_no_ext <- fs::path_ext_remove (files)
+
+        flocal <- fs::path_abs (path)
+        if (fs::is_dir (path)) {
+            flocal <- fs::dir_ls (path)
+        }
+
+        for (f in flocal) {
+            f_base <- fs::path_file (f)
+            f_ext <- fs::path_ext (f_base)
+            f_no_ext <- fs::path_ext_remove (f_base)
+            while (grepl ("\\.", f_no_ext)) { # rm both ".tar.gz":
+                f_no_ext <- fs::path_ext_remove (f_no_ext)
+            }
+
+            if (!f_no_ext %in% files_no_ext) {
+                stop (
+                    "Local file [",
+                    f_base,
+                    "] does not exist on remote deposit. ",
+                    "Please use 'deposit_upload_file()' to first upload file.",
+                    call. = FALSE
+                )
+            }
+
+            if (f_ext == "gz") {
+                compress <- "tar"
+            } else if (f_ext == "zip") {
+                compress <- "zip"
+            } else {
+                compress <- "no"
+            }
+
+            private$upload_local_file (f, overwrite = TRUE, compress = compress)
+        }
     }
 )
 

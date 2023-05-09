@@ -810,11 +810,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         #' @description Update a remote (online) deposit with local metadata.
+        #'
         #' @param deposit_id (Optional) The 'id' number of deposit to update. If
         #' not specified, the 'id' value of current deposits client is used.
+        #' @param path (Optional) If given as path to single file, update that
+        #' file on remote service. If given as a directory, update all files
+        #' within that directory on remote service. Only files for which local
+        #' versions have been changed will be uploaded.
         #' @return (Invisibly) Updated deposits client.
 
-        deposit_update = function (deposit_id = NULL) {
+        deposit_update = function (deposit_id = NULL, path = NULL) {
 
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
@@ -825,6 +830,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
             req$headers <- c (req$headers, "Content-Type" = "application/json")
+
+            if (!is.null (path) && (fs::is_dir (path) ||
+                fs::path_file (path) == private$frictionless_json_name)) {
+
+                self$deposit_fill_metadata (metadata = path)
+            }
 
             # Re-generate service metadata:
             metadata_service <- validate_metadata (
@@ -840,6 +851,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
+
+            if (!is.null (path)) {
+                private$update_files (path)
+            }
 
             # This prevents retrieval from updating client metadata with
             # contents of remote "datapackage.json":

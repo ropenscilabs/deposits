@@ -80,6 +80,7 @@ md5sums_are_same <- function (path,
                               hostdata,
                               name_field,
                               service,
+                              file_exists = FALSE,
                               quiet = FALSE) {
 
     md5_local <- unname (tools::md5sum (path))
@@ -102,7 +103,7 @@ md5sums_are_same <- function (path,
                 path,
                 "] is identical on host and will not be uploaded."
             )
-        } else {
+        } else if (file_exists) {
             message (
                 "Local file at [",
                 path,

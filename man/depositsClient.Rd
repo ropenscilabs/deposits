@@ -636,7 +636,7 @@ package.}
 \subsection{Method \code{deposit_update()}}{
 Update a remote (online) deposit with local metadata.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -644,6 +644,11 @@ Update a remote (online) deposit with local metadata.
 \describe{
 \item{\code{deposit_id}}{(Optional) The 'id' number of deposit to update. If
 not specified, the 'id' value of current deposits client is used.}
+
+\item{\code{path}}{(Optional) If given as path to single file, update that
+file on remote service. If given as a directory, update all files
+within that directory on remote service. Only files for which local
+versions have been changed will be uploaded.}
 }
 \if{html}{\out{</div>}}
 }
