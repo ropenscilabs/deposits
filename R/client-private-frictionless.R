@@ -84,7 +84,7 @@ depositsClient$set (
         files <- self$hostdata$files
         file_names <- files [[service_filename_field (self$service)]]
 
-        local_dp_check <- ensure_latest_local_dpsjon (
+        local_dp_check <- ensure_latest_local_dpjson (
             self,
             file_names,
             path,
@@ -208,7 +208,7 @@ depositsClient$set (
 #' Used only to call the 'deposit_download_file' method to download the
 #' 'datapackage.json' file.
 #' @noRd
-ensure_latest_local_dpsjon <- function (cli, file_names,
+ensure_latest_local_dpjson <- function (cli, file_names,
                                         path, frictionless_json_name) {
 
     mtime_remote <- mtime_local <- strftime ("1900-01-01 00:00:00")
