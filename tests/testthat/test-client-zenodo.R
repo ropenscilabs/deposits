@@ -374,6 +374,52 @@ test_that ("zenodo download", {
     )
 })
 
+# The previous update tests were updating in response to changes to internal
+# client metadata. This tests updating in response to changes in external
+# "datapackage.json" file.
+test_that ("zenodo update", {
+
+    service <- "zenodo"
+    cli <- new_mock_deposit (service = service)
+    deposit_id <- cli$id
+
+    path <- fs::path (fs::path_temp (), "data")
+    fs::dir_create (path)
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename)
+
+    cli <- with_mock_dir ("zen_up", {
+        cli$deposit_upload_file (path = filename) # deposit_id from cli$id
+    })
+
+    # Modify local "datapackage.json":
+    f <- fs::path (path, "datapackage.json")
+    x <- readLines (f)
+    i <- grep ("Original\\ssource", x)
+    x [i] <- gsub ("Original\\ssource", "A description", x [i])
+    i <- grep ("Time\\-series\\sanalyses", x)
+    x [i] <- gsub (
+        "Time\\-series\\sanalyses\\sof\\sbeaver\\sbody\\stemperatures",
+        "New Title",
+        x [i]
+    )
+    writeLines (x, f)
+
+    # ----- NOTE -----
+    # This can't be tested at present, because the "datapackage.json" files can
+    # not be uploaded in test environments, as explained in comment in private
+    # "update_frictionless" method. That means that attempting to update
+    # triggers an error that file does not exist on remote deposit.
+
+    # cli <- with_mock_dir ("zen_update_dp", {
+    #     cli$deposit_update (path = path)
+    # })
+    expect_error (
+        cli$deposit_update (path = path),
+        "Local file \\[datapackage\\.json\\] does not exist on remote"
+    )
+})
+
 test_that ("zenodo update frictionless", {
 
     service <- "zenodo"

@@ -183,10 +183,14 @@ depositsClient$set (
             )
         }
 
-        # httptest2 does not produce mocked download files; only the actual
-        # request result. So these files can not be uploaded here.
+        # Upload frictionless if it has changed.
+        #
+        # This re-upload of the same resource can not be mocked with httptest2,
+        # because it can only expect same mocked upload, so all upload of
+        # "datapackage.json" is switched off in test environments.
         if (update_remote && !is.null (self$id) &&
             !is.null (self$url_service) && !is_deposits_test_env ()) {
+
             self <- private$upload_local_file (
                 local_dp_check$dp,
                 overwrite = overwrite,
