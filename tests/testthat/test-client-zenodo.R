@@ -415,7 +415,9 @@ test_that ("zenodo update", {
     #     cli$deposit_update (path = path)
     # })
     expect_error (
-        cli$deposit_update (path = path),
+        with_mock_dir ("zen_update_dp", {
+            cli$deposit_update (path = path)
+        }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"
     )
 })
