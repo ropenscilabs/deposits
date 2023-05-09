@@ -862,6 +862,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             self <- self$deposit_retrieve (deposit_id)
             private$dl_frictionless <- TRUE # default
 
+            if (!is.null (path)) {
+                private$compare_dpjson_to_meta (path)
+            }
+
             invisible (self)
         },
 

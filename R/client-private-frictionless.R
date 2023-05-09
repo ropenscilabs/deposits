@@ -206,6 +206,45 @@ depositsClient$set (
     }
 )
 
+#' @description Compare internal metadata with contents of local
+#' "datapackage.json" file.
+#'
+#' @param path Full path to local "datapackage.json" file, or directory holding
+#' that file.
+#' @noRd
+
+depositsClient$set ("private", "compare_dpjson_to_meta", function (path) {
+
+    if (fs::is_file (path)) {
+        path <- fs::path_dir (path)
+    }
+    path_json <- fs::path (path, private$frictionless_json_name)
+    if (!fs::file_exists (path_json)) {
+        return (invisible (client))
+    }
+
+    op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
+    suppressMessages (
+        p <- frictionless::read_package (path_json)
+    )
+    options (op)
+
+    dp_meta <- p$metadata [order (names (p$metadata))]
+    cli_meta <- self$metadata [order (names (self$metadata))]
+
+    if (!identical (dp_meta, cli_meta)) {
+        warning (
+            "Metadata in client differs from values in '",
+            path_json,
+            "'\nPlease update that file and call\n> ",
+            "cli$deposit_update(path = ",
+            path_json,
+            ")",
+            call. = FALSE
+        )
+    }
+})
+
 #' Ensure local 'datapacakge.json' is up to date.
 #'
 #' @param cli Client, which is 'self' in the private method which calls this.
