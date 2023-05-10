@@ -211,7 +211,6 @@ by-passed when this parameter if \code{FALSE}.}
 \item \href{#method-depositsClient-deposit_retrieve}{\code{depositsClient$deposit_retrieve()}}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
-\item \href{#method-depositsClient-deposit_update_frictionless}{\code{depositsClient$deposit_update_frictionless()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
 \item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
 \item \href{#method-depositsClient-deposits_methods}{\code{depositsClient$deposits_methods()}}
@@ -649,36 +648,6 @@ not specified, the 'id' value of current deposits client is used.}
 file on remote service. If given as a directory, update all files
 within that directory on remote service. Only files for which local
 versions have been changed will be uploaded.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-(Invisibly) Updated deposits client.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-depositsClient-deposit_update_frictionless"></a>}}
-\if{latex}{\out{\hypertarget{method-depositsClient-deposit_update_frictionless}{}}}
-\subsection{Method \code{deposit_update_frictionless()}}{
-Update both local and remote "datapackage.json" files
-with contents of client metadata. This function is intended to be
-used when client itself is used to update metadata, in order for any
-local changes to be propagated through to the \pkg{frictionless}
-"datapackage.json" file(s).
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_update_frictionless(deposit_id = NULL, path = NULL)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deposit_id}}{The 'id' number of deposit to update. If not
-specified, the 'id' value of current deposits client is used.}
-
-\item{\code{path}}{(Optional) path to local directory containing deposit
-data and a \pkg{frictionless} "datapackage.json" file. If specified,
-that local "datapackage.json" will be updated, and the updated
-version then uploaded to the deposits service.}
 }
 \if{html}{\out{</div>}}
 }

@@ -30,7 +30,6 @@
          - deposit_retrieve
          - deposit_service
          - deposit_update
-         - deposit_update_frictionless
          - deposit_upload_file
          - deposits_list
          - deposits_methods
@@ -86,7 +85,6 @@
          - deposit_retrieve
          - deposit_service
          - deposit_update
-         - deposit_update_frictionless
          - deposit_upload_file
          - deposits_list
          - deposits_methods
