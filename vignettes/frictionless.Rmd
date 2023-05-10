@@ -196,39 +196,23 @@ vignette](https://docs.ropensci.org/deposits/articles/metadata.html).
 
 ## Updating "datapackage.json" on deposits service
 
-The remote version of the "datapackage.json" file can be updated by uploading
-it with [the `deposit_upload_file()`
-function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-),
-passing the full path to that file.
+Any changes to a local "datapackage.json" file can be imported into a deposits
+client with [the `deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-),
+which will also update the remote version of the "datapackage.json" file held
+on the deposits service. The `path` argument passed to that method can either
+be the path to the entire data directly, in which case all files which have
+been modified will be uploaded, or it can specify the path to the single
+"datapackage.json" file, in which case only that file will be uploaded,
+regardless of any local modifications to other files.
 
 ```{r upload-datapackage, eval = FALSE}
-cli$deposit_upload_file (path = path, overwrite = TRUE)
+cli$deposit_update (path = dirname (path))
+#> Local file at [/tmp/Rtmp5QfAEc/data/beaver1.csv] is identical on host and will not be uploaded.
+#> Local file at [/tmp/Rtmp5QfAEc/data/datapackage.json] has changed and will now be uploaded.
 ```
 
-Without explicitly setting `overwrite = TRUE`, the existing version will not be
-overwritten, and running that line will generate an error.
-
-## Using deposits client to edit frictionless metadata
-
-The local and remote "datapackage.json" files may be updated to the current
-state of a `deposits` client with [the `deposit_update_frictionless()`
-method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_update_frictionless).
-This method accepts the optional parameter, `path`, of the directory to local
-data and "datapackage.json" files. Calling the method will then update both
-local and remote versions of "datapackage.json" to include all changes to
-client metadata.
-
-```{r update-frictionless, eval = FALSE}
-cli$deposit_update_frictionless (path = dirname (path))
-```
-
-Both local and remote versions will then include the additional "description"
-in their "metadata" items.
-
-For demonstration purposes, the metadata in a `deposits` client may also be
-directly edited and updated. For example, the metadata shown above may be
-modified like this:
-
-```{r extend-client-metadata, eval = FALSE}
-cli$metadata$description <- "A description"
-```
+Calling that method will update both the "metadata" and "hostdata" elements of
+the deposits client to reflect any changes made to the "datapackage.json" file,
+and will also update the remote version of that file, as indicated in the
+messages produced by calling that method.
