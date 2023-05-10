@@ -46,10 +46,10 @@ Initiative](https://www.dublincore.org/specifications/dublin-core/dcmi-terms/).
 Users do not need to understand or read any documents on the DCMI structure, as
 the implementation is explicitly contained within [the package's
 "dc/schema.json"
-file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json),
-which should be the only document needed to understand metadata compliance. The
-above link to the DCMI specifications may nevertheless be useful for anyone
-wishing to understand individual terms in a broader context.
+file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
+That file should be the only document needed to understand metadata compliance
+for deposits. It may nevertheless be instructive to examine  the DCMI
+specifications, in order to understand individual terms in a broader context.
 
 ## Metadata Validation
 
