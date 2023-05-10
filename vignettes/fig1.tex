@@ -24,7 +24,16 @@
                     raise=0.8ex,
                     text along path,
                     text align=center,
-                    text={|\sffamily\scriptsize|fill metadata}
+                    text={|\sffamily\scriptsize|fill{\_}metadata}
+                }
+            },
+            postaction={
+                decorate,
+                decoration={
+                    raise=-1.5ex,
+                    text along path,
+                    text align=center,
+                    text={|\sffamily\scriptsize|update}
                 }
             },
             transform canvas={xshift=-4mm}
@@ -99,7 +108,7 @@
                     raise=-1.5ex,
                     text along path,
                     text align=center,
-                    text={|\sffamily\scriptsize|upload{\_}file}
+                    text={|\sffamily\scriptsize|upload{\_}file, update}
                 }
             },
             transform canvas={xshift=-6mm}
