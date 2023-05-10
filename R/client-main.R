@@ -824,12 +824,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
             }
-            checkmate::assert_int (deposit_id)
+            if (!is.null (deposit_id)) {
+                checkmate::assert_int (deposit_id)
 
-            url <- get_service_url (self, deposit_id = deposit_id)
+                url <- get_service_url (self, deposit_id = deposit_id)
 
-            req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
-            req$headers <- c (req$headers, "Content-Type" = "application/json")
+                req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
+                req$headers <- c (req$headers, "Content-Type" = "application/json")
+            }
 
             if (!is.null (path) && (fs::is_dir (path) ||
                 fs::path_file (path) == private$frictionless_json_name)) {
@@ -847,23 +849,31 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             metadata_service <-
                 httptest2_hostdata_timestamps (metadata_service, self$service)
 
-            req <- httr2::req_body_json (req, data = metadata_service)
+            if (!is.null (deposit_id)) {
 
-            resp <- httr2::req_perform (req)
-            httr2::resp_check_status (resp)
+                req <- httr2::req_body_json (req, data = metadata_service)
 
-            if (!is.null (path)) {
-                private$update_files (path)
-            }
+                resp <- httr2::req_perform (req)
+                httr2::resp_check_status (resp)
 
-            # This prevents retrieval from updating client metadata with
-            # contents of remote "datapackage.json":
-            private$dl_frictionless <- FALSE
-            self <- self$deposit_retrieve (deposit_id)
-            private$dl_frictionless <- TRUE # default
 
-            if (!is.null (path)) {
-                private$compare_dpjson_to_meta (path)
+                if (!is.null (path)) {
+                    private$update_files (path)
+                }
+
+                # This prevents retrieval from updating client metadata with
+                # contents of remote "datapackage.json":
+                private$dl_frictionless <- FALSE
+                self <- self$deposit_retrieve (deposit_id)
+                private$dl_frictionless <- TRUE # default
+
+                if (!is.null (path)) {
+                    # This generates a warning if local dp differs from client
+                    # metadata, but that warning should not be issued if update
+                    # method is called on local-only deposit, and that updating
+                    # is presumably the desired effect.
+                    private$compare_dpjson_to_meta (path)
+                }
             }
 
             invisible (self)
