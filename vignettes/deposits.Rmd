@@ -300,11 +300,14 @@ arbitrary format alongside these structured metadata. This is achieved with
 [the `deposit_upload_file()`
 function](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_upload_file),
 demonstrated in the following code which uses our deposit retrieved directly
-above.
+above. It is recommended to store all data for a single deposit within a single
+directory, which the following code also creates.
 
 
 ```{r upload-file, eval = FALSE}
-path <- file.path (tempdir (), "data.csv")
+data_dir <- file.path (tempdir (), "data")
+dir.create (data_dir)
+path <- file.path (data_dir, "data.csv")
 write.csv (datasets::Orange, path, row.names = FALSE)
 cli$deposit_upload_file (path = path)
 ```
@@ -341,9 +344,9 @@ from the deposits service:
 
 ```{r dl_file, eval = FALSE}
 file.remove (path)
-file <- cli$deposit_download_file (filename = "data.csv", path = tempdir ())
+file <- cli$deposit_download_file (filename = "data.csv", path = data_dir)
 file
-#> [1] /tmp/RtmpcO59N8/data.csv
+#> [1] /tmp/RtmpcO59N8/data/data.csv
 ```
 
 ### Pre-generating frictionless metadata files prior to upload
@@ -407,9 +410,12 @@ cli$deposit_fill_metadata (metadata = path)
 ```
 
 Alternatively, the `metadata` parameter can be passed directly to the `new()`
-method to initiate a new client, as demonstrated immediately below. An example
-full workflow for creating and editing a deposits client and associated
-metadata would look something like the following five main steps:
+method to initiate a new client, as demonstrated immediately below.
+
+## Example workflow
+
+An example full workflow for creating and editing a deposits client and
+associated metadata would look something like the following five main steps:
 
 1. Initiate local deposits client with metadata:
 
@@ -434,7 +440,6 @@ metadata would look something like the following five main steps:
     dir.create (data_dir)
     path <- file.path (data_dir, "data.csv")
     write.csv (datasets::Orange, path, row.names = FALSE)
-    cli$deposit_upload_file (path = path)
     ```
     The following call then uploads that dataset to the newly-created deposit:
     ```{r local-data-upload, eval = FALSE}
@@ -454,13 +459,14 @@ metadata would look something like the following five main steps:
     dp$metadata$title <- "Updated Title"
     frictionless::write_package (dp, data_dir)
     ```
-4. Re-initiate deposits client to update local and remote deposits:
+    This is an indirect way of editing metadata, by using R code. The best way
+    to update deposits metadata is to directly edit and modify the
+    "datapackage.json" file.
+4. Update both local client and remote deposit data:
     ```{r update-metadata, eval = FALSE}
-    cli <- depositsClient$new (
-        service = "zenodo",
-        sandbox = TRUE,
-        metadata = data_dir
-    )
+    cli$deposit_update (path = data_dir)
+    #> Local file at [/tmp/RtmpBM0VYr/data/data.csv] is identical on host and will not be uploaded.
+    #> Local file at [/tmp/RtmpBM0VYr/data/datapackage.json] has changed and will now be uploaded.
     cli$metadata$title
     #> [1] "Updated Title"
     cli$hostdata$title
@@ -468,11 +474,6 @@ metadata would look something like the following five main steps:
     ```
     And local modificaitons are reflected in both updated "metadata" with the
     deposits client, as well as in "hostdata" stored on the Zenodo service.
-5. Versions of data files stored on remote hosts can be updated by uploading
-   updated versions of any files:
-    ```{r update-data, eval = FALSE
-    cli$deposit_upload_file (path = path)
-    ```
 
 ## Publishing a deposit
 
