@@ -50,14 +50,28 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
     options (op)
 
     if (!"metadata" %in% names (p)) {
-        p <- append (p, c (metadata = list (self$metadata)), after = 1)
-        op <- options (
-            readr.show_progress = FALSE,
-            readr.show_col_types = FALSE
-        )
-        frictionless::write_package (p, path)
-        options (op)
-        ret <- TRUE
+
+        if (!is.null (self$metadata)) {
+
+            p <- append (p, c (metadata = list (self$metadata)), after = 1)
+            op <- options (
+                readr.show_progress = FALSE,
+                readr.show_col_types = FALSE
+            )
+            frictionless::write_package (p, path)
+            options (op)
+            ret <- TRUE
+
+        } else {
+
+            message (
+                "Client has no metadata. Metadata may be specified by ",
+                "adding a 'metadata' element to the frictionless file [",
+                path_json,
+                "] and calling 'deposit_update()', ",
+                "or by passing elements to 'deposit_fill_metadata()'."
+            )
+        }
     }
 
     return (ret)

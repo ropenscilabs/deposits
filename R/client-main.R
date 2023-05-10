@@ -300,7 +300,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 p <- frictionless::read_package (path_dp)
             )
             options (op)
-            self$deposit_fill_metadata (p$metadata)
+            if ("metadata" %in% names (p)) {
+                self$deposit_fill_metadata (p$metadata)
+            }
 
             invisible (self)
         },
