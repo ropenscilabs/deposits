@@ -86,6 +86,7 @@ service.
 cli$deposit_new ()
 #> ID of new deposit : 1162420
 cli$deposit_upload_file (path = path)
+#> frictionless metadata file has been generated as '/tmp/RtmpvRre5Z/data/datapackage.json'
 ```
 
 The client then lists two files that were uploaded, and the local directory
