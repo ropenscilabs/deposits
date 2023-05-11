@@ -135,7 +135,7 @@ depositsClient$set (
                 p <- private$generate_frictionless (path)
                 message (
                     "frictionless metadata file has been generated as '",
-                    path,
+                    fs::path (path_dir, private$frictionless_json_name),
                     "'"
                 )
                 chk <- private$add_meta_to_dp_json (path_dir) # always true
