@@ -338,6 +338,15 @@ compression often offers little advantage for small files. The advantages for
 large files can nevertheless be considerable, and compression is generally
 recommended.)
 
+To change compression, or to compress a file that was previously uploaded in
+uncompressed form, the file first needs to be removed from the deposits service
+with [the `deposit_delete_file()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-delete-file-),
+and then re-uploaded with either
+[`deposit_upload_file()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
+or
+[`deposit_update()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
+
 ### Editing and updating files
 
 The [`deposit_update()`
