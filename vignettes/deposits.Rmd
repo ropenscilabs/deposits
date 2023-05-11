@@ -247,14 +247,16 @@ print (cli)
 #>  url_deposit : https://sandbox.zenodo.org/deposit/1064327
 #>   deposit id : 1064327
 #>     hostdata : list with 14  elements
-#>     metadata : 3 terms (see 'metadata' element for details)
+#>     metadata : 4 terms (see 'metadata' element for details)
 ```
 
 The client now lists one current deposit, additional fields for the URL and
-"id" of the deposit, and has a `hostdata` field with 14 elements. Importantly,
+"id" of the deposit, and has a "hostdata" field with 14 elements. Importantly,
 the `id` field holds a unique integer value used to identify particular
 deposits both on all external services, and as the `deposit_id` parameter of
-`deposits` client functions.
+`deposits` client functions. The "metadata" item also includes an additional
+"identifier" element containing a pre-reserved DOI provided by the deposits
+service.
 
 If we now construct a new, empty client, we see the following result:
 
@@ -310,6 +312,7 @@ dir.create (data_dir)
 path <- file.path (data_dir, "data.csv")
 write.csv (datasets::Orange, path, row.names = FALSE)
 cli$deposit_upload_file (path = path)
+#> frictionless metadata file has been generated as '/tmp/RtmpxSiYhW/data/datapackage.json'
 ```
 
 Although the `print` output of our `cli` object does not change after
