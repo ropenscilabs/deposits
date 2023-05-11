@@ -240,6 +240,7 @@ depositsClient$set (
         files_no_ext <- NULL
         if (!is.null (files)) {
             files_no_ext <- fs::path_ext_remove (files)
+            files_no_ext <- gsub ("\\.tar$", "", files_no_ext)
         }
 
         flocal <- fs::path_abs (path)
@@ -251,9 +252,7 @@ depositsClient$set (
             f_base <- fs::path_file (f)
             f_ext <- fs::path_ext (f_base)
             f_no_ext <- fs::path_ext_remove (f_base)
-            while (grepl ("\\.", f_no_ext)) { # rm both ".tar.gz":
-                f_no_ext <- fs::path_ext_remove (f_no_ext)
-            }
+            f_no_ext <- gsub ("\\.tar$", "", f_no_ext)
 
             if (!f_no_ext %in% files_no_ext) {
                 stop (
@@ -265,13 +264,8 @@ depositsClient$set (
                 )
             }
 
-            if (f_ext == "gz") {
-                compress <- "tar"
-            } else if (f_ext == "zip") {
-                compress <- "zip"
-            } else {
-                compress <- "no"
-            }
+            f_remote <- files [match (f_no_ext, files_no_ext)]
+            compress <- compress_from_filename (f_remote)
 
             private$upload_local_file (f, overwrite = TRUE, compress = compress)
         }
