@@ -252,14 +252,16 @@ print (cli)
 #>  url_service : https://sandbox.zenodo.org/deposit/1065666
 #>   deposit id : 1065666
 #>     hostdata : list with 14  elements
-#>     metadata : 3 terms (see 'metadata' element for details)
+#>     metadata : 4 terms (see 'metadata' element for details)
 ```
 
 The client now includes several additional elements, notably a "deposit id"
 (stored in `cli$id`) giving the unique identifier for the new deposit, and a
-`hostdata` item with, in this case,  14 elements as specified by the host
+"hostdata" item with, in this case,  14 elements as specified by the host
 service. The `url_service` is the URL for the newly-created deposit. (Viewing
 in a web browser will require logging in for all private and sandbox deposits).
+The "metadata" item also includes an additional "identifier" element containing
+a pre-reserved DOI provided by the deposits service.
 
 ### Uploading (and downloading) files
 
