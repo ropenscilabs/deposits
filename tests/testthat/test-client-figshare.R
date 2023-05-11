@@ -253,7 +253,10 @@ test_that ("figshare add_resource", {
     expect_null (cli$hostdata)
     expect_message (
         cli$deposit_add_resource (path),
-        "Please make sure you have the right"
+        paste0 (
+            "Your \\'datapackage\\.json\\' includes the following ",
+            "resources which have not yet been uploaded"
+        )
     )
     expect_null (cli$hostdata)
     expect_false (is.null (cli$metadata))
