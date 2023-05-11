@@ -114,3 +114,15 @@ md5sums_are_same <- function (path,
 
     return (res)
 }
+
+compress_from_filename <- function (filename) {
+
+    compress <- "no"
+    if (grepl ("\\.zip$", filename)) {
+        compress <- "zip"
+    } else if (grepl ("\\.tar\\.gz$", filename)) {
+        compress <- "tar"
+    }
+
+    return (compress)
+}

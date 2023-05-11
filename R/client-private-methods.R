@@ -133,14 +133,24 @@ depositsClient$set (
     "private", "upload_local_file",
     function (path, overwrite, compress) {
 
+        name_field <- service_filename_field (self$service)
+        current_files <- self$hostdata$files [[name_field]]
+        current_files_no_ext <- NULL
+        if (!is.null (current_files)) {
+            current_files_no_ext <- fs::path_ext_remove (current_files)
+            current_files_no_ext <- gsub ("\\.tar$", "", current_files_no_ext)
+        }
+        path_no_ext <- fs::path_ext_remove (fs::path_file (path))
+        file_exists <- path_no_ext %in% current_files_no_ext
+
+        if (file_exists && compress == "no") {
+            remote_file <- current_files [match (path_no_ext, current_files_no_ext)]
+            compress <- compress_from_filename (remote_file)
+        }
         if (compress != "no") {
             path_old <- path
             path <- compress_local_file (path, compress)
         }
-
-        name_field <- service_filename_field (self$service)
-        current_files <- self$hostdata$files [[name_field]]
-        file_exists <- fs::path_file (path) %in% current_files
 
         chk <- md5sums_are_same (
             path,
@@ -227,7 +237,10 @@ depositsClient$set (
 
         name_field <- service_filename_field (self$service)
         files <- self$hostdata$files [[name_field]]
-        files_no_ext <- fs::path_ext_remove (files)
+        files_no_ext <- NULL
+        if (!is.null (files)) {
+            files_no_ext <- fs::path_ext_remove (files)
+        }
 
         flocal <- fs::path_abs (path)
         if (fs::is_dir (path)) {
