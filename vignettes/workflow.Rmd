@@ -197,28 +197,23 @@ package](https://docs.ropensci.org/frictionless).
 
 Edited and updated versions of metadata can then be loaded into a deposits
 client by passing the path to the directory as the `path` argument to [the
-`deposit_fill_metadata()`
-method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
+`deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
 
 ```{r cli-update-meta, eval = FALSE}
-cli$deposit_fill_metadata (beaver_dir)
+cli$deposit_update (beaver_dir)
 ```
 
 Instead of `beaver_dir`, the full path to the local "datapackage.json" file can
-also be passed. However, once a "datapackage.json" file exists, the deposits
-client can be updated by calling [the `deposit_update()`
-method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
-This has exactly the same effect as
-[`deposit_fill_metadata()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
-for deposits which have not been initiated on the remote service, but has
-additional effects after that point, as demonstrated in the subsequent section.
-
-The
-[`deposit_fill_metadata()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
-should be used only to initiate a client with metadata. Once a local
-"datapackage.json" file exists, all metadata modification should be done by
-directly modifying that file and calling [the `deposit_update()`
-method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
+also be passed. While the same effect can be achieved by calling [the
+`deposit_fill_metadata()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
+for deposits which have not been initiated on the remote service, the 
+[`deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
+has additional effects after that point, and is the recommended method once a
+"datapackage.json" file has been generated. This is demonstrated in the
+subsequent section.
 
 The following code demonstrates modification and updating of
 metadata by first modifying the "title", and then showing that those changes
@@ -287,10 +282,7 @@ directory are uploaded.
 
 ```{r upload-files, eval = FALSE}
 cli$deposit_upload_file (beaver_dir)
-#> Loading required namespace: frictionless
 #> frictionless metadata file has been generated as '/tmp/RtmpCPOaqC/beaver/beaver1.csv'
-#> Please make sure you have the right to access data from this Data Package for your intended use.
-#> Follow applicable norms or requirements to credit the dataset and its authors.
 cli$hostdata$files [, 1:3]
 ```
 ```{r hostfiles, echo = FALSE}
@@ -323,10 +315,7 @@ demonstrates the effects of file compression:
 
 ```{r upload-files-compressed, eval = FALSE}
 cli$deposit_upload_file (beaver_dir, compress = "tar")
-#> Loading required namespace: frictionless
 #> frictionless metadata file has been generated as '/tmp/RtmpCPOaqC/beaver/beaver1.csv'
-#> Please make sure you have the right to access data from this Data Package for your intended use.
-#> Follow applicable norms or requirements to credit the dataset and its authors.
 cli$hostdata$files [, 1:3]
 ```
 ```{r hostfiles-compressed, echo = FALSE}
@@ -342,7 +331,9 @@ hf <- data.frame (
 print (hf)
 ```
 
-(The increase in sizes of the uploaded files there demonstrates that
+The frictionless "datapackage.json" files are never compressed, ensuring that
+their contents can always be viewed on the web interfaces of the deposits
+services. (The increase in sizes of the uploaded files there demonstrates that
 compression often offers little advantage for small files. The advantages for
 large files can nevertheless be considerable, and compression is generally
 recommended.)
