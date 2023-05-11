@@ -21,7 +21,7 @@ This README gives a brief overview of package usage, with more detail in
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html).
 For those who prefer to jump straight in to a workflow, there is also [a
 deposits
-workflow](https://docs.ropensci.org/deposits/articles/example-workflow.html)
+workflow](https://docs.ropensci.org/deposits/articles/workflow.html)
 vignette demonstrating a full workflow from data generation and
 documentation to publication.
 
@@ -66,7 +66,7 @@ This section gives a brief overview of the deposits workflow. A more
 complete description is given in the [main package
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html),
 and demonstrated step-by-step in [the workflow
-vignette](https://docs.ropensci.org/deposits/articles/example-workflow.html).
+vignette](https://docs.ropensci.org/deposits/articles/workflow.html).
 The `deposits` package uses [the `R6`
 package](https://github.com/r-lib/R6) to create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
