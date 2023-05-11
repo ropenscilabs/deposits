@@ -104,6 +104,11 @@ depositsClient$set (
             path,
             private$frictionless_json_name
         )
+        file_names_no_ext <- NULL
+        if (!is.null (file_names)) {
+            file_names_no_ext <- fs::path_ext_remove (file_names)
+            file_names_no_ext <- gsub ("\\.tar$", "", file_names_no_ext)
+        }
 
         update_remote <- local_dp_check$update_remote
         path_dir <- fs::path_dir (path)
@@ -163,7 +168,9 @@ depositsClient$set (
         }
 
         # -------- Update local version with new resources
-        dpj <- frictionless::read_package (local_dp_check$dp_local)
+        suppressMessages (
+            dpj <- frictionless::read_package (local_dp_check$dp_local)
+        )
         resource_names <-
             vapply (dpj$resources, function (i) i$name, character (1L))
         new_resource_name <- fs::path_ext_remove (fs::path_file (path))
@@ -172,6 +179,7 @@ depositsClient$set (
             function (i) i$path,
             character (1L)
         )
+        dp_file_names <- fs::path_ext_remove (dp_file_names)
 
         if (!new_resource_name %in% resource_names) {
 
@@ -184,11 +192,11 @@ depositsClient$set (
 
             update_remote <- TRUE
 
-        } else if (!all (dp_file_names %in% file_names) && !quiet) {
+        } else if (!all (dp_file_names %in% file_names_no_ext) && !quiet) {
 
             # "datapackage.json" lists resources not yet uploaded.
             dp_not_uploaded <-
-                dp_file_names [which (!dp_file_names %in% file_names)]
+                dp_file_names [which (!dp_file_names %in% file_names_no_ext)]
             message (
                 "Your 'datapackage.json' includes the following resources ",
                 "which have not yet been uploaded: [",
