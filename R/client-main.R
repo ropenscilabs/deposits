@@ -176,6 +176,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     metadata,
                     gsub ("\\-sandbox$", "", self$service)
                 )
+                if (!is.null (attr (metadata, "local_path"))) {
+                    self$local_path <- attr (metadata, "local_path")
+                }
                 metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
                 private$metadata_service <- metadata$service
@@ -218,6 +221,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             if (!is.null (self$id)) {
                 cat (paste0 (" deposit id : ", self$id), sep = "\n")
+            }
+            if (!is.null (self$local_path)) {
+                cat (paste0 (" local_path : ", self$local_path), sep = "\n")
             }
 
             if (is.null (self$hostdata)) {
@@ -264,6 +270,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 path_resource <- path
                 path <- fs::path_dir (path)
             }
+            self$local_path <- path
 
             path <- fs::path_real (path)
             path_resource <- fs::path_real (path_resource)
@@ -431,6 +438,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 checkmate::assert_directory_exists (path)
                 path <- fs::path_real (path)
             }
+            self$local_path <- path
+
             checkmate::assert_logical (quiet, len = 1L)
 
             # repeat retrieve_deposit method to get download_url:
@@ -552,6 +561,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata,
                 gsub ("\\-sandbox$", "", self$service)
             )
+            if (!is.null (attr (metadata, "local_path"))) {
+                self$local_path <- attr (metadata, "local_path")
+            }
             metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
 
@@ -849,6 +861,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$metadata,
                 service = gsub ("\\-sandbox$", "", self$service)
             )
+            local_path <- attr (metadata_service, "local_path")
+            if (!is.null (local_path) && !identica (local_path, self$local_path)) {
+                self$local_path <- local_path
+            }
             metadata_service <- metadata_service$service
             metadata_service <- httptest2_created_timestamp (metadata_service)
             metadata_service <-
@@ -968,6 +984,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                 }
 
+                path <- fs::path_dir (path)
+
             } else {
 
                 flist <- fs::dir_ls (path)
@@ -985,6 +1003,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     )
                 }
             }
+
+            self$local_path <- path
 
             # client metadata is then stored in "datapackage.json", so no longer
             # need to store in host metadata fields:
