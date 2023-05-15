@@ -50,7 +50,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         # @field dl_frictionless (logical) Used to control whether remote
         # ":datapackage.json" should be downloaded and used to update client
         # metadata.
-        dl_frictionless = TRUE
+        dl_frictionless = TRUE,
+        # @field num_resources_local Number of resources in local
+        # "datapackage.json" file.
+        num_resources_local = 0L,
+        # @field num_resources_remote Number of resources ("files") listed on
+        # remote service (excluding "datapackage.json").
+        num_resources_remote = 0L
 
         # ... other private methods in R/client-private-methods.R
     ), # end private list
@@ -176,8 +182,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     metadata,
                     gsub ("\\-sandbox$", "", self$service)
                 )
-                if (!is.null (attr (metadata, "local_path"))) {
-                    self$local_path <- attr (metadata, "local_path")
+                if (!is.null (metadata$local_path)) {
+                    self$local_path <- metadata$local_path
+                }
+                if (metadata$num_resources_local > 0L) {
+                    private$num_resources_local <- metadata$num_resources_local
                 }
                 metadata <- httptest2_created_timestamp (metadata)
                 self$metadata <- metadata$dcmi
@@ -248,6 +257,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     sep = "\n"
                 )
             }
+
         },
 
         # -----------
@@ -271,6 +281,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 path <- fs::path_dir (path)
             }
             self$local_path <- path
+            private$count_num_resources () # count resources in dp.json
 
             path <- fs::path_real (path)
             path_resource <- fs::path_real (path_resource)
@@ -404,6 +415,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             self <- private$delete_file (filename)
 
+            private$count_num_resources ()
+
             invisible (self)
         },
 
@@ -439,6 +452,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 path <- fs::path_real (path)
             }
             self$local_path <- path
+            private$count_num_resources ()
 
             checkmate::assert_logical (quiet, len = 1L)
 
@@ -561,9 +575,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 metadata,
                 gsub ("\\-sandbox$", "", self$service)
             )
-            if (!is.null (attr (metadata, "local_path"))) {
-                self$local_path <- attr (metadata, "local_path")
+            if (!is.null (metadata$local_path)) {
+                self$local_path <- metadata$local_path
+                private$count_num_resources ()
             }
+
             metadata <- httptest2_created_timestamp (metadata)
             self$metadata <- metadata$dcmi
 
@@ -792,6 +808,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
+            private$count_num_resources ()
+
             self <- private$fill_service_id_url ()
 
             invisible (self)
@@ -869,10 +887,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 service = gsub ("\\-sandbox$", "", self$service)
             )
 
-            local_path <- attr (metadata_service, "local_path")
+            local_path <- metadata_service$local_path
             if (!is.null (local_path) &&
-                !identica (local_path, self$local_path)) {
+                !identical (local_path, self$local_path)) {
                 self$local_path <- local_path
+                private$count_num_resources ()
             }
 
             metadata_service <- metadata_service$service
@@ -906,6 +925,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     private$compare_dpjson_to_meta (path)
                 }
             }
+
+            private$count_num_resources ()
 
             invisible (self)
         },
@@ -1019,6 +1040,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # client metadata is then stored in "datapackage.json", so no longer
             # need to store in host metadata fields:
             private$remove_dcmi2host ()
+
+            private$count_num_resources ()
 
             invisible (self)
         },

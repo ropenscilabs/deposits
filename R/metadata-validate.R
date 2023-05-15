@@ -17,7 +17,8 @@ validate_metadata <- function (metadata, service) {
     return (list (
         dcmi = metadata_dcmi,
         service = metadata_service,
-        local_path = attr (metadata_dcmi, "local_path")
+        local_path = attr (metadata_dcmi, "local_path"),
+        num_resources_local = attr (metadata_dcmi, "num_resources_local")
     ))
 }
 
@@ -34,8 +35,10 @@ validate_metadata <- function (metadata, service) {
 #' @noRd
 validate_dcmi_metadata <- function (metadata) {
 
+    num_resources_local <- 0L
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
+        num_resources_local <- attr (metadata, "num_resources_local")
     }
     local_path <- attr (metadata, "local_path")
 
@@ -110,6 +113,7 @@ validate_dcmi_metadata <- function (metadata) {
     }
 
     attr (metadata, "local_path") <- local_path
+    attr (metadata, "num_resources_local") <- num_resources_local
 
     return (metadata)
 }
@@ -157,14 +161,17 @@ deposits_meta_from_file <- function (filename = NULL, frictionless_json_name) {
         stop ("json is not valid.")
     }
 
+    num_resources_local <- 0L
     meta <- jsonlite::read_json (filename)
     if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
         # datapackage.json:
+        num_resources_local <- length (meta$resources)
         meta <- meta$metadata
     }
     meta <- meta [which (lapply (meta, length) > 0L)]
 
     attr (meta, "local_path") <- local_path
+    attr (meta, "num_resources_local") <- num_resources_local
 
     return (meta)
 }

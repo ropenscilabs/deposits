@@ -483,3 +483,45 @@ depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
 
     return (invisible (self))
 })
+
+#' @description Count numbers of local and remote resources to store in private
+#' member fields.
+#'
+#' @return (Invisibly) Updated version of self.
+#' @noRd
+
+depositsClient$set ("private", "count_num_resources", function () {
+
+    if (is.null (self$local_path) && is.null (self$hostdata$files)) {
+        return (invisible (self))
+    }
+
+    files <- self$hostdata$files
+    if (!is.null (files)) {
+        file_names <- files [[service_filename_field (self$service)]]
+        file_names <-
+            file_names [which (!file_names == private$frictionless_json_name)]
+        private$num_resources_remote <- length (file_names)
+    }
+
+    if (!is.null (self$local_path)) {
+
+        path_dp <- fs::path (self$local_path, private$frictionless_json_name)
+
+        if (fs::file_exists (path_dp)) {
+
+            op <- options (
+                readr.show_progress = FALSE,
+                readr.show_col_types = FALSE
+            )
+            suppressMessages (
+                dp <- frictionless::read_package (path_dp)
+            )
+            options (op)
+
+            private$num_resources_local <- length (dp$resources)
+        }
+    }
+
+    return (invisible (self))
+})
