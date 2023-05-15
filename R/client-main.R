@@ -265,7 +265,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     private$num_resources_local,
                     " local, ",
                     private$num_resources_remote,
-                    " remote.",
+                    " remote",
                     sep = "\n"
                 ))
             }
