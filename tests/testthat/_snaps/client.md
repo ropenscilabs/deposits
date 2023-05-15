@@ -1,4 +1,4 @@
-# print-figshare
+# print figshare
 
     Code
       print(cli)
@@ -52,7 +52,21 @@
          hostdata : list with 1  elements
          metadata : 1 terms (see 'metadata' element for details)
 
-# print-zenodo
+# print figshare with local_path
+
+    Code
+      print(cli)
+    Output
+      <deposits client>
+       deposits service : figshare
+               url_base : https://api.figshare.com/v2/
+       Current deposits : 1 (see 'deposits' element for details)
+      
+       local_path : /tmp/Rtmp/data
+         hostdata : <none>
+         metadata : 4 terms (see 'metadata' element for details)
+
+# print zenodo
 
     Code
       print(cli)
@@ -107,4 +121,19 @@
        deposit id : 1
          hostdata : list with 1  elements
          metadata : 1 terms (see 'metadata' element for details)
+
+# print zenodo with local_path
+
+    Code
+      print(cli)
+    Output
+      <deposits client>
+       deposits service : zenodo
+                 sandbox: TRUE
+               url_base : https://sandbox.zenodo.org/api/
+       Current deposits : 2 (see 'deposits' element for details)
+      
+       local_path : /tmp/Rtmp/data
+         hostdata : <none>
+         metadata : 4 terms (see 'metadata' element for details)
 

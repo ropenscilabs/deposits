@@ -50,7 +50,7 @@ test_that ("Client structure", {
 # so switched off from here.
 testthat::skip_if (!test_all)
 
-test_that ("print-figshare", {
+test_that ("print figshare", {
 
     service <- "figshare"
 
@@ -72,7 +72,38 @@ test_that ("print-figshare", {
     testthat::expect_snapshot (print (cli))
 })
 
-test_that ("print-zenodo", {
+test_that ("print figshare with local_path", {
+
+    service <- "figshare"
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = "This is the description"
+    )
+    expect_silent (
+        cli <- with_mock_dir ("print-fs", {
+            depositsClient$new (service = service, metadata = metadata)
+        })
+    )
+
+    path <- fs::path (fs::path_temp (), "data")
+    if (fs::dir_exists (path)) {
+        fs::dir_delete (path)
+    }
+    fs::dir_create (path)
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename, row.names = FALSE)
+    cli$deposit_add_resource (filename)
+
+    # Standardise 'local_path':
+    cli$local_path <- "/tmp/Rtmp/data"
+
+    testthat::expect_snapshot (print (cli))
+})
+
+test_that ("print zenodo", {
 
     service <- "zenodo"
 
@@ -90,6 +121,37 @@ test_that ("print-zenodo", {
     cli$id <- "1"
     cli$url_service <- "https://my.deposit"
     cli$deposits <- data.frame (n = 1:5)
+
+    testthat::expect_snapshot (print (cli))
+})
+
+test_that ("print zenodo with local_path", {
+
+    service <- "zenodo"
+
+    metadata <- list (
+        title = "New Title",
+        abstract = "This is the abstract",
+        creator = list (list (name = "A. Person"), list (name = "B. Person")),
+        description = "This is the description"
+    )
+    expect_silent (
+        cli <- with_mock_dir ("print-zen", {
+            depositsClient$new (service = service, sandbox = TRUE, metadata = metadata)
+        })
+    )
+
+    path <- fs::path (fs::path_temp (), "data")
+    if (fs::dir_exists (path)) {
+        fs::dir_delete (path)
+    }
+    fs::dir_create (path)
+    filename <- fs::path (path, "data.csv")
+    write.csv (datasets::Orange, filename, row.names = FALSE)
+    cli$deposit_add_resource (filename)
+
+    # Standardise 'local_path':
+    cli$local_path <- "/tmp/Rtmp/data"
 
     testthat::expect_snapshot (print (cli))
 })
