@@ -62,9 +62,10 @@
                url_base : https://api.figshare.com/v2/
        Current deposits : 1 (see 'deposits' element for details)
       
-       local_path : /tmp/Rtmp/data
          hostdata : <none>
          metadata : 4 terms (see 'metadata' element for details)
+       local_path : /tmp/Rtmp/data
+        resources : 1 local, 0 remote.
 
 # print zenodo
 
@@ -133,7 +134,8 @@
                url_base : https://sandbox.zenodo.org/api/
        Current deposits : 2 (see 'deposits' element for details)
       
-       local_path : /tmp/Rtmp/data
          hostdata : <none>
          metadata : 4 terms (see 'metadata' element for details)
+       local_path : /tmp/Rtmp/data
+        resources : 1 local, 0 remote.
 

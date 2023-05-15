@@ -231,9 +231,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!is.null (self$id)) {
                 cat (paste0 (" deposit id : ", self$id), sep = "\n")
             }
-            if (!is.null (self$local_path)) {
-                cat (paste0 (" local_path : ", self$local_path), sep = "\n")
-            }
 
             if (is.null (self$hostdata)) {
                 cat ("   hostdata : <none>\n")
@@ -258,6 +255,20 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 )
             }
 
+            if (!is.null (self$local_path)) {
+                cat (paste0 (" local_path : ", self$local_path), sep = "\n")
+            }
+            if (private$num_resources_local > 0L ||
+                private$num_resources_remote > 0L) {
+                cat (paste0 (
+                    "  resources : ",
+                    private$num_resources_local,
+                    " local, ",
+                    private$num_resources_remote,
+                    " remote.",
+                    sep = "\n"
+                ))
+            }
         },
 
         # -----------
@@ -324,6 +335,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if ("metadata" %in% names (p)) {
                 self$deposit_fill_metadata (p$metadata)
             }
+
+            private$count_num_resources ()
 
             invisible (self)
         },
