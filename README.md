@@ -9,14 +9,21 @@ status](https://github.com/ropenscilabs/deposits/workflows/R-CMD-check/badge.svg
 Concept](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The `deposits` R package is a universal client for depositing and
+The deposits R package is a universal client for depositing and
 accessing research data in a variety of online deposition services.
 Currently supported services are [zenodo](https://zenodo.org) and
-[figshare](https://figshare.com). The package works seamlessly with [the
-“frictionless” data workflow](https://frictionlessdata.io/), to enable
-unified documentation of all aspects of datasets in one place.
-Instructions for installing and setting up the package are in the
-[installation
+[figshare](https://figshare.com). These two systems have fundamentally
+different interfaces (“API”s, or Application Programming Interfaces),
+and access to these and indeed all deposition services has traditionally
+been enabled through individual software clients. The deposits package
+aims to be a universal client offering access to a variety of deposition
+services, without users having to know any specific details of the APIs
+for each service.
+
+The deposits package works seamlessly with [the “frictionless” data
+workflow](https://frictionlessdata.io/), to enable unified documentation
+of all aspects of datasets in one place. Instructions for installing and
+setting up the package are in the [installation
 vignette](https://docs.ropensci.org/deposits/articles/install-setup.html).
 This README gives a brief overview of package usage, with more detail in
 the [introductory
@@ -47,20 +54,20 @@ environment for testing the functionality of this package.
 
 ## The “frictionless” data workflow
 
-Prior to describing the `deposits` workflow, it is useful to understand
+Prior to describing the deposits workflow, it is useful to understand
 the [“frictionless” data workflow](https://frictionlessdata.io/), which
 provides a standardised way to document the contents and structure of
-data files through a separate metadata file. The `deposits` package
-links directly with [rOpenSci’s `frictionless`
+data files through a separate metadata file. The deposits package links
+directly with [rOpenSci’s `frictionless`
 package](https://docs.ropensci.org/frictionless) for writing, editing,
 and reading frictionless metadata files.
 
-The `deposits` package nevertheless aims to make this integration as
+The deposits package nevertheless aims to make this integration as
 seamless and painless as possible. No knowledge of the frictionless
-workflow is necessary, and the `deposits` workflow should “just work” in
+workflow is necessary, and the deposits workflow should “just work” in
 many cases, appropriately constructing frictionless metadata files and
 uploading them to deposits services. It is of course also possible to
-use the `deposits` package without frictionless metadata.
+use the deposits package without frictionless metadata.
 
 ## The deposits workflow
 
@@ -69,7 +76,7 @@ complete description is given in the [main package
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html),
 and demonstrated step-by-step in [the workflow
 vignette](https://docs.ropensci.org/deposits/articles/workflow.html).
-The `deposits` package uses [the `R6`
+The deposits package uses [the `R6`
 package](https://github.com/r-lib/R6) to create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
 used to call all methods needed in a deposits workflow. A [separate
@@ -97,8 +104,8 @@ The following sections describe each of these steps in more detail.
 
 ### Step 1: Create a new client
 
-All `deposits` operations start with a client constructed with the
-`new()` function:
+All deposits operations start with a client constructed with the `new()`
+function:
 
 ``` r
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
@@ -176,7 +183,7 @@ assigned to a return value (so there is no need to use
 The *metadata* of a deposit describe the nature and properties of the
 data being deposited. A deposit is first created by uploading metadata
 to a deposits service; only then can actual data be uploaded and
-associated with the deposit described by the metadata. The `deposits`
+associated with the deposit described by the metadata. The deposits
 package works with two main types of metadata:
 
 1.  Metadata which describe a deposit and associated properties, such as
@@ -193,20 +200,20 @@ in the [introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html),
 but the third may generally be ignored, and is intended as “read-only”
 metadata provided by host services.) As explained at the outset, the
-`deposits` package can be used without knowing or understanding anything
+deposits package can be used without knowing or understanding anything
 about [the `frictionless`
 package](https://docs.ropensci.org/frictionless) or [frictionless
 workflows](https://frictionlessdata.io). Most of this present section
 therefore concerns the first of these two kinds of metadata, referred to
 throughout all package documentation as “metadata”. Brief demonstrations
 are also given of the second kind, to illustrate how the frictionless
-workflow integrates with the general `deposits` workflow. These kinds of
+workflow integrates with the general deposits workflow. These kinds of
 metadata are always referred to as “frictionless metadata.”
 
 A separate vignette describes in detail [how to specify and include
-metadata in a `deposits`
+metadata in a deposits
 client](https://docs.ropensci.org/deposits/articles/metadata.html). This
-section briefly demonstrates the process. An example of `deposits`
+section briefly demonstrates the process. An example of deposits
 metadata is:
 
 ``` r
