@@ -846,8 +846,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
                 url <- get_service_url (self, deposit_id = deposit_id)
 
-                req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
-                req$headers <- c (req$headers, "Content-Type" = "application/json")
+                req <- create_httr2_helper (
+                    url,
+                    self$headers$Authorization,
+                    "PUT"
+                )
+                req$headers <- c (
+                    req$headers,
+                    "Content-Type" = "application/json"
+                )
             }
 
             if (!is.null (path) && (fs::is_dir (path) ||
@@ -861,10 +868,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 self$metadata,
                 service = gsub ("\\-sandbox$", "", self$service)
             )
+
             local_path <- attr (metadata_service, "local_path")
-            if (!is.null (local_path) && !identica (local_path, self$local_path)) {
+            if (!is.null (local_path) &&
+                !identica (local_path, self$local_path)) {
                 self$local_path <- local_path
             }
+
             metadata_service <- metadata_service$service
             metadata_service <- httptest2_created_timestamp (metadata_service)
             metadata_service <-
