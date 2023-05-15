@@ -82,6 +82,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         hostdata = NULL,
         #' @field metadata holds list of DCMI-compliant metadata.
         metadata = NULL,
+        #' @field local_path holds path to local directory (not file) containing
+        #' current deposit.
+        local_path = NULL,
 
         #' @description Create a new `depositsClient` object, as an \pkg{R6}
         #' client with methods listed via `deposits_emthods()`.

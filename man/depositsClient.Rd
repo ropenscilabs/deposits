@@ -191,6 +191,9 @@ by-passed when this parameter if \code{FALSE}.}
 \item{\code{hostdata}}{(list) Data as stored by host platform}
 
 \item{\code{metadata}}{holds list of DCMI-compliant metadata.}
+
+\item{\code{local_path}}{holds path to local directory (not file) containing
+current deposit.}
 }
 \if{html}{\out{</div>}}
 }
