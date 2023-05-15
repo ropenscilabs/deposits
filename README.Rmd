@@ -18,19 +18,20 @@ output:
 
 
 The `deposits` R package is a universal client for depositing and accessing
-research data anywhere. Currently supported services are
-[zenodo](https://zenodo.org) and [figshare](https://figshare.com). The package
-works seamlessly with [the "frictionless" data
-workflow](https://frictionlessdata.io/). Instructions for installing and
-setting up the package are in [a separate
+research data in a variety of online deposition services. Currently supported
+services are [zenodo](https://zenodo.org) and [figshare](https://figshare.com).
+The package works seamlessly with [the "frictionless" data
+workflow](https://frictionlessdata.io/), to enable unified documentation of all
+aspects of datasets in one place. Instructions for installing and setting up
+the package are in the [installation
 vignette](https://docs.ropensci.org/deposits/articles/install-setup.html). This
-README gives a brief overview of package usage, with more detail in [the
-introductory
+README gives a brief overview of package usage, with more detail in the
+[introductory
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html). For those
-who prefer to jump straight in to a workflow, there is also [a deposits
-workflow](https://docs.ropensci.org/deposits/articles/workflow.html)
-vignette demonstrating a full workflow from data generation and documentation
-to publication.
+who prefer to jump straight in to a workflow, there is also a deposits
+[workflow vignette](https://docs.ropensci.org/deposits/articles/workflow.html)
+demonstrating a full workflow from data generation and documentation to
+publication.
 
 
 ## Data Repositories
@@ -65,16 +66,41 @@ without frictionless metadata.
 
 ## The deposits workflow
 
-This section gives a brief overview of the deposits workflow. A more complete
+We now provide a brief overview of the deposits workflow. A more complete
 description is given in the [main package
 vignette](https://docs.ropensci.org/deposits/articles/deposits.html), and
 demonstrated step-by-step in [the workflow
-vignette](https://docs.ropensci.org/deposits/articles/workflow.html).
-The `deposits` package uses [the `R6` package](https://github.com/r-lib/R6) to
+vignette](https://docs.ropensci.org/deposits/articles/workflow.html). The
+`deposits` package uses [the `R6` package](https://github.com/r-lib/R6) to
 create [a
 `depositsClient`](https://docs.ropensci.org/deposits/reference/depositsClient.html)
-used to perform all functions. All `deposits` operations start with a client
-constructed with the `new()` function:
+used to call all methods needed in a deposits workflow. A [separate
+vignette](https://docs.ropensci.org/deposits/articles/deposits-R6.html)
+describes the `R6` system for those unfamiliar with it.
+
+A typical deposits workflow, and associated methods, involves the following
+steps:
+
+1. Create a new deposits client
+2. Fill the client with metadata, either as part of Step 1 through using the
+   [`new()`
+   method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-new-),
+   or afterward by using the
+   [`deposit_fill_metadata()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_fill_metadata)
+   method;
+3. Create a new deposit on the nominated service using the
+   [`deposit_new()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-)
+   method; and
+4. Upload files for the deposit using the
+   [`deposit_upload_file()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
+   method.
+
+The following sections describe each of these steps in more detail.
+
+### Step 1: Create a new client
+
+All `deposits` operations start with a client constructed with the `new()`
+function:
 
 ```{r client-new, eval = FALSE}
 cli <- depositsClient$new (service = "zenodo", sandbox = TRUE)
@@ -89,10 +115,10 @@ print (cli)
 #>    metadata : <none>
 ```
 
-The upper section of information shown by printing the client describes general
-information, and aspects of the specified service, and the profile of the user
-(identified through the locally-stored token, as described in [the
-"Installation and Setup"
+The upper section of information shown by calling `print (cli)` to print the
+client describes general information, and aspects of the specified service, and
+the profile of the user (identified through the locally-stored token, as
+described in [the "Installation and Setup"
 vignette](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-api-tokens)).
 The lower section contains information on the current deposit held within the
 client. A new client initially contains no information on a deposit, and so
@@ -129,10 +155,11 @@ cli$deposits_methods ()
 #>  see `?depositsClient` for full details of all methods.
 ```
 
-All of those methods then work similarly, by calling
-`cli$<method>(<parameters>)`. Note that R6 functions are called directly on the
-client, with the object itself (`cli`) updated by the call. For example, [the
-`deposit_fill_metadata()`
+All of the methods listed by
+[`cli$deposits_methods()`](thos://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposits-methods-)
+then work similarly, by calling `cli$<method>(<parameters>)`. Note that R6
+functions are called directly on the client, with the object itself (`cli`)
+updated by the call. For example, [the `deposit_fill_metadata()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-)
 described below can be used to specify metadata for a deposit. This works by
 simply calling,
@@ -141,25 +168,10 @@ simply calling,
 cli$deposit_fill_metadata (metadata)
 ```
 The `cli` object is then updated by this call, without needing to be assigned
-to a return value (like `cli <- cli$<method>`).
+to a return value (so there is no need to use `cli <- cli$<method>`).
 
-A typical deposits workflow, and associated methods, involves the following
-steps:
 
-1. Fill the client with metadata (using the
-   [`new()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-new-)
-   or
-   [`deposit_fill_metadata()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_fill_metadata) methods);
-2. Create a new deposit on the nominated service (using the
-   [`deposit_new()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-)
-   method); and
-3. Upload files for the deposit (using the
-   [`deposit_upload_file()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
-   method).
-
-The following sections describe each of these steps in more detail.
-
-### Fill client with metadata
+### Step 2: Fill client with metadata
 
 The *metadata* of a deposit describe the nature and properties of the data
 being deposited. A deposit is first created by uploading metadata to a deposits
@@ -170,13 +182,17 @@ metadata:
 1. Metadata which describe a deposit and associated properties, such as author
    names and affiliations, deposit titles and descriptions, dates, keywords, 
    links to other deposits or publications, and many other terms.
-2. Metadata which describe the actual contents of the data to be deposited.
-   These kinds of metadata are (optionally) generated and (always) handled here
-   by [the `frictionless`
+2. Frictionless metadata which describe the actual contents of the data to be
+   deposited. These kinds of metadata are (optionally) generated and (always)
+   handled here by [the `frictionless`
    package](https://docs.ropensci.org/frictionless).
 
-As explained at the outset, the `deposits` package can be used without knowing
-or understanding anything about [the `frictionless`
+(Note that there are actually three main types of metadata, as described in the
+[introductory
+vignette](https://docs.ropensci.org/deposits/articles/deposits.html), but the
+third may generally be ignored, and is intended as "read-only" metadata
+provided by host services.) As explained at the outset, the `deposits` package
+can be used without knowing or understanding anything about [the `frictionless`
 package](https://docs.ropensci.org/frictionless) or [frictionless
 workflows](https://frictionlessdata.io). Most of this present section therefore
 concerns the first of these two kinds of metadata, referred to throughout all
@@ -233,7 +249,7 @@ following section describes how to use those metadata to initiate a deposit on
 an external service.
 
 
-### Create a new deposit
+### Step 3: Create a new deposit
 
 The metadata filled with the above steps can then be used to initiate a new
 deposit on the associated server using [the `deposit_new()`
@@ -263,7 +279,7 @@ in a web browser will require logging in for all private and sandbox deposits).
 The "metadata" item also includes an additional "identifier" element containing
 a pre-reserved DOI provided by the deposits service.
 
-### Uploading (and downloading) files
+### Step 4: Upload (or download) files
 
 A deposit is really about data, not just metadata. Data can be uploaded to a deposit
 with [the `deposit_upload_file()`
@@ -273,9 +289,11 @@ method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-
 cli$deposit_upload_file (path = "<path>/<to>/my-data.dat")
 ```
 
-Details of files associated with deposits are stored in a `data.frame` held as
-`cli$hostdata$files` which after running that command will include a row with
-an item whose "filename" will be "my-data.dat".
+Details of files associated with deposits are stored in a `data.frame` stored
+as part of the "hostdata" of a deposits client, in the `cli$hostdata$files`
+item. Prior to uploading, `cli$hostdata$files` will be empty, but after
+uploading it will be a `data.frame` including one row with an item whose
+"filename" will be "my-data.dat".
 
 ```{r uploaded-files, eval = FALSE}
 cli$hostdata$files
@@ -293,13 +311,14 @@ cli$hostdata$files
 The `deposit_download_file()` function does the reverse:
 
 ```{r deposit_download, eval = FALSE}
-path <- cli$deposit_download_file ("my-data.dat")
+cli$deposit_download_file ("my-data.dat")
+#> '/<loca>/<directory>/my-data.dat'
 ```
 
 Files are by default downloaded to the current working directory, or elsewhere
-specified by an additional `path` parameter. Unlike most methods for deposit
-clients, which invisibly return an updated version of the client, the
-`deposit_download_file()` returns the full local path to the downloaded file.
+specified by an additional `path` parameter. (Note that this method returns the
+full local path to the downloaded file, unlike most methods for deposit
+clients, which invisibly return an updated version of the client.)
 
 ## Code of Conduct
 
