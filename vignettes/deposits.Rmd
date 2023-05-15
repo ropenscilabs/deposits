@@ -21,28 +21,27 @@ knitr::opts_chunk$set (
 )
 ```
 
-The `deposits` package is a universal client for depositing and accessing
-research data anywhere. Currently supported services are
-[zenodo](https://zenodo.org) and [figshare](https://figshare.com).
+The deposits package is a universal client for depositing and accessing
+research data in a variety of online deposition services. Currently supported
+services are [zenodo](https://zenodo.org) and [figshare](https://figshare.com).
 These two systems have fundamentally different interfaces ("API"s, or
-Application Programming Interfaces), and access to these and
-indeed all deposition services has traditionally been enabled through
-individual software clients. The `deposits` package aims to be a
-universal client offering access to a variety of deposition services, without
-users having to know any specific details of the APIs for each service. This
-vignette demonstrates how the `deposits` package can be used to manage the
-processes of uploading and publishing research data, using the methods
-summarised in Figure 1.
+Application Programming Interfaces), and access to these and indeed all
+deposition services has traditionally been enabled through individual software
+clients. The deposits package aims to be a universal client offering access
+to a variety of deposition services, without users having to know any specific
+details of the APIs for each service. This vignette demonstrates how the
+deposits package can be used to manage the processes of uploading and
+publishing research data, using the methods summarised in Figure 1.
 
 ```{r lib, echo = FALSE}
 library (deposits)
 ```
 
-![Figure 1: Schematic diagram of 'deposits' methods, each of which is explained below. All methods have prefixes of "deposit_", which are not shown in the diagram. Methods connecting to the central "deposits Client" all modify its internal properties, whereas the "upload_file" and "download_file" methods copy files between local storage and remote services without modifying the deposits client itself. The methods connecting the client to "Local Storage" only have an effect the first time they are called, when they create a local version of a frictionless "datapackage.json" file, if one did not previously exist.](fig1.png)
+![Figure 1: Schematic diagram of deposits methods, each of which is explained below. All methods have prefixes of "deposit_", which are not shown in the diagram. Methods connecting to the central "deposits Client" all modify its internal properties, whereas the "upload_file" and "download_file" methods copy files between local storage and remote services without modifying the deposits client itself. The methods connecting the client to "Local Storage" only have an effect the first time they are called, when they create a local version of a frictionless "datapackage.json" file, if one did not previously exist.](fig1.png)
 
 ## The deposits client
 
-The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
+The deposits package uses [an `R6` client](https://github.com/r-lib/R6) to
 interface with the individual deposition services. A [separate
 vignette](https://docs.ropensci.org/deposits/articles/deposits-R6.html)
 describes the `R6` system for those unfamiliar with it.
@@ -74,9 +73,9 @@ document](https://docs.ropensci.org/deposits/articles/install-setup.html#setup-a
 Authentication tokens are checked when new clients are constructed, so the
 `$new()` function will only succeed with valid tokens.
 
-As also described [in that
+As also described [in the
 `README`](https://docs.ropensci.org/deposits/index.html#the-deposits-workflow),
-all methods of a `deposits` client can be seen with [the `deposits_methods()`
+all methods of a deposits client can be seen with [the `deposits_methods()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposits-methods-):
 
 ```{r ls-cli, eval = FALSE}
@@ -110,13 +109,13 @@ num_methods <- 3L
 ```
 
 
-Each of these methods is described in detail in the [documentation entry for
-the deposits
+All methods are described in detail in the [documentation entry for the
+deposits
 client](https://docs.ropensci.org/deposits/reference/depositsClient.html#methods).
-The final `r num_methods` methods starting with "deposits_" are general methods
-applied to services in general ("list" and "search"), or to a deposits client
-in general ("methods"). All other methods start with the singular "deposit_"
-prefix, and operate on individual deposits. The main methods, and relationships
+All methods starting with the singular "deposit_" prefix operate on individual
+deposits. The final `r num_methods` methods starting with "deposits_" are
+general methods applied to services in general ("list" and "search"), or to a
+deposits client in general ("methods"). The main methods, and relationships
 between them, are also illustrated in Figure 1.
 
 ## Metadata
@@ -130,7 +129,7 @@ downloaded. These files also have accompanying metadata, according to [the
 [separate "frictionless"
 vignette](https://docs.ropensci.org/deposits/articles/frictionless.html).
 
-There are thus three types of metadata used in a `deposits` workflow:
+There are thus three types of metadata used in a deposits workflow:
 
 1. *"metadata"* which describe a deposit and associated properties, such as author
    names and affiliations, deposit titles and descriptions, dates, keywords, 
@@ -144,17 +143,17 @@ There are thus three types of metadata used in a `deposits` workflow:
    described in [the frictionless
    vignette](https://docs.ropensci.org/deposits/articles/frictionless.html).
 3. *"hostdata"* which are provided in different formats by the various
-   `deposits` services, and are intended as *read-only* data used to examine
+   deposits services, and are intended as *read-only* data used to examine
    the remote records of a deposit.
 
-The `hostdata` structures are directly provided by the `deposits` host
-services, generally as lists, although with different structures for different
+The `metadata` and "frictionless metadata" structures remain consistent between
+services, and allow data to be transformed from one format to another, and
+between local clients and remote services. 
+In contrast, the `hostdata` structures are directly provided by the deposits host
+services, generally as lists, and with different structures for different
 services. These structures are read-only fields which are automatically filled
-by the `deposits` client, and are intended to provide insight into metadata
-records stored on host sites. In contrast, the `metadata` structures remain
-consistent between services, and allow data to be transformed from one format
-to another, and potentially to allow data to be transferred between different
-services.
+by the deposits client, and are intended to provide insight into metadata
+records stored on host sites. 
 
 
 ### Passing metadata to a deposits client
@@ -217,13 +216,13 @@ print (metadata)
 Alternative ways of specifying and entering metadata are described in [the
 metadata vignette](https://docs.ropensci.org/deposits/articles/metadata.html),
 along with detailed descriptions of the kinds of metadata accepted by a
-`deposits` client.
+deposits client.
 
 
 ## Creating a new deposit
 
 
-Once filled with metadata, a `deposits` client can be used to initiate a new
+Once filled with metadata, a deposits client can be used to initiate a new
 deposit on the associated external service with [the `$deposit_new()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-new-).
 This is not to be confused with [the `$new()`
@@ -254,7 +253,7 @@ The client now lists one current deposit, additional fields for the URL and
 "id" of the deposit, and has a "hostdata" field with 14 elements. Importantly,
 the `id` field holds a unique integer value used to identify particular
 deposits both on all external services, and as the `deposit_id` parameter of
-`deposits` client functions. The "metadata" item also includes an additional
+deposits client functions. The "metadata" item also includes an additional
 "identifier" element containing a pre-reserved DOI provided by the deposits
 service.
 
@@ -337,7 +336,7 @@ The list of files includes a "datapackage.json" file generated by [the
 in [the main README](https://docs.ropensci.org/deposits/index.html), and at
 length in [the separate "frictionless"
 vignette](https://docs.ropensci.org/deposits/articles/frictionless.html), these
-files contain both the metadata entered in to the `deposits` client, as well as
+files contain both the metadata entered in to the deposits client, as well as
 "frictionless metadata" describing the internal properties of the dataset
 itself.
 
@@ -355,7 +354,7 @@ file
 ### Pre-generating frictionless metadata files prior to upload
 
 The workflow described in the preceding section results in a frictionless
-metadata file being simultaneously generated, filled with `deposits` metadata,
+metadata file being simultaneously generated, filled with deposits metadata,
 and uploaded to the nominated service.
 As described in detail in [the "frictionless"
 vignette](https://docs.ropensci.org/deposits/articles/frictionless.html), an
@@ -378,9 +377,9 @@ cli$deposit_add_resource (path = path)
 ```
 
 The directory containing the specified file will then have an additional
-"datapackage.json" file including the `deposits` metadata used in client
+"datapackage.json" file including the deposits metadata used in client
 construction. This file may be edited as desired prior to uploading. To update
-a `deposits` client with changes to external metadata files, simply pass the
+a deposits client with changes to external metadata files, simply pass the
 path to that file to [the `deposits_fill_metadata()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-).
 When ready, a single call to [the `deposit_upload_file()`
@@ -396,7 +395,7 @@ All deposits are initiated on the nominated services as "private" deposits, mean
 2. They can be freely edited, including complete deletion.
 
 A deposit can only be publicly viewed once it has been published, as described
-in the final section of this vignette. The process of using `deposits` to
+in the final section of this vignette. The process of using deposits to
 prepare one or more datasets for publication will generally involve multiple
 stages of editing and updating. As described in the final section of [the
 metadata

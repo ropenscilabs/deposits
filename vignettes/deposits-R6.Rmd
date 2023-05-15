@@ -21,17 +21,17 @@ knitr::opts_chunk$set (
 )
 ```
 
-The `deposits` package uses [an `R6` client](https://github.com/r-lib/R6) to
+The deposits package uses [an `R6` client](https://github.com/r-lib/R6) to
 interface with the individual deposition services. This vignette briefly
-explains explains the properties of a `deposits` client for those unfamiliar
+explains explains the properties of a deposits client for those unfamiliar
 with `R6` objects.
 
 ### R6 methods
 
-The `R6` package used to construct `deposits` clients here allows for
+The `R6` package used to construct deposits clients here allows for
 structured class objects in R. The objects include elements (such as variables)
 and methods, which for R are generally functions. A new client can be
-constructed with the `new` operator, which for `deposits` requires specifying
+constructed with the `new` operator, which for deposits requires specifying
 the service for which the client is to be constructed:
 
 ```{r new-cli, eval = FALSE}
@@ -40,7 +40,7 @@ cli <- depositsClient$new (service = "figshare")
 ```
 
 Additional functions are called in a similar way, using a `$`-notation, in the
-form `cli$deposit_function()`. The `deposits` package is constructed so that
+form `cli$deposit_function()`. The deposits package is constructed so that
 function calls constructed is this way will "automatically" update the object
 itself, and so generally do not need to be assigned to a return value. For
 example, the function `deposits_list()` updates the list of deposits on the

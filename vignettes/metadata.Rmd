@@ -23,7 +23,7 @@ knitr::opts_chunk$set (
 ```
 
 This vignette demonstrates procedures for specifying and validate metadata for
-the `deposits` package. This vignette will use metadata for the two "beaver"
+the deposits package. This vignette will use metadata for the two "beaver"
 datasets provided with R's ["datasets"
 package](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html).
 Relevant metadata for these datasets are given in the "Source" listed on that
@@ -53,12 +53,12 @@ specifications, in order to understand individual terms in a broader context.
 
 ## Metadata Validation
 
-Metadata in `deposits` are validated against [JSON
+Metadata in deposits are validated against [JSON
 schemas](https://json-schema.org), with the schema for the main "metadata"
 field contained in [the package's "dc/schema.json"
 file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
 This schema file includes detailed specifications for every metadata term used
-in `deposits`. The list of terms can also be viewed directly with [the
+in deposits. The list of terms can also be viewed directly with [the
 `dcmi_terms()`
 function](https://docs.ropensci.org/deposits/reference/dcmi_terms.html). This
 validation procedure is intended to issue instructive errors throughout when
@@ -96,7 +96,7 @@ stop (
 That error tells us that "author" is an additional property, and that the
 metadata "must NOT have additional properties."  These "additional properties"
 refer to any beyond those specified in the schema. The schema used to validate
-`deposits` metadata is contained in [the package's `dc/schema.json`
+deposits metadata is contained in [the package's `dc/schema.json`
 file](https://github.com/ropenscilabs/deposits/blob/main/inst/extdata/dc/schema.json).
 A copy of that file is included with each installation of this package in the
 location given by,
@@ -309,7 +309,7 @@ stop (
 That then fails because "created" must match the format "date-time", even
 though the main JSON schema clearly indicates that either date or date-time
 strings are acceptable. This error reflects the fact that validation of
-`deposits` metadata is a two-stage process. The metadata are first validated
+deposits metadata is a two-stage process. The metadata are first validated
 against the general JSON schema described above, then converted to formats
 expected for the nominated deposits service, and the result is then validated
 again against a service-specific JSON schema. In this case, the Zenodo service
@@ -336,11 +336,11 @@ Figshare deposit.
 ### Metadata to specify connections between deposits
 
 The schema permits many other fields, importantly including fields intended to
-be used by the `deposits` package to document and identify connections between
+be used by the deposits package to document and identify connections between
 different data resources. These include "hasPart", "hasVersion", "isPartOf",
 "isReferencedBy", "isReplacedBy", "isRequiredBy", and "isVersionOf". Specifying
 these allows one deposit to be connected to others. One of the aims of the
-`deposits` package is to facilitate specification of these kinds of metadata,
+deposits package is to facilitate specification of these kinds of metadata,
 and so to enhance an ability to inter-connect and inter-relate different data
 depositions, providing insight into a growing ecosystem of inter-connected
 deposits.
@@ -446,7 +446,7 @@ populated with appropriately-translated versions of the metadata.
 
 ## Metadata templates
 
-An alternative way to enter metadata into a `deposits` client is via a local
+An alternative way to enter metadata into a deposits client is via a local
 JSON metadata file. `depostis` includes the function,
 [`deposits_metadata_template()`](https://docs.ropensci.org/deposits/reference/deposits_metadata_template.html),
 which generates a local version of a complete template for all allowed metadata
@@ -509,7 +509,7 @@ of type "object", which in JSON are defined by curly brackets, `{ ... object
 contents ...}`.
 
 Those are the only two key aspects of JSON specification required to understand
-and use metadata templates in `deposits`:
+and use metadata templates in deposits:
 
 - A JSON "array" is defined within square brackets, and may contain any number
   of items: `[ ... array ...]`.
@@ -520,7 +520,7 @@ Both "array" and "object" items in JSON are represented in R terms as `list`s,
 so an array of objects simply becomes `list(list(...))`, as demonstrated in the
 first second of this vignette. (While this means that objects composed of
 arrays could cause confusion, these are relatively uncommon, and are not used
-in any of the JSON schemas within the `deposits`
+in any of the JSON schemas within the deposits
 package.)
 
 ### Valid JSON Files
@@ -548,14 +548,14 @@ Because "creator" is an "array", it may contain multiple unnamed items. In
 contrast, items within an "object" must generally be named, and schemas will
 generally expect single instances only of each item within an "object."
 Switching the square and curly brackets in that definition would invalidate the
-JSON file, and would trigger an error in `deposits`. 
+JSON file, and would trigger an error in deposits. 
 
 Errors in the validation of JSON files themselves are, however, nowhere near as
 informative as errors arising through comparing JSON files with schemas. If a
-JSON file is itself invalid, the errors shown by `deposits` will generally be
+JSON file is itself invalid, the errors shown by deposits will generally be
 uninformative. It is therefore very important to ensure that JSON metadata
 files are formatted  in a valid way. The easiest way to check validity before
-passing a metadata file to a `deposits` client is to use [the `validate()`
+passing a metadata file to a deposits client is to use [the `validate()`
 function of the `jsonlite`
 package](https://cran.r-project.org/package=jsonlite). This function requires a
 string input, so should be called as
@@ -597,7 +597,7 @@ Placing commas anywhere else, such as after the values, or at the end of
 
 As described in detail in [the "frictionless"
 vignette](https://docs.ropensci.org/deposits/articles/frictionless.html),
-`deposits` is designed to work seamlessly with [the "frictionless"
+deposits is designed to work seamlessly with [the "frictionless"
 workflow](https://frictionlessdata.io/), via rOpenSci's ["frictionless" R
 package](https://docs.ropensci.org/frictionless). For metadata, this means that
 as soon as a data resource is uploaded to a service (with [the
@@ -614,7 +614,7 @@ method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-
 In conclusion: from the moment your deposit has its own "datapackage.json"
 file, that should be considered the definitive record of all metadata. Any
 changes you may wish to make to those metadata should be made by directly
-editing that file, and `deposits` will update all corresponding local and
+editing that file, and deposits will update all corresponding local and
 remote records.
 
 After restarting an R session, a deposits client can be connected to  a local
@@ -628,7 +628,7 @@ cli <- depositsClient$new (
 )
 ```
 
-Equivalently, start an empty `deposits` client, and fill the metadata with [the
+Equivalently, start an empty deposits client, and fill the metadata with [the
 `deposit_fill_metadata()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-fill-metadata-):
 
