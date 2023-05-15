@@ -16,7 +16,8 @@ validate_metadata <- function (metadata, service) {
 
     return (list (
         dcmi = metadata_dcmi,
-        service = metadata_service
+        service = metadata_service,
+        local_path = attr (metadata_dcmi, "local_path")
     ))
 }
 
@@ -36,6 +37,7 @@ validate_dcmi_metadata <- function (metadata) {
     if (methods::is (metadata, "character")) {
         metadata <- deposits_meta_from_file (metadata)
     }
+    local_path <- attr (metadata, "local_path")
 
     # Align all metadata term names with DCMI names:
     nms <- vapply (
@@ -107,6 +109,8 @@ validate_dcmi_metadata <- function (metadata) {
         )
     }
 
+    attr (metadata, "local_path") <- local_path
+
     return (metadata)
 }
 
@@ -138,9 +142,11 @@ validate_service_metadata <- function (metadata, service) {
 
 deposits_meta_from_file <- function (filename = NULL, frictionless_json_name) {
 
+    local_path <- NULL # for local_path client field.
     checkmate::assert_character (filename, len = 1L)
     if (fs::is_dir (filename)) {
         # Only place where 'datapackage.json' is hard-coded:
+        local_path <- filename
         filename <- fs::path (filename, "datapackage.json")
     }
     checkmate::assert_file_exists (filename)
@@ -157,6 +163,8 @@ deposits_meta_from_file <- function (filename = NULL, frictionless_json_name) {
         meta <- meta$metadata
     }
     meta <- meta [which (lapply (meta, length) > 0L)]
+
+    attr (meta, "local_path") <- local_path
 
     return (meta)
 }
