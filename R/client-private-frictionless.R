@@ -114,9 +114,14 @@ depositsClient$set (
         path_dir <- fs::path_dir (path)
 
         if (fs::file_exists (local_dp_check$dp)) {
+            op <- options (
+                readr.show_progress = FALSE,
+                readr.show_col_types = FALSE
+            )
             suppressMessages (
                 dpj <- frictionless::read_package (local_dp_check$dp)
             )
+            options (op)
             if (!"metadata" %in% names (dpj)) {
                 update_remote <- private$add_meta_to_dp_json (path_dir)
                 # That method always returns 'TRUE'
@@ -168,9 +173,14 @@ depositsClient$set (
         }
 
         # -------- Update local version with new resources
+        op <- options (
+            readr.show_progress = FALSE,
+            readr.show_col_types = FALSE
+        )
         suppressMessages (
             dpj <- frictionless::read_package (local_dp_check$dp_local)
         )
+        options (op)
         resource_names <-
             vapply (dpj$resources, function (i) i$name, character (1L))
         new_resource_name <- fs::path_ext_remove (fs::path_file (path))
