@@ -136,6 +136,12 @@ or locally generated only through calling
 the frictionless data file can then be edited and updated as described in the
 following sub-section.
 
+Note that calling either of these methods connects the client to the local
+directory containing the "datapackage.json" file and other data files. Printing
+the client then produces additional information including a `local_path`
+identifying the directory, along with counts of both local and remote
+"resources" or files.
+
 
 ## Reading and editing "datapackage.json" files
 
@@ -198,17 +204,24 @@ vignette](https://docs.ropensci.org/deposits/articles/metadata.html).
 ## Updating "datapackage.json" on deposits service
 
 Any changes to a local "datapackage.json" file can be imported into a deposits
-client with [the `deposit_update()`
+client with the [`deposit_update()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-),
 which will also update the remote version of the "datapackage.json" file held
-on the deposits service. The `path` argument passed to that method can either
-be the path to the entire data directly, in which case all files which have
-been modified will be uploaded, or it can specify the path to the single
+on the deposits service. Because the initial
+[`deposit_upload_file()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
+and
+[`deposit_add_resource()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-add-resource-)
+methods both connected the client to the local directory containing the deposit
+data, the update method can be called directly without any parameters. Specific
+paths can nevertheless be passed to the [`deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-),
+to update only specified files while ignoring changes in any other files. For
+example, the `path` argument can specify the path to the single
 "datapackage.json" file, in which case only that file will be uploaded,
 regardless of any local modifications to other files.
 
 ```{r upload-datapackage, eval = FALSE}
-cli$deposit_update (path = dirname (path))
+cli$deposit_update ()
 #> Local file at [/tmp/Rtmp5QfAEc/data/beaver1.csv] is identical on host and will not be uploaded.
 #> Local file at [/tmp/Rtmp5QfAEc/data/datapackage.json] has changed and will now be uploaded.
 ```
