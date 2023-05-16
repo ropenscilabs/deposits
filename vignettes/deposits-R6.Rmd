@@ -102,11 +102,15 @@ intended to provide an overview all all implemented methods:
 cli$deposits_methods ()
 #> List of methods for a deposits client:
 #>
+#>    - deposit_add_resource
 #>    - deposit_delete
 #>    - deposit_delete_file
 #>    - deposit_download_file
+#>    - deposit_embargo
 #>    - deposit_fill_metadata
 #>    - deposit_new
+#>    - deposit_prereserve_doi
+#>    - deposit_publish
 #>    - deposit_retrieve
 #>    - deposit_service
 #>    - deposit_update
