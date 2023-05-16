@@ -458,7 +458,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (filename, len = 1L)
             if (is.null (path)) {
-                path <- fs::path (here::here ())
+                if (!is.null (self$local_path)) {
+                    message (
+                        "File will be downloaded to client 'local_path': [",
+                        self$local_path,
+                        "]"
+                    )
+                    path <- self$local_path
+                } else {
+                    path <- fs::path (here::here ())
+                }
             } else {
                 checkmate::assert_character (path, len = 1L)
                 checkmate::assert_directory_exists (path)
@@ -863,7 +872,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' not specified, the 'id' value of current deposits client is used.
         #' @param path (Optional) If given as path to single file, update that
         #' file on remote service. If given as a directory, update all files
-        #' within that directory on remote service. Only files for which local
+        #' within that directory on remote service. If not given, path will be
+        #' taken from client's "local_path" field. Only files for which local
         #' versions have been changed will be uploaded.
         #' @return (Invisibly) Updated deposits client.
 
@@ -886,6 +896,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     req$headers,
                     "Content-Type" = "application/json"
                 )
+            }
+
+            if (is.null (path) && !is.null (self$local_path)) {
+                path <- self$local_path
             }
 
             if (!is.null (path) && (fs::is_dir (path) ||
@@ -947,12 +961,14 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         #' @description Upload a local file or folder to an specified deposit,
         #' or update an existing version of file with new local version.
         #'
-        #' @param path Path to local file or folder to be uploaded. If the file
-        #' to be uploaded is able to be read as a tabular data file, an
-        #' associated \pkg{frictionless} "datapackage.json" file will also be
-        #' uploaded if it exists, or created if it does not. The metadata within
-        #' a client will also be used to fill or update any metadata within the
-        #' "datapackage.json" file.
+        #' @param path Either single file name or full path to local file or
+        #' folder to be uploaded. If a single file name, the path if taken from
+        #' the client's "local_path" field. If the file to be uploaded is able
+        #' to be read as a tabular data file, an associated \pkg{frictionless}
+        #' "datapackage.json" file will also be uploaded if it exists, or
+        #' created if it does not. The metadata within a client will also be
+        #' used to fill or update any metadata within the "datapackage.json"
+        #' file.
         #' @param deposit_id The 'id' number of deposit which file is to be
         #' uploaded to. If not specified, the 'id' value of current deposits
         #' client is used.
@@ -1010,6 +1026,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_int (deposit_id)
             checkmate::assert_character (path, len = 1L)
             if (!fs::is_dir (path)) {
+                is_filename <- length (fs::path_split (path) [[1]]) == 1L
+                if (is_filename && !is.null (self$local_path)) {
+                    path <- fs::path (self$local_path, path)
+                }
                 checkmate::assert_file_exists (path)
             }
 

@@ -649,7 +649,8 @@ not specified, the 'id' value of current deposits client is used.}
 
 \item{\code{path}}{(Optional) If given as path to single file, update that
 file on remote service. If given as a directory, update all files
-within that directory on remote service. Only files for which local
+within that directory on remote service. If not given, path will be
+taken from client's "local_path" field. Only files for which local
 versions have been changed will be uploaded.}
 }
 \if{html}{\out{</div>}}
@@ -677,12 +678,14 @@ or update an existing version of file with new local version.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{path}}{Path to local file or folder to be uploaded. If the file
-to be uploaded is able to be read as a tabular data file, an
-associated \pkg{frictionless} "datapackage.json" file will also be
-uploaded if it exists, or created if it does not. The metadata within
-a client will also be used to fill or update any metadata within the
-"datapackage.json" file.}
+\item{\code{path}}{Either single file name or full path to local file or
+folder to be uploaded. If a single file name, the path if taken from
+the client's "local_path" field. If the file to be uploaded is able
+to be read as a tabular data file, an associated \pkg{frictionless}
+"datapackage.json" file will also be uploaded if it exists, or
+created if it does not. The metadata within a client will also be
+used to fill or update any metadata within the "datapackage.json"
+file.}
 
 \item{\code{deposit_id}}{The 'id' number of deposit which file is to be
 uploaded to. If not specified, the 'id' value of current deposits

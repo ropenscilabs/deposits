@@ -97,8 +97,13 @@ depositsClient$set ("private", "remove_dcmi2host", function () {
     private$metadata_service <- metadata$service
 
     # That service data will then *not* have the 'dcmi2host' field inserted, so
-    # can be used to update directly.
+    # can be used to update directly. The "local_path" variable has to be
+    # temporarily removed here to prevent update from erroring because
+    # additional local files do not exist on remote deposit.
+    local_path <- self$local_path
+    self$local_path <- NULL
     self$deposit_update ()
+    self$local_path <- local_path
 
     invisible (self)
 })
