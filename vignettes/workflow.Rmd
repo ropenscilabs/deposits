@@ -132,17 +132,39 @@ bv2 <- file.path (beaver_dir, "beaver2.csv")
 write.csv (datasets::beaver1, bv2, row.names = FALSE)
 ```
 
-We can then connect the deposits client with that local directory with [the
-`deposit_add_resource()`
+We can then connect the deposits client with that local directory with the
+[`deposit_add_resource()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-add-resource-):
 
 ```{r add_resource, eval = FALSE}
 cli$deposit_add_resource (beaver_dir)
 ```
 
-Calling that method also writes a ["frictionless" metadata
+Printing the client, by typing `print(cli)`, or simply `cli`, then reveals that
+it has been connected with the local directory holding those data:
+
+```{r add-resource-print, eval = FALSE}
+print (cli)
+#> <deposits client>
+#> deposits service : zenodo
+#>           sandbox: TRUE
+#>         url_base : https://sandbox.zenodo.org/api/
+#> Current deposits : <none>
+#>
+#>   hostdata : <none>
+#>   metadata : 6 terms (see 'metadata' element for details)
+#> local_path : /tmp/RtmpPru5st/beaver
+#>  resources : 2 local, 0 remote
+```
+
+
+### Frictionless metadata
+
+Calling the [`deposit_add_resource()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-add-resource-):
+the first time also writes a ["frictionless" metadata
 file](https://docs.ropensci.org/deposits/articles/frictionless.html#local-generation)
-to the directory:
+to the `local_path` directory:
 
 ```{r fake-dp, echo = FALSE}
 write.csv (beaver1, file.path (beaver_dir, "datapackage.json"), row.names = FALSE)
@@ -257,6 +279,8 @@ print (cli)
 #>   deposit id : 1065666
 #>     hostdata : list with 14  elements
 #>     metadata : 7 terms (see 'metadata' element for details)
+#>   local_path : /tmp/RtmpMd4uB8/beaver
+#>    resources : 2 local, 0 remote
 ```
 
 The client now contains additional "hostdata" elements, containing all data
@@ -361,7 +385,7 @@ version of that file will also be updated.
 In short, [the `deposit_upload_file()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-upload-file-)
 is only needed to initially upload files (or directories). Once files exist on
-the remote deposits service, the The [`deposit_update()`
+the remote deposits service, the [`deposit_update()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
 can be used to automatically upload any modified files to the service.
 
