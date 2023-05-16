@@ -374,9 +374,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # Finally remove 'id' if that's been set
             if (!is.null (self$id)) {
                 if (self$id == deposit_id) {
-                    self$id <- self$hostdata <- NULL
+                    self$id <- self$hostdata <- self$url_service <- NULL
                 }
             }
+
+            private$num_resources_remote <- 0L
+            private$count_num_resources () # Will still count local resources
 
             invisible (self)
         },

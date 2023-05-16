@@ -493,6 +493,7 @@ depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
 depositsClient$set ("private", "count_num_resources", function () {
 
     if (is.null (self$local_path) && is.null (self$hostdata$files)) {
+        private$num_resources_local <- private$num_resources_remote <- 0L
         return (invisible (self))
     }
 
