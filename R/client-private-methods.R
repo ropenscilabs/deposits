@@ -274,7 +274,7 @@ depositsClient$set (
 
 compress_local_file <- function (path, compress) {
 
-    if (compress == "tar") {
+    if (compress %in% c ("tar", "rpkg")) {
         file_ext <- ".tar.gz"
     } else if (compress == "zip") {
         file_ext <- ".zip"
@@ -288,13 +288,16 @@ compress_local_file <- function (path, compress) {
             "] already exists; will not be re-created."
         )
     } else if (compress == "tar") {
-        withr::with_dir (path, tar (binfile, compression = "gzip"))
+        binfile <- withr::with_dir (path, tar (binfile, compression = "gzip"))
     } else if (compress == "zip") {
         # Update flags from ?zip to add 'q' to suppress verbose output
-        withr::with_dir (
+        binfile <- withr::with_dir (
             path,
             zip (binfile, files = fs::dir_ls (), flags = "-r9Xq")
         )
+    } else if (compress == "rpkg") {
+        requireNamespace ("pkgbuild")
+        binfile <- withr::with_dir (path, pkgbuild::build (vignettes = FALSE))
     }
 
     return (binfile)

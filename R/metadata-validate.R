@@ -152,19 +152,22 @@ deposits_meta_from_file <- function (filename = NULL,
 
     local_path <- NULL # for local_path client field.
     checkmate::assert_character (filename, len = 1L)
-    is_dcf <- FALSE
+    file_is_dcf <- FALSE
     if (fs::is_dir (filename)) {
         # Only place where 'datapackage.json' is hard-coded:
         local_path <- filename
         filename <- fs::path (filename, "datapackage.json")
         if (!fs::file_exists (filename)) {
             filename <- dcf_path (local_path)
-            is_dcf <- fs::file_exists (filename)
+            file_is_dcf <- fs::file_exists (filename)
         }
+    } else {
+        file_is_dcf <- is_dcf (filename)
+        local_path <- fs::path_dir (filename)
     }
     checkmate::assert_file_exists (filename)
 
-    if (is_dcf) {
+    if (file_is_dcf) {
 
         # Current presumed only to be the 'DESCRIPTION' file of an R package:
         filename <- dcf_path (filename)

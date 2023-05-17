@@ -1042,6 +1042,10 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 fs::dir_copy (path, td)
                 td <- fs::path (td, fs::path_file (path))
 
+                if (is_dcf (path) && compress == "tar") {
+                    compress <- "rpkg"
+                }
+
                 path_compressed <- compress_local_file (td, compress)
                 private$upload_local_file (
                     path_compressed,
