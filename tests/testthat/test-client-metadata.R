@@ -160,3 +160,21 @@ test_that ("figshare metadata terms", {
         "Stopping because the DCMI metadata terms listed above do not conform"
     )
 })
+
+test_that ("meta from DESCRIPTION file", {
+
+    desc <- system.file ("DESCRIPTION", package = "deposits")
+    tdir <- fs::file_temp (pattern = "pkg")
+    fs::dir_create (tdir)
+    fs::file_copy (desc, tdir)
+    desc <- data.frame (read.dcf (desc))
+
+    meta <- validate_metadata (tdir, service = "zenodo")
+    dcmi <- meta$dcmi
+    expect_equal (dcmi$title, desc$Title)
+    expect_equal (dcmi$license, desc$License)
+    # dcmi$Description has Version appended
+    expect_false (identical (dcmi$description, desc$Description))
+    expect_true (grepl ("Version", dcmi$description))
+    expect_false (grepl ("Version", desc$Description))
+})
