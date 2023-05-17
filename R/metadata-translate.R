@@ -229,7 +229,7 @@ parse_multi_src_string <- function (metadata, m, tr_full) {
         targets <- grep ("^\\#+", content)
     }
 
-    what <- gsub ("^\\#+\\s?", "", content [targets])
+    what <- tolower (gsub ("^\\#+\\s?", "", content [targets]))
     index <- which (what %in% tr_full$target)
     targets <- targets [index]
     what <- what [index]
