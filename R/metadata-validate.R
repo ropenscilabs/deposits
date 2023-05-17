@@ -10,7 +10,7 @@
 #' @noRd
 validate_metadata <- function (metadata, service) {
 
-    metadata_dcmi <- validate_dcmi_metadata (metadata)
+    metadata_dcmi <- validate_dcmi_metadata (metadata, service)
     metadata_service <-
         translate_dc_to_service (metadata_dcmi, service = service)
 
@@ -30,14 +30,16 @@ validate_metadata <- function (metadata, service) {
 #' items, and thus neither does this function.
 #'
 #' @param metadata Metadata as a list or filename.
+#' @param service Name of deposits service; only used if 'metadata' is path to
+#' a 'DESCIPTION' file.
 #' @return A list of metadata terms, standardised to expected DCMI nomenclature.
 #'
 #' @noRd
-validate_dcmi_metadata <- function (metadata) {
+validate_dcmi_metadata <- function (metadata, service) {
 
     num_resources_local <- 0L
     if (methods::is (metadata, "character")) {
-        metadata <- deposits_meta_from_file (metadata)
+        metadata <- deposits_meta_from_file (metadata, service = service)
         num_resources_local <- attr (metadata, "num_resources_local")
     }
     local_path <- attr (metadata, "local_path")
@@ -144,34 +146,62 @@ validate_service_metadata <- function (metadata, service) {
     return (res)
 }
 
-deposits_meta_from_file <- function (filename = NULL, frictionless_json_name) {
+deposits_meta_from_file <- function (filename = NULL,
+                                     frictionless_json_name,
+                                     service = NULL) {
 
     local_path <- NULL # for local_path client field.
     checkmate::assert_character (filename, len = 1L)
+    is_dcf <- FALSE
     if (fs::is_dir (filename)) {
         # Only place where 'datapackage.json' is hard-coded:
         local_path <- filename
         filename <- fs::path (filename, "datapackage.json")
+        if (!fs::file_exists (filename)) {
+            filename <- dcf_path (local_path)
+            is_dcf <- fs::file_exists (filename)
+        }
     }
     checkmate::assert_file_exists (filename)
 
-    meta <- readLines (filename)
-    check <- jsonlite::validate (meta)
-    if (!check) {
-        stop ("json is not valid.")
-    }
+    if (is_dcf) {
 
-    num_resources_local <- 0L
-    meta <- jsonlite::read_json (filename)
-    if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
-        # datapackage.json:
-        num_resources_local <- length (meta$resources)
-        meta <- meta$metadata
-    }
-    meta <- meta [which (lapply (meta, length) > 0L)]
+        # Current presumed only to be the 'DESCRIPTION' file of an R package:
+        filename <- dcf_path (filename)
+        descfile <- data.frame (read.dcf (filename))
+        meta <- list (
+            title = descfile$Title,
+            description = paste0 (
+                descfile$Description,
+                "\n## Version\n", descfile$Version
+            ),
+            creator = desc_creators (descfile, service = service),
+            license = desc_license (descfile, service = service),
+            format = "software"
+        )
 
+        attr (meta, "num_resources_local") <- 0
+
+    } else {
+
+        meta <- readLines (filename)
+        check <- jsonlite::validate (meta)
+        if (!check) {
+            stop ("json is not valid.")
+        }
+
+        num_resources_local <- 0L
+        meta <- jsonlite::read_json (filename)
+        if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
+            # datapackage.json:
+            num_resources_local <- length (meta$resources)
+            meta <- meta$metadata
+        }
+        meta <- meta [which (lapply (meta, length) > 0L)]
+
+        attr (meta, "num_resources_local") <- num_resources_local
+    }
     attr (meta, "local_path") <- local_path
-    attr (meta, "num_resources_local") <- num_resources_local
 
     return (meta)
 }

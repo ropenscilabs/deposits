@@ -83,7 +83,7 @@ translate_service_to_dc <- function (metadata, service) {
     )
     metadata <- concatenate_multiple_targets (metadata, translations)
 
-    metadata <- validate_dcmi_metadata (metadata)
+    metadata <- validate_dcmi_metadata (metadata, service)
 
     return (metadata)
 }

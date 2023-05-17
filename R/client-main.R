@@ -147,7 +147,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             # If no 'service' specified, see if it is in 'metadata':
             if (!is.null (metadata)) {
-                metadata_dcmi <- validate_dcmi_metadata (metadata)
+                metadata_dcmi <- validate_dcmi_metadata (metadata, service)
                 service_tmp <- service_from_metadata (metadata_dcmi, service)
                 if (missing (service)) {
                     service <- service_tmp
