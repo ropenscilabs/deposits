@@ -276,10 +276,8 @@ compress_local_file <- function (path, compress) {
 
     if (compress == "tar") {
         file_ext <- ".tar.gz"
-        fn <- tar
     } else if (compress == "zip") {
         file_ext <- ".zip"
-        fn <- zip
     }
 
     binfile <- fs::path_ext_set (path, file_ext)
@@ -289,8 +287,14 @@ compress_local_file <- function (path, compress) {
             binfile,
             "] already exists; will not be re-created."
         )
-    } else {
-        do.call (fn, list (binfile, files = path))
+    } else if (compress == "tar") {
+        withr::with_dir (path, tar (binfile, compression = "gzip"))
+    } else if (compress == "zip") {
+        # Update flags from ?zip to add 'q' to suppress verbose output
+        withr::with_dir (
+            path,
+            zip (binfile, files = fs::dir_ls (), flags = "-r9Xq")
+        )
     }
 
     return (binfile)
