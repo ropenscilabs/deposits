@@ -168,7 +168,7 @@ test_that ("figshare metadata terms", {
 
 test_that ("meta from DESCRIPTION file", {
 
-    desc <- system.file ("DESCRIPTION", package = "deposits")
+    desc <- system.file ("DESCRIPTION", package = "methods")
     tdir <- fs::file_temp (pattern = "pkg")
     fs::dir_create (tdir)
     fs::file_copy (desc, tdir)
