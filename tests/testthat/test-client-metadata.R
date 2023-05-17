@@ -104,7 +104,8 @@ test_that ("zenodo metadata terms", {
     )
 
     metadata_dcmi <- validate_dcmi_metadata (metadata)
-    metadata_service <- validate_service_metadata (metadata_dcmi, service = "zenodo")
+    metadata_service <-
+        validate_service_metadata (metadata_dcmi, service = "zenodo")
 
     metadata_dcmi$owner <- "me" # should be integer
     metadata_dcmi$state <- "notinvocab" # vocab=(inprogress|done|error)
@@ -119,7 +120,8 @@ test_that ("zenodo metadata terms", {
     metadata_dcmi$owner <- 1L
     metadata_dcmi$state <- "done" # vocab=(inprogress|done|error)
     expect_silent (
-        metadata <- validate_service_metadata (metadata_dcmi, service = "zenodo")
+        metadata <-
+            validate_service_metadata (metadata_dcmi, service = "zenodo")
     )
 })
 
@@ -133,7 +135,8 @@ test_that ("figshare metadata terms", {
     )
     metadata_dcmi <- validate_dcmi_metadata (metadata)
     expect_silent (
-        metadata_service <- validate_service_metadata (metadata_dcmi, service = "figshare")
+        metadata_service <-
+            validate_service_metadata (metadata_dcmi, service = "figshare")
     )
 
     metadata$license <- "MIT"
