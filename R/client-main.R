@@ -1025,49 +1025,74 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (is.null (deposit_id)) {
                 deposit_id <- self$id
             }
-
             checkmate::assert_int (deposit_id)
-            checkmate::assert_character (path, len = 1L)
-            if (!fs::is_dir (path)) {
-                is_filename <- length (fs::path_split (path) [[1]]) == 1L
-                if (is_filename && !is.null (self$local_path)) {
-                    path <- fs::path (self$local_path, path)
-                }
-                checkmate::assert_file_exists (path)
-            }
 
-            path <- fs::path_real (path)
-
-            if (!fs::is_dir (path)) {
-
-                self <- private$upload_local_file (path, overwrite, compress)
-                # Create "datapackage.json" if it does not exist, or download
-                # remote if only that exists. Either way, local version is then
-                # the most up-to-date version.
-                if (fs::path_file (path) != private$frictionless_json_name) {
-                    self <- private$update_frictionless (
-                        path,
-                        overwrite = overwrite
+            if (is.null (path)) {
+                # Upload entire directory in compressed format
+                if (compress == "no") {
+                    stop (
+                        "Entire directories can only be uploaded in compressed format",
+                        call. = FALSE
                     )
                 }
+                path <- self$local_path
 
-                path <- fs::path_dir (path)
+                td <- fs::file_temp (pattern = "deposits_temppath_")
+                fs::dir_create (td)
+                fs::dir_copy (path, td)
+                td <- fs::path (td, fs::path_file (path))
+
+                path_compressed <- compress_local_file (td, compress)
+                private$upload_local_file (
+                    path_compressed,
+                    overwrite = TRUE,
+                    compress = "no"
+                )
 
             } else {
 
-                flist <- fs::dir_ls (path)
-                flist <- flist [which (!grepl ("datapackage\\.json$", flist))]
-                for (f in flist) {
-                    self <- private$upload_local_file (
-                        f,
-                        overwrite,
-                        compress
-                    )
-                    self <- private$update_frictionless (
-                        f,
-                        overwrite = TRUE
-                        # force updates after new resources added.
-                    )
+                checkmate::assert_character (path, len = 1L)
+                if (!fs::is_dir (path)) {
+                    is_filename <- length (fs::path_split (path) [[1]]) == 1L
+                    if (is_filename && !is.null (self$local_path)) {
+                        path <- fs::path (self$local_path, path)
+                    }
+                    checkmate::assert_file_exists (path)
+                }
+
+                path <- fs::path_real (path)
+
+                if (!fs::is_dir (path)) {
+
+                    self <- private$upload_local_file (path, overwrite, compress)
+                    # Create "datapackage.json" if it does not exist, or download
+                    # remote if only that exists. Either way, local version is then
+                    # the most up-to-date version.
+                    if (fs::path_file (path) != private$frictionless_json_name) {
+                        self <- private$update_frictionless (
+                            path,
+                            overwrite = overwrite
+                        )
+                    }
+
+                    path <- fs::path_dir (path)
+
+                } else {
+
+                    flist <- fs::dir_ls (path)
+                    flist <- flist [which (!grepl ("datapackage\\.json$", flist))]
+                    for (f in flist) {
+                        self <- private$upload_local_file (
+                            f,
+                            overwrite,
+                            compress
+                        )
+                        self <- private$update_frictionless (
+                            f,
+                            overwrite = TRUE
+                            # force updates after new resources added.
+                        )
+                    }
                 }
             }
 
