@@ -81,6 +81,10 @@ desc_authors <- function (desc) {
         res$orcid [index] <- orcid
     }
 
+    if (all (nzchar (res$role))) {
+        res <- res [grep ("aut", res$role), ]
+    }
+
     return (res)
 }
 
