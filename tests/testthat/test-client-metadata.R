@@ -56,22 +56,24 @@ test_that ("client with metadata", {
         depositsClient$new (service, sandbox = TRUE, metadata = filename)
     })
 
-    # clients are not identical because calling environments differ.
-    expect_equal (cli1, cli2)
+    # clients differ because cli2 has "local_path"
+    n1 <- length (capture.output (print (cli1)))
+    n2 <- length (capture.output (print (cli2)))
+    expect_true (n2 > n1)
 
     meta <- deposits_meta_from_file (filename)
     cli3 <- with_mock_dir ("meta-new3", {
         depositsClient$new (service, sandbox = TRUE, metadata = meta)
     })
 
-    expect_equal (cli1, cli3)
+    expect_equal (cli2, cli3)
 
     cli4 <- with_mock_dir ("meta-new4", {
         depositsClient$new (service, sandbox = TRUE)
     })
     cli4$deposit_fill_metadata (meta)
 
-    expect_equal (cli1, cli4)
+    expect_equal (cli2, cli4)
 })
 
 test_that ("client with invalid metadata", {
