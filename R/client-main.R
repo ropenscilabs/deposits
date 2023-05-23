@@ -871,6 +871,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         #' @description Update a remote (online) deposit with local metadata.
         #'
+        #' @note This method is generally intended to be used for private
+        #' deposits; that is, to edit deposits prior to publication. It is
+        #' nevertheless possible to edit published deposits on Zenodo, and this
+        #' method will do so if called on a public Zenodo deposit. The updated
+        #' data and/or metadata will not be publicly visible until the deposit
+        #' is again published with the `deposit_publish()` method.
+        #'
         #' @param deposit_id (Optional) The 'id' number of deposit to update. If
         #' not specified, the 'id' value of current deposits client is used.
         #' @param path (Optional) If given as path to single file, update that
@@ -930,6 +937,28 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 httptest2_hostdata_timestamps (metadata_service, self$service)
 
             if (!is.null (deposit_id)) {
+
+                # Unlock Zenodo deposit for editing if needed:
+                if (gsub ("\\-sandbox$", "", self$service) == "zenodo" &&
+                    !is.null (self$hostdata)) {
+                    if (self$hostdata$state == "done") {
+
+                        url <- get_service_url (self, deposit_id = deposit_id)
+                        url <- paste0 (url, "/actions/edit")
+                        req <- create_httr2_helper (
+                            url,
+                            self$headers$Authorization,
+                            "POST"
+                        )
+                        resp <- httr2::req_perform (req)
+                        httr2::resp_check_status (resp)
+                        message (
+                            "Previously published deposit [",
+                            deposit_id,
+                            "] unlocked for editing."
+                        )
+                    }
+                }
 
                 req <- httr2::req_body_json (req, data = metadata_service)
 

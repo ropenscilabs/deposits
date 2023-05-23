@@ -12,6 +12,14 @@ currently including Figshare and Zenodo. Use of a 'deposits' client is
 controlled by the methods listed below. Those looking for help with client
 usage are advised to head to that section.
 }
+\note{
+This method is generally intended to be used for private
+deposits; that is, to edit deposits prior to publication. It is
+nevertheless possible to edit published deposits on Zenodo, and this
+method will do so if called on a public Zenodo deposit. The updated
+data and/or metadata will not be publicly visible until the deposit
+is again published with the \code{deposit_publish()} method.
+}
 \examples{
 \dontrun{
 # make a client
