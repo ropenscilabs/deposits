@@ -57,7 +57,7 @@ depositsClient$set ("private", "embargo_zenodo", function (embargo_date) {
 
 depositsClient$set ("private", "publish_zenodo", function () {
 
-    url <- paste0 (get_service_url (self), "/", self$id, "/publish")
+    url <- paste0 (get_service_url (self), "/", self$id, "/actions/publish")
     req <- create_httr2_helper (url, self$headers$Authorization, "POST")
     resp <- httr2::req_perform (req)
 
