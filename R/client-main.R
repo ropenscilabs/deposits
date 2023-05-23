@@ -1060,7 +1060,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 # Upload entire directory in compressed format
                 if (compress == "no") {
                     stop (
-                        "Entire directories can only be uploaded in compressed format",
+                        "Entire directories can only be ",
+                        "uploaded in compressed format",
                         call. = FALSE
                     )
                 }
@@ -1097,11 +1098,17 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
                 if (!fs::is_dir (path)) {
 
-                    self <- private$upload_local_file (path, overwrite, compress)
-                    # Create "datapackage.json" if it does not exist, or download
-                    # remote if only that exists. Either way, local version is then
-                    # the most up-to-date version.
-                    if (fs::path_file (path) != private$frictionless_json_name) {
+                    self <- private$upload_local_file (
+                        path,
+                        overwrite,
+                        compress
+                    )
+                    # Create "datapackage.json" if it does not exist, or
+                    # download remote if only that exists. Either way, local
+                    # version is then the most up-to-date version.
+                    if (fs::path_file (path) !=
+                        private$frictionless_json_name) {
+
                         self <- private$update_frictionless (
                             path,
                             overwrite = overwrite
@@ -1113,7 +1120,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 } else {
 
                     flist <- fs::dir_ls (path)
-                    flist <- flist [which (!grepl ("datapackage\\.json$", flist))]
+                    flist <-
+                        flist [which (!grepl ("datapackage\\.json$", flist))]
                     for (f in flist) {
                         self <- private$upload_local_file (
                             f,
