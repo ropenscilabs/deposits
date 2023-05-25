@@ -355,7 +355,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
             checkmate::assert_int (deposit_id)
 
-            url <- get_service_url (self, deposit_id = deposit_id)
+            url <- get_service_url (
+                self,
+                deposit_id = deposit_id,
+                private = TRUE
+            )
 
             req <- create_httr2_helper (
                 url,
@@ -649,7 +653,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             # Insert 'self$metadata' into host parameter (#65):
             private$dcmi2host ()
 
-            url <- get_service_url (self)
+            url <- get_service_url (self, private = TRUE)
 
             req <- create_httr2_helper (url, self$headers$Authorization, "POST")
             req <- httr2::req_body_json (req, data = private$metadata_service)
@@ -777,7 +781,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             checkmate::assert_int (deposit_id)
 
-            url <- get_service_url (self, deposit_id = deposit_id)
+            url <- get_service_url (
+                self,
+                deposit_id = deposit_id,
+                private = FALSE
+            )
 
             req <- create_httr2_helper (url, self$headers$Authorization, "GET")
             resp <- httr2::req_perform (req)
@@ -895,7 +903,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!is.null (deposit_id)) {
                 checkmate::assert_int (deposit_id)
 
-                url <- get_service_url (self, deposit_id = deposit_id)
+                url <- get_service_url (self, deposit_id = deposit_id, private = TRUE)
 
                 req <- create_httr2_helper (
                     url,

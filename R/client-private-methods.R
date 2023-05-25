@@ -393,7 +393,7 @@ depositsClient$set ("private", "prereserve_doi", function (id) {
         return (NULL)
     }
 
-    url <- paste0 (get_service_url (self), "/", id, "/reserve_doi")
+    url <- paste0 (get_service_url (self, private = TRUE), "/", id, "/reserve_doi")
     req <- create_httr2_helper (url, self$headers$Authorization, "POST")
 
     resp <- httr2::req_perform (req)
