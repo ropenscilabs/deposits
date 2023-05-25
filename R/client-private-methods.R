@@ -45,7 +45,7 @@ depositsClient$set ("private", "fill_service_id_url", function () {
             )
     } else if (self$service == "zenodo") {
         self$id <- self$hostdata$id
-        self$url_service <- self$hostdata$links$html
+        self$url_service <- self$hostdata$links$latest_html
     }
 
     invisible (self)
