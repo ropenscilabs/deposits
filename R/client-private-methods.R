@@ -148,7 +148,8 @@ depositsClient$set (
         file_exists <- path_no_ext %in% current_files_no_ext
 
         if (file_exists && compress == "no") {
-            remote_file <- current_files [match (path_no_ext, current_files_no_ext)]
+            remote_file <-
+                current_files [match (path_no_ext, current_files_no_ext)]
             compress <- compress_from_filename (remote_file)
         }
         if (compress != "no") {
