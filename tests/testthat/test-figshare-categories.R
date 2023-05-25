@@ -1,3 +1,7 @@
+# This envvar turns off the interactive readline parts of the
+# figshare_categories function.
+Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
+
 test_that ("figsahre categories", {
 
     cats <- figshare_categories ()
