@@ -1115,6 +1115,16 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
                 path <- fs::path_real (path)
 
+                if (is_dcf (path)) {
+                    warning (
+                        "'path' should generally not be specified for ",
+                        "uploading software; calling again without path will",
+                        "upload the entire repository as a single compressed ",
+                        "file.",
+                        call. = FALSE
+                    )
+                }
+
                 if (!fs::is_dir (path)) {
 
                     self <- private$upload_local_file (
