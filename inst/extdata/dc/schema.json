@@ -803,9 +803,28 @@
         },
         "subject": {
             "description": "A topic of the resource. Recommended practice is to refer to the subject with a URI. If this is not possible or feasible, a literal value that identifies the subject may be provided. Both should preferably refer to a subject in a controlled vocabulary.",
-            "oneOf": [
+            "anyOf": [
                 {
                     "type": "string"
+                },
+                {
+                    "description": "Figshare array of keywords and/or categories; use 'deposits::figshare_categories()' to select.",
+                    "type": "object",
+                    "properties": {
+                        "categories": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "keywords": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
                 },
                 {
                     "description": "Zenodo array of keywords",
