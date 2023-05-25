@@ -77,11 +77,12 @@
             }
         },
         "custom_fields": {
+            "description": "These are not permitted for individual items. https://help.figshare.com/admin-faq states under 'Does Figshare support metadata per item type?' that 'custom fiels can only be set at the group level, not according to item type.'",
             "_info": { "type": "object" },
             "additionalProperties": { "type": "string" }
         },
         "custom_fields_list": {
-            "description": "Supersedes 'custom_fields'",
+            "description": "Supersedes 'custom_fields'. These are not permitted for individual items. https://help.figshare.com/admin-faq states under 'Does Figshare support metadata per item type?' that 'custom fiels can only be set at the group level, not according to item type.'",
             "type": "array",
             "items": {
                 "name": "string",

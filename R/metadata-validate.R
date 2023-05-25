@@ -14,6 +14,18 @@ validate_metadata <- function (metadata, service) {
     metadata_service <-
         translate_dc_to_service (metadata_dcmi, service = service)
 
+    if (service == "figshare" &&
+        any (c ("custom_fields", "custom_fields_list") %in%
+            names (metadata_service))) {
+        stop (
+            "Figshare does not currently allow custom fields ",
+            "for individual items. See ",
+            "https://help.figshare.com/admin-faq under ",
+            "'Does Figshare support metadata per item type?'",
+            call. = FALSE
+        )
+    }
+
     return (list (
         dcmi = metadata_dcmi,
         service = metadata_service,
