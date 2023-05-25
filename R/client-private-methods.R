@@ -243,9 +243,25 @@ depositsClient$set (
             files_no_ext <- gsub ("\\.tar$", "", files_no_ext)
         }
 
-        flocal <- fs::path_abs (path)
-        if (fs::is_dir (path)) {
-            flocal <- fs::dir_ls (path)
+        if (is_dcf (path)) { # description file
+
+            # code from main 'upload_local_file' method, which shouild be put in
+            # separate utils fn.
+            if (!fs::is_dir (path)) {
+                path <- fs::path_dir (path)
+            }
+            td <- fs::file_temp (pattern = "deposits_temppath_")
+            fs::dir_create (td)
+            fs::dir_copy (path, td)
+            td <- fs::path (td, fs::path_file (path))
+
+            flocal <- compress_local_file (td, compress = "rpkg")
+        } else {
+
+            flocal <- fs::path_abs (path)
+            if (fs::is_dir (path)) {
+                flocal <- fs::dir_ls (path)
+            }
         }
 
         for (f in flocal) {
@@ -266,6 +282,9 @@ depositsClient$set (
 
             f_remote <- files [match (f_no_ext, files_no_ext)]
             compress <- compress_from_filename (f_remote)
+            if (is_dcf (path)) {
+                compress <- "no"
+            }
 
             private$upload_local_file (f, overwrite = TRUE, compress = compress)
         }

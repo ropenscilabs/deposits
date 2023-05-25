@@ -252,7 +252,7 @@ depositsClient$set ("private", "compare_dpjson_to_meta", function (path) {
     }
     path_json <- fs::path (path, private$frictionless_json_name)
     if (!fs::file_exists (path_json)) {
-        return (invisible (client))
+        return (invisible (self))
     }
 
     op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
