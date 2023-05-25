@@ -195,6 +195,13 @@ deposits_meta_from_file <- function (filename = NULL,
             format = "software"
         )
 
+        fs_cat <- grep ("figsharecategor", names (descfile), ignore.case = TRUE)
+        if (service == "figshare" && length (fs_cat) == 1L) {
+            cats <- strsplit (descfile [[fs_cat]], split = ",")
+            cats <- as.integer (cats [[1]])
+            meta$subject <- list (categories = as.list (cats))
+        }
+
         attr (meta, "num_resources_local") <- 0
 
     } else {

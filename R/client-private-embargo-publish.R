@@ -110,6 +110,17 @@ depositsClient$set (
 
 depositsClient$set ("private", "publish_figshare", function () {
 
+    if (length (cli$hostdata$categories) == 0L) {
+        stop (
+            "To be published, Figshare articles must specify at least ",
+            "one category prior to publication. These must be specified ",
+            "as integers, obtainable from the `figshare_categories()` ",
+            "function, and added in the metadata item 'subject' as: ",
+            "'metadata$subject = list (categories = list (<id1>,<id2>)).",
+            call. = FALSE
+        )
+    }
+
     url <- paste0 (get_service_url (self), "/", self$id, "/publish")
     req <- create_httr2_helper (url, self$headers$Authorization, "POST")
     resp <- httr2::req_perform (req)
