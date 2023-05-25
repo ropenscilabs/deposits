@@ -10,7 +10,7 @@ depositsClient$set ("private", "dcmi2host", function () {
 
     meta_json <- jsonlite::toJSON (self$metadata, auto_unbox = TRUE)
     meta_json <- paste0 (
-        "\\n---start-deposits-meta---\\n",
+        "\\n\\n---start-deposits-meta---\\n",
         paste0 (meta_json),
         "\\n---end-deposits-meta---\\n"
     )

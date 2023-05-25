@@ -184,11 +184,13 @@ deposits_meta_from_file <- function (filename = NULL,
         # Current presumed only to be the 'DESCRIPTION' file of an R package:
         filename <- dcf_path (filename)
         descfile <- data.frame (read.dcf (filename))
+        desc <- strsplit (descfile$Description, "\\n") [[1]]
+        desc <- paste0 (desc, collapse = " ")
         meta <- list (
             title = descfile$Title,
             description = paste0 (
-                descfile$Description,
-                "\n## Version\n", descfile$Version
+                desc,
+                "\\n\\n## Version\\n", descfile$Version
             ),
             creator = desc_creators (descfile, service = service),
             license = desc_license (descfile, service = service),
