@@ -1,4 +1,3 @@
-
 #' Get URL of deposit service
 #'
 #' @param cli Deposits client with 'url_base' and 'service' fields.
@@ -10,13 +9,22 @@
 
 get_service_url <- function (cli, deposit_id = NULL) {
 
-    url <- paste0 (
-        cli$url_base,
-        ifelse (cli$service == "figshare",
-            "account/articles",
-            "deposit/depositions"
-        )
-    )
+    subdom <- ""
+    if (cli$service == "figshare") {
+
+        subdom <- "articles" # public articles
+        if (!is.null (deposit_id) && !is.null (cli$deposits$id)) {
+            if (deposit_id %in% cli$deposits$id) {
+                subdom <- "account/articles" # private articles
+            }
+        }
+
+    } else if (cli$service == "zenodo") {
+
+        subdom <- "deposit/depositions"
+    }
+
+    url <- paste0 (cli$url_base, subdom)
 
     if (!is.null (deposit_id)) {
         checkmate::assert_int (deposit_id)
