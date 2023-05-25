@@ -65,6 +65,12 @@ figshare_categories <- function () {
         return (res_i)
     })
 
+    if (!interactive () || is_deposits_test_env ()) {
+        out <- lapply (res, function (i) do.call (rbind, i))
+        return (do.call (rbind, out))
+    }
+
+    # ------ Interactive readline code to select category: ------
     message (
         "Choose a number corresponding to one of the ",
         "following categorical groups:"
