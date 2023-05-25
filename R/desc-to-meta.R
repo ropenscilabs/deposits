@@ -124,7 +124,35 @@ desc_creators <- function (desc, service) {
 desc_license <- function (desc, service) {
 
     if (service == "figshare") {
-        return (NULL)
+        # url <- "https://api.figshare.com/v2/licenses"
+        # cli <- depositsClient$new (service = "figshare")
+        # req <- create_httr2_helper (url, cli$headers$Authorization, "GET")
+        # resp <- httr2::req_perform (req)
+        # licenses <- httr2::resp_body_json (resp)
+        # license <- do.call (rbind, licenses)
+        licenses <- data.frame (
+            value = 1:7,
+            name = c (
+                "CC\\sBY\\s4\\.0",
+                "CC0",
+                "MIT",
+                "GPL",
+                "GPL(.*?)2",
+                "GPL(.*?)3",
+                "Apache\\s2"
+            )
+        )
+        index <- vapply (
+            licenses$name,
+            function (i) grepl (i, desc$License, ignore.case = TRUE),
+            logical (1L)
+        )
+        ret <- NULL
+        if (any (index)) {
+            ret <- max (which (index))
+        }
+
+        return (ret)
     } else {
         return (desc$License)
     }
