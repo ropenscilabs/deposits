@@ -933,7 +933,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             )
 
             local_path <- metadata_service$local_path
-            if (!is.null (local_path) &&
+            if (!is.null (local_path) && !is_dcf (local_path) &&
                 !identical (local_path, self$local_path)) {
                 self$local_path <- local_path
                 private$count_num_resources ()
@@ -968,11 +968,22 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     }
                 }
 
+                # Plus Figshare doesn't seem to accept email address in author
+                # lists on update method. It dumps them from the hostdata
+                # structures anyway, so they're just removed here:
+                if (self$service == "figshare") {
+                    metadata_service$authors <- lapply (
+                        metadata_service$authors, function (i) {
+                            i$email <- NULL
+                            return (i)
+                        }
+                    )
+                }
+
                 req <- httr2::req_body_json (req, data = metadata_service)
 
                 resp <- httr2::req_perform (req)
                 httr2::resp_check_status (resp)
-
 
                 if (!is.null (path)) {
                     private$update_files (path)

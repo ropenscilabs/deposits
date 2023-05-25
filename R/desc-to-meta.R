@@ -4,6 +4,10 @@
 #' @noRd
 is_dcf <- function (path) {
 
+    if (is.null (path)) {
+        return (FALSE)
+    }
+
     path <- fs::path_abs (path)
 
     if (fs::is_dir (path)) {
