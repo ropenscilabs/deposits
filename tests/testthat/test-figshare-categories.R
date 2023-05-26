@@ -2,6 +2,11 @@
 # figshare_categories function.
 Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
+test_all <- (identical (Sys.getenv ("MPADGE_LOCAL"), "true") |
+    identical (Sys.getenv ("GITHUB_WORKFLOW"), "test-coverage"))
+
+testthat::skip_if (!test_all)
+
 test_that ("figsahre categories", {
 
     cats <- figshare_categories ()
