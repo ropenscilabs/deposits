@@ -1,5 +1,5 @@
 {
-    "conceptrecid": "1200392",
+    "conceptrecid": "1206384",
     "created": "2022-01-01T00:00:00+00:00",
     "doi": "",
     "doi_url": "https://doi.org/",
@@ -8,36 +8,36 @@
             "checksum": "cc624d72ede85ef061afa494d9951f6f",
             "filename": "data2.csv",
             "filesize": 625,
-            "id": "ac682bfa-0414-4b3e-9a62-dcc8f3c7406d",
+            "id": "5db3a8ed-f1a4-4346-bfd9-fcc282a22474",
             "links": {
                 "download": "sbapi/files/hash/data2.csv",
-                "self": "sbapi/deposit/depositions/1200393/files/ac682bfa-0414-4b3e-9a62-dcc8f3c7406d"
+                "self": "sbapi/deposit/depositions/1206385/files/5db3a8ed-f1a4-4346-bfd9-fcc282a22474"
             }
         },
         {
             "checksum": "cc624d72ede85ef061afa494d9951f6f",
             "filename": "data.csv",
             "filesize": 625,
-            "id": "acdf5370-57d8-415e-aa39-96a294e2bd74",
+            "id": "62403d3f-eb11-475a-b9ac-5a3d92bb2c7d",
             "links": {
                 "download": "sbapi/files/hash/data.csv",
-                "self": "sbapi/deposit/depositions/1200393/files/acdf5370-57d8-415e-aa39-96a294e2bd74"
+                "self": "sbapi/deposit/depositions/1206385/files/62403d3f-eb11-475a-b9ac-5a3d92bb2c7d"
             }
         }
     ],
-    "id": 1200393,
+    "id": 1206385,
     "links": {
-        "bucket": "sbapi/files/74f6f2b9-314e-4ed7-8fe5-42e17fba6409",
-        "discard": "sbapi/deposit/depositions/1200393/actions/discard",
-        "edit": "sbapi/deposit/depositions/1200393/actions/edit",
-        "files": "sbapi/deposit/depositions/1200393/files",
-        "html": "https://sandbox.zenodo.org/deposit/1200393",
-        "latest_draft": "sbapi/deposit/depositions/1200393",
-        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1200393",
-        "newversion": "sbapi/deposit/depositions/1200393/actions/newversion",
-        "publish": "sbapi/deposit/depositions/1200393/actions/publish",
-        "registerconceptdoi": "sbapi/deposit/depositions/1200393/actions/registerconceptdoi",
-        "self": "sbapi/deposit/depositions/1200393"
+        "bucket": "sbapi/files/c7365378-583d-47dc-88a6-4ea6442dad5c",
+        "discard": "sbapi/deposit/depositions/1206385/actions/discard",
+        "edit": "sbapi/deposit/depositions/1206385/actions/edit",
+        "files": "sbapi/deposit/depositions/1206385/files",
+        "html": "https://sandbox.zenodo.org/deposit/1206385",
+        "latest_draft": "sbapi/deposit/depositions/1206385",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1206385",
+        "newversion": "sbapi/deposit/depositions/1206385/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1206385/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1206385/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1206385"
     },
     "metadata": {
         "access_right": "closed",
@@ -57,8 +57,8 @@
             "three"
         ],
         "prereserve_doi": {
-            "doi": "10.5072/zenodo.1200393",
-            "recid": 1200393
+            "doi": "10.5072/zenodo.1206385",
+            "recid": 1206385
         },
         "publication_date": "2022-01-01",
         "title": "New Title",
@@ -67,7 +67,7 @@
     },
     "modified": "2022-01-01T00:00:00+00:00",
     "owner": 115518,
-    "record_id": 1200393,
+    "record_id": 1206385,
     "state": "unsubmitted",
     "submitted": false,
     "title": "New Title"

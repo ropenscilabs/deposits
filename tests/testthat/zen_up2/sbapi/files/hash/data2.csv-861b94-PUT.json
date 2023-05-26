@@ -3,13 +3,13 @@
     "updated": "2022-01-01T00:00:00+00:00",
     "links": {
         "self": "sbapi/files/hash/data2.csv",
-        "version": "sbapi/files/hash/data2.csv?versionId=cdbc8577-506b-4583-b541-ddb192137f01",
+        "version": "sbapi/files/hash/data2.csv?versionId=41f9d042-765b-4385-a2dc-cb4b022d3272",
         "uploads": "sbapi/files/hash/data2.csv?uploads"
     },
     "is_head": true,
     "created": "2022-01-01T00:00:00+00:00",
     "checksum": "md5:cc624d72ede85ef061afa494d9951f6f",
-    "version_id": "cdbc8577-506b-4583-b541-ddb192137f01",
+    "version_id": "41f9d042-765b-4385-a2dc-cb4b022d3272",
     "delete_marker": false,
     "key": "data2.csv",
     "size": 625
