@@ -13,11 +13,15 @@ is_dcf <- function (path) {
     if (fs::is_dir (path)) {
         path <- fs::path (path, "DESCRIPTION")
     }
+
+    dcf_names <- c ("DESCRIPTION") # Can be extended
     if (!fs::file_exists (path)) {
+        return (FALSE)
+    } else if (!fs::path_file (path) %in% dcf_names) {
         return (FALSE)
     }
 
-    desc <- read.dcf (path)
+    desc <- tryCatch (read.dcf (path), error = function (e) NULL)
     ret <- all (c ("Package", "Title", "Version") %in% colnames (desc))
 
     return (ret)
