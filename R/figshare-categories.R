@@ -2,6 +2,7 @@
 #'
 #' These identifiers should then be added in deposit metadata as, for example,
 #' `subject(categories=c(1,2))`.
+#' @family meta
 #' @export
 figshare_categories <- function () {
 

@@ -10,3 +10,9 @@ figshare_categories()
 These identifiers should then be added in deposit metadata as, for example,
 \code{subject(categories=c(1,2))}.
 }
+\seealso{
+Other meta: 
+\code{\link{dcmi_terms}()},
+\code{\link{deposits_metadata_template}()}
+}
+\concept{meta}
