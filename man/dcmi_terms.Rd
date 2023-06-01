@@ -19,6 +19,7 @@ The Dublin Core Metadata Initiative defines a set of terms at
 }
 \seealso{
 Other meta: 
-\code{\link{deposits_metadata_template}()}
+\code{\link{deposits_metadata_template}()},
+\code{\link{figshare_categories}()}
 }
 \concept{meta}

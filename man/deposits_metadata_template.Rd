@@ -30,6 +30,7 @@ deposits_metadata_template (filename)
 }
 \seealso{
 Other meta: 
-\code{\link{dcmi_terms}()}
+\code{\link{dcmi_terms}()},
+\code{\link{figshare_categories}()}
 }
 \concept{meta}
