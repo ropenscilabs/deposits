@@ -215,6 +215,7 @@ deposits_meta_from_file <- function (filename = NULL,
         meta <- list (
             title = descfile$Title,
             description = paste0 (
+                "## Description\\n",
                 desc,
                 "\\n\\n## Version\\n", descfile$Version
             ),

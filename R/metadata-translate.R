@@ -196,6 +196,14 @@ separate_multiple_sources <- function (metadata, translations,
             content <- parse_multi_src_string (metadata, m, tr_full)
             if (length (content) > 0L) {
                 content <- convert_target_format (content, service_schema)
+                if (any (grepl ("(\\n|\\\\n)#", content))) {
+                    # re-insert original header if any subsequent (sub-)section
+                    # headers
+                    nms <- names (content)
+                    content <-
+                        paste0 ("## ", names (content) [1], "\\n", content)
+                    names (content) <- nms
+                }
                 metadata <- c (
                     metadata [which (!names (metadata) == m)],
                     content
@@ -356,8 +364,13 @@ concatenate_multiple_targets <- function (metadata, translations) {
         })
         content <- cbind (sources, unlist (metadata [sources]))
         content [, 1] <- paste0 ("## ", content [, 1])
-        content <-
-            apply (content, 1, function (i) paste0 (i, collapse = "\\n\\n"))
+        content <- apply (content, 1, function (i) {
+            ifelse (
+                grepl ("^\\#", i [2]), # don't add new header if already exists
+                i [2],
+                paste0 (i, collapse = "\\n\\n")
+            )
+        })
         content <- paste0 (content, collapse = "\\n\\n")
 
         metadata <- metadata [which (!names (metadata) %in% sources)]
