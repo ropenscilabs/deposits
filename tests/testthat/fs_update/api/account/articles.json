@@ -1,19 +1,19 @@
 [
     {
-        "id": 23501823,
+        "id": 23502069,
         "title": "Modified Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23501823",
+        "url": "api/articles/23502069",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23501823",
-        "url_public_api": "api/articles/23501823",
-        "url_private_html": "https://figshare.com/account/articles/23501823",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23501823",
+        "url_private_api": "api/articles/23502069",
+        "url_public_api": "api/articles/23502069",
+        "url_private_html": "https://figshare.com/account/articles/23502069",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23502069",
         "timeline": {
 
         },
@@ -21,41 +21,20 @@
         "resource_doi": null
     },
     {
-        "id": 23501820,
+        "id": 23502066,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23501820",
+        "url": "api/articles/23502066",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23501820",
-        "url_public_api": "api/articles/23501820",
-        "url_private_html": "https://figshare.com/account/articles/23501820",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23501820",
-        "timeline": {
-
-        },
-        "resource_title": null,
-        "resource_doi": null
-    },
-    {
-        "id": 23501781,
-        "title": "Trace Function Parameter Types",
-        "doi": "10.6084/m9.figshare.23501781",
-        "handle": "",
-        "url": "api/articles/23501781",
-        "published_date": null,
-        "thumb": "",
-        "defined_type": 9,
-        "defined_type_name": "software",
-        "group_id": null,
-        "url_private_api": "api/articles/23501781",
-        "url_public_api": "api/articles/23501781",
-        "url_private_html": "https://figshare.com/account/articles/23501781",
-        "url_public_html": "https://figshare.com/articles/software/_/23501781",
+        "url_private_api": "api/articles/23502066",
+        "url_public_api": "api/articles/23502066",
+        "url_private_html": "https://figshare.com/account/articles/23502066",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23502066",
         "timeline": {
 
         },
