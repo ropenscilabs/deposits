@@ -27,26 +27,29 @@ validate_metadata <- function (metadata, service) {
     }
 
     # convert any markdown-formatted description items to HTML:
-    desc <- strsplit (metadata_service$description, "\\\\n") [[1]]
-    if (length (desc) == 1L) {
+    if ("description" %in% names (metadata_service)) {
+
         desc <- strsplit (metadata_service$description, "\\\\n") [[1]]
-    }
-    for (i in 2:3) {
-        ptn <- paste0 ("^", paste0 (rep ("\\#", i), collapse = ""), "\\s")
-        index <- grep (ptn, desc)
-        hptn_open <- paste0 ("<h", i, ">")
-        hptn_close <- paste0 ("</h", i, ">")
-        if (length (index) > 0L) {
-            desc [index] <- paste0 (gsub (ptn, hptn_open, desc [index]), hptn_close)
+        if (length (desc) == 1L) {
+            desc <- strsplit (metadata_service$description, "\\\\n") [[1]]
         }
-        index_rm <- which (!nzchar (desc [index + 1]))
-        if (length (index_rm) > 0L) {
-            desc <- desc [-(index + 1) [index_rm]]
+        for (i in 2:3) {
+            ptn <- paste0 ("^", paste0 (rep ("\\#", i), collapse = ""), "\\s")
+            index <- grep (ptn, desc)
+            hptn_open <- paste0 ("<h", i, ">")
+            hptn_close <- paste0 ("</h", i, ">")
+            if (length (index) > 0L) {
+                desc [index] <- paste0 (gsub (ptn, hptn_open, desc [index]), hptn_close)
+            }
+            index_rm <- which (!nzchar (desc [index + 1]))
+            if (length (index_rm) > 0L) {
+                desc <- desc [-(index + 1) [index_rm]]
+            }
+            desc <- paste0 (desc, collapse = "\n")
         }
-        desc <- paste0 (desc, collapse = "\n")
-    }
-    if (!identical (desc, metadata_service$description)) {
-        metadata_service$description <- desc
+        if (!identical (desc, metadata_service$description)) {
+            metadata_service$description <- desc
+        }
     }
 
     return (list (
