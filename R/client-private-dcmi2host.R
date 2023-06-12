@@ -25,8 +25,9 @@ depositsClient$set ("private", "dcmi2host", function () {
     } else if (self$service == "figshare") {
 
         # Figshare should ideally go into "custom_fields", or
-        # "custom_fields_list", but submitting data with those fields does not
-        # work at all, so they can't (currently) be used.
+        # "custom_fields_list", but those are currently only used to auto-fill
+        # from institutional-level settings, and can't be used for indivudual
+        # deposits.
 
         private$metadata_service$description <- paste0 (
             private$metadata_service$description,
