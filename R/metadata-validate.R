@@ -39,7 +39,8 @@ validate_metadata <- function (metadata, service) {
             hptn_open <- paste0 ("<h", i, ">")
             hptn_close <- paste0 ("</h", i, ">")
             if (length (index) > 0L) {
-                desc [index] <- paste0 (gsub (ptn, hptn_open, desc [index]), hptn_close)
+                desc [index] <-
+                    paste0 (gsub (ptn, hptn_open, desc [index]), hptn_close)
             }
             index_rm <- which (!nzchar (desc [index + 1]))
             if (length (index_rm) > 0L) {
