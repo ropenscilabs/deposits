@@ -147,5 +147,5 @@
             "description": "Not applicable for regular users."
         }
     },
-    "required": ["title"]
+    "required": ["title", "description", "defined_type", "categories", "keywords"]
 }
