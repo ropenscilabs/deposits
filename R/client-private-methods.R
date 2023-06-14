@@ -284,7 +284,7 @@ depositsClient$set (
             f_no_ext <- fs::path_ext_remove (f_base)
             f_no_ext <- gsub ("\\.tar$", "", f_no_ext)
 
-            if (!f_no_ext %in% files_no_ext) {
+            if (!is_dcf (path) && !f_no_ext %in% files_no_ext) {
                 stop (
                     "Local file [",
                     f_base,
