@@ -745,8 +745,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (proceed && interactive ()) {
                 ans <- readline (paste0 (
                     "This action can not be undone. ",
-                    "Are you sure you want to publish deposit#",
-                    cli$id,
+                    "Note also that markdown or HMTL-formatted items in ",
+                    "description fields may need to be manually formatted ",
+                    "online via ",
+                    self$url_service,
+                    ". Are you sure you want to publish deposit#",
+                    self$id,
                     " (y/n) ? "
                 ))
                 proceed <- identical (tolower (substring (ans, 1L, 1L)), "y")
