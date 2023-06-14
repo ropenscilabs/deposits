@@ -121,3 +121,27 @@ depositsClient$set ("private", "fill_service_id_url", function () {
 
     invisible (self)
 })
+
+#' @description Extract integer IDs of all current deposits.
+#'
+#' These are currently identical for all services, but this function allows any
+#' differences in new systems to be immediately implemented.
+#' @return Vector of integer IDs (if any; otherwise NULL).
+#' @noRd
+
+depositsClient$set ("private", "get_deposits_ids", function () {
+
+    deps <- self$deposits
+    if (length (deps) == 0L) {
+        return (NULL)
+    }
+
+    ids <- NULL
+    if (self$service == "figshare") {
+        ids <- deps$id
+    } else if (self$service == "zenodo") {
+        ids <- deps$id
+    }
+
+    return (ids)
+})

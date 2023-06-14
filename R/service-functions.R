@@ -68,6 +68,18 @@ rm_service_sandbox <- function (service) {
     return (service)
 }
 
+service_deposits_urls <- function (service, url_base) {
+
+    url_sfx <- ""
+    if (service == "figshare") {
+        url_sfx <- "account/articles"
+    } else if (service == "zenodo") {
+        url_sfx <- "deposit/depositions?size=1000"
+    }
+
+    return (paste0 (url_base, url_sfx))
+}
+
 service_download_url <- function (service, files, filename) {
 
     if (service == "figshare") {

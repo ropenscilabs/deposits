@@ -34,13 +34,7 @@ depositsClient$set (
 
 depositsClient$set ("private", "deposits_list_extract", function () {
 
-    url <- paste0 (
-        self$url_base,
-        ifelse (self$service == "figshare",
-            "account/articles",
-            "deposit/depositions?size=1000"
-        )
-    )
+    url <- service_deposits_urls (self$service, self$url_base)
 
     req <- create_httr2_helper (url, self$headers$Authorization, "GET")
     resp <- httr2::req_perform (req)
@@ -49,27 +43,6 @@ depositsClient$set ("private", "deposits_list_extract", function () {
     self$deposits <- httr2::resp_body_json (resp, simplifyVector = TRUE)
 
     invisible (self)
-})
-
-#' @description Extract integer IDs of all current deposits.
-#' @return Vector of integer IDs (if any; otherwise NULL).
-#' @noRd
-
-depositsClient$set ("private", "get_deposits_ids", function () {
-
-    deps <- self$deposits
-    if (length (deps) == 0L) {
-        return (NULL)
-    }
-
-    ids <- NULL
-    if (self$service == "figshare") {
-        ids <- deps$id
-    } else if (self$service == "zenodo") {
-        ids <- deps$id
-    }
-
-    return (ids)
 })
 
 #' @description Remove 'hostdata' and 'metadata' items after call to
@@ -450,7 +423,7 @@ depositsClient$set ("private", "servicedata_from_dp", function (meta_source) {
         metadata <- httptest2_created_timestamp (metadata)
 
         if (!is.null (id)) {
-            if (id %in% private$get_deposits_ids ()) {
+            if (id %in% private$get_deposits_ids ()) { # in service-methods.R
                 self$deposit_retrieve (id)
             }
         }
