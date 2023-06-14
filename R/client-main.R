@@ -729,11 +729,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             }
 
             if (proceed) {
-                if (self$service == "zenodo") {
-                    private$publish_zenodo ()
-                } else if (self$service == "figshare") {
-                    private$publish_figshare ()
-                }
+                private$deposit_publish_method ()
             }
 
             invisible (self)

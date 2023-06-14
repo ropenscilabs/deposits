@@ -1,5 +1,10 @@
 # ---------------------------------------------------
-# Private methods for embargo and publish API methods
+# Private methods for embargo and publish API methods,
+# including service-specific methods.
+# ---------------------------------------------------
+
+# ---------------------------------------------------
+# ----------------- EMBARGO METHODS -----------------
 # ---------------------------------------------------
 
 #' @description Method to set embargo date
@@ -79,22 +84,6 @@ depositsClient$set ("private", "embargo_zenodo", function (embargo_date) {
     invisible (self)
 })
 
-#' @description Publish method for Zenodo service
-#'
-#' @return Updated client
-#' @noRd
-
-depositsClient$set ("private", "publish_zenodo", function () {
-
-    url <- paste0 (get_service_url (self), "/", self$id, "/actions/publish")
-    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
-    resp <- httr2::req_perform (req)
-
-    self$hostdata <- httr2::resp_body_json (resp)
-
-    invisible (self)
-})
-
 #' @description Embargo method for Figshare service
 #'
 #' Figshare embargo methods are provided by a distinct "embargo" API endpoint.
@@ -131,6 +120,42 @@ depositsClient$set (
         invisible (self)
     }
 )
+
+# ---------------------------------------------------
+# ----------------- PUBLISH METHODS -----------------
+# ---------------------------------------------------
+
+#' @description Generic publish method for all services
+#'
+#' @return Updated client
+#' @noRd
+
+depositsClient$set ("private", "deposit_publish_method", function () {
+
+    if (self$service == "zenodo") {
+        private$publish_zenodo ()
+    } else if (self$service == "figshare") {
+        private$publish_figshare ()
+    }
+
+    invisible (self)
+})
+
+#' @description Publish method for Zenodo service
+#'
+#' @return Updated client
+#' @noRd
+
+depositsClient$set ("private", "publish_zenodo", function () {
+
+    url <- paste0 (get_service_url (self), "/", self$id, "/actions/publish")
+    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+    resp <- httr2::req_perform (req)
+
+    self$hostdata <- httr2::resp_body_json (resp)
+
+    invisible (self)
+})
 
 #' @description Publish method for Figshare service
 #'
