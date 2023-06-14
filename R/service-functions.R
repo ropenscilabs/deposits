@@ -156,3 +156,34 @@ clean_metadata_service <- function (metadata_service, service) {
 
     return (metadata_service)
 }
+
+#' Only called in the 'deposits_search()' method.
+#' @noRd
+deposits_search_service_req <- function (service, url_base, arglist, headers) {
+
+    url_sfx <- ""
+    method <- "GET"
+    if (service == "figshare") {
+        url_sfx <- "articles/search"
+        method <- "POST"
+    } else if (service == "zenodo") {
+        url_sfx <- "records"
+    } else {
+        stop ("service not supported.", call. = FALSE)
+    }
+
+    url <- paste0 (url_base, url_sfx)
+
+    req <- create_httr2_helper (url, headers$Authorization, method)
+
+    if (service == "figshare") {
+        req <- httr2::req_body_json (req, arglist)
+    } else {
+        req <- do.call (
+            httr2::req_url_query,
+            c (.req = list (req), arglist)
+        )
+    }
+
+    return (req)
+}

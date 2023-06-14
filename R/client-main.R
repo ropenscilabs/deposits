@@ -1224,6 +1224,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                                     page_number = 1L,
                                     ...) {
 
+            # In search-params.R:
             arglist <- process_search_params (
                 self$service,
                 search_string = search_string,
@@ -1232,25 +1233,13 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 ...
             )
 
-            url <- paste0 (
+            # In service-functions.R:
+            req <- deposits_search_service_req (
+                self$service,
                 self$url_base,
-                ifelse (self$service == "figshare",
-                    "articles/search",
-                    "records"
-                )
+                arglist,
+                self$headers
             )
-
-            method <- ifelse (self$service == "figshare", "POST", "GET")
-            req <- create_httr2_helper (url, self$headers$Authorization, method)
-
-            if (self$service == "figshare") {
-                req <- httr2::req_body_json (req, arglist)
-            } else {
-                req <- do.call (
-                    httr2::req_url_query,
-                    c (.req = list (req), arglist)
-                )
-            }
 
             resp <- httr2::req_perform (req)
             httr2::resp_check_status (resp)
