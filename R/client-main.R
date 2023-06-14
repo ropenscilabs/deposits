@@ -913,27 +913,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (!is.null (deposit_id)) {
 
-                # Unlock Zenodo deposit for editing if needed:
-                if (gsub ("\\-sandbox$", "", self$service) == "zenodo" &&
-                    !is.null (self$hostdata)) {
-                    if (self$hostdata$state == "done") {
-
-                        url <- get_service_url (self, deposit_id = deposit_id)
-                        url <- paste0 (url, "/actions/edit")
-                        req <- create_httr2_helper (
-                            url,
-                            self$headers$Authorization,
-                            "POST"
-                        )
-                        resp <- httr2::req_perform (req)
-                        httr2::resp_check_status (resp)
-                        message (
-                            "Previously published deposit [",
-                            deposit_id,
-                            "] unlocked for editing."
-                        )
-                    }
-                }
+                private$unlock_deposit_for_editing (deposit_id)
 
                 # Plus Figshare doesn't seem to accept email address in author
                 # lists on update method. It dumps them from the hostdata

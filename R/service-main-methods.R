@@ -42,3 +42,34 @@ depositsClient$set (
         invisible (self)
     }
 )
+
+#' Unlock a deposit for editing - Zenodo-only
+#' @noRd
+depositsClient$set (
+    "private", "unlock_deposit_for_editing",
+    function (deposit_id) {
+
+        if (gsub ("\\-sandbox$", "", self$service) == "zenodo" &&
+            !is.null (self$hostdata)) {
+            if (self$hostdata$state == "done") {
+
+                url <- get_service_url (self, deposit_id = deposit_id)
+                url <- paste0 (url, "/actions/edit")
+                req <- create_httr2_helper (
+                    url,
+                    self$headers$Authorization,
+                    "POST"
+                )
+                resp <- httr2::req_perform (req)
+                httr2::resp_check_status (resp)
+                message (
+                    "Previously published deposit [",
+                    deposit_id,
+                    "] unlocked for editing."
+                )
+            }
+        }
+
+        invisible (self)
+    }
+)
