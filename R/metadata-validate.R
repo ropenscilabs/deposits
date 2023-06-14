@@ -221,34 +221,12 @@ deposits_meta_from_file <- function (filename = NULL,
                 "\\n\\n## Version\\n", descfile$Version
             ),
             creator = desc_creators (descfile, service = service),
-            license = desc_license (descfile, service = service), # in service-desc-meta.R
+            license = desc_license (descfile, service = service),
             format = "software"
         )
 
-        if (service == "figshare") {
-
-            fs_cat <- grep (
-                "figsharecategor",
-                names (descfile),
-                ignore.case = TRUE
-            )
-            if (length (fs_cat) == 1L) {
-                cats <- strsplit (descfile [[fs_cat]], split = ",")
-                cats <- as.integer (cats [[1]])
-                meta$subject <- list (categories = as.list (cats))
-            }
-
-            fs_kw <- grep ("keyword", names (descfile), ignore.case = TRUE)
-            if (length (fs_kw) == 1L) {
-                kws <- strsplit (descfile [[fs_kw]], split = ",") [[1]]
-                kws <- as.list (sub ("^\\s+|\\s+$", "", kws))
-                if ("subject" %in% names (meta)) {
-                    meta$subject$keywords <- kws
-                } else {
-                    meta$subect <- list (keywords = kws)
-                }
-            }
-        }
+        # in service-desc-meta.R:
+        meta <- desc_subjects_service (meta, descfile, service)
 
         attr (meta, "num_resources_local") <- 0
 

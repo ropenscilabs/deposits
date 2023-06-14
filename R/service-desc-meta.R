@@ -53,3 +53,44 @@ desc_creator_service <- function (creators, service) {
 
     return (creators)
 }
+
+#' Add additional fields required by Figshare if they are present in DESC file.
+#'
+#' These fields include categories and keywords, and are placed in the 'subject'
+#' metadata item.
+#'
+#' @param meta Initial metadata from description file.
+#' @noRd
+desc_subjects_service <- function (meta, descfile, service) {
+
+    if (service == "figshare") {
+
+        fs_cat <- grep (
+            "figsharecategor",
+            names (descfile),
+            ignore.case = TRUE
+        )
+
+        if (length (fs_cat) == 1L) {
+
+            cats <- strsplit (descfile [[fs_cat]], split = ",")
+            cats <- as.integer (cats [[1]])
+            meta$subject <- list (categories = as.list (cats))
+        }
+
+        fs_kw <- grep ("keyword", names (descfile), ignore.case = TRUE)
+        if (length (fs_kw) == 1L) {
+
+            kws <- strsplit (descfile [[fs_kw]], split = ",") [[1]]
+            kws <- as.list (sub ("^\\s+|\\s+$", "", kws))
+
+            if ("subject" %in% names (meta)) {
+                meta$subject$keywords <- kws
+            } else {
+                meta$subect <- list (keywords = kws)
+            }
+        }
+    }
+
+    return (meta)
+}
