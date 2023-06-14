@@ -10,6 +10,14 @@ new_mock_deposit <- function (service = "zenodo") {
         subject = "## keywords\none, two\nthree"
     )
 
+    if (service == "figshare") {
+        metadata$subject <- list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        )
+        metadata$format <- "dataset"
+    }
+
     prfx <- ifelse (service == "zenodo", "zen", "fs")
 
     cli <- httptest2::with_mock_dir (paste0 (prfx, "_client"), {

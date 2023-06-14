@@ -26,7 +26,11 @@ test_that ("figshare new", {
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none, two\nthree\n\n"
+        subject = list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        ),
+        format = "dataset"
     )
 
     cli <- with_mock_dir ("fs_client", {
@@ -38,10 +42,10 @@ test_that ("figshare new", {
 
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 5L)
+    expect_length (cli$metadata, 6L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "description", "subject", "title")
+        c ("abstract", "creator", "description", "format", "subject", "title")
     )
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
@@ -74,7 +78,11 @@ test_that ("figshare default metadata", {
         description = paste0 (
             "This is the description\n\n",
             "## keywords\none, two\nthree\n\n## version\n1.0"
-        )
+        ),
+        subject = list (
+            categories = list (24418L)
+        ),
+        format = "dataset"
     )
 
     expect_error (
@@ -85,7 +93,7 @@ test_that ("figshare default metadata", {
         )
     )
     metadata$description <- "This is the description\n\n## version\n1.0"
-    metadata$subject <- "## keywords\none, two\nthree"
+    metadata$subject$keywords <- as.list (c ("beaver", "temperature"))
 
     expect_silent (
         metadata <- validate_metadata (metadata, service)
@@ -126,7 +134,11 @@ test_that ("figshare retrieve", {
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none, two\nthree"
+        subject = list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        ),
+        format = "dataset"
     )
 
     dep <- with_mock_dir ("fs_retr", {
@@ -170,7 +182,11 @@ test_that ("figshare update", {
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none, two\nthree\n\n"
+        subject = list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        ),
+        format = "dataset"
     )
 
     cli <- cli$deposit_fill_metadata (metadata)
@@ -210,7 +226,11 @@ test_that ("figshare add_resource", {
             "## description\nThis is the description\n\n",
             "## version\n1.0"
         ),
-        subject = "## keywords\none, two\nthree\n\n"
+        subject = list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        ),
+        format = "dataset"
     )
 
     cli <- with_mock_dir ("fs_client", {
@@ -261,7 +281,7 @@ test_that ("figshare add_resource", {
     expect_null (cli$hostdata)
     expect_false (is.null (cli$metadata))
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 5L)
+    expect_length (cli$metadata, 6L)
 
     expect_identical (
         cli$metadata [order (names (cli$metadata))],
