@@ -323,15 +323,9 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 }
             }
 
-            # Then update metadata from dp_json:
-            op <- options (
-                readr.show_progress = FALSE,
-                readr.show_col_types = FALSE
-            )
-            suppressMessages (
-                p <- frictionless::read_package (path_dp)
-            )
-            options (op)
+            # Then update metadata from dp_json, but using jsonlite because
+            # frictionless defaults to `simplifyVector = TRUE`.
+            p <- jsonlite::read_json (path_dp, simplifyVector = FALSE)
             if ("metadata" %in% names (p)) {
                 self$deposit_fill_metadata (p$metadata)
             }
@@ -829,11 +823,12 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                     path = fs::path_temp ()
                 )
                 if (fs::file_exists (dp_path)) {
-                    suppressMessages (
-                        self$metadata <- frictionless::read_package (
-                            dp_path
-                        )$metadata
-                    )
+                    # can't read via frictionless because that defaults to
+                    # `simplifyVector = TRUE`.
+                    self$metadata <- jsonlite::read_json (
+                        dp_path,
+                        simplifyVector = FALSE
+                    )$metadata
                     # only delete if 'datapackage.json' created here:
                     if (!dp_exists) {
                         fs::file_delete (dp_path)

@@ -43,6 +43,10 @@ depositsClient$set ("private", "add_meta_to_dp_json", function (path) {
     ret <- FALSE
 
     path_json <- fs::path (path, private$frictionless_json_name)
+    # Using frictionless::read_package is okay here, because this routine adds
+    # the metadata. From this point on, those can only be read back in via
+    # jsonlite::read_json(..., simplifyVector = FALSE), because frictionless
+    # defaults to simplifyVector = TRUE.
     op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
     suppressMessages (
         p <- frictionless::read_package (path_json)
@@ -181,6 +185,15 @@ depositsClient$set (
             dpj <- frictionless::read_package (local_dp_check$dp_local)
         )
         options (op)
+        # Have to read metadata separately with jsonlite, because
+        # frictionless defaults to simplifyVector = TRUE.
+        dpj_meta <- jsonlite::read_json (
+            local_dp_check$dp_local,
+            simplifyVector = FALSE
+        )
+        if ("metadata" %in% names (dpj_meta)) {
+            dpj$metadata <- dpj_meta$metadata
+        }
         resource_names <-
             vapply (dpj$resources, function (i) i$name, character (1L))
         new_resource_name <- fs::path_ext_remove (fs::path_file (path))
@@ -255,11 +268,7 @@ depositsClient$set ("private", "compare_dpjson_to_meta", function (path) {
         return (invisible (self))
     }
 
-    op <- options (readr.show_progress = FALSE, readr.show_col_types = FALSE)
-    suppressMessages (
-        p <- frictionless::read_package (path_json)
-    )
-    options (op)
+    p <- jsonlite::read_json (path_json, simplifyVector = FALSE)
 
     dp_meta <- p$metadata [order (names (p$metadata))]
     cli_meta <- self$metadata [order (names (self$metadata))]
