@@ -870,7 +870,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             if (!is.null (deposit_id)) {
                 checkmate::assert_int (deposit_id)
 
-                url <- get_service_url (self, deposit_id = deposit_id, private = TRUE)
+                url <- get_service_url (
+                    self,
+                    deposit_id = deposit_id,
+                    private = TRUE
+                )
 
                 req <- create_httr2_helper (
                     url,
