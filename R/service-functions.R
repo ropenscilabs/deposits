@@ -1,5 +1,4 @@
-# Single file for all service-specific functions. This is inteded to be the only
-# file in the R/ directory which needs to be modified to add new services.
+# Single file for service-specific functions (not methods).
 
 #' List all deposits services and associated URLs
 #'
@@ -35,6 +34,20 @@ deposits_services <- function () {
     names (out) <- c ("name", "docs", "api_base_url")
 
     return (out)
+}
+
+#' Define methods which are NOT applicable for particular services.
+#'
+#' This method is only called for its immediate side-effect of erroring when
+#' methodss are called which are not applicable for the nominated service.
+#' @noRd
+stop_if_method_not_defined <- function (service, method_name) {
+
+    if (method_name == "deposit_prereserve_doi" && service != "figshare") {
+        stop ("This method only has effect for Figshare", call. = FALSE)
+    }
+
+    invisible (NULL)
 }
 
 add_service_sandbox <- function (service, sandbox) {

@@ -637,6 +637,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             hostdata <- httr2::resp_body_json (resp)
 
+            # Service-specific methods to fill client hostdata:
             self <- private$fill_deposit_new_hostdata (hostdata, prereserve_doi)
 
             if (prereserve_doi) {
@@ -662,10 +663,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
         deposit_prereserve_doi = function () {
 
-            if (!self$service == "figshare") {
-                message ("This method only has effect for Figshare")
-                return (invisible (self))
-            }
+            stop_if_method_not_defined ("deposit_prereserve_doi", self$service)
 
             if (nzchar (self$hostdata$doi)) {
                 message ("This deposit already has a DOI")
