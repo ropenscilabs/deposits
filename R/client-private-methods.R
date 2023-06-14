@@ -9,7 +9,9 @@ depositsClient$set (
     "private", "define_service",
     function (service, sandbox = FALSE) {
 
-        service <- match.arg (tolower (service), c ("zenodo", "figshare"))
+        service_names <- deposits_services ()$name
+        service_names <- unique (gsub ("\\-sandbox$", "", service_names))
+        service <- match.arg (tolower (service), service_names)
         checkmate::assert_logical (sandbox, len = 1L)
 
         service <- add_service_sandbox (service, sandbox)
@@ -25,44 +27,6 @@ depositsClient$set (
         invisible (self)
     }
 )
-
-#' @description Fill client 'id' and 'url_service' values from
-#' 'hostdata'
-#' @noRd
-
-depositsClient$set ("private", "fill_service_id_url", function () {
-
-    if (self$service == "figshare") {
-        # entity_id is filled on creation, but retrieval returns 'id'
-        self$id <- self$hostdata$entity_id
-        if (is.null (self$id)) {
-            self$id <- self$hostdata$id
-        }
-        self$url_service <-
-            paste0 (
-                "https://figshare.com/account/articles/",
-                self$id
-            )
-    } else if (self$service == "zenodo") {
-        self$id <- self$hostdata$id
-        links <- self$hostdata$links
-        self$url_service <- ifelse (
-            "latest_html" %in% names (links),
-            links$latest_html, links$html
-        )
-
-        # If id is a new version, update url_service to edit-mode interface for
-        # new version:
-        latest_id <- as.integer (fs::path_file (self$url_service))
-        if (latest_id != self$id) {
-            self$url_service <-
-                gsub ("\\/record\\/", "/deposit/", self$url_service)
-            self$url_service <- gsub (latest_id, self$id, self$url_service)
-        }
-    }
-
-    invisible (self)
-})
 
 #' @description Extract list of all current deposits and store as
 #' 'deposits' member element.

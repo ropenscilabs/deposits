@@ -644,7 +644,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 private$add_doi_to_metadata ()
             }
 
-            self <- private$fill_service_id_url ()
+            self <- private$fill_service_id_url () # in service-methods.R
 
             self <- private$deposits_list_extract ()
 

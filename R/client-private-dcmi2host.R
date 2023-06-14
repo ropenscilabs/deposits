@@ -1,5 +1,6 @@
-# Functions to insert deposits "metadata" field in DCMI-compliant form into host
-# metadata fields, including private client methods. See #65.
+# Service-specific functions to insert deposits "metadata" field in
+# DCMI-compliant form into host metadata fields, including private client
+# methods. See #65.
 
 #' Method to convert client "metadata" (DCMI) field into one metadata parameter
 #' on host service.
