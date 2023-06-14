@@ -364,7 +364,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             httr2::resp_check_status (resp)
 
             # rm current 'hostdata' + 'metadata' if they are from self$id:
-            self <- private$rm_host_meta_data ()
+            self <- private$rm_host_meta_data () # in service-methods.R
 
             # Then return client with that deposit removed from list:
             self <- self$deposits_list ()

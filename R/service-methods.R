@@ -49,6 +49,8 @@ depositsClient$set (
 )
 
 #' Unlock a deposit for editing - Zenodo-only
+#'
+#' Only called in public deposit_update() method.
 #' @noRd
 depositsClient$set (
     "private", "unlock_deposit_for_editing",
@@ -79,13 +81,40 @@ depositsClient$set (
     }
 )
 
-# -------------------------------------------------------
-# --------------   FROM PRIVATE METHODS   ---------------
-# ---------    in client-private-methods.R     ----------
-# -------------------------------------------------------
+#' @description Remove 'hostdata' and 'metadata' items after call to
+#' `deposit_delete()` method (if they correspond to `self$id`).
+#' @noRd
 
-#' @description Fill client 'id' and 'url_service' values from
-#' 'hostdata'
+depositsClient$set ("private", "rm_host_meta_data", function () {
+
+    if (self$service == "figshare") {
+
+        if (!(is.null (self$id) & is.null (self$hostdata))) {
+            if (!is.null (self$hostdata$entity_id)) {
+                if (self$hostdata$entity_id == self$id |
+                    self$hostdata$id == self$id) {
+                    self$hostdata <- self$metadata <- NULL
+                }
+            }
+        }
+
+    } else if (self$service == "zenodo") {
+
+        if (!(is.null (self$id) & is.null (self$hostdata))) {
+            if (!is.null (self$hostdata$id)) {
+                if (self$hostdata$id == self$id) {
+                    self$hostdata <- self$metadata <- NULL
+                }
+            }
+        }
+    }
+
+    invisible (self)
+})
+
+#' Fill the 'url_service' field of client from 'hostdata'
+#'
+#' This is called from `deposit_new()` and `deposit_retrieve()` methods.
 #' @noRd
 
 depositsClient$set ("private", "fill_service_id_url", function () {
@@ -122,10 +151,17 @@ depositsClient$set ("private", "fill_service_id_url", function () {
     invisible (self)
 })
 
+# -------------------------------------------------------
+# --------------   FROM PRIVATE METHODS   ---------------
+# ---------    in client-private-methods.R     ----------
+# -------------------------------------------------------
+
 #' @description Extract integer IDs of all current deposits.
 #'
-#' These are currently identical for all services, but this function allows any
-#' differences in new systems to be immediately implemented.
+#' This is called from private 'servicedata_from_dp' method.
+#'
+#' Returned values are currently identical for all services, but this function
+#' allows any differences in new systems to be immediately implemented.
 #' @return Vector of integer IDs (if any; otherwise NULL).
 #' @noRd
 

@@ -45,37 +45,6 @@ depositsClient$set ("private", "deposits_list_extract", function () {
     invisible (self)
 })
 
-#' @description Remove 'hostdata' and 'metadata' items after call to
-#' `deposit_delete()` method (if they correspond to `self$id`).
-#' @noRd
-
-depositsClient$set ("private", "rm_host_meta_data", function () {
-
-    if (self$service == "figshare") {
-
-        if (!(is.null (self$id) & is.null (self$hostdata))) {
-            if (!is.null (self$hostdata$entity_id)) {
-                if (self$hostdata$entity_id == self$id |
-                    self$hostdata$id == self$id) {
-                    self$hostdata <- self$metadata <- NULL
-                }
-            }
-        }
-
-    } else if (self$service == "zenodo") {
-
-        if (!(is.null (self$id) & is.null (self$hostdata))) {
-            if (!is.null (self$hostdata$id)) {
-                if (self$hostdata$id == self$id) {
-                    self$hostdata <- self$metadata <- NULL
-                }
-            }
-        }
-    }
-
-    invisible (self)
-})
-
 #' @description Perform actual upload of local file.
 #' @noRd
 
