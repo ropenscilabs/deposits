@@ -68,6 +68,19 @@ rm_service_sandbox <- function (service) {
     return (service)
 }
 
+read_service_schema <- function (service) {
+
+    service_schema <- system.file (fs::path ("extdata", service, "schema.json"),
+        package = "deposits"
+    )
+    service_schema <- jsonlite::read_json (service_schema)$properties
+    if (service == "zenodo") {
+        service_schema <- service_schema$metadata$properties
+    }
+
+    return (service_schema)
+}
+
 service_deposits_urls <- function (service, url_base) {
 
     url_sfx <- ""

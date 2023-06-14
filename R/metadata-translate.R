@@ -182,13 +182,7 @@ separate_multiple_sources <- function (metadata, translations,
     multiple_sources <- unique (translations$source [index])
 
     tr_full <- get_service_translation (service)
-    service_schema <- system.file (fs::path ("extdata", service, "schema.json"),
-        package = "deposits"
-    )
-    service_schema <- jsonlite::read_json (service_schema)$properties
-    if (service == "zenodo") {
-        service_schema <- service_schema$metadata$properties
-    }
+    service_schema <- read_service_schema (service) # in service-functions.R
 
     for (m in multiple_sources) {
 
