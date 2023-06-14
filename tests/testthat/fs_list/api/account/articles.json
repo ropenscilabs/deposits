@@ -1,19 +1,19 @@
 [
     {
-        "id": 23502069,
+        "id": 23514888,
         "title": "New Modified Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23502069",
+        "url": "api/articles/23514888",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23502069",
-        "url_public_api": "api/articles/23502069",
-        "url_private_html": "https://figshare.com/account/articles/23502069",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23502069",
+        "url_private_api": "api/articles/23514888",
+        "url_public_api": "api/articles/23514888",
+        "url_private_html": "https://figshare.com/account/articles/23514888",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23514888",
         "timeline": {
 
         },
@@ -21,20 +21,20 @@
         "resource_doi": null
     },
     {
-        "id": 23502066,
+        "id": 23514885,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23502066",
+        "url": "api/articles/23514885",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23502066",
-        "url_public_api": "api/articles/23502066",
-        "url_private_html": "https://figshare.com/account/articles/23502066",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23502066",
+        "url_private_api": "api/articles/23514885",
+        "url_public_api": "api/articles/23514885",
+        "url_private_html": "https://figshare.com/account/articles/23514885",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23514885",
         "timeline": {
 
         },
