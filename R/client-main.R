@@ -623,10 +623,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             metadata$service <-
                 httptest2_hostdata_timestamps (metadata$service, self$service)
             private$metadata_service <- metadata$service
-            if (gsub ("\\-sandbox$", "", self$service) == "zenodo") {
-                private$metadata_service$metadata$prereserve_doi <-
-                    prereserve_doi
-            }
+            private$set_doi_prereserve_meta_flag (prereserve_doi) # zenodo only
 
             # Insert 'self$metadata' into host parameter (#65):
             private$dcmi2host ()
@@ -640,14 +637,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             hostdata <- httr2::resp_body_json (resp)
 
-            if (self$service == "figshare") {
-                if (prereserve_doi) {
-                    doi <- private$prereserve_doi (hostdata$entity_id)
-                }
-                self$deposit_retrieve (hostdata$entity_id)
-            } else if (self$service == "zenodo") {
-                self$hostdata <- hostdata
-            }
+            self <- private$fill_deposit_new_hostdata (hostdata, prereserve_doi)
 
             if (prereserve_doi) {
                 private$add_doi_to_metadata ()
