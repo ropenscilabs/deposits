@@ -557,23 +557,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             checkmate::assert_character (embargo_date, len = 1L)
             embargo_date <- strftime (embargo_date, "%Y-%m-%d")
 
-            if (self$service == "zenodo") {
-
-                self <- private$embargo_zenodo (embargo_date)
-
-            } else if (self$service == "figshare") {
-
-                embargo_type <- match.arg (embargo_type)
-                if (embargo_type == "deposit") {
-                    embargo_type <- "article"
-                }
-                if (!is.null (embargo_reason)) {
-                    checkmate::assert_character (embargo_reason, len = 1L)
-                }
-                self <- private$embargo_figshare (
-                    embargo_date, embargo_type, embargo_reason
-                )
-            }
+            self <- private$set_embargo (embargo_date)
 
             invisible (self)
         },

@@ -2,6 +2,35 @@
 # Private methods for embargo and publish API methods
 # ---------------------------------------------------
 
+#' @description Method to set embargo date
+#'
+#' @param embargo_date Date of expiry for embargo.
+#' @return Updated client with embargo metadata
+#' @noRd
+
+depositsClient$set ("private", "set_embargo", function (embargo_date) {
+
+    if (self$service == "zenodo") {
+
+        self <- private$embargo_zenodo (embargo_date)
+
+    } else if (self$service == "figshare") {
+
+        embargo_type <- match.arg (embargo_type)
+        if (embargo_type == "deposit") {
+            embargo_type <- "article"
+        }
+        if (!is.null (embargo_reason)) {
+            checkmate::assert_character (embargo_reason, len = 1L)
+        }
+        self <- private$embargo_figshare (
+            embargo_date, embargo_type, embargo_reason
+        )
+    }
+
+    invisible (self)
+})
+
 
 #' @description Embargo method for Zenodo service
 #'
