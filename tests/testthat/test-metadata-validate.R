@@ -29,6 +29,11 @@ test_that ("metadata validate", {
     )
     metadata$description <- "## description\nThis is the description"
     metadata$subject <- "## keywords\none, two\nthree"
+    metadata$subject <- list (
+        categories = list (24418L),
+        keywords = as.list (c ("beaver", "temperature"))
+    )
+    metadata$format <- "dataset"
     metadata$creator [[1]]$affiliation <- NULL
     expect_silent (
         metadata_valid <- validate_metadata (metadata, service = "figshare")

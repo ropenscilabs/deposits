@@ -80,7 +80,12 @@ test_that ("print figshare with local_path", {
         title = "New Title",
         abstract = "This is the abstract",
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
-        description = "This is the description"
+        description = "This is the description",
+        subject = list (
+            categories = list (24418L),
+            keywords = as.list (c ("beaver", "temperature"))
+        ),
+        format = "dataset"
     )
     expect_silent (
         cli <- with_mock_dir ("print-fs", {

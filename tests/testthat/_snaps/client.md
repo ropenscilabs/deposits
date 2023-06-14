@@ -63,7 +63,7 @@
        Current deposits : 1 (see 'deposits' element for details)
       
          hostdata : <none>
-         metadata : 4 terms (see 'metadata' element for details)
+         metadata : 6 terms (see 'metadata' element for details)
        local_path : /tmp/Rtmp/data
         resources : 1 local, 0 remote
 
