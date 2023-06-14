@@ -114,3 +114,20 @@ service_filename_field <- function (service) {
 
     return (ret)
 }
+
+# Currently only used to address what might be a  Figshare but, in that it
+# doesn't seem to accept email address in author lists on update method. It
+# dumps them from the hostdata structures anyway, so they're just removed here:
+clean_metadata_service <- function (metadata_service, service) {
+
+    if (service == "figshare") {
+        metadata_service$authors <- lapply (
+            metadata_service$authors, function (i) {
+                i$email <- NULL
+                return (i)
+            }
+        )
+    }
+
+    return (metadata_service)
+}

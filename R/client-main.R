@@ -915,17 +915,8 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
                 private$unlock_deposit_for_editing (deposit_id)
 
-                # Plus Figshare doesn't seem to accept email address in author
-                # lists on update method. It dumps them from the hostdata
-                # structures anyway, so they're just removed here:
-                if (self$service == "figshare") {
-                    metadata_service$authors <- lapply (
-                        metadata_service$authors, function (i) {
-                            i$email <- NULL
-                            return (i)
-                        }
-                    )
-                }
+                metadata_service <-
+                    clean_metadata_service (metadata_service, service)
 
                 req <- httr2::req_body_json (req, data = metadata_service)
 
