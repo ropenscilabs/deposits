@@ -1,0 +1,16 @@
+{
+    "token": "274d4a2d-2d4c-4b10-8522-810548b26b4b",
+    "md5": "cc624d72ede85ef061afa494d9951f6f",
+    "size": 625,
+    "name": "41239023/data.csv",
+    "status": "PENDING",
+    "parts": [
+        {
+            "partNo": 1,
+            "startOffset": 0,
+            "endOffset": 624,
+            "status": "PENDING",
+            "locked": false
+        }
+    ]
+}
