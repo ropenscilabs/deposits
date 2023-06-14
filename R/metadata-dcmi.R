@@ -95,8 +95,12 @@ load_meta_terms <- function () {
     for (i in seq_len (ncol (terms))) {
         terms [, i] <- gsub ("^\\s+|\\s+$", "", terms [, i])
     }
-    index <- which (nzchar (terms$Zenodo) | nzchar (terms$Figshare))
-    return (terms [index, ])
+
+    service_cols <- names (terms) [which (!names (terms) == "DC")]
+    index <- apply (terms [, service_cols], 1, function (i) {
+        any (nzchar (i))
+    })
+    return (terms [which (index), ])
 }
 
 #' Constrct map between DCMI terms and those of nominated deposits service.
