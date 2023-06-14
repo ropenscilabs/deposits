@@ -920,7 +920,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
                 private$unlock_deposit_for_editing (deposit_id)
 
                 metadata_service <-
-                    clean_metadata_service (metadata_service, service)
+                    clean_metadata_service (metadata_service, self$service)
 
                 req <- httr2::req_body_json (req, data = metadata_service)
 
