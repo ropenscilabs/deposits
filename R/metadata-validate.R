@@ -221,7 +221,7 @@ deposits_meta_from_file <- function (filename = NULL,
                 "\\n\\n## Version\\n", descfile$Version
             ),
             creator = desc_creators (descfile, service = service),
-            license = desc_license (descfile, service = service),
+            license = desc_license (descfile, service = service), # in service-desc-meta.R
             format = "software"
         )
 
