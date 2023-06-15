@@ -4,7 +4,7 @@ author:
   - "Mark Padgham"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{deposits metadata}
+  %\VignetteIndexEntry{4. deposits metadata}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

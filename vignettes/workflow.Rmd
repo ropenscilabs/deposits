@@ -4,7 +4,7 @@ author:
   - "Mark Padgham"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{Example deposits workflow}
+  %\VignetteIndexEntry{3. Example deposits workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

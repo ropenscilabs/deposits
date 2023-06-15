@@ -4,7 +4,7 @@ author:
   - "Mark Padgham"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{The deposits R6 client}
+  %\VignetteIndexEntry{2. The deposits R6 client}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

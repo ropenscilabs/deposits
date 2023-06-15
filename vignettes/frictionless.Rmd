@@ -4,7 +4,7 @@ author:
   - "Mark Padgham"
 date: "`r Sys.Date()`"
 vignette: >
-  %\VignetteIndexEntry{frictionless}
+  %\VignetteIndexEntry{5. frictionless}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
