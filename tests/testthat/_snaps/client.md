@@ -31,6 +31,7 @@
          - deposit_service
          - deposit_update
          - deposit_upload_file
+         - deposit_version
          - deposits_list
          - deposits_methods
          - deposits_search
@@ -101,6 +102,7 @@
          - deposit_service
          - deposit_update
          - deposit_upload_file
+         - deposit_version
          - deposits_list
          - deposits_methods
          - deposits_search
