@@ -223,6 +223,7 @@ current deposit.}
 \item \href{#method-depositsClient-deposit_service}{\code{depositsClient$deposit_service()}}
 \item \href{#method-depositsClient-deposit_update}{\code{depositsClient$deposit_update()}}
 \item \href{#method-depositsClient-deposit_upload_file}{\code{depositsClient$deposit_upload_file()}}
+\item \href{#method-depositsClient-deposit_version}{\code{depositsClient$deposit_version()}}
 \item \href{#method-depositsClient-deposits_list}{\code{depositsClient$deposits_list()}}
 \item \href{#method-depositsClient-deposits_methods}{\code{depositsClient$deposits_methods()}}
 \item \href{#method-depositsClient-deposits_search}{\code{depositsClient$deposits_search()}}
@@ -750,6 +751,20 @@ fs::dir_ls (fs::path_temp (), regexp = "datapackage")
 
 }
 
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-depositsClient-deposit_version"></a>}}
+\if{latex}{\out{\hypertarget{method-depositsClient-deposit_version}{}}}
+\subsection{Method \code{deposit_version()}}{
+Start a new version of a published deposit, based on
+current client metadata. This method is not available for Figshare.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_version()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+(Invisibly) Updated 'deposits' client
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-depositsClient-deposits_list"></a>}}
