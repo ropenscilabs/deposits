@@ -81,7 +81,7 @@
                 "access_right": {
                     "type": "string",
                     "enum": ["open", "embargoed", "restricted", "closed"],
-                    "default": "closed"
+                    "default": "open"
                 },
                 "license": {
                     "type": "string"
