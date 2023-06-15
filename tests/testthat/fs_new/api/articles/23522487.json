@@ -32,7 +32,7 @@
             "orcid_id": ""
         }
     ],
-    "figshare_url": "https://figshare.com/articles/dataset/_/23514936",
+    "figshare_url": "https://figshare.com/articles/dataset/_/23522487",
     "description": "<h2>abstract<\/h2>\nThis is the abstract\n\n<h2>description<\/h2>\nThis is the description\n\n<h2>version<\/h2>\n1.0\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"format\":\"dataset\",\"subject\":{\"categories\":[24418],\"keywords\":[\"beaver\",\"temperature\"]},\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
     "funding": null,
     "funding_list": [
@@ -71,7 +71,7 @@
 
     ],
     "has_linked_file": false,
-    "citation": "Padgham, Mark; Person, A.; Person, B. (2023). New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/23514936",
+    "citation": "Padgham, Mark; Person, A.; Person, B. (2023). New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/23522487",
     "related_materials": [
 
     ],
@@ -83,20 +83,20 @@
     "embargo_options": [
 
     ],
-    "id": 23514936,
+    "id": 23522487,
     "title": "New Title",
     "doi": "",
     "handle": "",
-    "url": "api/articles/23514936",
+    "url": "api/articles/23522487",
     "published_date": null,
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "api/articles/23514936",
-    "url_public_api": "api/articles/23514936",
-    "url_private_html": "https://figshare.com/account/articles/23514936",
-    "url_public_html": "https://figshare.com/articles/dataset/_/23514936",
+    "url_private_api": "api/articles/23522487",
+    "url_public_api": "api/articles/23522487",
+    "url_private_html": "https://figshare.com/account/articles/23522487",
+    "url_public_html": "https://figshare.com/articles/dataset/_/23522487",
     "timeline": {
 
     }

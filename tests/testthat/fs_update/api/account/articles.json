@@ -1,19 +1,19 @@
 [
     {
-        "id": 23514939,
+        "id": 23522487,
         "title": "Modified Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23514939",
+        "url": "api/articles/23522487",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23514939",
-        "url_public_api": "api/articles/23514939",
-        "url_private_html": "https://figshare.com/account/articles/23514939",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23514939",
+        "url_private_api": "api/articles/23522487",
+        "url_public_api": "api/articles/23522487",
+        "url_private_html": "https://figshare.com/account/articles/23522487",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23522487",
         "timeline": {
 
         },
@@ -21,22 +21,44 @@
         "resource_doi": null
     },
     {
-        "id": 23514936,
+        "id": 23522484,
         "title": "New Title",
         "doi": "",
         "handle": "",
-        "url": "api/articles/23514936",
+        "url": "api/articles/23522484",
         "published_date": null,
         "thumb": "",
         "defined_type": 3,
         "defined_type_name": "dataset",
         "group_id": null,
-        "url_private_api": "api/articles/23514936",
-        "url_public_api": "api/articles/23514936",
-        "url_private_html": "https://figshare.com/account/articles/23514936",
-        "url_public_html": "https://figshare.com/articles/dataset/_/23514936",
+        "url_private_api": "api/articles/23522484",
+        "url_public_api": "api/articles/23522484",
+        "url_private_html": "https://figshare.com/account/articles/23522484",
+        "url_public_html": "https://figshare.com/articles/dataset/_/23522484",
         "timeline": {
 
+        },
+        "resource_title": null,
+        "resource_doi": null
+    },
+    {
+        "id": 23514972,
+        "title": "Trace Function Parameter Types",
+        "doi": "10.6084/m9.figshare.23514972",
+        "handle": "",
+        "url": "api/articles/23514972",
+        "published_date": "2022-01-01T00:00:00Z",
+        "thumb": "",
+        "defined_type": 9,
+        "defined_type_name": "software",
+        "group_id": null,
+        "url_private_api": "api/articles/23514972",
+        "url_public_api": "api/articles/23514972",
+        "url_private_html": "https://figshare.com/account/articles/23514972",
+        "url_public_html": "https://figshare.com/articles/software/Trace_Function_Parameter_Types/23514972",
+        "timeline": {
+            "posted": "2022-01-01T00:00:00",
+            "firstOnline": "2022-01-01T00:00:00"
         },
         "resource_title": null,
         "resource_doi": null
