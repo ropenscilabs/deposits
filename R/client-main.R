@@ -1,5 +1,27 @@
 # Note this file needs to come alphabetically before the other `client-` files
 # for the externally-defined methods to load in the proper sequence!
+#
+# The methods in the order in which they are defined here are (in alphabetical
+# order except for the first two generic methods):
+#
+# - initialize
+# - print
+# - deposit_add_resource
+# - deposit_delete
+# - deposit_delete_file
+# - deposit_download_file
+# - deposit_embargo
+# - deposit_fill_metadata
+# - deposit_new
+# - deposit_prereserve_doi
+# - deposit_publish
+# - deposit_retrieve
+# - deposit_service
+# - deposit_update
+# - deposit_upload_file
+# - deposits_list
+# - deposits_methods
+# - deposits_search
 
 #' @title depositsClient
 #'
