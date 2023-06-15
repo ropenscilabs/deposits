@@ -437,6 +437,41 @@ test_that ("zenodo update", {
     )
 })
 
+test_that ("zenodo version", {
+
+    service <- "zenodo"
+
+    cli <- with_mock_dir ("zen_create", {
+        depositsClient$new (service = service, sandbox = TRUE)
+    })
+
+    cli <- with_mock_dir ("zen_get_publ", {
+        cli$deposit_retrieve (cli$deposits$id [1])
+    })
+
+    # Increment version number:
+    vers0 <- cli$hostdata$metadata$version
+    vers <- regmatches (vers0, regexpr ("[0-9]*$", vers0))
+    nc <- nchar (vers)
+    vers <- sprintf (paste0 ("%0", nc, "i"), as.integer (vers) + 1L)
+    vers <- gsub ("[0-9]*$", vers, vers0)
+
+    metadata <- list (
+        title = cli$hostdata$metadata$title,
+        description = cli$hostdata$metadata$description,
+        creator = list (as.list (cli$hostdata$metadata$creators)),
+        subject = list (version = vers)
+    )
+    cli$deposit_fill_metadata (metadata)
+
+    cli <- with_mock_dir ("zen_vers", {
+        cli$deposit_version ()
+    })
+
+    expect_equal (cli$hostdata$metadata$version, vers)
+    expect_false (cli$hostdata$metadata$version == vers0)
+})
+
 # can't mock delete because it returns an empty body
 test_that ("zenodo delete", {
     # dep <- with_mock_dir ("zen_del", {
