@@ -78,6 +78,12 @@ method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-
 The primary URL of the deposit will then resolve to the latest published
 version.
 
+Versions created with the [`deposit_version()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-version-)
+are private until published. These versions may also be cancelled or deleted by
+calling
+[`cli$deposit_delete()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-delete-).
+
 # Services without explicit version control
 
 Figshare does not offer explicit control of versions. Instead, a deposit may be
@@ -100,3 +106,8 @@ The only difference to the workflow for Zenodo is that [`deposit_update()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
 is called instead of [`deposit_version()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-version-).
+Any updates created with the [`deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
+are private until published. These updates may also be cancelled or deleted by
+calling
+[`cli$deposit_delete()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-delete-).
