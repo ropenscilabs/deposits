@@ -4,6 +4,21 @@
 # ---------------   FROM PUBLIC METHODS   ---------------
 # ---------------    in client-main.R     ---------------
 # -------------------------------------------------------
+#
+# Defines the following methods:
+#
+# - set_doi_prereserve_meta_flag
+# - fill_deposit_new_hostdata
+# - unlock_deposit_for_editing
+# - start_new_version
+# - rm_host_meta_data
+# - fill_service_id_url
+#
+# followed by private methods:
+#
+# - get_deposits_ids
+#
+# -------------------------------------------------------
 
 #' Set the 'prereserve_doi' flag in metadata_service for zenodo.
 #'
@@ -76,6 +91,56 @@ depositsClient$set (
                 )
             }
         }
+
+        invisible (self)
+    }
+)
+
+#' Start a new version of a deposit.
+#'
+#' Only called in public deposit_version() method, and currently only
+#' implemented for Zenodo.
+#' @noRd
+depositsClient$set (
+    "private", "start_new_version", function (metadata_service) {
+
+        if (!gsub ("\\-sandbox$", "", self$service) == "zenodo") {
+            return (invisible (self))
+        }
+
+        url <- get_service_url (self, deposit_id = self$id)
+        url <- paste0 (url, "/actions/newversion")
+
+        req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+        resp <- httr2::req_perform (req)
+
+        hostdata <- httr2::resp_body_json (resp)
+        url_latest <- hostdata$links$latest_draft
+        self$id <- as.integer (fs::path_file (url_latest))
+
+        # Unlock that deposit for editing - nope, not necessary and not permitted
+        # url <- paste0 (url_latest, "/actions/edit")
+        # req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+        # resp <- httr2::req_perform (req)
+
+        # Upload new metadata:
+        id <- fs::path_file (url_latest)
+        url_service <- ifelse (
+            "latest_html" %in% names (hostdata$links),
+            hostdata$links$latest_html, hostdata$links$html
+        )
+        # "record" in URL is read-only state, "deposit" is edit-mode new version:
+        url_service <- gsub ("\\/record\\/", "/deposit/", url_service)
+        id_old <- fs::path_file (url_service)
+        self$url_service <- gsub (id_old, id, url_service)
+        id <- as.integer (id)
+
+        url <- get_service_url (self, deposit_id = id)
+        req <- create_httr2_helper (url, self$headers$Authorization, "PUT")
+        req$headers <- c (req$headers, "Content-Type" = "application/json")
+        req <- httr2::req_body_json (req, data = metadata_service)
+        resp <- httr2::req_perform (req)
+        self$hostdata <- httr2::resp_body_json (resp)
 
         invisible (self)
     }

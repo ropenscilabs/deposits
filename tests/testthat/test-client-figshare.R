@@ -395,6 +395,23 @@ test_that ("figshare upload binary", {
     # )
 })
 
+test_that ("figshare version", {
+
+    service <- "figshare"
+
+    cli <- with_mock_dir ("fs_create", {
+        depositsClient$new (service = service)
+    })
+    cli <- with_mock_dir ("fs_get_publ", {
+        cli$deposit_retrieve (cli$deposits$id [1])
+    })
+
+    expect_error (
+        cli$deposit_version (),
+        "This method is not applicable for Figshare"
+    )
+})
+
 test_that ("figshare embargo", {
 
     service <- "figshare"

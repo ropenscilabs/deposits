@@ -1,0 +1,66 @@
+{
+    "conceptdoi": "10.5072/zenodo.1206119",
+    "conceptrecid": "1206119",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "10.5072/zenodo.1206120",
+    "doi_url": "https://doi.org/10.5072/zenodo.1206120",
+    "files": [
+        {
+            "checksum": "762fc94bc138735cd70afc714a2db7b0",
+            "filename": "typetracer_0.1.1.006.tar.gz",
+            "filesize": 24499,
+            "id": "568d0149-29d0-4dcc-85eb-0cab65333cfc",
+            "links": {
+                "download": "sbapi/files/hash/typetracer_0.1.1.006.tar.gz",
+                "self": "sbapi/deposit/depositions/1206120/files/568d0149-29d0-4dcc-85eb-0cab65333cfc"
+            }
+        }
+    ],
+    "id": 1206120,
+    "links": {
+        "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1206120.svg",
+        "bucket": "sbapi/files/4321a0d3-3414-4b55-bbbc-81e0f95f1bfd",
+        "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1206119.svg",
+        "conceptdoi": "https://doi.org/10.5072/zenodo.1206119",
+        "discard": "sbapi/deposit/depositions/1206120/actions/discard",
+        "doi": "https://doi.org/10.5072/zenodo.1206120",
+        "edit": "sbapi/deposit/depositions/1206120/actions/edit",
+        "files": "sbapi/deposit/depositions/1206120/files",
+        "html": "https://sandbox.zenodo.org/deposit/1206120",
+        "latest": "sbapi/records/1206120",
+        "latest_draft": "sbapi/deposit/depositions/1212459",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1212459",
+        "latest_html": "https://sandbox.zenodo.org/record/1206120",
+        "newversion": "sbapi/deposit/depositions/1206120/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1206120/actions/publish",
+        "record": "sbapi/records/1206120",
+        "record_html": "https://sandbox.zenodo.org/record/1206120",
+        "registerconceptdoi": "sbapi/deposit/depositions/1206120/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1206120"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "Mark Padgham",
+                "orcid": "0000-0003-2172-5265"
+            }
+        ],
+        "description": "<p>The &#39;R&#39; language includes a set of defined types, but the language itself is &quot;absurdly dynamic&quot; (Turcotte &amp; Vitek (2019)\\n), and lacks any way to specify which types are expected by any expression. The &#39;typetracer&#39; package enables code to be traced to extract detailed information on the properties of parameters\\npassed to &#39;R&#39; functions. &#39;typetracer&#39; can trace individual functions or\\nentire packages.<\/p>",
+        "doi": "10.5072/zenodo.1206120",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1206120",
+            "recid": 1206120
+        },
+        "publication_date": "2022-01-01",
+        "title": "Trace Function Parameter Types",
+        "upload_type": "software",
+        "version": "0.1.1.006"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1206120,
+    "state": "done",
+    "submitted": true,
+    "title": "Trace Function Parameter Types"
+}
