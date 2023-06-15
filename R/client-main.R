@@ -1148,6 +1148,37 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         deposit_version = function () {
 
             stop_if_method_not_defined (self$service, "deposit_version")
+
+            if (is.null (self$metadata)) {
+                stop ("'metadata' must be defined.", call. = FALSE)
+            }
+            if (is.null (self$id)) {
+                stop ("Client is not connected to a remote deposit.", call. = FALSE)
+            }
+
+            metadata_service <- validate_metadata (
+                self$metadata,
+                service = gsub ("\\-sandbox$", "", self$service)
+            )
+
+            local_path <- metadata_service$local_path
+            if (!is.null (local_path) && !is_dcf (local_path) &&
+                !identical (local_path, self$local_path)) {
+                self$local_path <- local_path
+                private$count_num_resources ()
+            }
+
+            metadata_service <- metadata_service$service
+            metadata_service <-
+                clean_metadata_service (metadata_service, self$service)
+
+            metadata_service <- httptest2_created_timestamp (metadata_service)
+            metadata_service <-
+                httptest2_hostdata_timestamps (metadata_service, self$service)
+
+            private$start_new_version (metadata_service) # in service-methods.R
+
+            invisible (self)
         },
 
         #' @description Update 'deposits' item of current deposits for given
