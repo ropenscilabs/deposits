@@ -47,6 +47,17 @@ stop_if_method_not_defined <- function (service, method_name) {
         stop ("This method only has effect for Figshare", call. = FALSE)
     }
 
+    if (method_name == "deposit_version" && service == "figshare") {
+        stop (
+            "This method is not applicable for Figshare, for which ",
+            "versions are simple integer values. Use ",
+            "'deposit_update' to edit current deposit, and ",
+            "'deposit_publish' when finished. Version number ",
+            "will then be increased by one.",
+            call. = FALSE
+        )
+    }
+
     invisible (NULL)
 }
 

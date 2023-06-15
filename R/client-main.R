@@ -1141,6 +1141,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             invisible (self)
         },
 
+        #' @description Start a new version of a published deposit, based on
+        #' current client metadata. This method is not available for Figshare.
+        #' @return (Invisibly) Updated 'deposits' client
+
+        deposit_version = function () {
+
+            stop_if_method_not_defined (self$service, "deposit_version")
+        },
+
         #' @description Update 'deposits' item of current deposits for given
         #' service. The list of deposits contained within the "deposits" item of
         #' a client may not be up-to-date; this method can be used for force
