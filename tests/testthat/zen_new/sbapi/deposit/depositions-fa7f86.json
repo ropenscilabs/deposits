@@ -43,7 +43,7 @@
                     "orcid": "0000-0003-2172-5265"
                 }
             ],
-            "description": "<p>The &#39;R&#39; language includes a set of defined types, but the language itself is &quot;absurdly dynamic&quot; (Turcotte &amp; Vitek (2019)\\n), and lacks any way to specify which types are\\nexpected by any expression. The &#39;typetracer&#39; package enables code to be traced to extract detailed information on the properties of parameters\\npassed to &#39;R&#39; functions. &#39;typetracer&#39; can trace individual functions or\\nentire packages.<\/p>",
+            "description": "<p>The &#39;R&#39; language includes a set of defined types, but the language itself is &quot;absurdly dynamic&quot; (Turcotte &amp; Vitek (2019)\\n), and lacks any way to specify which types are expected by any expression. The &#39;typetracer&#39; package enables code to be traced to extract detailed information on the properties of parameters\\npassed to &#39;R&#39; functions. &#39;typetracer&#39; can trace individual functions or\\nentire packages.<\/p>",
             "doi": "10.5072/zenodo.1206120",
             "prereserve_doi": {
                 "doi": "10.5072/zenodo.1206120",

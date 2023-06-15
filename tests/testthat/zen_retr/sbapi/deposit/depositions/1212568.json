@@ -1,0 +1,56 @@
+{
+    "conceptrecid": "1212567",
+    "created": "2022-01-01T00:00:00+00:00",
+    "doi": "",
+    "doi_url": "https://doi.org/",
+    "files": [
+
+    ],
+    "id": 1212568,
+    "links": {
+        "bucket": "sbapi/files/6fd82ad2-3cb2-4bf9-bfd2-83e38ecb7acc",
+        "discard": "sbapi/deposit/depositions/1212568/actions/discard",
+        "edit": "sbapi/deposit/depositions/1212568/actions/edit",
+        "files": "sbapi/deposit/depositions/1212568/files",
+        "html": "https://sandbox.zenodo.org/deposit/1212568",
+        "latest_draft": "sbapi/deposit/depositions/1212568",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1212568",
+        "newversion": "sbapi/deposit/depositions/1212568/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1212568/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1212568/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1212568"
+    },
+    "metadata": {
+        "access_right": "closed",
+        "creators": [
+            {
+                "name": "A. Person"
+            },
+            {
+                "name": "B. Person"
+            }
+        ],
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+        "doi": "",
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"accessRights\":\"closed\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+        "prereserve_doi": {
+            "doi": "10.5072/zenodo.1212568",
+            "recid": 1212568
+        },
+        "publication_date": "2022-01-01",
+        "title": "New Title",
+        "upload_type": "other",
+        "version": "1.0"
+    },
+    "modified": "2022-01-01T00:00:00+00:00",
+    "owner": 115518,
+    "record_id": 1212568,
+    "state": "unsubmitted",
+    "submitted": false,
+    "title": "New Title"
+}

@@ -2,8 +2,8 @@
     "conceptdoi": "10.5072/zenodo.1206119",
     "conceptrecid": "1206119",
     "created": "2022-01-01T00:00:00+00:00",
-    "doi": "10.5072/zenodo.1212459",
-    "doi_url": "https://doi.org/10.5072/zenodo.1212459",
+    "doi": "10.5072/zenodo.1212569",
+    "doi_url": "https://doi.org/10.5072/zenodo.1212569",
     "files": [
         {
             "checksum": "762fc94bc138735cd70afc714a2db7b0",
@@ -12,43 +12,42 @@
             "id": "568d0149-29d0-4dcc-85eb-0cab65333cfc",
             "links": {
                 "download": "sbapi/files/hash/typetracer_0.1.1.006.tar.gz",
-                "self": "sbapi/deposit/depositions/1212459/files/568d0149-29d0-4dcc-85eb-0cab65333cfc"
+                "self": "sbapi/deposit/depositions/1212569/files/568d0149-29d0-4dcc-85eb-0cab65333cfc"
             }
         }
     ],
-    "id": 1212459,
+    "id": 1212569,
     "links": {
-        "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1212459.svg",
-        "bucket": "sbapi/files/a0fba99d-efd5-4da2-9915-c29025af941c",
+        "badge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1212569.svg",
+        "bucket": "sbapi/files/df7ffe92-2ac8-4b09-9ab1-f916fd068860",
         "conceptbadge": "https://sandbox.zenodo.org/badge/doi/10.5072/zenodo.1206119.svg",
         "conceptdoi": "https://doi.org/10.5072/zenodo.1206119",
-        "discard": "sbapi/deposit/depositions/1212459/actions/discard",
-        "doi": "https://doi.org/10.5072/zenodo.1212459",
-        "edit": "sbapi/deposit/depositions/1212459/actions/edit",
-        "files": "sbapi/deposit/depositions/1212459/files",
-        "html": "https://sandbox.zenodo.org/deposit/1212459",
+        "discard": "sbapi/deposit/depositions/1212569/actions/discard",
+        "doi": "https://doi.org/10.5072/zenodo.1212569",
+        "edit": "sbapi/deposit/depositions/1212569/actions/edit",
+        "files": "sbapi/deposit/depositions/1212569/files",
+        "html": "https://sandbox.zenodo.org/deposit/1212569",
         "latest": "sbapi/records/1206120",
-        "latest_draft": "sbapi/deposit/depositions/1212459",
-        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1212459",
+        "latest_draft": "sbapi/deposit/depositions/1212569",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1212569",
         "latest_html": "https://sandbox.zenodo.org/record/1206120",
-        "newversion": "sbapi/deposit/depositions/1212459/actions/newversion",
-        "publish": "sbapi/deposit/depositions/1212459/actions/publish",
-        "registerconceptdoi": "sbapi/deposit/depositions/1212459/actions/registerconceptdoi",
-        "self": "sbapi/deposit/depositions/1212459"
+        "newversion": "sbapi/deposit/depositions/1212569/actions/newversion",
+        "publish": "sbapi/deposit/depositions/1212569/actions/publish",
+        "registerconceptdoi": "sbapi/deposit/depositions/1212569/actions/registerconceptdoi",
+        "self": "sbapi/deposit/depositions/1212569"
     },
     "metadata": {
         "access_right": "closed",
         "creators": [
             {
-                "name": "Mark Padgham",
-                "orcid": "0000-0003-2172-5265"
+                "name": "Mark Padgham"
             }
         ],
         "description": "<p>The &#39;R&#39; language includes a set of defined types, but the language itself is &quot;absurdly dynamic&quot; (Turcotte &amp; Vitek (2019)\\n), and lacks any way to specify which types are expected by any expression. The &#39;typetracer&#39; package enables code to be traced to extract detailed information on the properties of parameters\\npassed to &#39;R&#39; functions. &#39;typetracer&#39; can trace individual functions or\\nentire packages.<\/p>",
-        "doi": "10.5072/zenodo.1212459",
+        "doi": "10.5072/zenodo.1212569",
         "prereserve_doi": {
-            "doi": "10.5072/zenodo.1212459",
-            "recid": 1212459
+            "doi": "10.5072/zenodo.1212569",
+            "recid": 1212569
         },
         "publication_date": "2022-01-01",
         "title": "Trace Function Parameter Types",
@@ -57,7 +56,7 @@
     },
     "modified": "2022-01-01T00:00:00+00:00",
     "owner": 115518,
-    "record_id": 1212459,
+    "record_id": 1212569,
     "state": "unsubmitted",
     "submitted": false,
     "title": "Trace Function Parameter Types"

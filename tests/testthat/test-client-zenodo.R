@@ -26,7 +26,8 @@ test_that ("zenodo new", {
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
         description =
             "## description\nThis is the description\n\n## version\n1.0",
-        subject = "## keywords\none, two\nthree"
+        subject = "## keywords\none, two\nthree",
+        accessRights = "closed"
     )
 
     cli <- with_mock_dir ("zen_client", {
@@ -38,10 +39,10 @@ test_that ("zenodo new", {
     })
     expect_s3_class (cli, "depositsClient")
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 5L)
+    expect_length (cli$metadata, 6L)
     expect_equal (
         names (cli$metadata),
-        c ("abstract", "creator", "description", "subject", "title")
+        c ("abstract", "accessRights", "creator", "description", "subject", "title")
     )
     expect_type (cli$metadata, "list")
     # expect_type (cli$metadata_service, "list") # now a private field
@@ -103,6 +104,9 @@ test_that ("zenodo default metadata", {
     pos_txt <- grep ("This is the description", desc)
     expect_true ((pos_txt - pos_title) > 0)
     expect_true ((pos_txt - pos_title) <= 2)
+
+    # Expect access_right = "open":
+    expect_equal (metadata$service$metadata$access_right, "open")
 })
 
 test_that ("zenodo retrieve", {
@@ -117,7 +121,8 @@ test_that ("zenodo retrieve", {
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
         description =
             "## description\nThis is the description\n\n## version\n1.0",
-        subject = "## keywords\none, two\nthree"
+        subject = "## keywords\none, two\nthree",
+        accessRights = "closed"
     )
 
     # -------- DEPOSIT_RETRIEVE
@@ -149,7 +154,8 @@ test_that ("zenodo retrieve", {
         creator = list (list (name = "C. Person")),
         description =
             "## description\nThis is the description\n\n## version\n1.0",
-        subject = "## keywords\none, two\nthree"
+        subject = "## keywords\none, two\nthree",
+        accessRights = "closed"
     )
 
     dep <- with_mock_dir ("zen_meta", {
@@ -218,7 +224,8 @@ test_that ("zenodo add_resource", {
         creator = list (list (name = "A. Person"), list (name = "B. Person")),
         description =
             "## description\nThis is the description\n\n## version\n1.0",
-        subject = "## keywords\none, two\nthree"
+        subject = "## keywords\none, two\nthree",
+        accessRights = "closed"
     )
 
     cli <- with_mock_dir ("zen_client", {
@@ -270,7 +277,7 @@ test_that ("zenodo add_resource", {
     expect_null (cli$hostdata)
     expect_false (is.null (cli$metadata))
     expect_type (cli$metadata, "list")
-    expect_length (cli$metadata, 5L)
+    expect_length (cli$metadata, 6L)
 
     expect_identical (
         cli$metadata [order (names (cli$metadata))],
@@ -456,11 +463,16 @@ test_that ("zenodo version", {
     vers <- sprintf (paste0 ("%0", nc, "i"), as.integer (vers) + 1L)
     vers <- gsub ("[0-9]*$", vers, vers0)
 
+    cre <- lapply (
+        cli$hostdata$metadata$creators$name,
+        function (i) list (name = i)
+    )
     metadata <- list (
         title = cli$hostdata$metadata$title,
         description = cli$hostdata$metadata$description,
-        creator = list (as.list (cli$hostdata$metadata$creators)),
-        subject = list (version = vers)
+        creator = cre,
+        subject = list (version = vers),
+        accessRights = "closed"
     )
     cli$deposit_fill_metadata (metadata)
 

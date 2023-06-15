@@ -16,6 +16,8 @@ new_mock_deposit <- function (service = "zenodo") {
             keywords = as.list (c ("beaver", "temperature"))
         )
         metadata$format <- "dataset"
+    } else if (service == "zenodo") {
+        metadata$accessRights <- "closed"
     }
 
     prfx <- ifelse (service == "zenodo", "zen", "fs")

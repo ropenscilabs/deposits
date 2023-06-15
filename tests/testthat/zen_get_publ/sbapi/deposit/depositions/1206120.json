@@ -28,8 +28,6 @@
         "files": "sbapi/deposit/depositions/1206120/files",
         "html": "https://sandbox.zenodo.org/deposit/1206120",
         "latest": "sbapi/records/1206120",
-        "latest_draft": "sbapi/deposit/depositions/1212459",
-        "latest_draft_html": "https://sandbox.zenodo.org/deposit/1212459",
         "latest_html": "https://sandbox.zenodo.org/record/1206120",
         "newversion": "sbapi/deposit/depositions/1206120/actions/newversion",
         "publish": "sbapi/deposit/depositions/1206120/actions/publish",
