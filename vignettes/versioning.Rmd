@@ -78,9 +78,14 @@ method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-
 The primary URL of the deposit will then resolve to the latest published
 version.
 
+Versions can be edited and updated as described in the
+[main](https://docs.ropensci.org/deposits/articles/deposits.html#editing-and-updating-deposits)
+and [workflow](https://docs.ropensci.org/deposits/articles/workflow.html)
+vignettes, through using the [`deposit_update()`
+method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
 Versions created with the [`deposit_version()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-version-)
-are private until published. These versions may also be cancelled or deleted by
+remain private until published. These versions may also be cancelled or deleted by
 calling
 [`cli$deposit_delete()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-delete-).
 
