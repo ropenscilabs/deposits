@@ -468,17 +468,17 @@ metadata passed to the remote service. Any modified files, including
 "datapackage.json", will also be uploaded to the remote service, over-writing
 previous versions.
 
-Note that local files must first be individually uploaded with the [the
-`deposit_upload_file()`
+Note that local files must first be individually uploaded with the the
+[`deposit_upload_file()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-depositsClient-deposit_upload_file)
-before the [`deposit_update()
+before the [`deposit_update()`
 method](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
-can be used to update them. Moreover, calling 
-[`deposit_update()](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
+can be used to update them. Moreover, calling
+[`deposit_update()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-)
 before all files held in the `local_path` directory have been uploaded will
 generally produce an error noting that all files must first be uploaded prior
 to calling 
-[`deposit_update()](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
+[`deposit_update()`](https://docs.ropensci.org/deposits/reference/depositsClient.html#method-deposit-update-).
 
 
 ## Example workflow
