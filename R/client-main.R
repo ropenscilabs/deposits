@@ -66,9 +66,6 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         # @field metadata_service holds metadata converted to specific format
         # requires by service. Derived from `metadata`.
         metadata_service = NULL,
-        # @field term_map (data.frame) Map between DCMI and deposit terms for
-        # specified host service.
-        term_map = NULL,
         # @field dl_frictionless (logical) Used to control whether remote
         # ":datapackage.json" should be downloaded and used to update client
         # metadata.

@@ -22,8 +22,6 @@ depositsClient$set (
         self$url_base <- s$api_base_url [s$name == service]
         self$service <- rm_service_sandbox (service)
 
-        private$term_map <- get_dcmi_term_map (self$service)
-
         invisible (self)
     }
 )
