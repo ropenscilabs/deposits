@@ -21,6 +21,11 @@ test_that ("figshare search", {
     expect_s3_class (x, "data.frame")
     expect_equal (nrow (x), 5L)
     expect_true (any (grepl ("random", x$title)))
+
+    expect_error (
+        cli$deposits_search (search_string = "this", search_for = "this"),
+        "Please specify only one of 'search_for' or 'search_string'."
+    )
 })
 
 test_that ("zenodo search", {
