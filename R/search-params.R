@@ -47,6 +47,12 @@ process_search_params <- function (service,
         check_param_values_figshare (arglist)
 
         if (!is.null (search_string)) {
+            if ("search_for" %in% names (arglist)) {
+                stop (
+                    "Please specify only one of 'search_for' or 'search_string'.",
+                    call. = FALSE
+                )
+            }
             arglist <- c (arglist, search_for = search_string)
         }
         arglist <- c (
@@ -92,6 +98,7 @@ search_params_figshare <- function () {
         c ("item_type", "integer"),
         c ("doi", "string"),
         c ("handle", "string"),
+        c ("search_for", "string"),
         c ("project_id", "integer"),
         c ("order", "string"),
         c ("order_direction", "string"),
