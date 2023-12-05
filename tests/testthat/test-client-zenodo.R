@@ -187,7 +187,7 @@ test_that ("zenodo embargo", {
     cli <- new_mock_deposit (service = service)
     deposit_id <- cli$id
 
-    expect_equal (cli$hostdata$metadata$access_right, "closed")
+    expect_equal (cli$hostdata$metadata$access_right, "restricted")
 
     expect_error (
         cli$deposit_embargo (embargo_date = 1),
@@ -448,24 +448,18 @@ test_that ("zenodo version", {
 
     service <- "zenodo"
 
-    cli <- with_mock_dir ("zen_create", {
-        depositsClient$new (service = service, sandbox = TRUE)
-    })
-
-    cli <- with_mock_dir ("zen_get_publ", {
-        cli$deposit_retrieve (cli$deposits$id [1])
-    })
+    cli <- new_mock_deposit (service = service)
 
     # Increment version number:
     vers0 <- cli$hostdata$metadata$version
-    vers <- regmatches (vers0, regexpr ("[0-9]*$", vers0))
+    vers <- regmatches (vers0, regexpr ("[0-9].*$", vers0))
     nc <- nchar (vers)
-    vers <- sprintf (paste0 ("%0", nc, "i"), as.integer (vers) + 1L)
-    vers <- gsub ("[0-9]*$", vers, vers0)
+    incr <- as.integer (substring (vers, nc, nc)) + 1L
+    substring (vers, nc, nc) <- paste0 (incr)
 
     cre <- lapply (
-        cli$hostdata$metadata$creators$name,
-        function (i) list (name = i)
+        cli$hostdata$metadata$creators,
+        function (i) list (name = i$name)
     )
     metadata <- list (
         title = cli$hostdata$metadata$title,
@@ -476,12 +470,14 @@ test_that ("zenodo version", {
     )
     cli$deposit_fill_metadata (metadata)
 
-    cli <- with_mock_dir ("zen_vers", {
-        cli$deposit_version ()
-    })
+    # This can no longer be tested, because deposit data are no longer returned
+    # from, or listed on, sandbox:
+    # cli <- with_mock_dir ("zen_vers", {
+    #     cli$deposit_version ()
+    # })
 
-    expect_equal (cli$hostdata$metadata$version, vers)
-    expect_false (cli$hostdata$metadata$version == vers0)
+    # expect_equal (cli$hostdata$metadata$version, vers)
+    # expect_false (cli$hostdata$metadata$version == vers0)
 })
 
 # can't mock delete because it returns an empty body

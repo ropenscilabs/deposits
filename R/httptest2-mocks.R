@@ -35,8 +35,6 @@ httptest2_hostdata_timestamps <- function (hostdata, service) {
 
         } else if (service == "zenodo") {
 
-            hostdata$created <- mockdate
-
             if ("modified" %in% names (hostdata)) {
                 hostdata$modified <- mockdate
             }

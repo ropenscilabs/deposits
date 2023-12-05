@@ -1,0 +1,62 @@
+{
+    "created": "2022-01-01T00:00:00+00:00",
+    "modified": "2022-01-01T00:00:00+00:00",
+    "id": 6135,
+    "conceptrecid": "6134",
+    "doi": "10.5281/zenodo.6135",
+    "doi_url": "https://doi.org/10.5281/zenodo.6135",
+    "metadata": {
+        "title": "New Title",
+        "doi": "10.5281/zenodo.6135",
+        "publication_date": "2022-01-01",
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+        "access_right": "embargoed",
+        "embargo_date": "2022-01-01",
+        "creators": [
+            {
+                "name": "A. Person",
+                "affiliation": null
+            },
+            {
+                "name": "B. Person",
+                "affiliation": null
+            }
+        ],
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "version": "1.0",
+        "license": "cc-by-4.0",
+        "imprint_publisher": "Zenodo",
+        "upload_type": "other",
+        "prereserve_doi": {
+            "doi": "10.5281/zenodo.6135",
+            "recid": 6135
+        }
+    },
+    "title": "New Title",
+    "links": {
+        "self": "sbapi/deposit/depositions/6135",
+        "html": "https://sandbox.zenodo.org/deposit/6135",
+        "doi": "https://doi.org/10.5281/zenodo.6135",
+        "badge": "https://sandbox.zenodo.org/badge/doi/10.5281%2Fzenodo.6135.svg",
+        "files": "sbapi/deposit/depositions/6135/files",
+        "bucket": "sbapi/files/1565343c-0039-4c00-a989-6aa546bbea9e",
+        "latest_draft": "sbapi/deposit/depositions/6135",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/6135",
+        "publish": "sbapi/deposit/depositions/6135/actions/publish",
+        "edit": "sbapi/deposit/depositions/6135/actions/edit",
+        "discard": "sbapi/deposit/depositions/6135/actions/discard",
+        "newversion": "sbapi/deposit/depositions/6135/actions/newversion",
+        "registerconceptdoi": "sbapi/deposit/depositions/6135/actions/registerconceptdoi"
+    },
+    "record_id": 6135,
+    "owner": 623,
+    "files": [
+
+    ],
+    "state": "unsubmitted",
+    "submitted": false
+}
