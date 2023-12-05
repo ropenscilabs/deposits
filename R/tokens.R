@@ -1,4 +1,3 @@
-
 #' Retrieve a token for a specified deposits service.
 #'
 #' Tokens should be stored as local environment variables, optionally defined in
