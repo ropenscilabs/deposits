@@ -4,11 +4,13 @@
 \alias{get_deposits_token}
 \title{Retrieve a token for a specified deposits service.}
 \usage{
-get_deposits_token(service = NULL)
+get_deposits_token(service = NULL, sandbox = FALSE)
 }
 \arguments{
 \item{service}{Name of desired service; must be a value in the "name" column
 of \link{deposits_services}.}
+
+\item{sandbox}{If \code{TRUE}, retrieve token for sandbox, rather than actual API.}
 }
 \value{
 API token for nominated service.
