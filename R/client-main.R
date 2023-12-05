@@ -188,7 +188,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
 
             if (is.null (headers)) {
                 service <- add_service_sandbox (self$service, self$sandbox)
-                token <- get_deposits_token (service = service)
+                token <- get_deposits_token (service = service, sandbox = self$sandbox)
                 self$headers <- list (Authorization = paste0 ("Bearer ", token))
             }
 

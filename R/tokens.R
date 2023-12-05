@@ -7,6 +7,7 @@
 #'
 #' @param service Name of desired service; must be a value in the "name" column
 #' of \link{deposits_services}.
+#' @param sandbox If `TRUE`, retrieve token for sandbox, rather than actual API.
 #' @return API token for nominated service.
 #'
 #' @examples
@@ -15,7 +16,7 @@
 #' }
 #' @family auth
 #' @export
-get_deposits_token <- function (service = NULL) {
+get_deposits_token <- function (service = NULL, sandbox = FALSE) {
 
     checkmate::assert_character (service, len = 1L)
 
@@ -24,7 +25,11 @@ get_deposits_token <- function (service = NULL) {
     e <- e [grep (service, names (e), ignore.case = TRUE)]
     if (length (e) != 1L) {
         if (grepl ("^zenodo$", service, ignore.case = TRUE)) {
-            e <- e [which (!grepl ("sandbox", names (e), ignore.case = TRUE))]
+            if (sandbox && any (grepl ("sandbox", names (e), ignore.case = TRUE))) {
+                e <- e [grep ("sandbox", names (e), ignore.case = TRUE)]
+            } else {
+                e <- e [which (!grepl ("sandbox", names (e), ignore.case = TRUE))]
+            }
         }
     }
 
