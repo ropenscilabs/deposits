@@ -326,7 +326,11 @@ an on-screen overview of current contents and structure of client.
 \if{latex}{\out{\hypertarget{method-depositsClient-deposit_add_resource}{}}}
 \subsection{Method \code{deposit_add_resource()}}{
 Generate a local "datapackage.json" file, and/or add
-metadata from client.
+metadata from client. A "resource" must be readable by the
+\pkg{frictionless} package, generally meaning either a
+'datapackage.json' file, or a rectangular structure able to be read
+and represented as a \code{data.frame}. See
+\url{https://docs.ropensci.org/frictionless/} for details.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$deposit_add_resource(path)}\if{html}{\out{</div>}}
 }

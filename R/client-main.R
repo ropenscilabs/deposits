@@ -291,11 +291,15 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         },
 
         # -----------
-        # From here on, all methods are defined ain alphabetical order
+        # From here on, all methods are defined in alphabetical order
         # ---------
 
         #' @description Generate a local "datapackage.json" file, and/or add
-        #' metadata from client.
+        #' metadata from client. A "resource" must be readable by the
+        #' \pkg{frictionless} package, generally meaning either a
+        #' 'datapackage.json' file, or a rectangular structure able to be read
+        #' and represented as a `data.frame`. See
+        #' \url{https://docs.ropensci.org/frictionless/} for details.
         #' @param path Path to local resource to be added to client. May name an
         #' individual file or a directory.
         #' @return (Invisibly) Updated 'deposits' client
