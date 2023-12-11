@@ -28,18 +28,18 @@ get_deposits_token <- function (service = NULL, sandbox = FALSE) {
 
     # Check for fixed environmental variables ZENODO_TOKEN and ZENODO_SANDBOX_TOKEN
 
-    e <- NULL
+    e <- ""
     if (grepl("^zenodo$", service, ignore.case = TRUE)) {
-        if (sandbox && any(grepl("sandbox", names(e), ignore.case = TRUE))) {
-            e <- Sys.getenv("ZENODO_SANDBOX_TOKEN", NULL)
+        if (sandbox) {
+            e <- Sys.getenv("ZENODO_SANDBOX_TOKEN")
         } else {
-            e <- Sys.getenv("ZENODO_TOKEN", NULL)
+            e <- Sys.getenv("ZENODO_TOKEN")
         }
     } else if (grepl("^figshare$", service, ignore.case = TRUE)) {
-        e <- Sys.getenv("FIGSHARE_TOKEN", NULL)
+        e <- Sys.getenv("FIGSHARE_TOKEN")
     }
 
-    if (!is.null(e)) {
+    if (e == "") {
         e <- Sys.getenv()
         e <- e[grep(service, names(e), ignore.case = TRUE)]
         if (length(e) != 1L) {
