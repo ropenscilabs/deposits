@@ -17,8 +17,12 @@ API token for nominated service.
 }
 \description{
 Tokens should be stored as local environment variables, optionally defined in
-a \verb{~/.Renviron} file, and should contain the name of the desired deposits
-service.
+a \verb{~/.Renviron} file. Tokens can be defined by using the pattern
+\code{SERVICE_TOKEN}, where \code{SERVICE} is the name of the service in capital letters
+followed by \verb{_SANDBOX} if the sandbox from e.g. zotero should be used. An example
+would be \code{ZOTERO_SANDBOX_TOKEN} for the sandbox of zotero.
+If these are not found, an heuristic algorythm is used to find the token name
+which should contain the name of the desired deposits service.
 }
 \examples{
 \dontrun{
