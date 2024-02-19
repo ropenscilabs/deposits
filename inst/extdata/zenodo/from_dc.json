@@ -128,7 +128,7 @@
             "targets": ["language"]
         },
         "license": {
-            "targets": ["license", "access_right", "access_conditions"]
+            "targets": ["license", "access_conditions"]
         },
         "mediator": {
             "targets": ["notes"]
@@ -177,7 +177,7 @@
             "targets": ["related_identifiers"]
         },
         "rights": {
-            "targets": ["access_right", "access_conditions", "license"]
+            "targets": ["access_right", "access_conditions"]
         },
         "rightsHolder": {
             "targets": ["notes"]

@@ -43,10 +43,10 @@
                     "targets": ["description"]
                 },
                 "access_right": {
-                    "targets": ["rights", "license"]
+                    "targets": ["rights"]
                 },
                 "license": {
-                    "targets": ["rights", "license"]
+                    "targets": ["license"]
                 },
                 "embargo_date": {
                     "targets": ["description"]
