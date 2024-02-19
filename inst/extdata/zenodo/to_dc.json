@@ -1,8 +1,5 @@
 {
     "translations": {
-        "created": {
-            "targets": ["created"]
-        },
         "modified": {
             "targets": ["description"]
         },

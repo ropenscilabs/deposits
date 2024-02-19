@@ -57,10 +57,6 @@
         "coverage": {
             "targets": ["locations", "dates"]
         },
-        "created": {
-            "targetPath": "/",
-            "targets": ["created"]
-        },
         "creator": {
             "targets": ["creators"]
         },
@@ -77,7 +73,7 @@
             "targets": ["dates"]
         },
         "description": {
-            "targets": ["description", "embargo_date", "grants", "method", "notes", "version"]
+            "targets": ["description"]
         },
         "educationLevel": {
             "targets": ["notes"]
