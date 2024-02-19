@@ -1,3 +1,2203 @@
 [
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29710,
+        "conceptrecid": "29709",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"created\":\"2022-01-01T00:00:00Z\",\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29710",
+                "recid": 29710
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29710",
+            "html": "https://sandbox.zenodo.org/records/29710",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29710/files",
+            "latest_draft": "sbapi/deposit/depositions/29710",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29710",
+            "publish": "sbapi/deposit/depositions/29710/actions/publish",
+            "edit": "sbapi/deposit/depositions/29710/actions/edit",
+            "discard": "sbapi/deposit/depositions/29710/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29710/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29710/actions/registerconceptdoi"
+        },
+        "record_id": 29710,
+        "owner": 623,
+        "files": [
 
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29708,
+        "conceptrecid": "29707",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29708",
+                "recid": 29708
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29708",
+            "html": "https://sandbox.zenodo.org/records/29708",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29708/files",
+            "latest_draft": "sbapi/deposit/depositions/29708",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29708",
+            "publish": "sbapi/deposit/depositions/29708/actions/publish",
+            "edit": "sbapi/deposit/depositions/29708/actions/edit",
+            "discard": "sbapi/deposit/depositions/29708/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29708/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29708/actions/registerconceptdoi"
+        },
+        "record_id": 29708,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29706,
+        "conceptrecid": "29705",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29706",
+                "recid": 29706
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29706",
+            "html": "https://sandbox.zenodo.org/records/29706",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29706/files",
+            "latest_draft": "sbapi/deposit/depositions/29706",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29706",
+            "publish": "sbapi/deposit/depositions/29706/actions/publish",
+            "edit": "sbapi/deposit/depositions/29706/actions/edit",
+            "discard": "sbapi/deposit/depositions/29706/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29706/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29706/actions/registerconceptdoi"
+        },
+        "record_id": 29706,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29704,
+        "conceptrecid": "29703",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29704",
+                "recid": 29704
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29704",
+            "html": "https://sandbox.zenodo.org/records/29704",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29704/files",
+            "latest_draft": "sbapi/deposit/depositions/29704",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29704",
+            "publish": "sbapi/deposit/depositions/29704/actions/publish",
+            "edit": "sbapi/deposit/depositions/29704/actions/edit",
+            "discard": "sbapi/deposit/depositions/29704/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29704/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29704/actions/registerconceptdoi"
+        },
+        "record_id": 29704,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29702,
+        "conceptrecid": "29701",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29702",
+                "recid": 29702
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29702",
+            "html": "https://sandbox.zenodo.org/records/29702",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29702/files",
+            "latest_draft": "sbapi/deposit/depositions/29702",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29702",
+            "publish": "sbapi/deposit/depositions/29702/actions/publish",
+            "edit": "sbapi/deposit/depositions/29702/actions/edit",
+            "discard": "sbapi/deposit/depositions/29702/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29702/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29702/actions/registerconceptdoi"
+        },
+        "record_id": 29702,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29699,
+        "conceptrecid": "29698",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29699",
+                "recid": 29699
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29699",
+            "html": "https://sandbox.zenodo.org/records/29699",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29699/files",
+            "latest_draft": "sbapi/deposit/depositions/29699",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29699",
+            "publish": "sbapi/deposit/depositions/29699/actions/publish",
+            "edit": "sbapi/deposit/depositions/29699/actions/edit",
+            "discard": "sbapi/deposit/depositions/29699/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29699/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29699/actions/registerconceptdoi"
+        },
+        "record_id": 29699,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29694,
+        "conceptrecid": "29693",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29694",
+                "recid": 29694
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29694",
+            "html": "https://sandbox.zenodo.org/records/29694",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29694/files",
+            "latest_draft": "sbapi/deposit/depositions/29694",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29694",
+            "publish": "sbapi/deposit/depositions/29694/actions/publish",
+            "edit": "sbapi/deposit/depositions/29694/actions/edit",
+            "discard": "sbapi/deposit/depositions/29694/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29694/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29694/actions/registerconceptdoi"
+        },
+        "record_id": 29694,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29692,
+        "conceptrecid": "29691",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29692",
+                "recid": 29692
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29692",
+            "html": "https://sandbox.zenodo.org/records/29692",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29692/files",
+            "latest_draft": "sbapi/deposit/depositions/29692",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29692",
+            "publish": "sbapi/deposit/depositions/29692/actions/publish",
+            "edit": "sbapi/deposit/depositions/29692/actions/edit",
+            "discard": "sbapi/deposit/depositions/29692/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29692/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29692/actions/registerconceptdoi"
+        },
+        "record_id": 29692,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29690,
+        "conceptrecid": "29689",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29690",
+                "recid": 29690
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29690",
+            "html": "https://sandbox.zenodo.org/records/29690",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29690/files",
+            "latest_draft": "sbapi/deposit/depositions/29690",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29690",
+            "publish": "sbapi/deposit/depositions/29690/actions/publish",
+            "edit": "sbapi/deposit/depositions/29690/actions/edit",
+            "discard": "sbapi/deposit/depositions/29690/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29690/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29690/actions/registerconceptdoi"
+        },
+        "record_id": 29690,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29688,
+        "conceptrecid": "29687",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "related_identifiers": [
+                {
+                    "identifier": "10.1111/ele.14217",
+                    "relation": "isPartOf",
+                    "scheme": "doi"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"isPartOf\":[{\"identifier\":\"https://doi.org/10.1111/ele.14217\",\"relation\":\"isPartOf\"}],\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29688",
+                "recid": 29688
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29688",
+            "html": "https://sandbox.zenodo.org/records/29688",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29688/files",
+            "latest_draft": "sbapi/deposit/depositions/29688",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29688",
+            "publish": "sbapi/deposit/depositions/29688/actions/publish",
+            "edit": "sbapi/deposit/depositions/29688/actions/edit",
+            "discard": "sbapi/deposit/depositions/29688/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29688/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29688/actions/registerconceptdoi"
+        },
+        "record_id": 29688,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29686,
+        "conceptrecid": "29685",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "contributors": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "type": "DataManager",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"contributor\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\",\"type\":\"DataManager\"}],\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29686",
+                "recid": 29686
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29686",
+            "html": "https://sandbox.zenodo.org/records/29686",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29686/files",
+            "latest_draft": "sbapi/deposit/depositions/29686",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29686",
+            "publish": "sbapi/deposit/depositions/29686/actions/publish",
+            "edit": "sbapi/deposit/depositions/29686/actions/edit",
+            "discard": "sbapi/deposit/depositions/29686/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29686/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29686/actions/registerconceptdoi"
+        },
+        "record_id": 29686,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29684,
+        "conceptrecid": "29683",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Rainer M. Krug",
+                    "affiliation": "University of Zurich",
+                    "orcid": "0000-0002-7490-0066"
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Rainer M. Krug\",\"affiliation\":\"University of Zurich\",\"orcid\":\"0000-0002-7490-0066\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29684",
+                "recid": 29684
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29684",
+            "html": "https://sandbox.zenodo.org/records/29684",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29684/files",
+            "latest_draft": "sbapi/deposit/depositions/29684",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29684",
+            "publish": "sbapi/deposit/depositions/29684/actions/publish",
+            "edit": "sbapi/deposit/depositions/29684/actions/edit",
+            "discard": "sbapi/deposit/depositions/29684/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29684/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29684/actions/registerconceptdoi"
+        },
+        "record_id": 29684,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29682,
+        "conceptrecid": "29681",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"rightsHolder\":\"A person or organization owning or managing rights over the resource. Recommended practice is to refer to the rights holder with a URI. If this is not possible or feasible, a literal value that identifies the rights holder may be provided.\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29682",
+                "recid": 29682
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29682",
+            "html": "https://sandbox.zenodo.org/records/29682",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29682/files",
+            "latest_draft": "sbapi/deposit/depositions/29682",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29682",
+            "publish": "sbapi/deposit/depositions/29682/actions/publish",
+            "edit": "sbapi/deposit/depositions/29682/actions/edit",
+            "discard": "sbapi/deposit/depositions/29682/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29682/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29682/actions/registerconceptdoi"
+        },
+        "record_id": 29682,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29680,
+        "conceptrecid": "29679",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29680",
+                "recid": 29680
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29680",
+            "html": "https://sandbox.zenodo.org/records/29680",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29680/files",
+            "latest_draft": "sbapi/deposit/depositions/29680",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29680",
+            "publish": "sbapi/deposit/depositions/29680/actions/publish",
+            "edit": "sbapi/deposit/depositions/29680/actions/edit",
+            "discard": "sbapi/deposit/depositions/29680/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29680/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29680/actions/registerconceptdoi"
+        },
+        "record_id": 29680,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29678,
+        "conceptrecid": "29677",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"cc-by-sa-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29678",
+                "recid": 29678
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29678",
+            "html": "https://sandbox.zenodo.org/records/29678",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29678/files",
+            "latest_draft": "sbapi/deposit/depositions/29678",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29678",
+            "publish": "sbapi/deposit/depositions/29678/actions/publish",
+            "edit": "sbapi/deposit/depositions/29678/actions/edit",
+            "discard": "sbapi/deposit/depositions/29678/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29678/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29678/actions/registerconceptdoi"
+        },
+        "record_id": 29678,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29676,
+        "conceptrecid": "29675",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-zero",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"cc-zero\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29676",
+                "recid": 29676
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29676",
+            "html": "https://sandbox.zenodo.org/records/29676",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29676/files",
+            "latest_draft": "sbapi/deposit/depositions/29676",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29676",
+            "publish": "sbapi/deposit/depositions/29676/actions/publish",
+            "edit": "sbapi/deposit/depositions/29676/actions/edit",
+            "discard": "sbapi/deposit/depositions/29676/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29676/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29676/actions/registerconceptdoi"
+        },
+        "record_id": 29676,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29672,
+        "conceptrecid": "29671",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29672",
+                "recid": 29672
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29672",
+            "html": "https://sandbox.zenodo.org/records/29672",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29672/files",
+            "latest_draft": "sbapi/deposit/depositions/29672",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29672",
+            "publish": "sbapi/deposit/depositions/29672/actions/publish",
+            "edit": "sbapi/deposit/depositions/29672/actions/edit",
+            "discard": "sbapi/deposit/depositions/29672/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29672/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29672/actions/registerconceptdoi"
+        },
+        "record_id": 29672,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29670,
+        "conceptrecid": "29669",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "language": "eng",
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"language\":\"eng\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29670",
+                "recid": 29670
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29670",
+            "html": "https://sandbox.zenodo.org/records/29670",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29670/files",
+            "latest_draft": "sbapi/deposit/depositions/29670",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29670",
+            "publish": "sbapi/deposit/depositions/29670/actions/publish",
+            "edit": "sbapi/deposit/depositions/29670/actions/edit",
+            "discard": "sbapi/deposit/depositions/29670/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29670/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29670/actions/registerconceptdoi"
+        },
+        "record_id": 29670,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29668,
+        "conceptrecid": "29667",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29668",
+                "recid": 29668
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29668",
+            "html": "https://sandbox.zenodo.org/records/29668",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29668/files",
+            "latest_draft": "sbapi/deposit/depositions/29668",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29668",
+            "publish": "sbapi/deposit/depositions/29668/actions/publish",
+            "edit": "sbapi/deposit/depositions/29668/actions/edit",
+            "discard": "sbapi/deposit/depositions/29668/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29668/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29668/actions/registerconceptdoi"
+        },
+        "record_id": 29668,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29666,
+        "conceptrecid": "29665",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29666",
+                "recid": 29666
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29666",
+            "html": "https://sandbox.zenodo.org/records/29666",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29666/files",
+            "latest_draft": "sbapi/deposit/depositions/29666",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29666",
+            "publish": "sbapi/deposit/depositions/29666/actions/publish",
+            "edit": "sbapi/deposit/depositions/29666/actions/edit",
+            "discard": "sbapi/deposit/depositions/29666/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29666/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29666/actions/registerconceptdoi"
+        },
+        "record_id": 29666,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29664,
+        "conceptrecid": "29663",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "Data sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29664",
+                "recid": 29664
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29664",
+            "html": "https://sandbox.zenodo.org/records/29664",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29664/files",
+            "latest_draft": "sbapi/deposit/depositions/29664",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29664",
+            "publish": "sbapi/deposit/depositions/29664/actions/publish",
+            "edit": "sbapi/deposit/depositions/29664/actions/edit",
+            "discard": "sbapi/deposit/depositions/29664/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29664/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29664/actions/registerconceptdoi"
+        },
+        "record_id": 29664,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29662,
+        "conceptrecid": "29661",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThe data from the LEEF-1 experiment.\\n\\n## description\\n\\nData sampled during the LEEF-1 experiment",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"The data from the LEEF-1 experiment.\",\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Data sampled during the LEEF-1 experiment\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29662",
+                "recid": 29662
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29662",
+            "html": "https://sandbox.zenodo.org/records/29662",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29662/files",
+            "latest_draft": "sbapi/deposit/depositions/29662",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29662",
+            "publish": "sbapi/deposit/depositions/29662/actions/publish",
+            "edit": "sbapi/deposit/depositions/29662/actions/edit",
+            "discard": "sbapi/deposit/depositions/29662/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29662/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29662/actions/registerconceptdoi"
+        },
+        "record_id": 29662,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29660,
+        "conceptrecid": "29659",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "Description of the data",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Description of the data\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29660",
+                "recid": 29660
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29660",
+            "html": "https://sandbox.zenodo.org/records/29660",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29660/files",
+            "latest_draft": "sbapi/deposit/depositions/29660",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29660",
+            "publish": "sbapi/deposit/depositions/29660/actions/publish",
+            "edit": "sbapi/deposit/depositions/29660/actions/edit",
+            "discard": "sbapi/deposit/depositions/29660/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29660/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29660/actions/registerconceptdoi"
+        },
+        "record_id": 29660,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29650,
+        "conceptrecid": "29649",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "Description of the data",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Description of the data\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29650",
+                "recid": 29650
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29650",
+            "html": "https://sandbox.zenodo.org/records/29650",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29650/files",
+            "latest_draft": "sbapi/deposit/depositions/29650",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29650",
+            "publish": "sbapi/deposit/depositions/29650/actions/publish",
+            "edit": "sbapi/deposit/depositions/29650/actions/edit",
+            "discard": "sbapi/deposit/depositions/29650/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29650/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29650/actions/registerconceptdoi"
+        },
+        "record_id": 29650,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29644,
+        "conceptrecid": "29643",
+        "metadata": {
+            "title": "LEEF-1 experiment",
+            "publication_date": "2022-01-01",
+            "description": "Description of the data",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "Some name",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"accessRights\":\"open\",\"creator\":[{\"name\":\"Some name\"}],\"description\":\"Description of the data\",\"license\":\"CC-BY-SA-4.0\",\"title\":\"LEEF-1 experiment\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29644",
+                "recid": 29644
+            }
+        },
+        "title": "LEEF-1 experiment",
+        "links": {
+            "self": "sbapi/records/29644",
+            "html": "https://sandbox.zenodo.org/records/29644",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29644/files",
+            "latest_draft": "sbapi/deposit/depositions/29644",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29644",
+            "publish": "sbapi/deposit/depositions/29644/actions/publish",
+            "edit": "sbapi/deposit/depositions/29644/actions/edit",
+            "discard": "sbapi/deposit/depositions/29644/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29644/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29644/actions/registerconceptdoi"
+        },
+        "record_id": 29644,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29640,
+        "conceptrecid": "29639",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-sa-4.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"license\":\"CC-BY-SA-4.0\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29640",
+                "recid": 29640
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/29640",
+            "html": "https://sandbox.zenodo.org/records/29640",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/29640/files",
+            "latest_draft": "sbapi/deposit/depositions/29640",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29640",
+            "publish": "sbapi/deposit/depositions/29640/actions/publish",
+            "edit": "sbapi/deposit/depositions/29640/actions/edit",
+            "discard": "sbapi/deposit/depositions/29640/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29640/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29640/actions/registerconceptdoi"
+        },
+        "record_id": 29640,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 29638,
+        "conceptrecid": "29637",
+        "doi": "10.5281/zenodo.29638",
+        "doi_url": "https://doi.org/10.5281/zenodo.29638",
+        "metadata": {
+            "title": "New Title",
+            "doi": "10.5281/zenodo.29638",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.29638",
+                "recid": 29638
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/29638",
+            "html": "https://sandbox.zenodo.org/records/29638",
+            "doi": "https://doi.org/10.5281/zenodo.29638",
+            "badge": "https://sandbox.zenodo.org/badge/doi/10.5281%2Fzenodo.29638.svg",
+            "files": "sbapi/records/29638/files",
+            "latest_draft": "sbapi/deposit/depositions/29638",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/29638",
+            "publish": "sbapi/deposit/depositions/29638/actions/publish",
+            "edit": "sbapi/deposit/depositions/29638/actions/edit",
+            "discard": "sbapi/deposit/depositions/29638/actions/discard",
+            "newversion": "sbapi/deposit/depositions/29638/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/29638/actions/registerconceptdoi"
+        },
+        "record_id": 29638,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6699,
+        "conceptrecid": "6698",
+        "doi": "10.5281/zenodo.6699",
+        "doi_url": "https://doi.org/10.5281/zenodo.6699",
+        "metadata": {
+            "title": "New Title",
+            "doi": "10.5281/zenodo.6699",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "version": "1.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6699",
+                "recid": 6699
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6699",
+            "html": "https://sandbox.zenodo.org/records/6699",
+            "doi": "https://doi.org/10.5281/zenodo.6699",
+            "badge": "https://sandbox.zenodo.org/badge/doi/10.5281%2Fzenodo.6699.svg",
+            "files": "sbapi/records/6699/files",
+            "latest_draft": "sbapi/deposit/depositions/6699",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6699",
+            "publish": "sbapi/deposit/depositions/6699/actions/publish",
+            "edit": "sbapi/deposit/depositions/6699/actions/edit",
+            "discard": "sbapi/deposit/depositions/6699/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6699/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6699/actions/registerconceptdoi"
+        },
+        "record_id": 6699,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6135,
+        "conceptrecid": "6134",
+        "doi": "10.5281/zenodo.6135",
+        "doi_url": "https://doi.org/10.5281/zenodo.6135",
+        "metadata": {
+            "title": "New Title",
+            "doi": "10.5281/zenodo.6135",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "version": "1.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6135",
+                "recid": 6135
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6135",
+            "html": "https://sandbox.zenodo.org/records/6135",
+            "doi": "https://doi.org/10.5281/zenodo.6135",
+            "badge": "https://sandbox.zenodo.org/badge/doi/10.5281%2Fzenodo.6135.svg",
+            "files": "sbapi/records/6135/files",
+            "latest_draft": "sbapi/deposit/depositions/6135",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6135",
+            "publish": "sbapi/deposit/depositions/6135/actions/publish",
+            "edit": "sbapi/deposit/depositions/6135/actions/edit",
+            "discard": "sbapi/deposit/depositions/6135/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6135/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6135/actions/registerconceptdoi"
+        },
+        "record_id": 6135,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6133,
+        "conceptrecid": "6132",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "version": "1.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"accessRights\":\"closed\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6133",
+                "recid": 6133
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6133",
+            "html": "https://sandbox.zenodo.org/records/6133",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6133/files",
+            "latest_draft": "sbapi/deposit/depositions/6133",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6133",
+            "publish": "sbapi/deposit/depositions/6133/actions/publish",
+            "edit": "sbapi/deposit/depositions/6133/actions/edit",
+            "discard": "sbapi/deposit/depositions/6133/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6133/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6133/actions/registerconceptdoi"
+        },
+        "record_id": 6133,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6131,
+        "conceptrecid": "6130",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "version": "1.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"accessRights\":\"closed\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6131",
+                "recid": 6131
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6131",
+            "html": "https://sandbox.zenodo.org/records/6131",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6131/files",
+            "latest_draft": "sbapi/deposit/depositions/6131",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6131",
+            "publish": "sbapi/deposit/depositions/6131/actions/publish",
+            "edit": "sbapi/deposit/depositions/6131/actions/edit",
+            "discard": "sbapi/deposit/depositions/6131/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6131/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6131/actions/registerconceptdoi"
+        },
+        "record_id": 6131,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6126,
+        "conceptrecid": "6125",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\\n\\nThis is the description",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "version": "1.0",
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"accessRights\":\"closed\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6126",
+                "recid": 6126
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6126",
+            "html": "https://sandbox.zenodo.org/records/6126",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6126/files",
+            "latest_draft": "sbapi/deposit/depositions/6126",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6126",
+            "publish": "sbapi/deposit/depositions/6126/actions/publish",
+            "edit": "sbapi/deposit/depositions/6126/actions/edit",
+            "discard": "sbapi/deposit/depositions/6126/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6126/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6126/actions/registerconceptdoi"
+        },
+        "record_id": 6126,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6116,
+        "conceptrecid": "6115",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6116",
+                "recid": 6116
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6116",
+            "html": "https://sandbox.zenodo.org/records/6116",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6116/files",
+            "latest_draft": "sbapi/deposit/depositions/6116",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6116",
+            "publish": "sbapi/deposit/depositions/6116/actions/publish",
+            "edit": "sbapi/deposit/depositions/6116/actions/edit",
+            "discard": "sbapi/deposit/depositions/6116/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6116/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6116/actions/registerconceptdoi"
+        },
+        "record_id": 6116,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6114,
+        "conceptrecid": "6113",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6114",
+                "recid": 6114
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6114",
+            "html": "https://sandbox.zenodo.org/records/6114",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6114/files",
+            "latest_draft": "sbapi/deposit/depositions/6114",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6114",
+            "publish": "sbapi/deposit/depositions/6114/actions/publish",
+            "edit": "sbapi/deposit/depositions/6114/actions/edit",
+            "discard": "sbapi/deposit/depositions/6114/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6114/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6114/actions/registerconceptdoi"
+        },
+        "record_id": 6114,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6112,
+        "conceptrecid": "6111",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6112",
+                "recid": 6112
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6112",
+            "html": "https://sandbox.zenodo.org/records/6112",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6112/files",
+            "latest_draft": "sbapi/deposit/depositions/6112",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6112",
+            "publish": "sbapi/deposit/depositions/6112/actions/publish",
+            "edit": "sbapi/deposit/depositions/6112/actions/edit",
+            "discard": "sbapi/deposit/depositions/6112/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6112/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6112/actions/registerconceptdoi"
+        },
+        "record_id": 6112,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6110,
+        "conceptrecid": "6109",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6110",
+                "recid": 6110
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6110",
+            "html": "https://sandbox.zenodo.org/records/6110",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6110/files",
+            "latest_draft": "sbapi/deposit/depositions/6110",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6110",
+            "publish": "sbapi/deposit/depositions/6110/actions/publish",
+            "edit": "sbapi/deposit/depositions/6110/actions/edit",
+            "discard": "sbapi/deposit/depositions/6110/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6110/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6110/actions/registerconceptdoi"
+        },
+        "record_id": 6110,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6108,
+        "conceptrecid": "6107",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6108",
+                "recid": 6108
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6108",
+            "html": "https://sandbox.zenodo.org/records/6108",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6108/files",
+            "latest_draft": "sbapi/deposit/depositions/6108",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6108",
+            "publish": "sbapi/deposit/depositions/6108/actions/publish",
+            "edit": "sbapi/deposit/depositions/6108/actions/edit",
+            "discard": "sbapi/deposit/depositions/6108/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6108/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6108/actions/registerconceptdoi"
+        },
+        "record_id": 6108,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6106,
+        "conceptrecid": "6105",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6106",
+                "recid": 6106
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6106",
+            "html": "https://sandbox.zenodo.org/records/6106",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6106/files",
+            "latest_draft": "sbapi/deposit/depositions/6106",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6106",
+            "publish": "sbapi/deposit/depositions/6106/actions/publish",
+            "edit": "sbapi/deposit/depositions/6106/actions/edit",
+            "discard": "sbapi/deposit/depositions/6106/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6106/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6106/actions/registerconceptdoi"
+        },
+        "record_id": 6106,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6104,
+        "conceptrecid": "6103",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6104",
+                "recid": 6104
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6104",
+            "html": "https://sandbox.zenodo.org/records/6104",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6104/files",
+            "latest_draft": "sbapi/deposit/depositions/6104",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6104",
+            "publish": "sbapi/deposit/depositions/6104/actions/publish",
+            "edit": "sbapi/deposit/depositions/6104/actions/edit",
+            "discard": "sbapi/deposit/depositions/6104/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6104/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6104/actions/registerconceptdoi"
+        },
+        "record_id": 6104,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6102,
+        "conceptrecid": "6101",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6102",
+                "recid": 6102
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6102",
+            "html": "https://sandbox.zenodo.org/records/6102",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6102/files",
+            "latest_draft": "sbapi/deposit/depositions/6102",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6102",
+            "publish": "sbapi/deposit/depositions/6102/actions/publish",
+            "edit": "sbapi/deposit/depositions/6102/actions/edit",
+            "discard": "sbapi/deposit/depositions/6102/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6102/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6102/actions/registerconceptdoi"
+        },
+        "record_id": 6102,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    },
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 6100,
+        "conceptrecid": "6099",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "This is the abstract",
+            "access_right": "open",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "license": "cc-by-4.0",
+            "imprint_publisher": "Zenodo",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.6100",
+                "recid": 6100
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/records/6100",
+            "html": "https://sandbox.zenodo.org/records/6100",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/records/6100/files",
+            "latest_draft": "sbapi/deposit/depositions/6100",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/6100",
+            "publish": "sbapi/deposit/depositions/6100/actions/publish",
+            "edit": "sbapi/deposit/depositions/6100/actions/edit",
+            "discard": "sbapi/deposit/depositions/6100/actions/discard",
+            "newversion": "sbapi/deposit/depositions/6100/actions/newversion",
+            "registerconceptdoi": "sbapi/deposit/depositions/6100/actions/registerconceptdoi"
+        },
+        "record_id": 6100,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    }
 ]

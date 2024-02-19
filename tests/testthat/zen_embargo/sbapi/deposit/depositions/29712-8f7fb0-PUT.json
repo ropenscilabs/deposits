@@ -1,0 +1,61 @@
+{
+    "created": "2022-01-01T00:00:00+00:00",
+    "modified": "2022-01-01T00:00:00+00:00",
+    "id": 29712,
+    "conceptrecid": "29711",
+    "doi": "10.5281/zenodo.29712",
+    "doi_url": "https://doi.org/10.5281/zenodo.29712",
+    "metadata": {
+        "title": "New Title",
+        "doi": "10.5281/zenodo.29712",
+        "publication_date": "2022-01-01",
+        "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\nThis is the description\n\n## version\n1.0",
+        "access_right": "embargoed",
+        "embargo_date": "2022-01-01",
+        "creators": [
+            {
+                "name": "A. Person",
+                "affiliation": null
+            },
+            {
+                "name": "B. Person",
+                "affiliation": null
+            }
+        ],
+        "keywords": [
+            "one",
+            "two",
+            "three"
+        ],
+        "license": "cc-by-4.0",
+        "imprint_publisher": "Zenodo",
+        "upload_type": "other",
+        "prereserve_doi": {
+            "doi": "10.5281/zenodo.29712",
+            "recid": 29712
+        }
+    },
+    "title": "New Title",
+    "links": {
+        "self": "sbapi/deposit/depositions/29712",
+        "html": "https://sandbox.zenodo.org/deposit/29712",
+        "doi": "https://doi.org/10.5281/zenodo.29712",
+        "badge": "https://sandbox.zenodo.org/badge/doi/10.5281%2Fzenodo.29712.svg",
+        "files": "sbapi/deposit/depositions/29712/files",
+        "bucket": "sbapi/files/a49586e0-347d-4e85-b63b-f6b87d3df1c1",
+        "latest_draft": "sbapi/deposit/depositions/29712",
+        "latest_draft_html": "https://sandbox.zenodo.org/deposit/29712",
+        "publish": "sbapi/deposit/depositions/29712/actions/publish",
+        "edit": "sbapi/deposit/depositions/29712/actions/edit",
+        "discard": "sbapi/deposit/depositions/29712/actions/discard",
+        "newversion": "sbapi/deposit/depositions/29712/actions/newversion",
+        "registerconceptdoi": "sbapi/deposit/depositions/29712/actions/registerconceptdoi"
+    },
+    "record_id": 29712,
+    "owner": 623,
+    "files": [
+
+    ],
+    "state": "unsubmitted",
+    "submitted": false
+}
