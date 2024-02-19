@@ -3,10 +3,6 @@
     "title": "zenodo metadata schema",
     "type": "object",
     "properties": {
-        "created": {
-            "type": "string",
-            "format": "date-time"
-        },
         "doi": {
             "type": "string"
         },
@@ -292,6 +288,7 @@
                 "description",
                 "access_right"
             ],
+            "additionalProperties": false,
             "if": {
                 "properties": {
                     "upload_type": { "const": "publication" }
@@ -353,5 +350,6 @@
             "type": "string",
             "default": ""
         }
-    }
+    },
+    "additionalProperties": false
 }
