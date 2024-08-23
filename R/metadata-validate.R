@@ -240,7 +240,8 @@ deposits_meta_from_file <- function (filename = NULL,
 
         num_resources_local <- 0L
         meta <- jsonlite::read_json (filename)
-        if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
+        # if (all (c ("profile", "metadata", "resources") %in% names (meta))) {
+        if (all (c ("metadata", "resources") %in% names (meta))) {
             # datapackage.json:
             num_resources_local <- length (meta$resources)
             meta <- meta$metadata
