@@ -1,7 +1,7 @@
 Package: deposits
 Title: A universal client for depositing and accessing research data
     anywhere
-Version: 0.2.1.060
+Version: 0.2.1.061
 Authors@R: 
     person("Mark", "Padgham", , "mark.padgham@email.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2172-5265"))

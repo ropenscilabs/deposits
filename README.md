@@ -34,6 +34,31 @@ vignette](https://docs.ropensci.org/deposits/articles/workflow.html)
 demonstrating a full workflow from data generation and documentation to
 publication.
 
+## Installation
+
+The package can be installed by enabling the "ropenscilabs" repository from
+[r-universe](https://ropenscilabs.r-universe.dev):
+
+``` r
+options (repos = c (
+    ropenscilabs = "https://ropenscilabs.r-universe.dev",
+    CRAN = "https://cloud.r-project.org"
+))
+```
+
+The `install.packages()` command will then install the development version.
+Alternatively, the package can be installed with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github ("mpadge/deposits")
+```
+
+The package can then be loaded the usual way:
+``` r
+library (deposits)
+```
+
 ## Data Repositories
 
 The list of data repositories currently supported is accessible by the
