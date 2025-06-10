@@ -255,7 +255,7 @@
             "description": "A related resource that is included either physically or logically in the described resource. This property is an inverse property of Is Part Of.",
             "anyOf": [
                 {
-                    "typpe": "string"
+                    "type": "string"
                 },
                 {
                     "description": "Zenodo 'related_identifiers' field",
@@ -298,7 +298,7 @@
             "description": "A related resource that is a version, edition, or adaptation of the described resource. Changes in version imply substantive changes in content rather than differences in format. This property is an inverse property of Is Version Of.",
             "anyOf": [
                 {
-                    "typpe": "string"
+                    "type": "string"
                 },
                 {
                     "description": "Zenodo 'related_identifiers' field",
@@ -349,7 +349,7 @@
             "description": "A pre-existing related resource that is substantially the same as the described resource, but in another format. This property is an inverse property of Has Format.",
             "anyOf": [
                 {
-                    "typpe": "string"
+                    "type": "string"
                 },
                 {
                     "description": "Zenodo 'related_identifiers' field",

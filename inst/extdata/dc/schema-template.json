@@ -14,7 +14,7 @@
         {
             "name": "Name of first contributor. (Note that authors are specified in the 'creator' field, and a 'contributor' is not a 'creator'.)",
             "type": "(Optional) For Zenodo; one of 'ContactPerson', 'DataCollector', 'DataCurator', 'DataManager', 'istributor', 'Editor', 'HostingInstitution', 'Producer', 'ProjectLeader', 'ProjectManager', 'ProjectMember', 'RegistrationAgency', 'RegistrationAuthority', 'RelatedPerson', 'Researcher', 'ResearchGroup', 'RightsHolder', 'upervisor', 'Sponsor', 'WorkPackageLeader', 'Other'.",
-            "affiliantion": "(Optional) Affiliation of contributor",
+            "affiliation": "(Optional) Affiliation of contributor",
             "orcid": "(Optional) ORCID ID of contributor.",
             "gnd": "(Optional) GND number of contributor"
         },
@@ -27,7 +27,7 @@
     "creator": [
         {
             "name": "Name of first creator.",
-            "affliantion": "(Optional, Zenodo only)",
+            "affiliation": "(Optional, Zenodo only)",
             "id": "(Optional, figshare only) Integer 'id' on Figshare of creator.",
             "first_name": "(Optional, figshare only)",
             "last_name": "(Optional, figshare only)",
