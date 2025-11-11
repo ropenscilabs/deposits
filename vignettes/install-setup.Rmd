@@ -59,8 +59,18 @@ settings:
 - [figshare/account/applications](https://figshare.com/account/applications).
 
 It is not necessary to create or register applications on any of these
-services; this package uses personal tokens only. The tokens need to be 
-stored as local environment variables the names of which must include the names
+services; this package uses personal tokens only. 
+
+The tokens need to be 
+stored as local environment variables the names of which must be
+
+- ZENOODO_TOKEN
+- ZENODO_SANDBOX_TOKEN
+- FIGSHARE_TOKEN
+
+in which case the tokens are read from these environmental variables. If the respective one (responding
+to the `service` and `sandbox` arguments of `deposits_service()`) is not found,
+a heuristic algorytm is used to find environmental variables which include the names
 of the respective services, as defined by the "name" column returned from
 `deposits_service()`, as shown above. This can be done as in the following
 example:
