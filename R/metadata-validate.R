@@ -232,7 +232,7 @@ deposits_meta_from_file <- function (filename = NULL,
 
     } else {
 
-        meta <- readLines (filename)
+        meta <- readLines (filename, warn = FALSE)
         check <- jsonlite::validate (meta)
         if (!check) {
             stop ("json is not valid.")
@@ -246,6 +246,10 @@ deposits_meta_from_file <- function (filename = NULL,
             num_resources_local <- length (meta$resources)
             meta <- meta$metadata
         }
+        
+        # remove comments defined names starting with "_"
+        meta <- meta[!grepl("^_", names(meta))]
+
         meta <- meta [which (lapply (meta, length) > 0L)]
 
         attr (meta, "num_resources_local") <- num_resources_local

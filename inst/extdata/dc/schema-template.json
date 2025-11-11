@@ -1,5 +1,9 @@
 {
-    "_note": "Fields like this starting with underscores are comments. Please delete this field, and all fields in this template except for those you wish to use for your deposit. This template may NOT be used in anything like this default form to construct a 'deposits' client. Many values require editing to comply with expected formats described throughout, such as dates or fields expected to accord with some fixed vocabulary, or modification from text descriptions to JSON objects. Please refer to the main 'dc/schema' file of the 'deposits' package for full details.",
+    "_note_1": "Fields like this starting with underscores are comments. They will be ignored when loading the metadata from the json file.",
+    "_note_2": "Please delete all fields in this template except for those you wish to use for your deposit. ",
+    "_note_3": "This template may NOT be used in anything like this default form to construct a 'deposits' client.",
+    "_note_4": "Many values require editing to comply with expected formats described throughout, such as dates or fields expected to accord with some fixed vocabulary, or modification from text descriptions to JSON objects.",
+    "_note_5": "Please refer to the main 'dc/schema' file of the 'deposits' package for full details.",
     "abstract": "Abstract text",
     "accessRights": "Access rights, which for Zenodo must be one of 'open', 'embargoed', 'restricted', or 'closed'.",
     "accrualMethod": "See https://www.dublincore.org/specifications/dublin-core/collection-description/accrual-method/; must be one of 'deposit', 'donation', 'purchase', 'loan', 'license', or 'item_creation'",
