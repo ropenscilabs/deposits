@@ -1,0 +1,12 @@
+structure(list(method = "POST", url = "api/articles/30801242/files", 
+    status_code = 201L, headers = structure(list(date = "Fri, 05 Dec 2025 13:50:47 GMT", 
+        `content-type` = "application/json", `content-length` = "84", 
+        location = "api/articles/30801242/files/60137822", server = "nginx", 
+        `access-control-allow-origin` = "https://api.figshare.com", 
+        `access-control-allow-methods` = "GET, POST, PUT, DELETE, OPTIONS", 
+        `access-control-allow-headers` = "Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization", 
+        `access-control-max-age` = "3600"), class = "httr2_headers"), 
+    body = charToRaw("{\"location\": \"api/articles/30801242/files/60137822\"}"), 
+    timing = c(redirect = 0, namelookup = 0.021803, connect = 0.049311, 
+    pretransfer = 0.113932, starttransfer = 0.337847, total = 0.338113
+    ), cache = new.env(parent = emptyenv())), class = "httr2_response")

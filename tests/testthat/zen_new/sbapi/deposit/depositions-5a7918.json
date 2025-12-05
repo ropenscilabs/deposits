@@ -1,0 +1,56 @@
+[
+    {
+        "created": "2022-01-01T00:00:00+00:00",
+        "modified": "2022-01-01T00:00:00+00:00",
+        "id": 412011,
+        "conceptrecid": "412010",
+        "metadata": {
+            "title": "New Title",
+            "publication_date": "2022-01-01",
+            "description": "## abstract\\n\\nThis is the abstract\\n\\n## description\nThis is the description\n\n## version\n1.0",
+            "access_right": "restricted",
+            "creators": [
+                {
+                    "name": "A. Person",
+                    "affiliation": null
+                },
+                {
+                    "name": "B. Person",
+                    "affiliation": null
+                }
+            ],
+            "keywords": [
+                "one",
+                "two",
+                "three"
+            ],
+            "imprint_publisher": "Zenodo",
+            "notes": "\\n\\n---start-deposits-meta---\\n{\"abstract\":\"This is the abstract\",\"accessRights\":\"closed\",\"creator\":[{\"name\":\"A. Person\"},{\"name\":\"B. Person\"}],\"description\":\"## description\\nThis is the description\\n\\n## version\\n1.0\",\"subject\":\"## keywords\\none, two\\nthree\",\"title\":\"New Title\"}\\n---end-deposits-meta---\\n",
+            "upload_type": "other",
+            "prereserve_doi": {
+                "doi": "10.5281/zenodo.412011",
+                "recid": 412011
+            }
+        },
+        "title": "New Title",
+        "links": {
+            "self": "sbapi/deposit/depositions/412011",
+            "html": "https://sandbox.zenodo.org/deposit/412011",
+            "badge": "https://sandbox.zenodo.org/badge/doi/.svg",
+            "files": "sbapi/deposit/depositions/412011/files",
+            "latest_draft": "sbapi/deposit/depositions/412011",
+            "latest_draft_html": "https://sandbox.zenodo.org/deposit/412011",
+            "publish": "sbapi/deposit/depositions/412011/actions/publish",
+            "edit": "sbapi/deposit/depositions/412011/actions/edit",
+            "discard": "sbapi/deposit/depositions/412011/actions/discard",
+            "newversion": "sbapi/deposit/depositions/412011/actions/newversion"
+        },
+        "record_id": 412011,
+        "owner": 623,
+        "files": [
+
+        ],
+        "state": "unsubmitted",
+        "submitted": false
+    }
+]

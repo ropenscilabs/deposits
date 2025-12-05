@@ -100,7 +100,9 @@ test_that ("print figshare with local_path", {
     fs::dir_create (path)
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename, row.names = FALSE)
-    cli$deposit_add_resource (filename)
+    suppressWarnings (
+        cli$deposit_add_resource (filename)
+    )
 
     # Standardise 'local_path':
     cli$local_path <- "/tmp/Rtmp/data"
@@ -153,7 +155,9 @@ test_that ("print zenodo with local_path", {
     fs::dir_create (path)
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename, row.names = FALSE)
-    cli$deposit_add_resource (filename)
+    suppressWarnings (
+        cli$deposit_add_resource (filename)
+    )
 
     # Standardise 'local_path':
     cli$local_path <- "/tmp/Rtmp/data"

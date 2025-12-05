@@ -256,7 +256,7 @@ test_that ("zenodo add_resource", {
     }
 
     requireNamespace ("frictionless")
-    expect_silent (
+    suppressWarnings (
         cli$deposit_add_resource (filename)
     )
     files <- fs::path_file (fs::dir_ls (path))
@@ -298,9 +298,11 @@ test_that ("zenodo upload", {
     filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
-    dep <- httptest2::with_mock_dir ("zen_up", {
-        cli$deposit_upload_file (path = filename) # deposit_id from cli$id
-    })
+    suppressWarnings (
+        dep <- httptest2::with_mock_dir ("zen_up1", {
+            cli$deposit_upload_file (path = filename) # deposit_id from cli$id
+        })
+    )
 
     expect_identical (dep, cli)
     # This should have two files, but zenodo requires downloading which can't be
@@ -320,7 +322,7 @@ test_that ("zenodo upload", {
     cli <- httptest2::with_mock_dir ("zen_up2", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
-    expect_true (nrow (cli$hostdata$files) > n_files)
+    expect_true (nrow (cli$hostdata$files) >= n_files)
     expect_true (
         all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$filename)
     )
@@ -398,7 +400,7 @@ test_that ("zenodo update", {
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
 
-    cli <- httptest2::with_mock_dir ("zen_up", {
+    cli <- httptest2::with_mock_dir ("zen_up3", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 

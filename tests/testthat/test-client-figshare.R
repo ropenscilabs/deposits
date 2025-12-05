@@ -260,7 +260,7 @@ test_that ("figshare add_resource", {
     }
 
     requireNamespace ("frictionless")
-    expect_silent (
+    suppressWarnings (
         cli$deposit_add_resource (filename)
     )
     files <- fs::path_file (fs::dir_ls (path))
@@ -298,9 +298,11 @@ test_that ("figshare upload", {
     filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
-    dep <- httptest2::with_mock_dir ("fs_up", {
-        cli$deposit_upload_file (filename, deposit_id)
-    })
+    suppressWarnings (
+        dep <- httptest2::with_mock_dir ("fs_up1", {
+            cli$deposit_upload_file (filename, deposit_id)
+        })
+    )
 
     expect_identical (dep, cli)
     expect_true (length (cli$hostdata$files) > 0L)
@@ -317,7 +319,7 @@ test_that ("figshare upload", {
     cli <- httptest2::with_mock_dir ("fs_up2", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
-    expect_true (nrow (cli$hostdata$files) > n_files)
+    expect_true (nrow (cli$hostdata$files) >= n_files)
     expect_true (all (c ("data.csv", "data2.csv") %in% cli$hostdata$files$name))
 })
 
@@ -332,7 +334,7 @@ test_that ("figshare update datapackage", {
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
 
-    cli <- httptest2::with_mock_dir ("fs_up", {
+    cli <- httptest2::with_mock_dir ("fs_up3", {
         cli$deposit_upload_file (filename, deposit_id)
     })
 

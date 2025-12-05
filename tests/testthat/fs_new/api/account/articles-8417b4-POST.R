@@ -1,9 +1,11 @@
 structure(list(method = "POST", url = "api/account/articles", 
-    status_code = 201L, headers = structure(list(date = "Thu, 15 Jun 2023 09:26:19 GMT", 
+    status_code = 201L, headers = structure(list(date = "Fri, 05 Dec 2025 13:38:20 GMT", 
         `content-type` = "application/json", `content-length` = "108", 
-        location = "api/articles/23522487", server = "nginx", 
+        location = "api/articles/30801242", server = "nginx", 
         `access-control-allow-origin` = "https://api.figshare.com", 
         `access-control-allow-methods` = "GET, POST, PUT, DELETE, OPTIONS", 
         `access-control-allow-headers` = "Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization", 
         `access-control-max-age` = "3600"), class = "httr2_headers"), 
-    body = charToRaw("{\"entity_id\": 23522487, \"location\": \"api/articles/23522487\", \"warnings\": []}")), class = "httr2_response")
+    body = charToRaw("{\"entity_id\": 30801242, \"location\": \"api/articles/30801242\", \"warnings\": []}"), 
+    timing = c(redirect = 0, namelookup = 0, connect = 0, pretransfer = 0.000092, 
+    starttransfer = 0.216007, total = 0.216164), cache = new.env(parent = emptyenv())), class = "httr2_response")

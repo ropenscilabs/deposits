@@ -1,0 +1,156 @@
+{
+    "curation_status": null,
+    "files": [
+        {
+            "upload_token": "18867f7c-74af-4c2a-bf7c-df7db3025956",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
+            "is_attached_to_public_version": false,
+            "id": 60137699,
+            "name": "data.csv",
+            "size": 625,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/60137699",
+            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "computed_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "mimetype": "text/csv"
+        },
+        {
+            "upload_token": "3491ca43-f447-4a88-8a22-528ac66897a0",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
+            "is_attached_to_public_version": false,
+            "id": 60137702,
+            "name": "data2.csv",
+            "size": 625,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/60137702",
+            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "computed_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "mimetype": "text/csv"
+        },
+        {
+            "upload_token": "9660bbfd-119b-41cb-b5db-e18ed96f42e3",
+            "upload_url": "",
+            "status": "available",
+            "preview_state": "preview_available",
+            "viewer_type": "dataset",
+            "is_attached_to_public_version": false,
+            "id": 60137822,
+            "name": "data.csv",
+            "size": 625,
+            "is_link_only": false,
+            "download_url": "https://ndownloader.figshare.com/files/60137822",
+            "supplied_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "computed_md5": "cc624d72ede85ef061afa494d9951f6f",
+            "mimetype": "text/csv"
+        }
+    ],
+    "resource_title": null,
+    "resource_doi": null,
+    "group_resource_id": null,
+    "account_id": 2986795,
+    "folder_structure": {
+
+    },
+    "authors": [
+        {
+            "id": 12549448,
+            "full_name": "A. Person",
+            "first_name": "A.",
+            "last_name": "Person",
+            "is_active": false,
+            "url_name": "_",
+            "orcid_id": ""
+        },
+        {
+            "id": 14827645,
+            "full_name": "B. Person",
+            "first_name": "B.",
+            "last_name": "Person",
+            "is_active": false,
+            "url_name": "_",
+            "orcid_id": ""
+        }
+    ],
+    "custom_fields": [
+
+    ],
+    "figshare_url": "https://figshare.com/articles/dataset/_/30801242",
+    "download_disabled": false,
+    "description": "<h2>abstract<\/h2>\nThis is the abstract\n\n<h2>description<\/h2>\nThis is the description\n\n<h2>version<\/h2>\n1.0",
+    "funding": null,
+    "funding_list": [
+
+    ],
+    "version": 0,
+    "status": "private",
+    "size": 1875,
+    "created_date": "2022-01-01T00:00:00Z",
+    "modified_date": "2022-01-01T00:00:00Z",
+    "is_public": false,
+    "is_confidential": false,
+    "is_metadata_record": false,
+    "confidential_reason": "",
+    "metadata_reason": "",
+    "license": {
+        "value": 1,
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    "tags": [
+        "beaver",
+        "temperature"
+    ],
+    "keywords": [
+        "beaver",
+        "temperature"
+    ],
+    "categories": [
+        {
+            "id": 24418,
+            "title": "Animal physiological ecology",
+            "parent_id": 24397,
+            "path": "/24130/24397/24418",
+            "source_id": "310907",
+            "taxonomy_id": 100
+        }
+    ],
+    "references": [
+
+    ],
+    "has_linked_file": false,
+    "citation": "Person, A.; Person, B. (2025). New Title. figshare. Dataset. https://figshare.com/articles/dataset/_/30801242",
+    "related_materials": [
+
+    ],
+    "is_embargoed": false,
+    "embargo_date": null,
+    "embargo_type": null,
+    "embargo_title": "",
+    "embargo_reason": "",
+    "embargo_options": [
+
+    ],
+    "id": 30801242,
+    "title": "New Title",
+    "doi": "",
+    "handle": "",
+    "url": "api/articles/30801242",
+    "published_date": null,
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "api/articles/30801242",
+    "url_public_api": "api/articles/30801242",
+    "url_private_html": "https://figshare.com/account/articles/30801242",
+    "url_public_html": "https://figshare.com/articles/dataset/_/30801242",
+    "timeline": {
+
+    }
+}
