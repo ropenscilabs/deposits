@@ -1,7 +1,53 @@
 [
     {
-        "id": 23522487,
+        "id": 30801242,
         "title": "New Title",
+        "doi": "",
+        "handle": "",
+        "url": "api/articles/30801242",
+        "published_date": null,
+        "thumb": "",
+        "defined_type": 3,
+        "defined_type_name": "dataset",
+        "group_id": null,
+        "url_private_api": "api/articles/30801242",
+        "url_public_api": "api/articles/30801242",
+        "url_private_html": "https://figshare.com/account/articles/30801242",
+        "url_public_html": "https://figshare.com/articles/dataset/_/30801242",
+        "timeline": {
+
+        },
+        "resource_title": null,
+        "resource_doi": null,
+        "created_date": "2022-01-01T00:00:00Z",
+        "modified_date": "2022-01-01T00:00:00Z"
+    },
+    {
+        "id": 30801239,
+        "title": "New Title",
+        "doi": "",
+        "handle": "",
+        "url": "api/articles/30801239",
+        "published_date": null,
+        "thumb": "",
+        "defined_type": 3,
+        "defined_type_name": "dataset",
+        "group_id": null,
+        "url_private_api": "api/articles/30801239",
+        "url_public_api": "api/articles/30801239",
+        "url_private_html": "https://figshare.com/account/articles/30801239",
+        "url_public_html": "https://figshare.com/articles/dataset/_/30801239",
+        "timeline": {
+
+        },
+        "resource_title": null,
+        "resource_doi": null,
+        "created_date": "2022-01-01T00:00:00Z",
+        "modified_date": "2022-01-01T00:00:00Z"
+    },
+    {
+        "id": 23522487,
+        "title": "New Modified Title",
         "doi": "",
         "handle": "",
         "url": "api/articles/23522487",
@@ -18,7 +64,9 @@
 
         },
         "resource_title": null,
-        "resource_doi": null
+        "resource_doi": null,
+        "created_date": "2022-01-01T00:00:00Z",
+        "modified_date": "2022-01-01T00:00:00Z"
     },
     {
         "id": 23522484,
@@ -39,7 +87,9 @@
 
         },
         "resource_title": null,
-        "resource_doi": null
+        "resource_doi": null,
+        "created_date": "2022-01-01T00:00:00Z",
+        "modified_date": "2022-01-01T00:00:00Z"
     },
     {
         "id": 23514972,
@@ -61,6 +111,8 @@
             "firstOnline": "2022-01-01T00:00:00"
         },
         "resource_title": null,
-        "resource_doi": null
+        "resource_doi": null,
+        "created_date": "2022-01-01T00:00:00Z",
+        "modified_date": "2022-01-01T00:00:00Z"
     }
 ]

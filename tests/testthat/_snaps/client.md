@@ -6,7 +6,7 @@
       <deposits client>
        deposits service : figshare
                url_base : https://api.figshare.com/v2/
-       Current deposits : 1 (see 'deposits' element for details)
+       Current deposits : 5 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : <none>
@@ -61,7 +61,7 @@
       <deposits client>
        deposits service : figshare
                url_base : https://api.figshare.com/v2/
-       Current deposits : 1 (see 'deposits' element for details)
+       Current deposits : 5 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : 6 terms (see 'metadata' element for details)
@@ -77,7 +77,7 @@
        deposits service : zenodo
                  sandbox: TRUE
                url_base : https://sandbox.zenodo.org/api/
-       Current deposits : 2 (see 'deposits' element for details)
+       Current deposits : 1 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : <none>
@@ -134,7 +134,7 @@
        deposits service : zenodo
                  sandbox: TRUE
                url_base : https://sandbox.zenodo.org/api/
-       Current deposits : 2 (see 'deposits' element for details)
+       Current deposits : 1 (see 'deposits' element for details)
       
          hostdata : <none>
          metadata : 4 terms (see 'metadata' element for details)

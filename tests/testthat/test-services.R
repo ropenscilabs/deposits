@@ -52,14 +52,14 @@ testthat::skip_if (!test_all)
 
 test_that ("deposit_service function", {
 
-    cli <- with_mock_dir ("services_zen", {
+    cli <- httptest2::with_mock_dir ("services_zen", {
         depositsClient$new (service = "zenodo", sandbox = TRUE)
     })
     expect_equal (cli$service, "zenodo")
     expect_true (cli$sandbox)
     expect_true (grepl ("zenodo", cli$url_base))
 
-    cli <- with_mock_dir ("services_fs", {
+    cli <- httptest2::with_mock_dir ("services_fs", {
         cli$deposit_service (service = "figshare")
     })
     expect_equal (cli$service, "figshare")

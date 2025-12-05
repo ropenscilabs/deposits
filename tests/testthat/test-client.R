@@ -21,7 +21,7 @@ test_that ("Client structure", {
     )
 
     expect_silent (
-        cli <- with_mock_dir ("client-new", {
+        cli <- httptest2::with_mock_dir ("client-new", {
             depositsClient$new (service = service)
         })
     )
@@ -55,7 +55,7 @@ test_that ("print figshare", {
     service <- "figshare"
 
     expect_silent (
-        cli <- with_mock_dir ("print-fs", {
+        cli <- httptest2::with_mock_dir ("print-fs", {
             depositsClient$new (service = service)
         })
     )
@@ -88,7 +88,7 @@ test_that ("print figshare with local_path", {
         format = "dataset"
     )
     expect_silent (
-        cli <- with_mock_dir ("print-fs", {
+        cli <- httptest2::with_mock_dir ("print-fs", {
             depositsClient$new (service = service, metadata = metadata)
         })
     )
@@ -100,7 +100,9 @@ test_that ("print figshare with local_path", {
     fs::dir_create (path)
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename, row.names = FALSE)
-    cli$deposit_add_resource (filename)
+    suppressWarnings (
+        cli$deposit_add_resource (filename)
+    )
 
     # Standardise 'local_path':
     cli$local_path <- "/tmp/Rtmp/data"
@@ -113,7 +115,7 @@ test_that ("print zenodo", {
     service <- "zenodo"
 
     expect_silent (
-        cli <- with_mock_dir ("print-zen", {
+        cli <- httptest2::with_mock_dir ("print-zen", {
             depositsClient$new (service = service, sandbox = TRUE)
         })
     )
@@ -141,7 +143,7 @@ test_that ("print zenodo with local_path", {
         description = "This is the description"
     )
     expect_silent (
-        cli <- with_mock_dir ("print-zen", {
+        cli <- httptest2::with_mock_dir ("print-zen", {
             depositsClient$new (service = service, sandbox = TRUE, metadata = metadata)
         })
     )
@@ -153,7 +155,9 @@ test_that ("print zenodo with local_path", {
     fs::dir_create (path)
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename, row.names = FALSE)
-    cli$deposit_add_resource (filename)
+    suppressWarnings (
+        cli$deposit_add_resource (filename)
+    )
 
     # Standardise 'local_path':
     cli$local_path <- "/tmp/Rtmp/data"

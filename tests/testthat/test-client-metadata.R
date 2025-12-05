@@ -35,7 +35,7 @@ test_that ("client with metadata", {
         creator = list (list (name = "A. Person"), list (name = "B. Person"))
     )
 
-    cli1 <- with_mock_dir ("meta-new1", {
+    cli1 <- httptest2::with_mock_dir ("meta-new1", {
         depositsClient$new (service, sandbox = TRUE, metadata = metadata)
     })
 
@@ -52,7 +52,7 @@ test_that ("client with metadata", {
 
     filename <- fs::file_temp (ext = ".json")
     jsonlite::write_json (metadata, filename, auto_unbox = TRUE)
-    cli2 <- with_mock_dir ("meta-new2", {
+    cli2 <- httptest2::with_mock_dir ("meta-new2", {
         depositsClient$new (service, sandbox = TRUE, metadata = filename)
     })
 
@@ -62,13 +62,13 @@ test_that ("client with metadata", {
     expect_true (n2 > n1)
 
     meta <- deposits_meta_from_file (filename)
-    cli3 <- with_mock_dir ("meta-new3", {
+    cli3 <- httptest2::with_mock_dir ("meta-new3", {
         depositsClient$new (service, sandbox = TRUE, metadata = meta)
     })
 
     expect_equal (cli2, cli3)
 
-    cli4 <- with_mock_dir ("meta-new4", {
+    cli4 <- httptest2::with_mock_dir ("meta-new4", {
         depositsClient$new (service, sandbox = TRUE)
     })
     cli4$deposit_fill_metadata (meta)
@@ -89,7 +89,7 @@ test_that ("client with invalid metadata", {
     # meta$creator <- c (meta$creator, "wrong") # must be a 'DCCreator' object
 
     # expect_error (
-    #     cli <- with_mock_dir ("meta-new-error", {
+    #     cli <- httptest2::with_mock_dir ("meta-new-error", {
     #         depositsClient$new (service, sandbox = TRUE, metadata = meta)
     #     }),
     #     "metadata is not valid - see details via metadata\\$validate()"

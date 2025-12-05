@@ -1,51 +1,44 @@
-VIGNETTE=deposits
-README=README
+LFILE = README
+VIGNETTE = deposits
 
-.PHONY: all build check doc test
+all: help
 
-all: docall build check
+doc: ## Update package documentation with `roxygen2`
+	Rscript -e "roxygen2::roxygenise()"; \
 
-build: docall
-	R CMD build .
+init: ## Initialize pkgdown site
+	echo "pkgdown::init_site()" | R --no-save -q
 
-#check: build
-#	R CMD check typetracer*tar.gz
+pkgdown: ## Build entire pkgdown site
+	echo "pkgdown::build_site()" | R --no-save -q
 
-clean:
-	-rm -f deposits*tar.gz
-	-rm -fr deposits.Rcheck
-	-rm -fr src/*.{o,so}
+vignette: ## Build pkgdown article
+	echo "pkgdown::build_article('$(VIGNETTE)',quiet=FALSE)" | R --no-save -q
 
-doc: 
-	Rscript -e 'devtools::document()'
+knith: $(LFILE).Rmd ## Render README as HTML
+	echo "rmarkdown::render('$(LFILE).Rmd',output_file='$(LFILE).html')" | R --no-save -q
 
-readme: 
-	Rscript -e 'rmarkdown::render("$(README).Rmd")'
+knitr: $(LFILE).Rmd ## Render README as markdown
+	echo "rmarkdown::render('$(LFILE).Rmd',output_file='$(LFILE).md')" | R --no-save -q
 
-site: clean doc readme
-	Rscript -e "pkgdown::build_home(quiet=FALSE)"
-	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
-	Rscript -e "pkgdown::build_reference()"
+open: ## Open main HTML vignette in browser
+	xdg-open docs/articles/$(VIGNETTE).html &
 
-articles:
-	Rscript -e "pkgdown::build_articles(quiet=FALSE)"
+allcon: ## Run 'allcontributors::add_contributors'
+	Rscript -e 'allcontributors::add_contributors()'
 
-docall: readme doc site
+check: ## Run `rcmdcheck`
+	Rscript -e 'rcmdcheck::rcmdcheck()'
 
-open:
-	xdg-open docs/index.html &
+test: ## Run test suite
+	Rscript -e 'testthat::test_local()'
 
-test:
-	Rscript -e 'devtools::test()'
-
-check:
+pkgcheck: ## Run `pkgcheck` and print results to screen.
 	Rscript -e 'library(pkgcheck); checks <- pkgcheck(); print(checks); summary (checks)'
 
-knitr: $(README).Rmd
-	echo "rmarkdown::render('$(README).Rmd',output_file='$(README).md')" | R --no-save -q
+clean: ## Clean all junk files, including all pkgdown docs
+	rm -rf *.html *.png README_cache docs/
 
-install: clean
-	R CMD INSTALL .
-
-project:
-	xdg-open https://github.com/orgs/ropenscilabs/projects/2
+help: ## Show this help
+	@printf "Usage:\033[36m make [target]\033[0m\n"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

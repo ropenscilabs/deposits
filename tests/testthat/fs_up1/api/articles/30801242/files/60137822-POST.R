@@ -1,0 +1,11 @@
+structure(list(method = "POST", url = "api/articles/30801242/files/60137822", 
+    status_code = 202L, headers = structure(list(date = "Fri, 05 Dec 2025 13:50:47 GMT", 
+        `content-type` = "text/html; charset=UTF-8", `content-length` = "157", 
+        location = "api/articles/30801242/files/60137822", server = "nginx", 
+        `access-control-allow-origin` = "https://api.figshare.com", 
+        `access-control-allow-methods` = "GET, POST, PUT, DELETE, OPTIONS", 
+        `access-control-allow-headers` = "Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization", 
+        `access-control-max-age` = "3600"), class = "httr2_headers"), 
+    body = charToRaw("<html>\n <head>\n  <title>202 Accepted</title>\n </head>\n <body>\n  <h1>202 Accepted</h1>\n  The request is accepted for processing.<br/><br/>\n\n\n\n </body>\n</html>"), 
+    timing = c(redirect = 0, namelookup = 0, connect = 0, pretransfer = 0.000088, 
+    starttransfer = 0.270186, total = 0.270357), cache = new.env(parent = emptyenv())), class = "httr2_response")
