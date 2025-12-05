@@ -11,7 +11,7 @@ test_that ("figshare new", {
 
     service <- "figshare"
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = service)
     })
     expect_s3_class (cli, "depositsClient")
@@ -33,7 +33,7 @@ test_that ("figshare new", {
         format = "dataset"
     )
 
-    cli <- with_mock_dir ("fs_client", {
+    cli <- httptest2::with_mock_dir ("fs_client", {
         depositsClient$new (
             service = service,
             metadata = metadata
@@ -50,7 +50,7 @@ test_that ("figshare new", {
     expect_true (length (cli$metadata) == length (metadata))
     expect_null (cli$hostdata)
 
-    dep <- with_mock_dir ("fs_new2", {
+    dep <- httptest2::with_mock_dir ("fs_new2", {
         cli$deposit_new (prereserve_doi = TRUE)
     })
 
@@ -141,7 +141,7 @@ test_that ("figshare retrieve", {
         format = "dataset"
     )
 
-    dep <- with_mock_dir ("fs_retr", {
+    dep <- httptest2::with_mock_dir ("fs_retr", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
@@ -200,7 +200,7 @@ test_that ("figshare update", {
     expect_false (cli$hostdata$description ==
         metadata$abstract)
 
-    dep <- with_mock_dir ("fs_update", {
+    dep <- httptest2::with_mock_dir ("fs_update", {
         cli$deposit_update ()
     })
 
@@ -233,7 +233,7 @@ test_that ("figshare add_resource", {
         format = "dataset"
     )
 
-    cli <- with_mock_dir ("fs_client", {
+    cli <- httptest2::with_mock_dir ("fs_client", {
         depositsClient$new (
             service = service,
             metadata = metadata
@@ -266,7 +266,7 @@ test_that ("figshare add_resource", {
     files <- fs::path_file (fs::dir_ls (path))
     expect_true ("datapackage.json" %in% files)
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = service)
     })
     expect_null (cli$metadata)
@@ -298,7 +298,7 @@ test_that ("figshare upload", {
     filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
-    dep <- with_mock_dir ("fs_up", {
+    dep <- httptest2::with_mock_dir ("fs_up", {
         cli$deposit_upload_file (filename, deposit_id)
     })
 
@@ -314,7 +314,7 @@ test_that ("figshare upload", {
     # Initial uploads differ to subsequent uploads; this tests the latter
     filename <- fs::path (fs::path_temp (), "data2.csv")
     write.csv (datasets::Orange, filename)
-    cli <- with_mock_dir ("fs_up2", {
+    cli <- httptest2::with_mock_dir ("fs_up2", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
     expect_true (nrow (cli$hostdata$files) > n_files)
@@ -332,7 +332,7 @@ test_that ("figshare update datapackage", {
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
 
-    cli <- with_mock_dir ("fs_up", {
+    cli <- httptest2::with_mock_dir ("fs_up", {
         cli$deposit_upload_file (filename, deposit_id)
     })
 
@@ -342,7 +342,7 @@ test_that ("figshare update datapackage", {
     # first. Warning can't be generated in test env because of reasons explained
     # below.
     expect_error (
-        with_mock_dir ("fs_update_dp1", {
+        httptest2::with_mock_dir ("fs_update_dp1", {
             cli$deposit_update (path = path)
         }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"
@@ -363,11 +363,11 @@ test_that ("figshare update datapackage", {
     # "update_frictionless" method. That means that attempting to update
     # triggers an error that file does not exist on remote deposit.
 
-    # cli <- with_mock_dir ("zen_update_dp", {
+    # cli <- httptest2::with_mock_dir ("zen_update_dp", {
     #     cli$deposit_update (path = path)
     # })
     expect_error (
-        with_mock_dir ("fs_update_dp2", {
+        httptest2::with_mock_dir ("fs_update_dp2", {
             cli$deposit_update (path = path)
         }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"
@@ -383,7 +383,7 @@ test_that ("figshare upload binary", {
     filename <- file.path (tempdir (), "data.Rds")
     saveRDS (datasets::Orange, filename)
 
-    # dep <- with_mock_dir ("fs_up_bin", {
+    # dep <- httptest2::with_mock_dir ("fs_up_bin", {
     #     cli$deposit_upload_file (deposit_id, filename)
     # })
 
@@ -399,10 +399,10 @@ test_that ("figshare version", {
 
     service <- "figshare"
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = service)
     })
-    cli <- with_mock_dir ("fs_get_publ", {
+    cli <- httptest2::with_mock_dir ("fs_get_publ", {
         cli$deposit_retrieve (cli$deposits$id [1])
     })
 
@@ -466,7 +466,7 @@ test_that ("figshare list", {
     service <- "figshare"
     cli <- new_mock_deposit (service = service)
 
-    dep <- with_mock_dir ("fs_list", {
+    dep <- httptest2::with_mock_dir ("fs_list", {
         cli$deposits_list ()
     })
 
@@ -484,7 +484,7 @@ test_that ("figshare download", {
 test_that ("figshare delete", {
 
     # can't mock that because it returns an empty body
-    # dep <- with_mock_dir ("fs_del", {
+    # dep <- httptest2::with_mock_dir ("fs_del", {
     #     cli$deposit_delete (deposit_id)
     # })
     # expect_true (dep)

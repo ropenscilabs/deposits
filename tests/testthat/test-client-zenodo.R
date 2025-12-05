@@ -13,7 +13,7 @@ test_that ("zenodo new", {
 
     service <- "zenodo"
 
-    cli <- with_mock_dir ("zen_create", {
+    cli <- httptest2::with_mock_dir ("zen_create", {
         depositsClient$new (service = service, sandbox = TRUE)
     })
     expect_s3_class (cli, "depositsClient")
@@ -30,7 +30,7 @@ test_that ("zenodo new", {
         accessRights = "closed"
     )
 
-    cli <- with_mock_dir ("zen_client", {
+    cli <- httptest2::with_mock_dir ("zen_client", {
         depositsClient$new (
             service = service,
             sandbox = TRUE,
@@ -48,7 +48,7 @@ test_that ("zenodo new", {
     # expect_type (cli$metadata_service, "list") # now a private field
     expect_null (cli$hostdata)
 
-    dep <- with_mock_dir ("zen_new", {
+    dep <- httptest2::with_mock_dir ("zen_new", {
         cli$deposit_new ()
     })
 
@@ -127,7 +127,7 @@ test_that ("zenodo retrieve", {
 
     # -------- DEPOSIT_RETRIEVE
     deposit_id <- cli$id
-    dep <- with_mock_dir ("zen_retr", {
+    dep <- httptest2::with_mock_dir ("zen_retr", {
         cli$deposit_retrieve (deposit_id)
     })
     expect_s3_class (dep, "depositsClient")
@@ -158,7 +158,7 @@ test_that ("zenodo retrieve", {
         accessRights = "closed"
     )
 
-    dep <- with_mock_dir ("zen_meta", {
+    dep <- httptest2::with_mock_dir ("zen_meta", {
         cli$deposit_fill_metadata (metadata)
     })
 
@@ -171,7 +171,7 @@ test_that ("zenodo retrieve", {
     expect_false (cli$hostdata$metadata$description ==
         metadata$abstract)
 
-    dep <- with_mock_dir ("zen_update", {
+    dep <- httptest2::with_mock_dir ("zen_update", {
         cli$deposit_update ()
     })
 
@@ -195,7 +195,7 @@ test_that ("zenodo embargo", {
     )
 
     embargo_date <- "2040-01-01"
-    cli <- with_mock_dir ("zen_embargo", {
+    cli <- httptest2::with_mock_dir ("zen_embargo", {
         cli$deposit_embargo (embargo_date = embargo_date)
     })
 
@@ -208,7 +208,7 @@ test_that ("zenodo deposits_list", {
     service <- "zenodo"
     cli <- new_mock_deposit (service = service)
 
-    dep <- with_mock_dir ("zen_list", {
+    dep <- httptest2::with_mock_dir ("zen_list", {
         cli$deposits_list ()
     })
 
@@ -228,7 +228,7 @@ test_that ("zenodo add_resource", {
         accessRights = "closed"
     )
 
-    cli <- with_mock_dir ("zen_client", {
+    cli <- httptest2::with_mock_dir ("zen_client", {
         depositsClient$new (
             service = "zenodo",
             sandbox = TRUE,
@@ -262,7 +262,7 @@ test_that ("zenodo add_resource", {
     files <- fs::path_file (fs::dir_ls (path))
     expect_true ("datapackage.json" %in% files)
 
-    cli <- with_mock_dir ("zen_create", {
+    cli <- httptest2::with_mock_dir ("zen_create", {
         depositsClient$new (service = "zenodo", sandbox = TRUE)
     })
     expect_null (cli$metadata)
@@ -298,7 +298,7 @@ test_that ("zenodo upload", {
     filename <- fs::path (fs::path_temp (), "data.csv")
     write.csv (datasets::Orange, filename)
 
-    dep <- with_mock_dir ("zen_up", {
+    dep <- httptest2::with_mock_dir ("zen_up", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 
@@ -317,7 +317,7 @@ test_that ("zenodo upload", {
     # Initial uploads differ to subsequent uploads; this tests the latter
     filename <- fs::path (fs::path_temp (), "data2.csv")
     write.csv (datasets::Orange, filename)
-    cli <- with_mock_dir ("zen_up2", {
+    cli <- httptest2::with_mock_dir ("zen_up2", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
     expect_true (nrow (cli$hostdata$files) > n_files)
@@ -335,7 +335,7 @@ test_that ("zenodo upload binary", {
     filename <- file.path (tempdir (), "data.Rds")
     saveRDS (datasets::Orange, filename)
 
-    # cli <- with_mock_dir ("zen_up_bin", {
+    # cli <- httptest2::with_mock_dir ("zen_up_bin", {
     #     cli$deposit_upload_file (path = filename)
     # })
 
@@ -360,7 +360,7 @@ test_that ("zenodo download", {
         fs::file_delete (filename)
     }
 
-    path <- with_mock_dir ("zen_dl", {
+    path <- httptest2::with_mock_dir ("zen_dl", {
         cli$deposit_download_file (
             # deposit_id = deposit_id, # grabbed from cli$id
             filename = fs::path_file (filename),
@@ -373,7 +373,7 @@ test_that ("zenodo download", {
     # expect_identical (datasets::Orange, readRDS (path))
 
     expect_error (
-        with_mock_dir ("zen_dl_fail", {
+        httptest2::with_mock_dir ("zen_dl_fail", {
             cli$deposit_download_file (
                 deposit_id = deposit_id,
                 filename = "does_not_exist.dat",
@@ -398,7 +398,7 @@ test_that ("zenodo update", {
     filename <- fs::path (path, "data.csv")
     write.csv (datasets::Orange, filename)
 
-    cli <- with_mock_dir ("zen_up", {
+    cli <- httptest2::with_mock_dir ("zen_up", {
         cli$deposit_upload_file (path = filename) # deposit_id from cli$id
     })
 
@@ -408,7 +408,7 @@ test_that ("zenodo update", {
     # first. Warning can't be generated in test env because of reasons explained
     # below.
     expect_error (
-        with_mock_dir ("zen_update_dp", {
+        httptest2::with_mock_dir ("zen_update_dp", {
             cli$deposit_update (path = path)
         }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"
@@ -433,11 +433,11 @@ test_that ("zenodo update", {
     # "update_frictionless" method. That means that attempting to update
     # triggers an error that file does not exist on remote deposit.
 
-    # cli <- with_mock_dir ("zen_update_dp", {
+    # cli <- httptest2::with_mock_dir ("zen_update_dp", {
     #     cli$deposit_update (path = path)
     # })
     expect_error (
-        with_mock_dir ("zen_update_dp", {
+        httptest2::with_mock_dir ("zen_update_dp", {
             cli$deposit_update (path = path)
         }),
         "Local file \\[datapackage\\.json\\] does not exist on remote"
@@ -472,7 +472,7 @@ test_that ("zenodo version", {
 
     # This can no longer be tested, because deposit data are no longer returned
     # from, or listed on, sandbox:
-    # cli <- with_mock_dir ("zen_vers", {
+    # cli <- httptest2::with_mock_dir ("zen_vers", {
     #     cli$deposit_version ()
     # })
 
@@ -482,7 +482,7 @@ test_that ("zenodo version", {
 
 # can't mock delete because it returns an empty body
 test_that ("zenodo delete", {
-    # dep <- with_mock_dir ("zen_del", {
+    # dep <- httptest2::with_mock_dir ("zen_del", {
     #    cli$deposit_delete (deposit_id)
     # })
     # expect_true (dep)

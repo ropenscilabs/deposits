@@ -9,11 +9,11 @@ Sys.setenv ("DEPOSITS_TEST_ENV" = "true")
 
 test_that ("figshare search", {
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = "figshare")
     })
 
-    x <- with_mock_dir ("search_fs", {
+    x <- httptest2::with_mock_dir ("search_fs", {
         cli$deposits_search (search_string = "random", page_size = 5L)
     })
 
@@ -29,11 +29,11 @@ test_that ("figshare search", {
 
 test_that ("zenodo search", {
 
-    cli <- with_mock_dir ("zen_create", {
+    cli <- httptest2::with_mock_dir ("zen_create", {
         depositsClient$new (service = "zenodo", sandbox = TRUE)
     })
 
-    x <- with_mock_dir ("search_zen", {
+    x <- httptest2::with_mock_dir ("search_zen", {
         cli$deposits_search (search_string = "random", page_size = 5L)
     })
 
@@ -47,7 +47,7 @@ test_that ("zenodo search", {
 
 test_that ("general search errors", {
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = "figshare") # service doesn't matter here
     })
 
@@ -69,7 +69,7 @@ test_that ("general search errors", {
 
 test_that ("figshare search errors", {
 
-    cli <- with_mock_dir ("fs_create", {
+    cli <- httptest2::with_mock_dir ("fs_create", {
         depositsClient$new (service = "figshare") # service doesn't matter here
     })
 
@@ -106,7 +106,7 @@ test_that ("figshare search errors", {
 
 test_that ("zenodo search errors", {
 
-    cli <- with_mock_dir ("zen_create", {
+    cli <- httptest2::with_mock_dir ("zen_create", {
         depositsClient$new (service = "zenodo", sandbox = TRUE)
     })
 
