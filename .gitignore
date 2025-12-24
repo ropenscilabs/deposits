@@ -18,3 +18,5 @@ aaa\.Rmd*
 *.o
 *.so
 docs
+deposits.code-workspace
+.vscode/settings.json
