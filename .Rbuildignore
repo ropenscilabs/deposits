@@ -21,4 +21,3 @@
 ^vignettes/makefile$
 data-raw/
 vignettes/*.tex$
-.ropensci-staff
