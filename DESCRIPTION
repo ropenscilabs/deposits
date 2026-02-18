@@ -29,6 +29,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Config/ropensci/maintainer: staff
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
