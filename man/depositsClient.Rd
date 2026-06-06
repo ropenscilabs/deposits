@@ -234,7 +234,7 @@ current deposit.}
 \if{latex}{\out{\hypertarget{method-depositsClient-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new \code{depositsClient} object, as an \pkg{R6}
-client with methods listed via \code{deposits_emthods()}.
+client with methods listed via \code{deposits_methods()}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{depositsClient$new(service, metadata = NULL, sandbox = FALSE, headers = NULL)}\if{html}{\out{</div>}}
 }
