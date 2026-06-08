@@ -112,7 +112,7 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
         local_path = NULL,
 
         #' @description Create a new `depositsClient` object, as an \pkg{R6}
-        #' client with methods listed via `deposits_emthods()`.
+        #' client with methods listed via `deposits_methods()`.
         #'
         #' @param service (character) Name of a deposits service (see
         #' \link{deposits_services}).
